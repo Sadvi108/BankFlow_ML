@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+.env
+
+# Caches and logs
+.vercel/
+.vscode/
+.cache/
+*.log
+test_reports/
+debug_ocr_output/
+debug_failures_images/
+
+# System files
+nul
+.DS_Store
+Thumbs.db
+
+# Large data/model files
+models/
+app/models/
+Receipts/
+data/uploads/
+data/processed/
+
+# Results
+benchmark_results.txt
+cached_results.txt
+comprehensive_test_results_*.json
+enhanced_test_results.*
+final_test_results.*
+incremental_results.json
+verify_output.txt
+verify_result.txt
+debug_output*.txt
+simulation_output.txt
+single_debug_log.txt
+pdf_debug.txt
+temp_test.txt

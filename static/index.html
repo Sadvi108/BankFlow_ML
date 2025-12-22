@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Receipt Processing System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .upload-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 40px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .upload-area:hover {
+            border-color: #764ba2;
+            background: #f8f9ff;
+        }
+        
+        .upload-area.dragover {
+            border-color: #764ba2;
+            background: #e8f2ff;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .results {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .results.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .result-label {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .result-value {
+            color: #34495e;
+            font-size: 1.1rem;
+        }
+        
+        .status {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .status.processing {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .api-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+        }
+        
+        .api-status.connected {
+            border-left: 4px solid #28a745;
+        }
+        
+        .api-status.disconnected {
+            border-left: 4px solid #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="api-status" id="apiStatus">
+        <div id="apiStatusText">Checking API connection...</div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🏦 Bank Receipt Processing System</h1>
+            <p>Upload your bank receipts and extract transaction IDs automatically</p>
+        </div>
+        
+        <div class="content">
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📄</div>
+                    <h3>Drop your receipt here or click to browse</h3>
+                    <p>Supports PDF, JPG, PNG, JPEG formats</p>
+                    <input type="file" id="fileInput" class="file-input" accept=".pdf,.jpg,.jpeg,.png" multiple>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <button class="btn" id="uploadBtn" disabled>📤 Upload Receipts</button>
+                    <button class="btn" id="clearBtn" style="background: #6c757d;">🗑️ Clear All</button>
+                </div>
+                
+                <div id="fileList" style="margin-top: 20px; text-align: left;"></div>
+            </div>
+            
+            <div id="status"></div>
+            
+            <div id="results" class="results">
+                <h3>🔍 Processing Results</h3>
+                <div id="resultContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class ReceiptProcessor {
+            constructor() {
+                this.apiUrl = 'http://localhost:8000';
+                this.files = [];
+                this.init();
+            }
+
+            init() {
+                this.checkAPIConnection();
+                this.setupEventListeners();
+                setInterval(() => this.checkAPIConnection(), 30000); // Check every 30 seconds
+            }
+
+            setupEventListeners() {
+                const uploadArea = document.getElementById('uploadArea');
+                const fileInput = document.getElementById('fileInput');
+                const uploadBtn = document.getElementById('uploadBtn');
+                const clearBtn = document.getElementById('clearBtn');
+
+                uploadArea.addEventListener('click', () => fileInput.click());
+                uploadArea.addEventListener('dragover', this.handleDragOver.bind(this));
+                uploadArea.addEventListener('dragleave', this.handleDragLeave.bind(this));
+                uploadArea.addEventListener('drop', this.handleDrop.bind(this));
+
+                fileInput.addEventListener('change', this.handleFileSelect.bind(this));
+                uploadBtn.addEventListener('click', this.uploadFiles.bind(this));
+                clearBtn.addEventListener('click', this.clearAll.bind(this));
+            }
+
+            handleDragOver(e) {
+                e.preventDefault();
+                document.getElementById('uploadArea').classList.add('dragover');
+            }
+
+            handleDragLeave(e) {
+                e.preventDefault();
+                document.getElementById('uploadArea').classList.remove('dragover');
+            }
+
+            handleDrop(e) {
+                e.preventDefault();
+                document.getElementById('uploadArea').classList.remove('dragover');
+                const files = Array.from(e.dataTransfer.files);
+                this.addFiles(files);
+            }
+
+            handleFileSelect(e) {
+                const files = Array.from(e.target.files);
+                this.addFiles(files);
+            }
+
+            addFiles(newFiles) {
+                const validFiles = newFiles.filter(file => 
+                    file.type === 'application/pdf' || 
+                    file.type === 'image/jpeg' || 
+                    file.type === 'image/jpg' || 
+                    file.type === 'image/png'
+                );
+
+                if (validFiles.length !== newFiles.length) {
+                    this.showStatus('Some files were skipped (invalid format)', 'error');
+                }
+
+                this.files.push(...validFiles);
+                this.updateFileList();
+                document.getElementById('uploadBtn').disabled = this.files.length === 0;
+            }
+
+            updateFileList() {
+                const fileList = document.getElementById('fileList');
+                if (this.files.length === 0) {
+                    fileList.innerHTML = '';
+                    return;
+                }
+
+                const html = `
+                    <h4>📋 Selected Files (${this.files.length}):</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        ${this.files.map((file, index) => `
+                            <li style="padding: 5px 0; border-bottom: 1px solid #eee;">
+                                📄 ${file.name} (${this.formatFileSize(file.size)})
+                                <button onclick="processor.removeFile(${index})" style="float: right; background: #dc3545; color: white; border: none; padding: 2px 8px; border-radius: 3px; cursor: pointer;">❌</button>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+                fileList.innerHTML = html;
+            }
+
+            removeFile(index) {
+                this.files.splice(index, 1);
+                this.updateFileList();
+                document.getElementById('uploadBtn').disabled = this.files.length === 0;
+            }
+
+            clearAll() {
+                this.files = [];
+                this.updateFileList();
+                document.getElementById('uploadBtn').disabled = true;
+                document.getElementById('fileInput').value = '';
+                document.getElementById('results').classList.remove('show');
+                this.showStatus('', '');
+            }
+
+            formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            async checkAPIConnection() {
+                const statusEl = document.getElementById('apiStatus');
+                const textEl = document.getElementById('apiStatusText');
+
+                try {
+                    const response = await fetch(`${this.apiUrl}/health`);
+                    if (response.ok) {
+                        statusEl.className = 'api-status connected';
+                        textEl.textContent = '🔌 API Connected';
+                    } else {
+                        throw new Error('API not responding correctly');
+                    }
+                } catch (error) {
+                    statusEl.className = 'api-status disconnected';
+                    textEl.textContent = '❌ API Disconnected';
+                }
+            }
+
+            showStatus(message, type) {
+                const statusEl = document.getElementById('status');
+                if (!message) {
+                    statusEl.innerHTML = '';
+                    return;
+                }
+
+                statusEl.innerHTML = `<div class="status ${type}">${message}</div>`;
+            }
+
+            async uploadFiles() {
+                if (this.files.length === 0) return;
+
+                document.getElementById('uploadBtn').disabled = true;
+                this.showStatus('🔄 Processing receipts... <span class="loading"></span>', 'processing');
+
+                try {
+                    const results = [];
+                    
+                    for (let i = 0; i < this.files.length; i++) {
+                        const file = this.files[i];
+                        this.showStatus(`🔄 Processing ${i + 1} of ${this.files.length}: ${file.name}... <span class="loading"></span>`, 'processing');
+                        
+                        const formData = new FormData();
+                        formData.append('file', file);
+
+                        const response = await fetch(`${this.apiUrl}/extract`, {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+
+                        const result = await response.json();
+                        results.push({ file: file.name, result });
+                    }
+
+                    this.displayResults(results);
+                    this.showStatus(`✅ Successfully processed ${results.length} receipt(s)!`, 'success');
+                    
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    this.showStatus(`❌ Error processing receipts: ${error.message}`, 'error');
+                } finally {
+                    document.getElementById('uploadBtn').disabled = false;
+                }
+            }
+
+            displayResults(results) {
+                const resultsEl = document.getElementById('results');
+                const contentEl = document.getElementById('resultContent');
+                
+                let html = '';
+                
+                results.forEach(({ file, result }) => {
+                    html += `
+                        <div style="border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 20px;">
+                            <h4>📄 ${file}</h4>
+                            
+                            ${result.image_path ? `<img src="${this.apiUrl}${result.image_path}" class="preview-image" alt="Receipt preview">` : ''}
+                            
+                            <div class="result-item">
+                                <div class="result-label">🏦 Bank Type:</div>
+                                <div class="result-value">${result.bank_type || 'Unknown'}</div>
+                            </div>
+                            
+                            <div class="result-item">
+                                <div class="result-label">🔢 Transaction ID:</div>
+                                <div class="result-value">${result.fields?.transaction_number || result.fields?.reference_number || result.fields?.transaction_id || 'Not found'}</div>
+                            </div>
+                            
+                            <div class="result-item">
+                                <div class="result-label">💰 Amount:</div>
+                                <div class="result-value">${result.fields?.amount || 'Not found'}</div>
+                            </div>
+                            
+                            <div class="result-item">
+                                <div class="result-label">📅 Date:</div>
+                                <div class="result-value">${result.fields?.date || 'Not found'}</div>
+                            </div>
+                            
+                            <div class="result-item">
+                                <div class="result-label">📊 Processing Time:</div>
+                                <div class="result-value">${result.processing_time || 'Unknown'}</div>
+                            </div>
+                            
+                            ${result.confidence ? `
+                                <div class="result-item">
+                                    <div class="result-label">🎯 Confidence:</div>
+                                    <div class="result-value">${(result.confidence * 100).toFixed(1)}%</div>
+                                </div>
+                            ` : ''}
+                            
+                            ${result.error ? `
+                                <div class="result-item" style="border-left-color: #dc3545;">
+                                    <div class="result-label">❌ Error:</div>
+                                    <div class="result-value" style="color: #dc3545;">${result.error}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+                
+                contentEl.innerHTML = html;
+                resultsEl.classList.add('show');
+                resultsEl.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Initialize the processor
+        const processor = new ReceiptProcessor();
+    </script>
+</body>
+</html>

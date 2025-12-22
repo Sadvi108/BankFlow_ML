@@ -1,0 +1,115 @@
+
+🧪 Bank Receipt OCR - 100% Accuracy Validation Test
+
+================================================================================
+TESTING PREVIOUSLY FAILING CASES
+================================================================================
+
+Test 8: ✅ PASS
+  Description: PBeBank Reference: with space after colon
+  Text: PBeBank Reference: PBB251031580390 Amount: RM500
+  Expected: PBB251031580390
+  Extracted: ['PBB251031580390', 'B251031580390']
+  Bank: Public Bank
+  Confidence: 100.00%
+
+Test 11: ✅ PASS
+  Description: RHB Bank Reference: format
+  Text: RHB Bank Reference: RHB251031943944 Status: OK
+  Expected: RHB251031943944
+  Extracted: ['RHB251031943944']
+  Bank: RHB
+  Confidence: 100.00%
+
+Test 27: ✅ PASS
+  Description: Payment Reference : with spaces around colon
+  Text: Payment Reference : PBB251031111111 Status : Done
+  Expected: PBB251031111111
+  Extracted: ['PBB251031111111', 'B251031111111']
+  Bank: Public Bank
+  Confidence: 100.00%
+
+Test 28: ✅ PASS
+  Description: Bank Transfer-> with arrow separator
+  Text: Bank Transfer-> RHB251031222222 | Amount: RM500
+  Expected: RHB251031222222
+  Extracted: ['RHB251031222222', 'TRANSFER-']
+  Bank: RHB
+  Confidence: 100.00%
+
+Test 35: ✅ PASS
+  Description: PBB with space in ID
+  Text: PBB 251031999999 Public Bank transaction
+  Expected: PBB251031999999
+  Extracted: ['PBB251031999999']
+  Bank: Public Bank
+  Confidence: 100.00%
+
+================================================================================
+RESULTS: 5/5 tests passed
+================================================================================
+
+================================================================================
+TESTING ALL 35 TEST CASES
+================================================================================
+Test  1: ✅ PASS - MYCN251031853500
+Test  2: ✅ PASS - MYCN251031291491
+Test  3: ✅ PASS - MYCN251031842914
+Test  4: ✅ PASS - B10-2510-625105
+Test  5: ✅ PASS - B10-2510-240816
+Test  6: ✅ PASS - B10-2510-409674
+Test  7: ✅ PASS - PBB251031758202
+Test  8: ✅ PASS - PBB251031580390
+Test  9: ✅ PASS - PBB251031407081
+Test 10: ✅ PASS - RHB251031180741
+Test 11: ✅ PASS - RHB251031943944
+Test 12: ✅ PASS - RHB251031798726
+Test 13: ✅ PASS - HSBC251031529613
+Test 14: ✅ PASS - HSBC251031645651
+Test 15: ✅ PASS - HSBC251031701530
+Test 16: ✅ PASS - UOB251031200108
+Test 17: ✅ PASS - UOB251031806076
+Test 18: ✅ PASS - UOB251031499003
+Test 19: ✅ PASS - SCB251031744606
+Test 20: ✅ PASS - SCB251031911983
+Test 21: ✅ PASS - SCB251031295446
+Test 22: ✅ PASS - DN251031333313
+Test 23: ✅ PASS - DN251031565451
+Test 24: ✅ PASS - DN251031915330
+Test 25: ✅ PASS - MYCN251031123456
+Test 26: ✅ PASS - B10-2510-987654
+Test 27: ✅ PASS - PBB251031111111
+Test 28: ✅ PASS - RHB251031222222
+Test 29: ✅ PASS - HSBC251031333333
+Test 30: ✅ PASS - UOB251031444444
+Test 31: ❌ FAIL - Expected: SCB251031555555, Got: []
+Test 32: ✅ PASS - DN251031666666
+Test 33: ❌ FAIL - Expected: MYCN251031777777, Got: []
+Test 34: ✅ PASS - B10-2510-888888
+Test 35: ✅ PASS - PBB251031999999
+
+================================================================================
+OVERALL RESULTS: 33/35 tests passed
+Accuracy: 94.29%
+================================================================================
+
+FAILED CASES DETAILS:
+
+Test 31:
+  Text: SCB_Transfer_SCB251031555555_Success
+  Expected: SCB251031555555
+  Extracted: []
+
+Test 33:
+  Text: Reference No.MYCN251031777777 for your transfer
+  Expected: MYCN251031777777
+  Extracted: []
+
+================================================================================
+FINAL SUMMARY
+================================================================================
+Previously Failing Cases (5): ✅ ALL PASS
+All Test Cases (35): ❌ NOT 100% YET
+================================================================================
+
+⚠️  Some tests still failing. Review the output above.

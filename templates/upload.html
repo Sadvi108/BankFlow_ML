@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bank Receipt Extractor (MVP)</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif; margin: 2rem; }
+      .card { max-width: 800px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 8px; padding: 1.5rem; }
+      h1 { font-size: 1.5rem; margin-bottom: 1rem; }
+      .row { display: flex; gap: 1rem; align-items: center; }
+      .row > * { flex: 1; }
+      .actions { margin-top: 1rem; display: flex; gap: .5rem; }
+      button { padding: .5rem 1rem; border-radius: 6px; border: 1px solid #1f2937; background: #111827; color: white; cursor: pointer; }
+      button:disabled { background: #6b7280; border-color: #6b7280; cursor: not-allowed; }
+      .status { margin-top: .75rem; color: #374151; font-size: .95rem; }
+      pre { background: #f8fafc; padding: 1rem; border-radius: 8px; overflow: auto; max-height: 360px; border: 1px solid #e5e7eb; }
+      footer { margin-top: 2rem; color: #6b7280; font-size: .9rem; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Upload Bank Receipt</h1>
+      <p>Upload a PDF or image (PNG/JPG). The server will run OCR (if configured), predict the bank, and extract key fields.</p>
+      <div class="row">
+        <input id="fileInput" type="file" accept="image/*,.pdf" />
+      </div>
+      <div class="actions">
+        <button id="uploadBtn">Extract</button>
+        <button id="resetBtn" type="button">Reset</button>
+      </div>
+      <div id="status" class="status"></div>
+      <h2>Result</h2>
+      <div id="resultCard" class="card" style="border-color:#cbd5e1;">
+        <div class="row">
+          <div>
+            <strong>Bank:</strong> <span id="bankName">-</span>
+          </div>
+          <div>
+            <strong>Transaction ID:</strong> <span id="transactionId" style="color:#1f2937;">(not found)</span>
+          </div>
+          <div>
+            <strong>Reference Number:</strong> <span id="refValue" style="color:#1f2937;">(not found)</span>
+          </div>
+          <div>
+            <strong>DuitNow Reference:</strong> <span id="duitnowRef" style="color:#1f2937;">(not found)</span>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 1rem;">
+          <div>
+            <strong>Amount:</strong> <span id="amountValue" style="color:#059669;">(not found)</span>
+          </div>
+          <div>
+            <strong>Date:</strong> <span id="dateValue" style="color:#1f2937;">(not found)</span>
+          </div>
+          <div>
+            <strong>Confidence:</strong> <span id="confidenceValue" style="color:#dc2626;">-</span>
+          </div>
+          <div>
+            <strong>Method:</strong> <span id="methodValue" style="color:#6b7280;">-</span>
+          </div>
+        </div>
+      </div>
+      <h3>Raw JSON</h3>
+      <pre id="result"></pre>
+    </div>
+    <footer>
+      <p>Note: For best results, install Tesseract OCR or integrate with a cloud OCR. This is an MVP using simple rules.</p>
+    </footer>
+
+    <script>
+      const $ = (sel) => document.querySelector(sel);
+      const fileInput = $('#fileInput');
+      const uploadBtn = $('#uploadBtn');
+      const resetBtn = $('#resetBtn');
+      const statusEl = $('#status');
+      const resultEl = $('#result');
+
+      resetBtn.addEventListener('click', () => {
+        fileInput.value = '';
+        statusEl.textContent = '';
+        resultEl.textContent = '';
+        // Reset all display fields
+        $('#bankName').textContent = '-';
+        $('#transactionId').textContent = '(not found)';
+        $('#refValue').textContent = '(not found)';
+        $('#duitnowRef').textContent = '(not found)';
+        $('#amountValue').textContent = '(not found)';
+        $('#dateValue').textContent = '(not found)';
+        $('#confidenceValue').textContent = '-';
+        $('#methodValue').textContent = '-';
+      });
+
+      uploadBtn.addEventListener('click', async () => {
+        if (!fileInput.files || fileInput.files.length === 0) {
+          alert('Please select a file first.');
+          return;
+        }
+        const file = fileInput.files[0];
+        const form = new FormData();
+        form.append('file', file);
+        uploadBtn.disabled = true;
+        statusEl.textContent = 'Uploading and extracting...';
+        resultEl.textContent = '';
+        try {
+          const resp = await fetch('/extract', { method: 'POST', body: form });
+          const json = await resp.json();
+          resultEl.textContent = JSON.stringify(json, null, 2);
+          // Populate quick fields
+          const bank = json?.bank?.name || '-';
+          const extraction = json?.extraction || {};
+          const fields = json?.fields || {};
+          
+          // Use extraction fields first, fallback to fields
+          const transactionId = extraction?.transaction_id || fields?.transaction_number || null;
+          const refNumber = extraction?.reference_number || fields?.reference_number || null;
+          const duitnowRef = extraction?.duitnow_reference || fields?.duitnow_reference_number || null;
+          const amount = extraction?.amount || fields?.amount || null;
+          const date = extraction?.date || fields?.date || null;
+          const confidence = extraction?.confidence || 0;
+          const method = extraction?.method || 'unknown';
+          
+          $('#bankName').textContent = bank;
+          $('#transactionId').textContent = transactionId || '(not found)';
+          $('#refValue').textContent = refNumber || '(not found)';
+          $('#duitnowRef').textContent = duitnowRef || '(not found)';
+          $('#amountValue').textContent = amount || '(not found)';
+          $('#dateValue').textContent = date || '(not found)';
+          $('#confidenceValue').textContent = confidence ? `${(confidence * 100).toFixed(1)}%` : '-';
+          $('#methodValue').textContent = method;
+          statusEl.textContent = 'Done.';
+        } catch (err) {
+          console.error(err);
+          statusEl.textContent = 'Error during extraction.';
+        } finally {
+          uploadBtn.disabled = false;
+        }
+      });
+    </script>
+  </body>
+  </html>

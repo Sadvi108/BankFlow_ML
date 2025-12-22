@@ -1,0 +1,50 @@
+[
+  {
+    "id": "20251220000355034291",
+    "timestamp": "2025-12-20T00:03:55.034383",
+    "filename": "AMBANK - CUSTOMER REF.pdf",
+    "bank_name": "RHB",
+    "reference_id": "SITPUPK170684G1DISCHARGE",
+    "amount": "1,272.00",
+    "date": "31/10/2025",
+    "confidence": 95.0,
+    "status": "success",
+    "notes": ""
+  },
+  {
+    "id": "20251219170840899302",
+    "timestamp": "2025-12-19T17:08:40.899466",
+    "filename": "AFFIN BANK -CUSTOMER REF.pdf",
+    "bank_name": "Affin Bank",
+    "reference_id": "1G251031263175",
+    "amount": "53.60",
+    "date": "31 Oct 2025",
+    "confidence": 78.85304234648817,
+    "status": "success",
+    "notes": ""
+  },
+  {
+    "id": "20251219151026646723",
+    "timestamp": "2025-12-19T15:10:26.646778",
+    "filename": "CITIBANK - CUST REF.pdf",
+    "bank_name": "RHB",
+    "reference_id": "30350SG74E4",
+    "amount": "20.00",
+    "date": "40/30/2025",
+    "confidence": 80.76425336073294,
+    "status": "success",
+    "notes": ""
+  },
+  {
+    "id": "20251219150132812054",
+    "timestamp": "2025-12-19T15:01:32.812160",
+    "filename": "CIMB - DIFF REF FRM STATEMENT.pdf",
+    "bank_name": "CIMB",
+    "reference_id": "706803-D",
+    "amount": "53.00",
+    "date": "31-10-2025",
+    "confidence": 95.0,
+    "status": "success",
+    "notes": ""
+  }
+]

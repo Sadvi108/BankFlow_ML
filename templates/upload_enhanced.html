@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bank Receipt Extractor (Enhanced)</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif; margin: 2rem; background: #f8fafc; }
+      .card { max-width: 900px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 12px; padding: 2rem; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+      h1 { font-size: 1.75rem; margin-bottom: 1rem; color: #1f2937; }
+      h2 { font-size: 1.25rem; margin: 1.5rem 0 1rem 0; color: #374151; }
+      .row { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+      .row > * { flex: 1; min-width: 200px; }
+      .actions { margin-top: 1.5rem; display: flex; gap: .75rem; }
+      button { padding: .75rem 1.5rem; border-radius: 8px; border: 1px solid #1f2937; background: #111827; color: white; cursor: pointer; font-weight: 500; transition: all 0.2s; }
+      button:hover { background: #374151; }
+      button:disabled { background: #6b7280; border-color: #6b7280; cursor: not-allowed; }
+      .status { margin-top: 1rem; color: #374151; font-size: .95rem; font-weight: 500; }
+      pre { background: #f8fafc; padding: 1.5rem; border-radius: 8px; overflow: auto; max-height: 400px; border: 1px solid #e5e7eb; font-size: 0.875rem; }
+      footer { margin-top: 2rem; color: #6b7280; font-size: .9rem; text-align: center; }
+      .extraction-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+      .extraction-item { padding: 0.75rem; background: #f9fafb; border-radius: 6px; border-left: 4px solid #3b82f6; }
+      .extraction-item strong { color: #374151; display: block; margin-bottom: 0.25rem; font-size: 0.875rem; }
+      .extraction-item span { color: #1f2937; font-weight: 500; }
+      .amount { border-left-color: #059669; }
+      .amount span { color: #059669; font-weight: 600; }
+      .confidence { border-left-color: #dc2626; }
+      .confidence span { color: #dc2626; font-weight: 600; }
+      .method { border-left-color: #6b7280; }
+      .method span { color: #6b7280; font-size: 0.8rem; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>🏦 Bank Receipt Extractor (Enhanced)</h1>
+      <p>Upload a PDF or image (PNG/JPG) receipt. Our advanced ML system will extract bank name, transaction IDs, reference numbers, amounts, and dates with high accuracy.</p>
+      
+      <div class="row">
+        <input id="fileInput" type="file" accept="image/*,.pdf" style="flex: 2; padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 6px;" />
+      </div>
+      
+      <div class="actions">
+        <button id="uploadBtn">🔍 Extract Receipt</button>
+        <button id="resetBtn" type="button">🔄 Reset</button>
+      </div>
+      
+      <div id="status" class="status"></div>
+      
+      <h2>📊 Extraction Results</h2>
+      <div id="resultCard" class="card" style="border-color:#cbd5e1; background: #fefefe;">
+        <div class="extraction-grid">
+          <div class="extraction-item">
+            <strong>Bank Name</strong>
+            <span id="bankName">-</span>
+          </div>
+          <div class="extraction-item">
+            <strong>Transaction ID</strong>
+            <span id="transactionId">(not found)</span>
+          </div>
+          <div class="extraction-item">
+            <strong>Reference Number</strong>
+            <span id="refValue">(not found)</span>
+          </div>
+          <div class="extraction-item">
+            <strong>DuitNow Reference</strong>
+            <span id="duitnowRef">(not found)</span>
+          </div>
+          <div class="extraction-item amount">
+            <strong>Amount</strong>
+            <span id="amountValue">(not found)</span>
+          </div>
+          <div class="extraction-item">
+            <strong>Transaction Date</strong>
+            <span id="dateValue">(not found)</span>
+          </div>
+          <div class="extraction-item confidence">
+            <strong>Confidence</strong>
+            <span id="confidenceValue">-</span>
+          </div>
+          <div class="extraction-item method">
+            <strong>Extraction Method</strong>
+            <span id="methodValue">-</span>
+          </div>
+        </div>
+      </div>
+      
+      <h2>🔧 Technical Details</h2>
+      <pre id="result" style="background: #1f2937; color: #f9fafb; border: 1px solid #374151;"></pre>
+    </div>
+    
+    <footer>
+      <p>💡 <strong>Tip:</strong> For best results, ensure receipts are clear and well-lit. Our system supports all major Malaysian banks including Maybank, CIMB, Public Bank, RHB, HSBC, UOB, Standard Chartered, and more.</p>
+    </footer>
+
+    <script>
+      const $ = (sel) => document.querySelector(sel);
+      const fileInput = $('#fileInput');
+      const uploadBtn = $('#uploadBtn');
+      const resetBtn = $('#resetBtn');
+      const statusEl = $('#status');
+      const resultEl = $('#result');
+
+      resetBtn.addEventListener('click', () => {
+        fileInput.value = '';
+        statusEl.textContent = '';
+        resultEl.textContent = '';
+        // Reset all display fields
+        $('#bankName').textContent = '-';
+        $('#transactionId').textContent = '(not found)';
+        $('#refValue').textContent = '(not found)';
+        $('#duitnowRef').textContent = '(not found)';
+        $('#amountValue').textContent = '(not found)';
+        $('#dateValue').textContent = '(not found)';
+        $('#confidenceValue').textContent = '-';
+        $('#methodValue').textContent = '-';
+      });
+
+      uploadBtn.addEventListener('click', async () => {
+        if (!fileInput.files || fileInput.files.length === 0) {
+          alert('📁 Please select a receipt file first.');
+          return;
+        }
+        const file = fileInput.files[0];
+        const form = new FormData();
+        form.append('file', file);
+        uploadBtn.disabled = true;
+        statusEl.textContent = '⏳ Processing receipt with advanced ML...';
+        resultEl.textContent = '';
+        
+        try {
+          const resp = await fetch('/extract', { method: 'POST', body: form });
+          const json = await resp.json();
+          
+          if (!resp.ok) {
+            throw new Error(json.detail || 'Processing failed');
+          }
+          
+          // Display raw JSON for technical users
+          resultEl.textContent = JSON.stringify(json, null, 2);
+          
+          // Populate user-friendly fields
+          const bank = json?.bank?.name || '-';
+          const extraction = json?.extraction || {};
+          const fields = json?.fields || {};
+          
+          // Use extraction fields first, fallback to fields
+          const transactionId = extraction?.transaction_id || fields?.transaction_number || null;
+          const refNumber = extraction?.reference_number || fields?.reference_number || null;
+          const duitnowRef = extraction?.duitnow_reference || fields?.duitnow_reference_number || null;
+          const amount = extraction?.amount || fields?.amount || null;
+          const date = extraction?.date || fields?.date || null;
+          const confidence = extraction?.confidence || 0;
+          const method = extraction?.method || 'unknown';
+          
+          $('#bankName').textContent = bank;
+          $('#transactionId').textContent = transactionId || '(not found)';
+          $('#refValue').textContent = refNumber || '(not found)';
+          $('#duitnowRef').textContent = duitnowRef || '(not found)';
+          $('#amountValue').textContent = amount || '(not found)';
+          $('#dateValue').textContent = date || '(not found)';
+          $('#confidenceValue').textContent = confidence ? `${(confidence * 100).toFixed(1)}%` : '-';
+          $('#methodValue').textContent = method;
+          
+          statusEl.textContent = '✅ Extraction completed successfully!';
+          statusEl.style.color = '#059669';
+          
+        } catch (err) {
+          console.error('❌ Extraction error:', err);
+          statusEl.textContent = `❌ Error: ${err.message}`;
+          statusEl.style.color = '#dc2626';
+        } finally {
+          uploadBtn.disabled = false;
+        }
+      });
+    </script>
+  </body>
+  </html>

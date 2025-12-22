@@ -1,0 +1,595 @@
+{
+  "total_tests": 35,
+  "exact_success_rate": 85.71428571428571,
+  "any_id_success_rate": 85.71428571428571,
+  "exact_matches": 30,
+  "any_id_found": 30,
+  "results": [
+    {
+      "test_case": 1,
+      "text": "Maybank Transfer Reference: MYCN251031853500 Status: Successful",
+      "expected": "MYCN251031853500",
+      "extracted": [
+        {
+          "text": "MYCN251031853500",
+          "pattern": "MYCN[0-9]{8,15}",
+          "source": "Maybank",
+          "confidence": 1.0,
+          "start": 28,
+          "end": 44
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 2,
+      "text": "M2U Maybank Ref No: MYCN251031291491 Amount: RM100.00",
+      "expected": "MYCN251031291491",
+      "extracted": [
+        {
+          "text": "MYCN251031291491",
+          "pattern": "MYCN[0-9]{8,15}",
+          "source": "Maybank",
+          "confidence": 1.0,
+          "start": 20,
+          "end": 36
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 3,
+      "text": "Maybank2u.com Transaction ID: MYCN251031842914",
+      "expected": "MYCN251031842914",
+      "extracted": [
+        {
+          "text": "MYCN251031842914",
+          "pattern": "MYCN[0-9]{8,15}",
+          "source": "Maybank",
+          "confidence": 1.0,
+          "start": 30,
+          "end": 46
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 4,
+      "text": "CIMB Transaction ID: B10-2510-625105 Amount: RM250.00",
+      "expected": "B10-2510-625105",
+      "extracted": [
+        {
+          "text": "B10-2510-625105",
+          "pattern": "B10-[0-9]{4}-[0-9]{6,8}",
+          "source": "CIMB",
+          "confidence": 1.0,
+          "start": 21,
+          "end": 36
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 5,
+      "text": "CIMB Clicks Reference: B10-2510-240816 Status: Completed",
+      "expected": "B10-2510-240816",
+      "extracted": [
+        {
+          "text": "B10-2510-240816",
+          "pattern": "B10-[0-9]{4}-[0-9]{6,8}",
+          "source": "CIMB",
+          "confidence": 1.0,
+          "start": 23,
+          "end": 38
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 6,
+      "text": "CIMB Bank Transfer Ref: B10-2510-409674",
+      "expected": "B10-2510-409674",
+      "extracted": [
+        {
+          "text": "B10-2510-409674",
+          "pattern": "B10-[0-9]{4}-[0-9]{6,8}",
+          "source": "CIMB",
+          "confidence": 1.0,
+          "start": 24,
+          "end": 39
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 7,
+      "text": "Public Bank Payment PBB251031758202 Completed",
+      "expected": "PBB251031758202",
+      "extracted": [
+        {
+          "text": "PBB251031758202",
+          "pattern": "\\b(?:payment|transfer|pymt)(?!.*(?:ref|id))[\\s:]*([A-Z0-9]{6,20})",
+          "source": "General Payment",
+          "confidence": 0.8999999999999999,
+          "start": 12,
+          "end": 35
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 8,
+      "text": "PBeBank Reference: PBB251031580390 Amount: RM500",
+      "expected": "PBB251031580390",
+      "extracted": [],
+      "found_expected": false,
+      "any_valid": false,
+      "success": false
+    },
+    {
+      "test_case": 9,
+      "text": "Public Bank Transaction ID: PBB251031407081",
+      "expected": "PBB251031407081",
+      "extracted": [
+        {
+          "text": "PBB251031407081",
+          "pattern": "\\b(?:id|no|number)(?!.*(?:card|account))[\\s:]*([A-Z0-9]{6,20})",
+          "source": "ID",
+          "confidence": 0.8999999999999999,
+          "start": 24,
+          "end": 43
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 10,
+      "text": "RHB Transfer RHB251031180741 Done",
+      "expected": "RHB251031180741",
+      "extracted": [
+        {
+          "text": "RHB251031180741",
+          "pattern": "\\b(?:payment|transfer|pymt)(?!.*(?:ref|id))[\\s:]*([A-Z0-9]{6,20})",
+          "source": "General Payment",
+          "confidence": 0.8999999999999999,
+          "start": 4,
+          "end": 28
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 11,
+      "text": "RHB Bank Reference: RHB251031943944 Status: OK",
+      "expected": "RHB251031943944",
+      "extracted": [],
+      "found_expected": false,
+      "any_valid": false,
+      "success": false
+    },
+    {
+      "test_case": 12,
+      "text": "RHB Now Transaction: RHB251031798726",
+      "expected": "RHB251031798726",
+      "extracted": [
+        {
+          "text": "RHB251031798726",
+          "pattern": "\\b(?:transaction|txn|trans)(?!.*(?:number|no|id))[\\s:]*([A-Z0-9]{6,20})",
+          "source": "General Transaction",
+          "confidence": 0.8999999999999999,
+          "start": 8,
+          "end": 36
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 13,
+      "text": "HSBC Transaction HSBC251031529613 Processed",
+      "expected": "HSBC251031529613",
+      "extracted": [
+        {
+          "text": "HSBC251031529613",
+          "pattern": "HSBC[0-9]{6,12}[A-Z]{0,4}",
+          "source": "HSBC",
+          "confidence": 1.0,
+          "start": 17,
+          "end": 33
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 14,
+      "text": "HSBC Bank Transfer Ref: HSBC251031645651",
+      "expected": "HSBC251031645651",
+      "extracted": [
+        {
+          "text": "HSBC251031645651",
+          "pattern": "HSBC[0-9]{6,12}[A-Z]{0,4}",
+          "source": "HSBC",
+          "confidence": 1.0,
+          "start": 24,
+          "end": 40
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 15,
+      "text": "HSBC Reference Number: HSBC251031701530",
+      "expected": "HSBC251031701530",
+      "extracted": [
+        {
+          "text": "HSBC251031701530",
+          "pattern": "HSBC[0-9]{6,12}[A-Z]{0,4}",
+          "source": "HSBC",
+          "confidence": 1.0,
+          "start": 23,
+          "end": 39
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 16,
+      "text": "UOB Reference UOB251031200108 Status: Completed",
+      "expected": "UOB251031200108",
+      "extracted": [
+        {
+          "text": "UOB251031200108",
+          "pattern": "UOB[0-9]{6,12}[A-Z]{0,4}",
+          "source": "UOB",
+          "confidence": 0.9999999999999999,
+          "start": 14,
+          "end": 29
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 17,
+      "text": "UOB Bank Transaction ID: UOB251031806076",
+      "expected": "UOB251031806076",
+      "extracted": [
+        {
+          "text": "UOB251031806076",
+          "pattern": "UOB[0-9]{6,12}[A-Z]{0,4}",
+          "source": "UOB",
+          "confidence": 0.9999999999999999,
+          "start": 25,
+          "end": 40
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 18,
+      "text": "UOB Transfer Reference: UOB251031499003",
+      "expected": "UOB251031499003",
+      "extracted": [
+        {
+          "text": "UOB251031499003",
+          "pattern": "UOB[0-9]{6,12}[A-Z]{0,4}",
+          "source": "UOB",
+          "confidence": 0.9999999999999999,
+          "start": 24,
+          "end": 39
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 19,
+      "text": "Standard Chartered Payment SCB251031744606 Successful",
+      "expected": "SCB251031744606",
+      "extracted": [
+        {
+          "text": "SCB251031744606",
+          "pattern": "SCB[0-9]{6,12}[A-Z]{0,6}",
+          "source": "Standard Chartered",
+          "confidence": 1.0,
+          "start": 27,
+          "end": 42
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 20,
+      "text": "SCB Transaction Ref: SCB251031911983 Amount: RM1000",
+      "expected": "SCB251031911983",
+      "extracted": [
+        {
+          "text": "SCB251031911983",
+          "pattern": "SCB[0-9]{6,12}[A-Z]{0,6}",
+          "source": "Standard Chartered",
+          "confidence": 1.0,
+          "start": 21,
+          "end": 36
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 21,
+      "text": "Standard Chartered Bank ID: SCB251031295446",
+      "expected": "SCB251031295446",
+      "extracted": [
+        {
+          "text": "SCB251031295446",
+          "pattern": "SCB[0-9]{6,12}[A-Z]{0,6}",
+          "source": "Standard Chartered",
+          "confidence": 1.0,
+          "start": 28,
+          "end": 43
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 22,
+      "text": "DuitNow Payment DN251031333313 Reference",
+      "expected": "DN251031333313",
+      "extracted": [
+        {
+          "text": "DN251031333313",
+          "pattern": "DN[0-9]{8,15}[A-Z]{0,8}",
+          "source": "DuitNow",
+          "confidence": 1.0,
+          "start": 16,
+          "end": 30
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 23,
+      "text": "DuitNow Transfer ID: DN251031565451 Status: OK",
+      "expected": "DN251031565451",
+      "extracted": [
+        {
+          "text": "DN251031565451",
+          "pattern": "DN[0-9]{8,15}[A-Z]{0,8}",
+          "source": "DuitNow",
+          "confidence": 1.0,
+          "start": 21,
+          "end": 35
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 24,
+      "text": "DuitNow Reference: DN251031915330",
+      "expected": "DN251031915330",
+      "extracted": [
+        {
+          "text": "DN251031915330",
+          "pattern": "\\bDuitNow Reference[\\s:]*([A-Z0-9]{8,25})",
+          "source": "DuitNow",
+          "confidence": 1.0,
+          "start": 0,
+          "end": 33
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 25,
+      "text": "Transfer completed. Ref: MYCN251031123456 Date: 31/10/25",
+      "expected": "MYCN251031123456",
+      "extracted": [
+        {
+          "text": "MYCN251031123456",
+          "pattern": "MYCN[0-9]{8,15}",
+          "source": "Maybank",
+          "confidence": 1.0,
+          "start": 25,
+          "end": 41
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 26,
+      "text": "transaction id: b10-2510-987654 amount: rm100",
+      "expected": "B10-2510-987654",
+      "extracted": [
+        {
+          "text": "b10-2510-987654",
+          "pattern": "B10-[0-9]{4}-[0-9]{6,8}",
+          "source": "CIMB",
+          "confidence": 0.6,
+          "start": 16,
+          "end": 31
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 27,
+      "text": "Payment Reference : PBB251031111111 Status : Done",
+      "expected": "PBB251031111111",
+      "extracted": [],
+      "found_expected": false,
+      "any_valid": false,
+      "success": false
+    },
+    {
+      "test_case": 28,
+      "text": "Bank Transfer-> RHB251031222222 | Amount: RM500",
+      "expected": "RHB251031222222",
+      "extracted": [],
+      "found_expected": false,
+      "any_valid": false,
+      "success": false
+    },
+    {
+      "test_case": 29,
+      "text": "#HSBC251031333333# Transaction Processed",
+      "expected": "HSBC251031333333",
+      "extracted": [
+        {
+          "text": "HSBC251031333333",
+          "pattern": "HSBC[0-9]{6,12}[A-Z]{0,4}",
+          "source": "HSBC",
+          "confidence": 1.0,
+          "start": 1,
+          "end": 17
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 30,
+      "text": "UOB:UOB251031444444:COMPLETED",
+      "expected": "UOB251031444444",
+      "extracted": [
+        {
+          "text": "UOB251031444444",
+          "pattern": "\\bUOB[\\s:]*([A-Z0-9]{6,16})",
+          "source": "UOB",
+          "confidence": 0.9999999999999999,
+          "start": 0,
+          "end": 19
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 31,
+      "text": "SCB_Transfer_SCB251031555555_Success",
+      "expected": "SCB251031555555",
+      "extracted": [
+        {
+          "text": "SCB251031555555",
+          "pattern": "SCB[0-9]{6,12}[A-Z]{0,6}",
+          "source": "Standard Chartered",
+          "confidence": 1.0,
+          "start": 13,
+          "end": 28
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 32,
+      "text": "DN251031666666 DuitNow Payment",
+      "expected": "DN251031666666",
+      "extracted": [
+        {
+          "text": "DN251031666666",
+          "pattern": "DN[0-9]{8,15}[A-Z]{0,8}",
+          "source": "DuitNow",
+          "confidence": 1.0,
+          "start": 0,
+          "end": 14
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 33,
+      "text": "Reference No.MYCN251031777777 for your transfer",
+      "expected": "MYCN251031777777",
+      "extracted": [
+        {
+          "text": "MYCN251031777777",
+          "pattern": "MYCN[0-9]{8,15}",
+          "source": "Maybank",
+          "confidence": 1.0,
+          "start": 13,
+          "end": 29
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 34,
+      "text": "CIMB ref#B10-2510-888888 completed successfully",
+      "expected": "B10-2510-888888",
+      "extracted": [
+        {
+          "text": "B10-2510-888888",
+          "pattern": "B10-[0-9]{4}-[0-9]{6,8}",
+          "source": "CIMB",
+          "confidence": 1.0,
+          "start": 9,
+          "end": 24
+        }
+      ],
+      "found_expected": true,
+      "any_valid": true,
+      "success": true
+    },
+    {
+      "test_case": 35,
+      "text": "PBB 251031999999 Public Bank transaction",
+      "expected": "PBB251031999999",
+      "extracted": [],
+      "found_expected": false,
+      "any_valid": false,
+      "success": false
+    }
+  ],
+  "timestamp": "2025-11-14"
+}
