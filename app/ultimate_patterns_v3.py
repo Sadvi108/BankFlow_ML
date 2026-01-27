@@ -23,6 +23,8 @@ class UltimatePatternMatcherV3:
                     # Standard reference formats with flexible spacing
                     r'\b(?:Maybank|M2U|Maybank2u|MYB|MBB)\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,20})',
                     r'\b([A-Z0-9]{8,20})\s*(?:Maybank|M2U|Maybank2u|MYB|MBB)',
+                    # ENHANCED: Spaced Reference Number (e.g. 1234 5678 9012)
+                    r'\b(?:Ref|Reference|ID|No|Number)\s*[:\.]?\s*(\d{4}\s+\d{4}\s+\d{4,})',
                     # ENHANCED: "No." without space pattern (Test 33 fix) - More flexible
                     r'\b(?:Ref|Reference)\s*No\.\s*([A-Z0-9]{8,20})\b',
                     # Specific Maybank formats
@@ -179,6 +181,15 @@ class UltimatePatternMatcherV3:
             },
             'DuitNow': {
                 'patterns': [
+                    # ENHANCED: DuitNow Outward format (DnD Receipt) - HIGH PRIORITY
+                    r'DuitNow\s*Outward[:\/]?\s*([A-Z0-9]{8,25})',
+                    # ENHANCED: Spaced DuitNow ID (e.g. DN 1234 5678) - Captures DN + digits
+                    r'\b(DN\s+\d+(?:\s+\d+)+)\b',
+                    # ENHANCED: Payment Details suffix (ID comes before "Payment Details")
+                    r'([A-Z0-9]{8,25})\s*Payment\s*Details',
+                    # ENHANCED: Chinese/English label "附言/用途"
+                    r'附言\/用途\s*([A-Z0-9]{8,25})',
+                    
                     r'\bDuitNow\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,25})',
                     r'\b([A-Z0-9]{8,25})\s*DuitNow',
                     r'\bDN[A-Z0-9]{8,20}\b',
@@ -238,11 +249,20 @@ class UltimatePatternMatcherV3:
         
         self.generic_patterns = {
             'transaction_ids': [
+                # ENHANCED: Receipt / Serial No
+                r'\b(?:Receipt|Serial)\s*(?:No\.?|Number|ID)?\s*[:\.]?\s*([A-Z0-9-]{6,25})',
+                # ENHANCED: Typo tolerance for Reference (Rcf, Ref, Ret, etc.)
+                r'\b(?:R[ecf]f(?:erence)?)\s*(?:N[o0]\.?|Number|ID)?\s*[:\.]?\s*([A-Z0-9-]{8,25})',
+                # SUPER LOOSE: "Ref...: ID" - catches very messy OCR labels
+                # Matches "Ref :", "Ref No :", "Reference ID :", "Rcf.. :"
+                r'\b[Rr][ecf][fmnst].{0,10}[:;]\s*([A-Z0-9-]{8,25})',
+                
                 # ENHANCED: Multiline Reference ID (e.g. Public Bank 30-char split)
                 # First part 15-25 chars, second part 6-15 chars
                 r'\b([A-Z0-9]{15,25}\s+[A-Z0-9]{6,15})\b',
                 # Generic transaction reference patterns with flexible spacing
-                r'\b(?:Ref|Reference|ID|No|Number|Trx|Txn|Transaction)\s*[#:]?\s*([A-Z0-9-]{8,25})',
+                # Updated to handle Ref-1, Ref 2, etc.
+                r'\b(?:Ref|Reference|ID|No|Number|Trx|Txn|Transaction)(?:[\s-]*\d+)?\s*[#:]?\s*([A-Z0-9-]{8,25})',
                 r'\b([A-Z0-9-]{8,25})\s*(?:Ref|Reference|ID|No|Number)\b',
                 # ENHANCED: "No." without space pattern (Test 33 fix) - Allow optional space
                 r'\b(?:Ref|Reference)\s*No\.\s*([A-Z0-9]{8,20})\b',
@@ -327,7 +347,8 @@ class UltimatePatternMatcherV3:
         # Amount Patterns
         self.amount_patterns = [
             # Currency symbol + amount (RM 1,234.56) - allow noisy dash/-
-            r'\b(?:RM|MYR|Amount|Currency|Total)\s*[:#-]?\s*(?:RM|MYR)?\s*(\d{1,3}(?:[,\s]\d{3,})*(?:\.\d{2}|,\s*00)?)\b',
+            # Enhanced to allow >3 digits without comma (e.g. 1500.00)
+            r'\b(?:RM|MYR|Amount|Currency|Total)\s*[:#-]?\s*(?:RM|MYR)?\s*(\d+(?:[,\s]\d{3})*(?:\.\d{2}|,\s*00)?)\b',
             # Amount with suffix (1,560.00MYR)
             r'\b(\d{1,3}(?:[,\s]\d{3,})*\.\d{2})\s*(?:MYR|RM)\b',
             # "Total Amount" context with noisy currency (RAYR 10.66)
@@ -344,13 +365,34 @@ class UltimatePatternMatcherV3:
         text = re.sub(r'[-=]>', '->', text)
         text = re.sub(r'→', '->', text)
         
-        # Safe strategy: Replace groups of 4 identical characters with 1.
-        # This handles consistent OCR artifacts while preserving legitimate double digits.
-        # e.g. 88888888 (artifact for 88) -> 88
-        text = re.sub(r'(.)\1{3}', r'\1', text)
+        # Safe strategy: Replace groups of 4 identical NON-ALPHANUMERIC characters with 1.
+        # This preserves 88889999 but collapses ---- or ====
+        text = re.sub(r'([^a-zA-Z0-9])\1{3,}', r'\1', text)
         
         # Normalize multiple spaces to single space
         text = re.sub(r'\s+', ' ', text)
+        return text
+
+    def _repair_ocr_digits(self, text: str) -> str:
+        """Repair common OCR digit substitutions in a candidate string."""
+        # Only repair if the string is mostly digits (e.g. > 50%)
+        # or if it matches a known format that should be numeric
+        digit_count = sum(c.isdigit() for c in text)
+        if len(text) > 0 and digit_count / len(text) > 0.5:
+            # Common substitutions
+            replacements = {
+                'l': '1', 'I': '1', 'i': '1', 'L': '1',
+                'O': '0', 'o': '0', 'D': '0', 'Q': '0',
+                'S': '5', 's': '5',
+                # 'B': '8', # Removed B->8 as it breaks Public Bank (PB) and CIMB (B10) prefixes
+                'Z': '2', 'z': '2',
+                'G': '6'
+            }
+            res = list(text)
+            for idx, char in enumerate(res):
+                if char in replacements:
+                    res[idx] = replacements[char]
+            return "".join(res)
         return text
 
     def detect_bank(self, text: str) -> str:
@@ -368,130 +410,258 @@ class UltimatePatternMatcherV3:
         
         if bank_scores:
             return max(bank_scores, key=bank_scores.get)
+            
+        # FAILSAFE: Fuzzy/Plaintext search for known Malaysian banks
+        # If strict patterns failed, just search for the names directly
+        known_banks = {
+            'Maybank': ['MAYBANK', 'MALAYAN BANKING'],
+            'CIMB': ['CIMB'],
+            'Public Bank': ['PUBLIC BANK', 'PBEBANK', 'PBB'],
+            'RHB': ['RHB'],
+            'Hong Leong Bank': ['HONG LEONG', 'HLB'],
+            'AmBank': ['AMBANK'],
+            'HSBC': ['HSBC'],
+            'UOB': ['UOB', 'UNITED OVERSEAS BANK'],
+            'Standard Chartered': ['STANDARD CHARTERED', 'SCB'],
+            'Affin Bank': ['AFFIN'],
+            'Alliance Bank': ['ALLIANCE'],
+            'Bank Islam': ['BANK ISLAM', 'BIMB'],
+            'Bank Muamalat': ['BANK MUAMALAT'],
+            'Bank Rakyat': ['BANK RAKYAT'],
+            'BSN': ['BANK SIMPANAN NASIONAL', 'BSN'],
+            'OCBC': ['OCBC'],
+            'Agrobank': ['AGROBANK'],
+            'Al Rajhi Bank': ['AL RAJHI'],
+            'MBSB Bank': ['MBSB'],
+            'Kuwait Finance House': ['KUWAIT FINANCE', 'KFH'],
+            'Citibank': ['CITIBANK', 'CITI'],
+            'Hana Bank': ['HANA BANK', 'HANA']
+        }
+        
+        for bank, keywords in known_banks.items():
+            for keyword in keywords:
+                if keyword in text_upper:
+                    return bank
+                    
         return "Unknown"
 
     def extract_transaction_ids(self, text: str, bank_name: str = None) -> List[str]:
-        """Extract transaction IDs with enhanced pattern matching."""
+        """Extract transaction IDs with enhanced pattern matching and scoring."""
         # Normalize text first
         text_normalized = self.normalize_text(text)
         text_upper = text_normalized.upper()
-        transaction_ids = []
+        
+        # Store (id, score, source)
+        candidates: List[Tuple[str, int, str]] = []
         
         # 1. Identify Account Numbers to blacklist them
         blacklist = set()
         account_patterns = [
             r'Account\s*Number\s*[:\s]*(\d{8,25})',
-            r'Beneficiary\s*Account\s*[:\s]*(\d{8,25})',
-            r'Recipient\s*Account\s*[:\s]*(\d{8,25})',
+            r'Acc\s*No\.?\s*[:\s]*(\d{8,25})',
+            r'(?:From|To|Bene|Beneficiary|Recipient|Payer|Payee)\s*(?:Acc|Account)(?:\s*No|\s*Num|\s*Number|\s*#)?\s*[:\.]?\s*(\d{8,25})',
+            r'Pay\s*To\s*[:\s]*(\d{8,25})',
+            r'Transfer\s*To\s*[:\s]*(\d{8,25})',
             r'Reg\.\s*:\s*(\d{8,25})', # Registration numbers
             r'Service\s*Tax\s*(?:ID\s*)?No\.?\s*[:\s]*([A-Z0-9-]{8,25})', # SST Numbers
-            r'SST\s*(?:ID\s*)?No\.?\s*[:\s]*([A-Z0-9-]{8,25})'
+            r'SST\s*(?:ID\s*)?No\.?\s*[:\s]*([A-Z0-9-]{8,25})',
+            r'Company\s*Reg\s*No\s*[:\s]*([A-Z0-9-]{8,25})',
+            r'Bill\s*Account\s*No\s*[:\s]*(\d{8,25})',
+            r'JomPay\s*Ref\s*[:\s]*(\d{8,25})', # JomPay Ref is usually not the Txn ID
         ]
         for pat in account_patterns:
             acc_matches = re.findall(pat, text_normalized, re.IGNORECASE)
             for acc in acc_matches:
                 blacklist.add(acc.strip())
+                blacklist.add(acc.strip().replace(' ', '').replace("'", ""))
         
         # 2. Bank-specific patterns first (Highest priority)
-        header_ids = [] # IDs found with specific headers
-        floating_ids = [] # IDs found floating or generic
-        
         if bank_name and bank_name in self.bank_patterns:
             for pattern in self.bank_patterns[bank_name]['patterns']:
                 matches = re.findall(pattern, text_upper, re.IGNORECASE)
                 if isinstance(matches, list):
                     for match in matches:
                         if isinstance(match, tuple):
-                            transaction_ids.extend([m for m in match if m])
+                            for m in match:
+                                if m: candidates.append((m, 50, "bank_specific"))
                         else:
-                            transaction_ids.append(match)
+                            candidates.append((match, 50, "bank_specific"))
         
-        # Generic transaction patterns
+        # 3. Generic transaction patterns
+        # We need to distinguish "Labeled" from "Floating" generic patterns
+        # Heuristic: If pattern contains "Ref", "Txn", "ID", "No", it is Labeled.
         for pattern in self.generic_patterns['transaction_ids']:
             matches = re.findall(pattern, text_upper, re.IGNORECASE)
+            
+            # Determine base score for this pattern
+            is_labeled = any(k in pattern for k in ['Ref', 'Reference', 'ID', 'No', 'Trx', 'Txn', 'Invoice', 'Bill'])
+            base_score = 40 if is_labeled else 10 # Lower score for floating patterns
+            
             if isinstance(matches, list):
                 for match in matches:
                     if isinstance(match, tuple):
-                        transaction_ids.extend([m for m in match if m])
+                        for m in match:
+                            if m: candidates.append((m, base_score, "generic"))
                     else:
-                        transaction_ids.append(match)
+                        candidates.append((match, base_score, "generic"))
         
-        # DuitNow patterns
+        # 4. DuitNow patterns
         for pattern in self.generic_patterns['duitnow_patterns']:
             matches = re.findall(pattern, text_upper, re.IGNORECASE)
             if isinstance(matches, list):
                 for match in matches:
                     if isinstance(match, tuple):
-                        transaction_ids.extend([m for m in match if m])
+                        for m in match:
+                            if m: candidates.append((m, 45, "duitnow"))
                     else:
-                        transaction_ids.append(match)
+                        candidates.append((match, 45, "duitnow"))
         
         # Clean and filter
-        valid_ids = []
+        valid_scored_ids = []
         seen = set()
         
-        for tid in transaction_ids:
-            if self.is_valid_transaction_id(tid):
-                tid_clean = tid.strip().upper().replace(' ', '').replace("'", "")
-                # Skip if blacklisted as an account number
+        for tid, initial_score, source in candidates:
+            # Attempt to repair OCR errors
+            tid_repaired = self._repair_ocr_digits(tid)
+            
+            if self.is_valid_transaction_id(tid_repaired):
+                tid_clean = tid_repaired.strip().upper().replace(' ', '').replace("'", "")
+                
+                # Skip if blacklisted
                 if tid_clean in blacklist:
                     continue
+                    
                 if tid_clean not in seen:
                     seen.add(tid_clean)
-                    valid_ids.append(tid_clean)
+                    
+                    # Refine Score based on Content
+                    final_score = initial_score
+                    
+                    # Alphanumeric boost (if it has letters but not too many)
+                    # Note: after repair, it might be all digits, which is fine for bank refs
+                    if not tid_clean.isdigit():
+                        final_score += 10
+                    
+                    # Complex ID boost
+                    if any(c in tid for c in ['-', ':', ' ']):
+                        final_score += 15
+                        
+                    # Date-based ID boost (e.g. 2024...)
+                    if len(tid_clean) >= 12 and tid_clean.startswith('20') and tid_clean[2:4].isdigit():
+                        final_score += 15
+                    
+                    # Account-like Penalty (Pure digits, 9-17 chars)
+                    # BUT ONLY if it didn't come from a high-confidence labeled source
+                    if tid_clean.isdigit() and 9 <= len(tid_clean) <= 17:
+                        # EXCEPTION: If it starts with '20' (likely date-based ID) and is >12 chars, do not penalize
+                        if tid_clean.startswith('20') and len(tid_clean) >= 12:
+                            pass
+                        elif source == "bank_specific" or (source == "generic" and initial_score >= 40):
+                            # It was labeled explicitly (e.g. "Ref No: 1234567890")
+                            # Only mild penalty or no penalty
+                            pass 
+                        else:
+                            # It was floating or weak label
+                            final_score -= 30 # Heavy penalty
+                            
+                    valid_scored_ids.append((tid_clean, final_score))
         
-        # Prioritization logic:
-        # A. Alphanumeric with characters (e.g. 206883855Q)
-        # B. Header-based IDs
-        # C. Pure digits
+        # Sort by Final Score
+        valid_scored_ids.sort(key=lambda x: x[1], reverse=True)
         
-        def get_priority(tid):
-            score = 0
-            # Alphanumeric is high priority
-            if not tid.isdigit():
-                score += 10
-            # Complex IDs with hyphens/spaces/colons are very high priority (likely Reference IDs)
-            if any(c in tid for c in ['-', ':', ' ']):
-                score += 15
-            # IDs that are likely account numbers (pure digits, 10-15 chars) are lower priority
-            if tid.isdigit() and 10 <= len(tid) <= 16:
-                score -= 5
-            return score
-
-        valid_ids.sort(key=get_priority, reverse=True)
-        return valid_ids
+        return [x[0] for x in valid_scored_ids]
 
     def extract_date(self, text: str) -> Optional[str]:
         """Extract the most likely date from text."""
+        candidates = []
+        
+        # 1. Look for explicit Date headers first (High priority)
+        header_patterns = [
+            r'\bDate\s*:?\s*(\d{1,2}[-\/\s]\w+[-\/\s]\d{2,4})\b',
+            r'\bDate\s*:?\s*(\d{1,2}[-\/\s]\d{1,2}[-\/\s]\d{2,4})\b',
+            r'\bDate\s*:?\s*(\d{4}[-\/\s]\d{1,2}[-\/\s]\d{1,2})\b'
+        ]
+        
+        for pattern in header_patterns:
+            matches = re.findall(pattern, text, re.IGNORECASE)
+            for m in matches:
+                candidates.append((m.strip(), 10)) # High score for explicit header
+        
+        # 2. Look for all date patterns
         for pattern in self.date_patterns:
             matches = re.findall(pattern, text, re.IGNORECASE)
-            if matches:
-                 # Return the first match that looks reasonable (simple heuristic)
-                 # In a real scenario, we might parse dates to validate
-                 return matches[0].strip()
-        return None
+            for m in matches:
+                # Assign lower score to generic matches
+                candidates.append((m.strip(), 5))
+                
+        if not candidates:
+            return None
+            
+        # Sort by priority score
+        candidates.sort(key=lambda x: x[1], reverse=True)
+        return candidates[0][0]
 
     def extract_amount(self, text: str) -> Optional[str]:
         """Extract the most likely transaction amount."""
+        candidates = []
+        
+        # 1. Look for explicit Amount headers (High priority)
+        header_patterns = [
+            r'\bTotal\s*Amount\s*[:\s]*RM\s*([\d,]+\.\d{2})',
+            r'\bAmount\s*[:\s]*RM\s*([\d,]+\.\d{2})',
+            r'\bTotal\s*[:\s]*RM\s*([\d,]+\.\d{2})'
+        ]
+        
+        for pattern in header_patterns:
+            matches = re.findall(pattern, text, re.IGNORECASE)
+            for m in matches:
+                candidates.append((m.strip(), 10))
+        
+        # 2. Look for all generic patterns
         for pattern in self.amount_patterns:
             matches = re.findall(pattern, text, re.IGNORECASE)
-            if matches:
-                # Return the largest amount found? Or the first?
-                # Usually the "Total" or first distinct amount is what we want.
-                return matches[0].strip()
-        return None
+            for m in matches:
+                if isinstance(m, tuple):
+                    val = m[0]
+                else:
+                    val = m
+                if val:
+                    candidates.append((val.strip(), 5))
+                    
+        if not candidates:
+            return None
+            
+        # Sort by priority
+        candidates.sort(key=lambda x: x[1], reverse=True)
+        return candidates[0][0]
 
     def is_valid_transaction_id(self, tid_text: str) -> bool:
         """Stricter ID Filtering for 'Perfect' extraction"""
+        if not tid_text:
+            return False
+            
         tid = tid_text.strip().upper()
         tid_clean = tid.replace(' ', '').replace("'", "")
         
+        # 0. Immediate Date/Phone Rejection
+        # Reject YYYY-MM-DD or DD-MM-YYYY
+        if re.match(r'^\d{4}[-/]\d{2}[-/]\d{2}$', tid_clean) or re.match(r'^\d{2}[-/]\d{2}[-/]\d{4}$', tid_clean):
+            return False
+            
+        # Reject Malaysian Phone Numbers (01x-xxxxxxx or 01xxxxxxxx)
+        # 010-019, 011
+        if tid_clean.replace('-', '').isdigit() and tid_clean.replace('-', '').startswith('01') and len(tid_clean.replace('-', '')) in [10, 11]:
+            return False
+        
         # 1. Length check
-        if len(tid_clean) < 6 or len(tid_clean) > 25:
+        if len(tid_clean) < 6 or len(tid_clean) > 30: # Increased upper limit slightly for complex IDs
             return False
             
         # 2. Basic Noise rejection
-        if tid_clean in ['REFERENCE', 'TRANSACTION', 'PAYMENT', 'TRANSFER', 'BANK', 'ACCOUNT', 'CUSTOMER', 'RECEIPT']:
+        if tid_clean in ['REFERENCE', 'TRANSACTION', 'PAYMENT', 'TRANSFER', 'BANK', 'ACCOUNT', 'CUSTOMER', 'RECEIPT', 
+                         'MAYBANK2U', 'MAYBANK', 'CIMBCLICKS', 'CIMB', 'PBEBANK', 'PUBLIC', 'RHBNOW', 'RHB', 
+                         'DUITNOW', 'JOMPAY', 'FPX', 'MYKAD', 'AMONLINE', 'HLB', 'HONGLEONG', 'UOB',
+                         'SUCCESSFUL', 'COMPLETED', 'PENDING', 'FAILED']:
             return False
             
         # 3. False Positive patterns
@@ -499,15 +669,20 @@ class UltimatePatternMatcherV3:
             return False
             
         # Rejects strings that are 100% alpha (must have at least one digit)
+        # Exception: Some bank refs might be all alpha, but rare. Safest to require digit.
         if tid_clean.isalpha():
             return False
             
+        # Rejects emails
+        if '@' in tid_clean:
+            return False
+
         # Rejects sequences of too many repeating chars (noise)
         if re.search(r'([A-Z0-9])\1{5,}', tid_clean):
             return False
             
         # Rejects noise headers that got sucked in
-        if any(x in tid_clean for x in ['ERENCE', 'AMOUNT', 'DATE', 'NUMBER']):
+        if any(x in tid_clean for x in ['ERENCE', 'AMOUNT', 'DATE', 'NUMBER', 'TIME']):
             if len(tid_clean) > 15 and ('ERENCE' in tid_clean or 'AMOUNT' in tid_clean):
                 return False
 
@@ -515,36 +690,53 @@ class UltimatePatternMatcherV3:
 
     def extract_all_fields(self, text: str) -> Dict[str, Any]:
         """Extract all possible fields from receipt text with 100% accuracy target."""
-        # Normalize text first
-        text_normalized = self.normalize_text(text)
-        
-        # Determine bank
-        bank_name = self.detect_bank(text_normalized)
-        
-        # Extract transaction IDs
-        transaction_ids = self.extract_transaction_ids(text_normalized, bank_name)
-        
-        # Extract Date & Amount
-        date_str = self.extract_date(text_normalized)
-        amount_str = self.extract_amount(text_normalized)
-        
-        # Calculate confidence
-        confidence = 0.95 if transaction_ids else 0.5
-        if bank_name != "Unknown":
-            confidence += 0.05
-        
-        return {
-            'bank': bank_name,
-            'bank_name': bank_name,
-            'transaction_id': transaction_ids[0] if transaction_ids else None,
-            'transaction_ids': transaction_ids,
-            'reference_number': transaction_ids[0] if transaction_ids else None,
-            'all_ids': transaction_ids,
-            'date': date_str,
-            'amount': amount_str,
-            'global_confidence': min(confidence, 1.0) * 100,
-            'confidence': min(confidence, 1.0)
-        }
+        try:
+            # Normalize text first
+            text_normalized = self.normalize_text(text)
+            
+            # Determine bank
+            bank_name = self.detect_bank(text_normalized)
+            
+            # Extract transaction IDs
+            transaction_ids = self.extract_transaction_ids(text_normalized, bank_name)
+            
+            # Extract Date & Amount
+            date_str = self.extract_date(text_normalized)
+            amount_str = self.extract_amount(text_normalized)
+            
+            # Calculate confidence
+            confidence = 0.95 if transaction_ids else 0.5
+            if bank_name != "Unknown":
+                confidence += 0.05
+            
+            return {
+                'bank': bank_name,
+                'bank_name': bank_name,
+                'transaction_id': transaction_ids[0] if transaction_ids else None,
+                'transaction_ids': transaction_ids,
+                'reference_number': transaction_ids[0] if transaction_ids else None,
+                'all_ids': transaction_ids,
+                'date': date_str,
+                'amount': amount_str,
+                'global_confidence': min(confidence, 1.0) * 100,
+                'confidence': min(confidence, 1.0)
+            }
+        except Exception as e:
+            logger.error(f"Error in extract_all_fields: {e}")
+            # Return a safe fallback
+            return {
+                'bank': 'Unknown',
+                'bank_name': 'Unknown',
+                'transaction_id': None,
+                'transaction_ids': [],
+                'reference_number': None,
+                'all_ids': [],
+                'date': None,
+                'amount': None,
+                'global_confidence': 0,
+                'confidence': 0,
+                'error': str(e)
+            }
 
 
 # Global instance for easy use

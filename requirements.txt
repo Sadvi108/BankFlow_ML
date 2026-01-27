@@ -20,4 +20,5 @@ tensorboard>=2.14.0
 
 # Utilities
 tqdm>=4.65.0
-aiofiles>=23.0.0
+aiofiles>=23.0.0supabase
+python-dotenv

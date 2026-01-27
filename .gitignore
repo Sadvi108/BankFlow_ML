@@ -39,3 +39,8 @@ simulation_output.txt
 single_debug_log.txt
 pdf_debug.txt
 temp_test.txt
+
+# Data and Uploads
+data/uploads/
+data/processed/
+Receipts/

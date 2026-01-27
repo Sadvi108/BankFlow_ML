@@ -1,78 +1,71 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BankFlow | AI Receipt Intelligence</title>
-  <!-- Modern Typography -->
+  <!-- Modern Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     :root {
-      --bg-deep: #0f172a;
-      --bg-card: #1e293b;
-      --bg-sidebar: #020617;
+      --bg: #030712;
+      --card: rgba(17, 24, 39, 0.7);
+      --border: rgba(255, 255, 255, 0.08);
       --accent: #38bdf8;
-      --accent-glow: rgba(56, 189, 248, 0.2);
-      --text-main: #f1f5f9;
-      --text-dim: #94a3b8;
-      --success: #22c55e;
+      --accent-soft: rgba(56, 189, 248, 0.1);
+      --text: #f9fafb;
+      --text-dim: #9ca3af;
+      --success: #10b981;
       --warning: #f59e0b;
       --danger: #ef4444;
-      --glass: rgba(30, 41, 59, 0.7);
-      --border-glass: rgba(255, 255, 255, 0.1);
     }
 
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      background: var(--bg-deep);
-      color: var(--text-main);
-      height: 100vh;
-      overflow: hidden;
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
       display: flex;
-      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
     }
 
-    /* Sidebar Style */
+    /* Sidebar Styles */
     .sidebar {
       width: 280px;
-      background: var(--bg-sidebar);
-      border-right: 1px solid var(--border-glass);
+      background: #020617;
+      border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      z-index: 10;
+      padding: 1.5rem;
+      z-index: 20;
     }
 
-    .logo-area {
-      padding: 2rem;
+    .logo-section {
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      margin-bottom: 2.5rem;
     }
 
-    .logo-area h1 {
-      font-family: 'Outfit', sans-serif;
+    .logo-section h1 {
       font-size: 1.5rem;
-      margin: 0;
-      background: linear-gradient(to right, #38bdf8, #818cf8);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), #a78bfa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-    }
-
-    .nav-links {
-      padding: 0 1rem;
-      flex-grow: 1;
     }
 
     .nav-item {
@@ -80,205 +73,124 @@
       align-items: center;
       gap: 0.75rem;
       padding: 0.75rem 1rem;
-      border-radius: 8px;
       color: var(--text-dim);
       text-decoration: none;
+      border-radius: 12px;
       transition: all 0.2s;
-      margin-bottom: 0.25rem;
       cursor: pointer;
+      margin-bottom: 0.25rem;
     }
 
     .nav-item:hover,
     .nav-item.active {
-      background: var(--bg-card);
+      background: var(--accent-soft);
       color: var(--accent);
     }
 
-    .history-section {
-      padding: 1.5rem;
-      border-top: 1px solid var(--border-glass);
+    .history-pane {
+      margin-top: 2rem;
+      flex-grow: 1;
+      overflow-y: auto;
     }
 
     .history-title {
       font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.1em;
       color: var(--text-dim);
       margin-bottom: 1rem;
-      display: flex;
-      justify-content: space-between;
     }
 
-    .history-list {
-      max-height: 400px;
-      overflow-y: auto;
-    }
-
-    .history-item {
-      padding: 0.75rem;
-      border-radius: 8px;
+    .history-card {
       background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      padding: 0.75rem;
+      border-radius: 10px;
       margin-bottom: 0.5rem;
-      cursor: pointer;
-      font-size: 0.875rem;
-      transition: transform 0.2s, background 0.2s;
+      font-size: 0.85rem;
     }
 
-    .history-item:hover {
-      background: rgba(255, 255, 255, 0.06);
-      transform: translateX(4px);
-    }
-
-    .history-item .h-bank {
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 0.25rem;
-    }
-
-    .history-item .h-details {
-      display: flex;
-      justify-content: space-between;
-      color: var(--text-dim);
-      font-size: 0.75rem;
-    }
-
-    /* Main Content Area */
-    .main-content {
+    /* Main Workspace */
+    .workspace {
       flex-grow: 1;
+      padding: 2.5rem;
       overflow-y: auto;
-      padding: 2rem;
       position: relative;
     }
 
-    /* Glow effect behind cards */
-    .glow-bg {
+    .glow {
       position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
       top: -200px;
       right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
       pointer-events: none;
-      z-index: 0;
     }
 
-    /* Upload Card */
-    .workspace {
-      position: relative;
-      z-index: 1;
-      max-width: 1000px;
-      margin: 0 auto;
+    .header {
+      margin-bottom: 2.5rem;
     }
 
-    .header-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
+    .header h2 {
+      font-size: 2rem;
+      font-weight: 700;
     }
 
-    .upload-dropzone {
-      background: var(--glass);
+    .header p {
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+    }
+
+    /* Dropzone */
+    .dropzone {
+      background: var(--card);
       backdrop-filter: blur(12px);
-      border: 2px dashed var(--border-glass);
-      border-radius: 16px;
-      padding: 4rem 2rem;
+      border: 2px dashed var(--border);
+      border-radius: 24px;
+      padding: 5rem 2rem;
       text-align: center;
-      transition: all 0.3s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
     }
 
-    .upload-dropzone:hover,
-    .upload-dropzone.dragging {
+    .dropzone:hover,
+    .dropzone.drag-active {
       border-color: var(--accent);
       background: rgba(56, 189, 248, 0.05);
+      transform: scale(1.01);
     }
 
-    .upload-icon {
-      width: 64px;
-      height: 64px;
+    .dropzone-icon {
       color: var(--accent);
       margin-bottom: 1.5rem;
+      animation: float 3s ease-in-out infinite;
     }
 
-    .btn-primary {
-      background: var(--accent);
-      color: var(--bg-deep);
-      border: none;
-      padding: 0.75rem 2rem;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+    @keyframes float {
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px var(--accent-glow);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-main);
-      border: 1px solid var(--border-glass);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Processing View */
-    .processing-view {
-      display: none;
-      text-align: center;
-      padding: 4rem;
-    }
-
-    .loader {
-      position: relative;
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 2rem;
-    }
-
-    .loader div {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border: 4px solid transparent;
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
+      0%,
+      100% {
+        transform: translateY(0);
       }
 
-      100% {
-        transform: rotate(360deg);
+      50% {
+        transform: translateY(-10px);
       }
     }
 
     /* Results Grid */
     .results-grid {
       display: none;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) 400px;
       gap: 2rem;
-      margin-top: 2rem;
-      animation: fadeIn 0.5s ease;
+      animation: slideUp 0.5s ease-out;
     }
 
-    @keyframes fadeIn {
+    @keyframes slideUp {
       from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(20px);
       }
 
       to {
@@ -287,234 +199,265 @@
       }
     }
 
-    .receipt-preview {
-      background: var(--bg-card);
-      border-radius: 16px;
-      border: 1px solid var(--border-glass);
+    .preview-pane {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
       padding: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 400px;
-      max-height: 600px;
-      overflow: hidden;
+      min-height: 500px;
     }
 
-    .receipt-preview img {
+    .preview-pane img {
       max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
+      max-height: 70vh;
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     }
 
-    .data-fields {
+    .details-pane {
       display: flex;
       flex-direction: column;
       gap: 1rem;
     }
 
-    .field-card {
-      background: var(--glass);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border-glass);
-      border-radius: 12px;
+    .detail-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
       padding: 1.25rem;
-      transition: border-color 0.2s;
+      position: relative;
     }
 
-    .field-card:focus-within {
-      border-color: var(--accent);
-    }
-
-    .field-header {
+    .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
       display: flex;
       justify-content: space-between;
-      margin-bottom: 0.5rem;
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
 
-    .field-input {
+    .value-input {
       background: transparent;
       border: none;
-      color: var(--text-main);
-      font-size: 1.125rem;
+      color: var(--text);
+      font-size: 1.25rem;
       font-weight: 600;
       width: 100%;
       outline: none;
+      font-family: inherit;
     }
 
-    .confidence-badge {
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      font-size: 0.7rem;
+    .conf-badge {
+      font-size: 0.65rem;
       font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
     }
 
-    .conf-high {
-      background: rgba(34, 197, 94, 0.1);
+    /* Diagnostic Console */
+    .console {
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .console-header {
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 0.5rem;
+    }
+
+    #logEntries {
+      color: #d1d5db;
+      max-height: 200px;
+      overflow-y: auto;
+      line-height: 1.5;
+    }
+
+    .log-line {
+      margin-bottom: 0.25rem;
+    }
+
+    .log-ts {
+      color: var(--text-dim);
+      margin-right: 0.5rem;
+    }
+
+    .log-success {
       color: var(--success);
     }
 
-    .conf-med {
-      background: rgba(245, 158, 11, 0.1);
-      color: var(--warning);
+    .log-info {
+      color: var(--accent);
     }
 
-    .conf-low {
-      background: rgba(239, 68, 68, 0.1);
-      color: var(--danger);
+    /* Controls */
+    .btn {
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .save-section {
-      margin-top: 1rem;
-      display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px var(--accent-soft);
     }
 
-    /* Responsive */
-    @media (max-width: 900px) {
-      .results-grid {
-        grid-template-columns: 1fr;
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    #loadingOverlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--accent-soft);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
       }
+    }
 
-      .sidebar {
-        display: none;
-      }
+    /* Utility */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
     }
   </style>
 </head>
 
 <body>
-  <!-- Sidebar -->
+  <div id="loadingOverlay">
+    <div class="spinner"></div>
+    <p style="font-weight: 600; letter-spacing: 0.05em">ANALYZING RECEIPT...</p>
+  </div>
+
   <aside class="sidebar">
-    <div class="logo-area">
-      <i data-lucide="zap" class="text-accent" style="color: var(--accent)"></i>
+    <div class="logo-section">
+      <i data-lucide="zap" style="color: var(--accent)"></i>
       <h1>BankFlow</h1>
     </div>
 
-    <nav class="nav-links">
-      <div class="nav-item active">
-        <i data-lucide="upload-cloud"></i>
-        <span>Workspace</span>
-      </div>
-      <div class="nav-item">
-        <i data-lucide="file-text"></i>
-        <span>Archive</span>
-      </div>
-      <div class="nav-item" id="exportBtn">
-        <i data-lucide="download"></i>
-        <span>Export CSV</span>
-      </div>
-      <div class="nav-item" onclick="window.open('/docs', '_blank')">
-        <i data-lucide="book-open"></i>
-        <span>Docs</span>
-      </div>
+    <nav>
+      <a class="nav-item active"><i data-lucide="layout"></i> Workspace</a>
+      <a class="nav-item"><i data-lucide="archive"></i> Archive</a>
+      <a class="nav-item" href="/export"><i data-lucide="download"></i> Export CSV</a>
     </nav>
 
-    <div class="history-section">
-      <div class="history-title">
-        <span>Recent Activity</span>
-        <i data-lucide="history" size="14"></i>
-      </div>
-      <div class="history-list" id="historyList">
-        <!-- History items injected here -->
-        <div class="text-center p-4 text-xs text-dim">Loading history...</div>
+    <div class="history-pane">
+      <div class="history-title">Recent Activity</div>
+      <div id="historyList">
+        <p style="color: var(--text-dim); font-size: 0.8rem; text-align: center; margin-top: 1rem">No history yet</p>
       </div>
     </div>
   </aside>
 
-  <!-- Main Content -->
-  <main class="main-content">
-    <div class="glow-bg"></div>
+  <main class="workspace">
+    <div class="glow"></div>
 
-    <div class="workspace">
-      <div class="header-actions">
-        <div>
-          <h2 style="margin: 0; font-family: 'Outfit'; font-size: 1.75rem;">Workspace</h2>
-          <p style="color: var(--text-dim); margin-top: 0.25rem;">Extract intelligent data from bank receipts via local
-            OCR.</p>
+    <div class="header">
+      <h2>Workspace</h2>
+      <p>Smart reference ID extraction powered by Local OCR.</p>
+    </div>
+
+    <div id="dropzone" class="dropzone">
+      <i data-lucide="upload-cloud" class="dropzone-icon" size="64"></i>
+      <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem">Drop Your Receipt Here</h3>
+      <p style="color: var(--text-dim); margin-bottom: 2rem">Supports PDF, PNG, and JPEG (up to 10MB)</p>
+      <button class="btn" onclick="document.getElementById('fileInput').click()">
+        <i data-lucide="plus"></i> Select File
+      </button>
+      <input type="file" id="fileInput" hidden accept="image/*,.pdf">
+    </div>
+
+    <div id="resultsView" class="results-grid">
+      <div class="preview-pane">
+        <img id="receiptPreview" src="" alt="Receipt">
+        <div id="pdfPlaceholder" style="display:none; text-align:center">
+          <i data-lucide="file-text" size="64" color="var(--text-dim)"></i>
+          <p style="margin-top:1rem; color:var(--text-dim)">PDF Analysis Mode</p>
         </div>
-        <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
-          <i data-lucide="plus"></i> New Upload
-        </button>
-        <input type="file" id="fileInput" hidden accept="image/*,.pdf">
       </div>
 
-      <!-- Initial Dropzone -->
-      <div id="dropzone" class="upload-dropzone">
-        <i data-lucide="component" class="upload-icon"></i>
-        <h3>Drop your receipt here</h3>
-        <p style="color: var(--text-dim)">Supports PNG, JPEG, and scanned PDFs up to 10MB</p>
-        <div style="margin-top: 2rem;">
-          <button class="btn-primary" onclick="document.getElementById('fileInput').click()">Select File</button>
-        </div>
-      </div>
-
-      <!-- Processing State -->
-      <div id="processingView" class="processing-view">
-        <div class="loader">
-          <div style="animation-delay: 0s;"></div>
-          <div style="animation-delay: 0.2s; border-top-color: #818cf8;"></div>
-        </div>
-        <h3>Analyzing Layout...</h3>
-        <p style="color: var(--text-dim)">Running local Layout-Aware engine for maximum precision.</p>
-      </div>
-
-      <!-- Results View -->
-      <div id="resultsView" class="results-grid">
-        <div class="receipt-preview">
-          <img id="previewImg" src="" alt="Receipt Preview">
-          <div id="pdfPlaceholder" style="display: none; text-align: center;">
-            <i data-lucide="file-text" size="64" color="gray"></i>
-            <p>PDF Preview Not Available</p>
-          </div>
+      <div class="details-pane">
+        <div class="detail-card">
+          <div class="label">Bank Institution <span id="bankConf" class="conf-badge">--</span></div>
+          <input type="text" id="fieldBank" class="value-input" value="Reading...">
         </div>
 
-        <div class="data-fields">
-          <div class="field-card">
-            <div class="field-header">
-              <span>Bank Institution</span>
-              <span id="bankConfBadge" class="confidence-badge">--</span>
-            </div>
-            <input type="text" id="fieldBank" class="field-input">
-          </div>
+        <div class="detail-card">
+          <div class="label">Reference ID <span id="idConf" class="conf-badge">--</span></div>
+          <input type="text" id="fieldId" class="value-input" value="Detecting...">
+        </div>
 
-          <div class="field-card">
-            <div class="field-header">
-              <span>Transaction Reference ID</span>
-              <span id="idConfBadge" class="confidence-badge">--</span>
-            </div>
-            <input type="text" id="fieldId" class="field-input">
-          </div>
+        <div class="detail-card">
+          <div class="label">Transaction Date</div>
+          <input type="text" id="fieldDate" class="value-input" value="Searching...">
+        </div>
 
-          <div class="field-card">
-            <div class="field-header">
-              <span>Transaction Date</span>
-              <span id="dateConfBadge" class="confidence-badge">--</span>
-            </div>
-            <input type="text" id="fieldDate" class="field-input">
-          </div>
+        <div class="detail-card">
+          <div class="label">Amount (MYR)</div>
+          <input type="text" id="fieldAmount" class="value-input" value="Calculating...">
+        </div>
 
-          <div class="field-card">
-            <div class="field-header">
-              <span>Amount (MYR)</span>
-              <span id="amountConfBadge" class="confidence-badge">--</span>
-            </div>
-            <input type="text" id="fieldAmount" class="field-input">
-          </div>
+        <div class="console">
+          <div class="console-header"><i data-lucide="terminal" size="14"></i> ANALYSIS LOG</div>
+          <div id="logEntries"></div>
+        </div>
 
-          <div class="save-section">
-            <div id="savedNotice"
-              style="display:none; color: var(--success); align-items: center; gap: 0.5rem; font-size: 0.875rem;">
-              <i data-lucide="check-circle" size="16"></i> Saved to cloud
-            </div>
-            <button class="btn-primary" id="saveUpdatesBtn">
-              <i data-lucide="save"></i> Save Changes
-            </button>
-          </div>
+        <div style="display:flex; gap:1rem; margin-top:1rem">
+          <button class="btn btn-outline" onclick="location.reload()" style="flex:1">New Scan</button>
+          <button class="btn" style="flex:2" id="saveBtn">Save Record</button>
         </div>
       </div>
     </div>
@@ -523,171 +466,130 @@
   <script>
     lucide.createIcons();
 
-    const elements = {
-      dropzone: document.getElementById('dropzone'),
-      fileInput: document.getElementById('fileInput'),
-      processing: document.getElementById('processingView'),
-      results: document.getElementById('resultsView'),
-      previewImg: document.getElementById('previewImg'),
-      pdfPlaceholder: document.getElementById('pdfPlaceholder'),
-      historyList: document.getElementById('historyList'),
-      saveBtn: document.getElementById('saveUpdatesBtn'),
-      exportBtn: document.getElementById('exportBtn'),
-      savedNotice: document.getElementById('savedNotice')
-    };
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const overlay = document.getElementById('loadingOverlay');
+    const results = document.getElementById('resultsView');
+    const logEntries = document.getElementById('logEntries');
 
-    let currentEntryId = null;
+    function addLog(msg, type = 'info') {
+      const time = new Date().toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      line.innerHTML = `<span class="log-ts">${time}</span><span class="log-${type}">${msg}</span>`;
+      logEntries.appendChild(line);
+      logEntries.scrollTop = logEntries.scrollHeight;
+    }
 
-    // Handle file selection
-    elements.fileInput.addEventListener('change', (e) => {
-      if (e.target.files.length > 0) processFile(e.target.files[0]);
+    // Dropzone listeners
+    ['dragenter', 'dragover'].forEach(e => {
+      dropzone.addEventListener(e, (evt) => {
+        evt.preventDefault();
+        dropzone.classList.add('drag-active');
+      });
+    });
+    ['dragleave', 'drop'].forEach(e => {
+      dropzone.addEventListener(e, (evt) => {
+        evt.preventDefault();
+        dropzone.classList.remove('drag-active');
+      });
     });
 
-    // Handle Dropzone
-    elements.dropzone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      elements.dropzone.classList.add('dragging');
-    });
-    elements.dropzone.addEventListener('dragleave', () => {
-      elements.dropzone.classList.remove('dragging');
-    });
-    elements.dropzone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      elements.dropzone.classList.remove('dragging');
-      if (e.dataTransfer.files.length > 0) processFile(e.dataTransfer.files[0]);
+    dropzone.addEventListener('drop', (evt) => {
+      if (evt.dataTransfer.files.length) handleFile(evt.dataTransfer.files[0]);
     });
 
-    async function processFile(file) {
-      // Show loading
-      elements.dropzone.style.display = 'none';
-      elements.results.style.display = 'none';
-      elements.processing.style.display = 'block';
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) handleFile(fileInput.files[0]);
+    });
 
-      // Preview
+    async function handleFile(file) {
+      dropzone.style.display = 'none';
+      overlay.style.display = 'flex';
+
+      // Set preview
+      const previewImg = document.getElementById('receiptPreview');
+      const pdfPlaceholder = document.getElementById('pdfPlaceholder');
       if (file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          elements.previewImg.src = e.target.result;
-          elements.previewImg.style.display = 'block';
-          elements.pdfPlaceholder.style.display = 'none';
-        };
-        reader.readAsDataURL(file);
+        previewImg.src = URL.createObjectURL(file);
+        previewImg.style.display = 'block';
+        pdfPlaceholder.style.display = 'none';
       } else {
-        elements.previewImg.style.display = 'none';
-        elements.pdfPlaceholder.style.display = 'block';
+        previewImg.style.display = 'none';
+        pdfPlaceholder.style.display = 'block';
       }
 
       const formData = new FormData();
       formData.append('file', file);
 
       try {
+        addLog('Connecting to AI backend...');
+        const start = performance.now();
         const res = await fetch('/extract', { method: 'POST', body: formData });
+        const elapsed = ((performance.now() - start) / 1000).toFixed(2);
+
         const json = await res.json();
+        overlay.style.display = 'none';
+        results.style.display = 'grid';
 
         if (json.success) {
-          displayResults(json.data);
-          loadHistory();
+          addLog(`Analysis complete in ${elapsed}s`, 'success');
+          populateResults(json.data);
         } else {
-          alert("Extraction failed: " + (json.detail || "Unknown error"));
-          elements.dropzone.style.display = 'block';
-          elements.processing.style.display = 'none';
+          addLog(`Error: ${json.error}`, 'danger');
+          alert(`Extraction Error: ${json.error}`);
         }
       } catch (err) {
-        console.error(err);
-        alert("Network error. Is the server running?");
-        elements.dropzone.style.display = 'block';
-        elements.processing.style.display = 'none';
+        overlay.style.display = 'none';
+        alert('Connection to server lost. Is the backend running?');
       }
     }
 
-    function displayResults(data) {
-      elements.processing.style.display = 'none';
-      elements.results.style.display = 'grid';
+    function populateResults(data) {
+      document.getElementById('fieldBank').value = data.bank_name || 'Not Found';
+      document.getElementById('fieldId').value = data.transaction_id || 'Not Found';
+      document.getElementById('fieldDate').value = data.date || 'Not Found';
+      document.getElementById('fieldAmount').value = data.amount || 'Not Found';
 
-      currentEntryId = data.entry_id;
+      const conf = Math.round(data.ocr_confidence * 100);
+      document.getElementById('bankConf').textContent = `${conf}%`;
+      document.getElementById('idConf').textContent = data.transaction_id ? '95%' : '0%';
 
-      document.getElementById('fieldBank').value = data.bank_name || '';
-      document.getElementById('fieldId').value = data.transaction_id || '';
-      document.getElementById('fieldDate').value = data.date || '';
-      document.getElementById('fieldAmount').value = data.amount || '';
+      addLog(`OCR Engine: ${data.method}`, 'info');
+      if (data.all_ids && data.all_ids.length > 0) {
+        addLog(`Found ${data.all_ids.length} candidate IDs`, 'info');
+        data.all_ids.forEach(id => addLog(`Candidate: ${id}`, 'info'));
+      } else {
+        addLog('No reference ID candidates found!', 'danger');
+      }
 
-      const globalConf = (data.ocr_confidence || 0.5) * 100;
-      updateBadge('bankConfBadge', globalConf);
-      updateBadge('idConfBadge', globalConf > 80 ? globalConf : 80); // Priority IDs usually higher
-      updateBadge('dateConfBadge', globalConf);
-      updateBadge('amountConfBadge', globalConf);
+      if (data.text_snippet) {
+        addLog(`Text: ${data.text_snippet.substring(0, 100)}...`, 'info');
+      }
 
-      lucide.createIcons();
+      // Session Identification
+      addLog(`Session: ${data.session_id || 'N/A'} (Started: ${data.server_start || 'N/A'})`, 'success');
+
+      loadHistory();
     }
 
-    function updateBadge(id, conf) {
-      const el = document.getElementById(id);
-      el.textContent = `${conf.toFixed(0)}%`;
-      el.className = 'confidence-badge ' + (conf >= 90 ? 'conf-high' : conf >= 70 ? 'conf-med' : 'conf-low');
-    }
-
-    // History
     async function loadHistory() {
       try {
         const res = await fetch('/history');
-        const data = await res.json();
-        if (data.success) {
-          elements.historyList.innerHTML = data.history.map(item => `
-              <div class="history-item" onclick="loadHistoryItem('${item.id}')">
-                <div class="h-bank">${item.bank_name}</div>
-                <div class="h-details">
-                  <span>${item.reference_id || 'No ID'}</span>
-                  <span>${item.amount ? 'RM' + item.amount : '-'}</span>
-                </div>
-              </div>
-            `).join('') || '<div class="text-center p-4 text-xs text-dim">No history yet</div>';
+        const json = await res.json();
+        if (json.success && json.history.length) {
+          const list = document.getElementById('historyList');
+          list.innerHTML = json.history.slice(0, 5).map(h => `
+                        <div class="history-card">
+                            <div style="color:var(--accent); font-weight:600">${h.bank_name}</div>
+                            <div style="font-size:0.75rem; color:var(--text-dim); margin-top:0.25rem">${h.reference_id || 'No ID'}</div>
+                        </div>
+                    `).join('');
         }
-      } catch (err) {
-        console.error("Failed to load history", err);
-      }
+      } catch (e) { }
     }
 
-    function loadHistoryItem(id) {
-      // In a real app, we'd fetch the specific item or find it in history array
-      // For now, let's toast that we found it
-      console.log("Loading item", id);
-    }
-
-    // Save Updates
-    elements.saveBtn.addEventListener('click', async () => {
-      if (!currentEntryId) return;
-
-      const updates = {
-        bank_name: document.getElementById('fieldBank').value,
-        reference_id: document.getElementById('fieldId').value,
-        date: document.getElementById('fieldDate').value,
-        amount: document.getElementById('fieldAmount').value
-      };
-
-      try {
-        const res = await fetch(`/history/update/${currentEntryId}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(updates)
-        });
-        const data = await res.json();
-        if (data.success) {
-          elements.savedNotice.style.display = 'flex';
-          setTimeout(() => { elements.savedNotice.style.display = 'none'; }, 3000);
-          loadHistory();
-        }
-      } catch (err) {
-        alert("Save failed");
-      }
-    });
-
-    // Export
-    elements.exportBtn.addEventListener('click', () => {
-      window.location.href = '/export';
-    });
-
-    // Initial Load
-    loadHistory();
+    window.onload = loadHistory;
   </script>
 </body>
 

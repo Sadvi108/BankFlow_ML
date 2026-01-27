@@ -65,27 +65,99 @@ async def extract_fields(file: UploadFile = File(...)):
     except Exception as e:
         return JSONResponse(
             status_code=400,
-            content={"error": f"Failed to process file: {str(e)}"}
+            content={"success": False, "detail": f"Failed to process file: {str(e)}"}
         )
 
-    # Bank classification
+    # Classify
     bank_name, bank_conf = classify.bank_from_text(text)
 
-    # Field extraction
+    # Extract
     fields = extract.extract_fields(text=text, tokens=tokens, bank_hint=bank_name)
 
-    result: Dict[str, Any] = {
+    if "error" in fields:
+        return JSONResponse(
+            status_code=400,
+            content={"success": False, "detail": f"Extraction error: {fields['error']}"}
+        )
+
+    # Save to dataset immediately so it appears in history and can be updated
+    entry: Dict[str, Any] = {
+        "id": file_id,
+        "filename": file.filename,
         "bank": {"name": bank_name, "confidence": bank_conf},
         "fields": fields,
+        "ocr_text": text,
         "meta": {
-            "filename": file.filename,
             "saved_path": str(saved_path),
             "processed_path": str(processed_path) if processed_path else None,
             "ocr_tokens": len(tokens),
         },
+        "ground_truth": {
+            "bank_name": None,
+            "reference_number": None,
+            "transaction_id": None,
+            "invoice_number": None,
+            "amount": None,
+            "date": None,
+        },
+    }
+    storage.append_annotation(entry)
+
+    # Format for frontend
+    response_data = {
+        "entry_id": file_id,
+        "bank_name": bank_name,
+        "transaction_id": fields.get("transaction_id"),
+        "date": fields.get("date"),
+        "amount": fields.get("amount"),
+        "ocr_confidence": bank_conf,
     }
 
-    return JSONResponse(content=result)
+    return JSONResponse(content={"success": True, "data": response_data})
+
+
+@app.get("/history")
+async def get_history():
+    rows = storage.read_annotations()
+    # Sort by newest first (assuming append adds to end, so reverse)
+    rows.reverse()
+    
+    history_items = []
+    for r in rows:
+        fields = r.get("fields", {})
+        gt = r.get("ground_truth", {})
+        
+        # Prefer ground truth if available, else extracted
+        bank = gt.get("bank_name") or (r.get("bank", {}) or {}).get("name")
+        tid = gt.get("transaction_id") or gt.get("reference_number") or fields.get("transaction_id")
+        amt = gt.get("amount") or fields.get("amount")
+        
+        history_items.append({
+            "id": r.get("id"),
+            "bank_name": bank,
+            "reference_id": tid,
+            "amount": amt
+        })
+    
+    return JSONResponse(content={"success": True, "history": history_items})
+
+
+@app.post("/history/update/{item_id}")
+async def update_history_item(item_id: str, payload: Dict[str, Any]):
+    # payload: { bank_name, reference_id, date, amount }
+    gt_updates = {
+        "ground_truth": {
+            "bank_name": payload.get("bank_name"),
+            "transaction_id": payload.get("reference_id"), # Map reference_id to transaction_id
+            "amount": payload.get("amount"),
+            "date": payload.get("date"),
+        }
+    }
+    ok = storage.update_annotation(item_id, gt_updates)
+    if not ok:
+        return JSONResponse(status_code=404, content={"success": False, "error": "Item not found"})
+    return JSONResponse(content={"success": True})
+
 
 
 @app.get("/train", response_class=HTMLResponse)
@@ -144,7 +216,7 @@ async def upload_bulk(files: List[UploadFile] = File(...)):
                     "date": None,
                 },
             }
-            dataset.append_annotation(entry)
+            storage.append_annotation(entry)
             results.append({"id": file_id, "filename": file.filename, "bank": bank_name, "fields": fields})
         except Exception as e:
             errors.append({"filename": file.filename, "error": str(e)})
@@ -255,7 +327,7 @@ async def ingest_receipts(path: Optional[str] = None):
                     "date": None,
                 },
             }
-            dataset.append_annotation(entry)
+            storage.append_annotation(entry)
             processed.append({"id": file_id, "filename": p.name, "bank": bank_name, "fields": fields})
         except Exception as e:
             errors.append({"filename": p.name, "error": str(e)})

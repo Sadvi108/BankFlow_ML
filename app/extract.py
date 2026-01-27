@@ -1,6 +1,10 @@
 import re
+import logging
 from typing import Dict, List, Tuple, Optional
+from .ultimate_patterns_v3 import ultimate_matcher_v3
 
+# Set up logger
+logger = logging.getLogger(__name__)
 
 # Common patterns for fields across Malaysian bank slips
 REF_PATTERNS = [
@@ -184,101 +188,108 @@ def extract_fields(text: str, tokens: List[Dict], bank_hint: Optional[str] = Non
 
     Returns a dict with values and optional bounding boxes.
     """
-    result = {
-        "reference_number": None,
-        "transaction_id": None,
-        "transaction_number": None,
-        "duitnow_reference_number": None,
-        "invoice_number": None,
-        "amount": None,
-        "date": None,
-        "boxes": {},
-        "meta": {},
-    }
+    try:
+        result = {
+            "reference_number": None,
+            "transaction_id": None,
+            "transaction_number": None,
+            "duitnow_reference_number": None,
+            "invoice_number": None,
+            "amount": None,
+            "date": None,
+            "boxes": {},
+            "meta": {},
+        }
 
-    # Bank-specific patterns can improve accuracy for certain templates
-    bank_specific_ref_patterns: List[str] = []
-    if bank_hint:
-        bh = bank_hint.lower()
-        if "public" in bh:
-            bank_specific_ref_patterns.extend([
-                r"\bTransaction\s*Reference(?:\s*No\.?|\s*Number)?\s*[:\-]?\s*([A-Za-z0-9\-/]{6,})",
-                r"\bPayment\s*Reference(?:\s*No\.?|\s*Number)?\s*[:\-]?\s*([A-Za-z0-9\-/]{6,})",
-            ])
-        if "rhb" in bh:
-            bank_specific_ref_patterns.extend([
-                r"\bReference\s*No\.?\s*[:\-]?\s*([A-Za-z0-9\-/]{6,})",
-            ])
-        if "maybank" in bh:
-            bank_specific_ref_patterns.extend([
-                r"\bReference\s*No\.?\s*[:\-]?\s*([A-Za-z0-9\-/]{6,})",
-                r"\bRef\s*No\.?\s*[:\-]?\s*([A-Za-z0-9\-/]{6,})",
-            ])
-        if "cimb" in bh:
-            bank_specific_ref_patterns.extend([
-                r"\bReference(?:\s*No\.?|\s*Number)?\s*[:\-]?\s*([A-Za-z0-9\-/]{6,})",
-            ])
+        # --- Step 1: Ultimate Pattern Matcher V3 (Primary) ---
+        # Normalize text
+        norm_text = ultimate_matcher_v3.normalize_text(text)
+        
+        # Determine bank: Prefer bank_hint if provided, else detect
+        effective_bank = bank_hint if bank_hint and bank_hint.lower() != "unknown" else ultimate_matcher_v3.detect_bank(norm_text)
+        
+        # Extract using V3
+        v3_ids = ultimate_matcher_v3.extract_transaction_ids(norm_text, effective_bank)
+        v3_date = ultimate_matcher_v3.extract_date(norm_text)
+        v3_amount = ultimate_matcher_v3.extract_amount(norm_text)
+        
+        # Populate result from V3
+        if v3_ids:
+            # V3 returns sorted list. Best one goes to main fields.
+            primary_id = v3_ids[0]
+            result["reference_number"] = primary_id
+            result["transaction_id"] = primary_id
+            result["transaction_number"] = primary_id
+            result["meta"]["transaction_number_source"] = "ultimate_v3"
+            result["meta"]["all_ids"] = v3_ids
+            
+            # Check for DuitNow specifically in the list or patterns
+            # If any ID looks like DuitNow format, assign it
+            # (For now, we just rely on primary_id)
 
-    ref = _match_first(bank_specific_ref_patterns + REF_PATTERNS, text)
-    if not ref:
-        # try token-based heuristic near labels
-        ref = _extract_by_label_tokens(tokens)
+        if v3_date:
+            result["date"] = v3_date
+            
+        if v3_amount:
+            result["amount"] = v3_amount
 
-    # DuitNow reference number
-    dn_ref = _match_first(DUITNOW_REF_PATTERNS, text)
-    if not dn_ref:
-        dn_ref = _extract_duitnow_by_tokens(tokens)
-    txn = _match_first(TXN_PATTERNS, text)
-    inv = _match_first(INVOICE_PATTERNS, text)
-    amt = _match_first(AMOUNT_PATTERNS, text)
-    dt = _match_first(DATE_PATTERNS, text)
+        # --- Step 2: Legacy / Specific Field Fallbacks ---
+        
+        # DuitNow specific pattern (legacy was good for this)
+        dn_ref = _match_first(DUITNOW_REF_PATTERNS, text)
+        if not dn_ref:
+            dn_ref = _extract_duitnow_by_tokens(tokens)
+        
+        if dn_ref:
+            result["duitnow_reference_number"] = dn_ref
+            # If V3 didn't find anything, use this as main ID
+            if not result["transaction_number"]:
+                result["transaction_number"] = dn_ref
+                result["reference_number"] = dn_ref
+                result["meta"]["transaction_number_source"] = "duitnow_legacy"
 
-    result["reference_number"] = ref
-    result["transaction_id"] = txn
-    result["duitnow_reference_number"] = dn_ref
-    # Unify: pick whichever exists as transaction_number
-    if txn:
-        result["transaction_number"] = txn
-        result["meta"]["transaction_number_source"] = "transaction_id"
-    elif ref:
-        result["transaction_number"] = ref
-        result["meta"]["transaction_number_source"] = "reference_number"
-    result["invoice_number"] = inv
-    result["amount"] = amt
-    result["date"] = dt
+        # Invoice Number (V3 doesn't explicitly separate Invoice No from other IDs)
+        inv = _match_first(INVOICE_PATTERNS, text)
+        if inv:
+            result["invoice_number"] = inv
+            
+        # --- Step 3: Bounding Boxes ---
+        # Try to find boxes for extracted values
+        
+        def try_find_box(value, key):
+            if not value:
+                return
+            # Try exact match first
+            box = _find_token_box(tokens, value)
+            if box:
+                result["boxes"][key] = box
+                return
+            
+            # Try removing spaces from tokens to match value (since V3 removes spaces)
+            # This is a simple heuristic: if value is "123456", and token is "123 456", we might not find it easily 
+            # without complex logic. For now, we stick to simple lookup.
+            
+            # Try matching parts if value is long
+            if len(value) > 10:
+                 # partial match?
+                 pass
 
-    # Try to attach bounding boxes if exact token matches exist
-    if ref:
-        box = _find_token_box(tokens, ref)
-        if box:
-            result["boxes"]["reference_number"] = box
-    if txn:
-        box = _find_token_box(tokens, txn)
-        if box:
-            result["boxes"]["transaction_id"] = box
-    if inv:
-        box = _find_token_box(tokens, inv)
-        if box:
-            result["boxes"]["invoice_number"] = box
-    if amt:
-        box = _find_token_box(tokens, amt)
-        if box:
-            result["boxes"]["amount"] = box
-    if dt:
-        box = _find_token_box(tokens, dt)
-        if box:
-            result["boxes"]["date"] = box
+        try_find_box(result["reference_number"], "reference_number")
+        try_find_box(result["transaction_id"], "transaction_id")
+        try_find_box(result["transaction_number"], "transaction_number")
+        try_find_box(result["duitnow_reference_number"], "duitnow_reference_number")
+        try_find_box(result["invoice_number"], "invoice_number")
+        try_find_box(result["amount"], "amount")
+        try_find_box(result["date"], "date")
 
-    # Box for unified transaction_number
-    if result["transaction_number"]:
-        box = _find_token_box(tokens, result["transaction_number"])
-        if box:
-            result["boxes"]["transaction_number"] = box
-
-    # Box for DuitNow reference
-    if dn_ref:
-        box = _find_token_box(tokens, dn_ref)
-        if box:
-            result["boxes"]["duitnow_reference_number"] = box
-
-    return result
+        return result
+    except Exception as e:
+        logger.error(f"Error in extract_fields: {e}", exc_info=True)
+        # Return partial result or re-raise?
+        # If we re-raise, the API returns 400.
+        # If we return partial, the user gets what we have.
+        # Let's try to return what we have if 'result' exists, otherwise re-raise.
+        if 'result' in locals():
+            result['error'] = str(e)
+            return result
+        raise e

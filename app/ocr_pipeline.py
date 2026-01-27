@@ -59,227 +59,197 @@ class OCRPipeline:
         
         return images
 
-    def preprocess_image(self, image: np.ndarray, skip_rotation: bool = False) -> np.ndarray:
-        """Comprehensive image preprocessing pipeline"""
-        try:
-            # Step 1: Resize to target DPI equivalent
-            height, width = image.shape[:2]
-            if height < 1000 or width < 1000:
-                # Scale up smaller images
-                scale_factor = min(2000 / height, 2000 / width)
-                new_width = int(width * scale_factor)
-                new_height = int(height * scale_factor)
-                image = cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_CUBIC)
-                logger.info(f"Resized image to {new_width}x{new_height}")
-
-            # Step 2: Convert to grayscale
-            if len(image.shape) == 3:
-                gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            else:
-                gray = image.copy()
-
-            # Step 3: Auto-rotate using text orientation
-            if not skip_rotation:
-                rotated = self._auto_rotate_text(gray)
-            else:
-                rotated = gray
-
-            # Step 4: Enhance contrast using CLAHE
-            enhanced = self._enhance_contrast(rotated)
-
-            # Step 5: Denoise
-            denoised = self._denoise_image(enhanced)
-
-            # Step 6: Sharpen
-            sharpened = self._sharpen_image(denoised)
-
-            # Step 7: Adaptive thresholding
-            thresholded = self._adaptive_threshold(sharpened)
-
-            # Step 8: Morphological operations
-            morphed = self._morphological_operations(thresholded)
-
-            logger.info("Image preprocessing completed successfully")
-            return morphed
-
-        except Exception as e:
-            logger.error(f"Preprocessing error: {e}")
-            return gray if 'gray' in locals() else image
-
-    def _auto_rotate_text(self, image: np.ndarray) -> np.ndarray:
-        """Auto-rotate image based on text orientation"""
-        try:
-            # Try multiple angles
-            angles = [0, 90, 180, 270]
-            best_angle = 0
-            best_confidence = 0
-            
-            for angle in angles:
-                if angle == 0:
-                    rotated = image
-                else:
-                    center = (image.shape[1] // 2, image.shape[0] // 2)
-                    matrix = cv2.getRotationMatrix2D(center, angle, 1.0)
-                    rotated = cv2.warpAffine(image, matrix, (image.shape[1], image.shape[0]))
-                
-                # Quick OCR to check orientation
-                data = pytesseract.image_to_osd(rotated, output_type=pytesseract.Output.DICT)
-                confidence = data.get('orientation_conf', 0)
-                
-                if confidence > best_confidence:
-                    best_confidence = confidence
-                    best_angle = angle
-            
-            if best_angle != 0:
-                center = (image.shape[1] // 2, image.shape[0] // 2)
-                matrix = cv2.getRotationMatrix2D(center, best_angle, 1.0)
-                rotated = cv2.warpAffine(image, matrix, (image.shape[1], image.shape[0]))
-                logger.info(f"Auto-rotated image by {best_angle}° (confidence: {best_confidence})")
-                return rotated
-            
-            return image
-        except Exception as e:
-            logger.warning(f"Auto-rotation failed: {e}")
-            return image
-
-    def _enhance_contrast(self, image: np.ndarray) -> np.ndarray:
-        """Enhance contrast using CLAHE"""
-        try:
-            clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
-            enhanced = clahe.apply(image)
-            logger.info("Contrast enhanced with CLAHE")
-            return enhanced
-        except Exception as e:
-            logger.warning(f"CLAHE enhancement failed: {e}")
-            return image
-
-    def _denoise_image(self, image: np.ndarray) -> np.ndarray:
-        """Denoise the image"""
-        try:
-            denoised = cv2.fastNlMeansDenoising(image, None, 10, 7, 21)
-            logger.info("Image denoised")
-            return denoised
-        except Exception as e:
-            logger.warning(f"Denoising failed: {e}")
-            return image
-
-    def _sharpen_image(self, image: np.ndarray) -> np.ndarray:
-        """Sharpen the image"""
-        try:
-            kernel = np.array([[-1,-1,-1],
-                               [-1, 9,-1],
-                               [-1,-1,-1]])
-            sharpened = cv2.filter2D(image, -1, kernel)
-            logger.info("Image sharpened")
-            return sharpened
-        except Exception as e:
-            logger.warning(f"Sharpening failed: {e}")
-            return image
-
-    def _adaptive_threshold(self, image: np.ndarray) -> np.ndarray:
-        """Apply adaptive thresholding"""
-        try:
-            thresh = cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-                                         cv2.THRESH_BINARY, 11, 2)
-            logger.info("Adaptive thresholding applied")
-            return thresh
-        except Exception as e:
-            logger.warning(f"Adaptive thresholding failed: {e}")
-            return image
-
-    def _morphological_operations(self, image: np.ndarray) -> np.ndarray:
-        """Apply morphological operations"""
-        try:
-            kernel = np.ones((2, 2), np.uint8)
-            morphed = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
-            logger.info("Morphological operations completed")
-            return morphed
-        except Exception as e:
-            logger.warning(f"Morphological operations failed: {e}")
-            return image
-
     def extract_text_with_confidence(self, image: np.ndarray, skip_rotation: bool = False) -> Dict[str, Any]:
-        """Extract text with confidence scores and detailed analysis"""
+        """Extract text with confidence scores using dual-pass strategy"""
         try:
-            # Preprocess the image
-            processed_image = self.preprocess_image(image, skip_rotation=skip_rotation)
+            # PASS 1: Light Preprocessing (Resize + Gray + Contrast)
+            # This works best for clean, digital receipts or high-quality scans
+            preprocessed_light = self.preprocess_image_light(image, skip_rotation)
+            result_light = self._run_tesseract(preprocessed_light)
             
-            # Extract text with detailed information
-            data = pytesseract.image_to_data(processed_image, output_type=pytesseract.Output.DICT)
+            # Check if Pass 1 was good enough
+            # Criteria: High confidence (>80%) AND found meaningful text (>10 chars)
+            if result_light['confidence'] > 0.8 and len(result_light['text'].strip()) > 10:
+                 logger.info(f"Light preprocessing successful (Confidence: {result_light['confidence']:.2f})")
+                 return result_light
             
-            # Build text with confidence scoring
-            lines = []
-            tokens = [] # NEW: tokens with positional data
-            word_confidences = []
-            current_line = []
-            current_line_num = 1
+            logger.info(f"Light preprocessing insufficient (Conf: {result_light['confidence']:.2f}). Trying heavy preprocessing...")
             
-            for i in range(len(data['text'])):
-                if int(data['conf'][i]) > 0:  # Valid word
-                    word = data['text'][i]
-                    conf = int(data['conf'][i])
-                    line_num = int(data['line_num'][i])
-                    
-                    # Store token with positional data
-                    token = {
-                        'text': word,
-                        'conf': conf,
-                        'left': data['left'][i],
-                        'top': data['top'][i],
-                        'width': data['width'][i],
-                        'height': data['height'][i],
-                        'line_num': line_num
-                    }
-                    tokens.append(token)
-                    
-                    if line_num == current_line_num:
-                        current_line.append((word, conf))
-                    else:
-                        # Process completed line
-                        if current_line:
-                            line_text = ' '.join([word for word, _ in current_line])
-                            lines.append(line_text)
-                            word_confidences.extend([conf for _, conf in current_line])
-                        
-                        # Start new line
-                        current_line = [(word, conf)]
-                        current_line_num = line_num
+            # PASS 2: Heavy Preprocessing (Denoise + Sharpen + Threshold + Morph)
+            # This works better for noisy, low-light, or faded photos
+            preprocessed_heavy = self.preprocess_image_heavy(image, skip_rotation)
+            result_heavy = self._run_tesseract(preprocessed_heavy)
             
-            # Process last line
-            if current_line:
-                line_text = ' '.join([word for word, _ in current_line])
-                lines.append(line_text)
-                word_confidences.extend([conf for _, conf in current_line])
-            
-            # Calculate overall confidence
-            overall_confidence = sum(word_confidences) / len(word_confidences) if word_confidences else 0
-            
-            result = {
-                'text': '\n'.join(lines),
-                'confidence': overall_confidence / 100.0,  # Convert to 0-1 scale
-                'lines': lines,
-                'tokens': tokens, # NEW
-                'word_count': len(word_confidences),
-                'avg_word_confidence': overall_confidence,
-                'processed_successfully': True,
-                'width': processed_image.shape[1],
-                'height': processed_image.shape[0]
-            }
-            
-            logger.info(f"OCR completed: {result['word_count']} words, confidence: {overall_confidence:.1f}%")
-            return result
-            
+            # Return the better of the two
+            if result_heavy['confidence'] > result_light['confidence']:
+                logger.info("Heavy preprocessing yielded better results")
+                return result_heavy
+            else:
+                 logger.info("Light preprocessing was actually better")
+                 return result_light
+
         except Exception as e:
             logger.error(f"OCR extraction error: {e}")
             return {
                 'text': '',
                 'confidence': 0.0,
+                'tokens': [],
                 'lines': [],
                 'word_count': 0,
                 'avg_word_confidence': 0.0,
                 'processed_successfully': False,
                 'error': str(e)
             }
+
+    def preprocess_image_light(self, image: np.ndarray, skip_rotation: bool = False) -> np.ndarray:
+        """Light preprocessing: Resize, Gray, Optional Rotation, CLAHE"""
+        # 1. Resize
+        height, width = image.shape[:2]
+        if height < 1000 or width < 1000:
+            scale_factor = min(2000 / height, 2000 / width)
+            image = cv2.resize(image, None, fx=scale_factor, fy=scale_factor, interpolation=cv2.INTER_CUBIC)
+            
+        # 2. Gray
+        if len(image.shape) == 3:
+            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        else:
+            gray = image.copy()
+            
+        # 3. Rotate
+        if not skip_rotation:
+            gray = self._auto_rotate_text(gray)
+            
+        # 4. CLAHE (Contrast)
+        enhanced = self._enhance_contrast(gray)
+        return enhanced
+
+    def preprocess_image_heavy(self, image: np.ndarray, skip_rotation: bool = False) -> np.ndarray:
+        """Heavy preprocessing: Light + Denoise + Sharpen + Threshold + Morph"""
+        # Start with light processed image
+        base = self.preprocess_image_light(image, skip_rotation)
+        
+        # Denoise
+        denoised = self._denoise_image(base)
+        # Sharpen
+        sharpened = self._sharpen_image(denoised)
+        # Threshold
+        thresholded = self._adaptive_threshold(sharpened)
+        # Morph
+        morphed = self._morphological_operations(thresholded)
+        
+        return morphed
+
+    def _run_tesseract(self, image: np.ndarray) -> Dict[str, Any]:
+        """Helper to run tesseract on an image and parse results"""
+        data = pytesseract.image_to_data(image, output_type=pytesseract.Output.DICT)
+        
+        lines = []
+        tokens = []
+        word_confidences = []
+        current_line = []
+        current_line_num = 1
+        
+        for i in range(len(data['text'])):
+            if int(data['conf'][i]) > 0:
+                word = data['text'][i]
+                conf = int(data['conf'][i])
+                line_num = int(data['line_num'][i])
+                
+                token = {
+                    'text': word,
+                    'conf': conf,
+                    'left': data['left'][i],
+                    'top': data['top'][i],
+                    'width': data['width'][i],
+                    'height': data['height'][i],
+                    'line_num': line_num
+                }
+                tokens.append(token)
+                
+                if line_num == current_line_num:
+                    current_line.append((word, conf))
+                else:
+                    if current_line:
+                        lines.append(' '.join([w for w, _ in current_line]))
+                        word_confidences.extend([c for _, c in current_line])
+                    current_line = [(word, conf)]
+                    current_line_num = line_num
+                    
+        if current_line:
+            lines.append(' '.join([w for w, _ in current_line]))
+            word_confidences.extend([c for _, c in current_line])
+            
+        overall_conf = sum(word_confidences) / len(word_confidences) if word_confidences else 0
+        
+        return {
+            'text': '\n'.join(lines),
+            'confidence': overall_conf / 100.0,
+            'lines': lines,
+            'tokens': tokens,
+            'word_count': len(word_confidences),
+            'avg_word_confidence': overall_conf,
+            'processed_successfully': True,
+            'width': image.shape[1],
+            'height': image.shape[0]
+        }
+    
+    def preprocess_image(self, image: np.ndarray, skip_rotation: bool = False) -> np.ndarray:
+        """Legacy method for backward compatibility - defaults to heavy for safety or light?"""
+        # For compatibility with any direct calls, let's use heavy as it was the previous default
+        # But we should really encourage using extract_text_with_confidence
+        return self.preprocess_image_heavy(image, skip_rotation)
+
+    def _auto_rotate_text(self, image: np.ndarray) -> np.ndarray:
+        """Auto-rotate text to correct orientation."""
+        try:
+            # Use Tesseract's OSD (Orientation and Script Detection)
+            osd = pytesseract.image_to_osd(image)
+            rotation = int(re.search(r'Rotate: (\d+)', osd).group(1))
+            
+            if rotation != 0:
+                logger.info(f"Auto-rotating image by {rotation} degrees")
+                if rotation == 90:
+                    return cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
+                elif rotation == 180:
+                    return cv2.rotate(image, cv2.ROTATE_180)
+                elif rotation == 270:
+                    return cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        except:
+            # If OSD fails, return original
+            pass
+        
+        return image
+    
+    def _enhance_contrast(self, image: np.ndarray) -> np.ndarray:
+        """Enhance contrast using CLAHE."""
+        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+        return clahe.apply(image)
+    
+    def _denoise_image(self, image: np.ndarray) -> np.ndarray:
+        """Denoise image using Non-local Means Denoising."""
+        return cv2.fastNlMeansDenoising(image, None, 10, 7, 21)
+    
+    def _sharpen_image(self, image: np.ndarray) -> np.ndarray:
+        """Sharpen image using unsharp masking."""
+        gaussian = cv2.GaussianBlur(image, (0, 0), 2.0)
+        sharpened = cv2.addWeighted(image, 1.5, gaussian, -0.5, 0)
+        return sharpened
+    
+    def _adaptive_threshold(self, image: np.ndarray) -> np.ndarray:
+        """Apply adaptive thresholding."""
+        return cv2.adaptiveThreshold(
+            image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
+            cv2.THRESH_BINARY, 11, 2
+        )
+    
+    def _morphological_operations(self, image: np.ndarray) -> np.ndarray:
+        """Apply morphological operations to clean up the image."""
+        kernel = np.ones((2, 2), np.uint8)
+        # Remove small noise
+        opening = cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel, iterations=1)
+        # Close small holes
+        closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel, iterations=1)
+        return closing
 
     def process_file(self, file_path: str) -> Dict[str, Any]:
         """Process a file (image or PDF) and extract text"""
@@ -312,7 +282,7 @@ class OCRPipeline:
                 
                 return {
                     'text': '\n'.join(all_text),
-                    'confidence': overall_confidence,
+                    'confidence': overall_confidence * 100,  # Convert to percentage
                     'pages_processed': len(images),
                     'processed_successfully': True
                 }
@@ -328,7 +298,10 @@ class OCRPipeline:
                         'processed_successfully': False
                     }
                 
-                return self.extract_text_with_confidence(image)
+                result = self.extract_text_with_confidence(image)
+                # Convert confidence to percentage for consistency
+                result['confidence'] = result.get('confidence', 0) * 100
+                return result
                 
         except Exception as e:
             logger.error(f"File processing error: {e}")
@@ -377,7 +350,7 @@ class OCRPipeline:
                 
                 return {
                     'text': '\n'.join(all_text),
-                    'confidence': overall_confidence,
+                    'confidence': overall_confidence * 100,
                     'pages_processed': len(images),
                     'processed_successfully': True
                 }
@@ -395,7 +368,9 @@ class OCRPipeline:
                         'processed_successfully': False
                     }
                 
-                return self.extract_text_with_confidence(image)
+                result = self.extract_text_with_confidence(image)
+                result['confidence'] = result.get('confidence', 0) * 100
+                return result
                 
         except Exception as e:
             logger.error(f"Bytes processing error: {e}")

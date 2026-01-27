@@ -47,7 +47,7 @@ class EnhancedOCRPipeline:
                         logger.info(f"PDF text extraction successful: {len(text)} characters, IDs found")
                         return {
                             'text': text,
-                            'confidence': 0.95,
+                            'confidence': 95.0,  # 0-100 scale
                             'method': 'pdf_text_extraction'
                         }
                     else:
@@ -73,7 +73,7 @@ class EnhancedOCRPipeline:
         
         # If IDs found AND confidence is good, return immediately
         # We check confidence because garbage text sometimes produces fake "IDs"
-        if initial_ids and result['confidence'] >= 70:
+        if initial_ids and result.get('confidence', 0) >= 70:
             result['method'] = 'ocr'
             return result
             

@@ -1,5 +1,6 @@
 import re
 from typing import Tuple
+from .ultimate_patterns_v3 import ultimate_matcher_v3
 
 try:
     import joblib
@@ -71,7 +72,12 @@ def bank_from_text(text: str) -> Tuple[str, float]:
         except Exception:
             pass
 
-    # Fallback: keyword-based
+    # Fallback: Use Ultimate V3 detection (More robust)
+    v3_bank = ultimate_matcher_v3.detect_bank(text)
+    if v3_bank != "Unknown":
+        return v3_bank, 0.9
+
+    # Fallback: Legacy keyword-based (Keep as backup)
     text_lower = text
     scores = {}
     for bank, patterns in BANK_KEYWORDS.items():

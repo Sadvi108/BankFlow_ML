@@ -1,0 +1,1779 @@
+[
+  {
+    "file": "00ec4413-5ab2-4988-a3a7-79a702aba953_TT 038304 RM 3695.00 MISHAL.pdf",
+    "text": "=== PAGE 1 ===\nDuitNow Receipt\nReference Number: RPP20210120038304\nTransaction Status: Successful\nRecipient’s Reference: DEMURRAGE - SHAG556454\nOther Payment Details:\nTransfer Date &Time: Wednesday, 20 January 2021 15:06 PM\nFrom: *********5310\nTo: D&D CONTROL (M) SDN BHD\nAccount Number: 21246660001343\nDuitNow ID Type:\nDuitNow ID:\nAmount: RM 3,695.00\nService Charge: RM 0.00\nCustomer Service Contacts:\nEmail: customercare@ambankgroup.com Important Notes:\nCall: +603 2178 8888 This receipt is computer generated and no signature is required.\nCopyright © AmBank (M) Berhad (Company No. 8515-D). All Rights Reserved.",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "RPP20210120038304",
+      "RPP20210120038304TRANSACTION",
+      "SHAG556454"
+    ],
+    "amount": "3,695.00",
+    "date": "20 January 2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "06ecbb13-9cc8-4ffb-a320-a840e4fe41fe_10061850.pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101200021713450\nService Reference No.: 205291\nPrinted Date/Time: 20/01/2021 09:16 AM\nPending Approval Transaction (Acknowledgement)\nProduct Type Interbank GIRO (IBG)\nReference No 2101200021713450\nService Reference No 205291\nApproval Status Processed\nFrom Account 3193110714 / SAGA FREIGHTER SDN BHD\nBeneficiary Bank RHB Islamic Bank Berhad\nTransfer Type Fund Transfer\nD&D CONTROL (M) SDN BHD\nBeneficiary Name\nName provided will not be validated. For receiving bank's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you proceed with the transaction.\nRecipient Reference INV: COS22110061850\nOther Payment Details CNTR NO: TEMU0852384\nAmount MYR 10.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nPayment Date 20-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101200021713450\nService Reference No.: 205291\nPrinted Date/Time: 20/01/2021 09:16 AM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker TAN KONG HIN 20-Jan-2021 09:16:21 Created\nAuthoriser\nAUTHORIS\nAny 1 from Group\nER-SAGA\nAUTHORISER-SAGA TAN KONG HIN 20-Jan-2021 09:16:45 Approved\nFREIGHET\nFREIGHETR SDN BHD\nR SDN BHD\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "TEMU0852384",
+      "21713450",
+      "60001343",
+      "2101200021713450",
+      "2101200021713450SERVICE",
+      "NO2101200021713450",
+      "NO21246660001343",
+      "COS22110061850"
+    ],
+    "amount": "10.00",
+    "date": "20-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "06f64252-5ea0-4571-88db-b499aedcadfd_D&D RM10.PDF",
+    "text": "=== PAGE 1 ===\nSearch Criteria\nReport Type Transaction Transaction Type DuitNow\nReport Name DuitNow Details Report Organisation ID RUHOCORP\nCountry Malaysia Account No. 7301105119\nYour Reference No. MYDN201215747671 Date Range 15 Dec 2020 To 15 Dec 2020\nDuitNow Details Report\nYour Reference No MYDN201215747671 OCBC Reference No. MYDN201215747671\nTotal Amount MYR - 10.00 Value Date 15 Dec 2020 - IMMEDIATE\nSource Manual Total No. of Items 1\nYour Account No. 7301105119 - MYR RUHO CORPORATION SDN BHD\nItem No. 1\nAmount 10.00 MALAYSIAN RINGGIT\nPayee Name D&D CONTROL (M) SDN BHD\nPayee Account No. 21246660001343\nPayee Bank Name RHB Bank Berhad\nTransfer Type Fund Transfer\nRecipient's Reference No. INVOICE SNK22010056010\nOther Payment Details\nPaynet Reference No. 20201215OCBCMYKL010OCB33952836\nItem Status Successful\nRemarks\nNotify Payee by Email\nMessage to Payee\n** End of Report **\nPrinted By LOO SAN SIEW Page 1 of 1\nPrinted On 20 Jan 2021 11:46:50",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "20201215OCBCMYKL010OCB33952836",
+      "MYDN201215747671",
+      "SNK22010056010",
+      "7301105119"
+    ],
+    "amount": "10.00",
+    "date": "15 Dec 2020",
+    "confidence": 1.0
+  },
+  {
+    "file": "135a2f08-fbb5-43de-a1e4-2eb429b9f8d8_LGH D&D 8INV.pdf",
+    "text": "=== PAGE 1 ===\n20/01/2021 https://www.cimb.bizchannel.com.my/corp/front/domesticbatch.do?action=doPrintMulti\nDomestic Transfers\nResult Message: This transaction has been submitted and successfully executed\nTransaction Source Beneficiary Beneficiary Beneficiary Amount Total Total Service\nReference No. Account Account Account Bank Charges Tax\nName\n202101200085132189 8010165798 / 21246660001343 D&D RHB BANK MYR 1,871.00 Interbank\nCL GLOBAL CONTROL BHD GIRO\nFOODS (M) SDN. (IBG)\nRESOURCES BHD.\n( MYR )\nInstruction Mode\nToday : 20-Jan-2021\nSubmitted Time (Information of time is following GMT+8) : 20-Jan-2021 11:14:25\nPrint Close\nhttps://www.cimb.bizchannel.com.my/corp/front/domesticbatch.do?action=doPrintMulti 1/1",
+    "bank": "CIMB",
+    "ref_ids": [
+      "2021012000851321898010165798",
+      "NAME202101200085132189",
+      "202101200085132189",
+      "8010165798",
+      "21246660001343"
+    ],
+    "amount": "1,871.00",
+    "date": "20/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "1651625b-0631-4d76-b10c-4ab5cb8ba6f0_10061588.pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101190021662230\nService Reference No.: 107192\nPrinted Date/Time: 19/01/2021 09:58 AM\nPending Approval Transaction (Acknowledgement)\nProduct Type Interbank GIRO (IBG)\nReference No 2101190021662230\nService Reference No 107192\nApproval Status Processed\nFrom Account 3193110714 / SAGA FREIGHTER SDN BHD\nBeneficiary Bank RHB Islamic Bank Berhad\nTransfer Type Fund Transfer\nD&D CONTROL (M) SDN BHD\nBeneficiary Name\nName provided will not be validated. For receiving bank's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you proceed with the transaction.\nRecipient Reference INV: OOL22110061588\nOther Payment Details CNTR NO: OOLU7769798\nAmount MYR 10.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nPayment Date 19-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101190021662230\nService Reference No.: 107192\nPrinted Date/Time: 19/01/2021 09:58 AM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker TAN KONG HIN 19-Jan-2021 09:58:03 Created\nAuthoriser\nAUTHORIS\nAny 1 from Group\nER-SAGA\nAUTHORISER-SAGA TAN KONG HIN 19-Jan-2021 09:58:21 Approved\nFREIGHET\nFREIGHETR SDN BHD\nR SDN BHD\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "OOLU7769798",
+      "21662230",
+      "60001343",
+      "2101190021662230",
+      "2101190021662230SERVICE",
+      "NO2101190021662230",
+      "NO21246660001343",
+      "OOL22110061588"
+    ],
+    "amount": "10.00",
+    "date": "19-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "16f4a15f-1c73-477a-b44a-7e7817bed77c_TT 914870 RM 50.00 ETERNAL-RTW.pdf",
+    "text": "=== PAGE 1 ===\nFund Transfer To 3rd Party Account - Data Input https://reflex.rhbgroup.com/rhbcams/corporate/corpFundTransfer3rdPa...\nFund Transfer To 3rd Party Account - Data Input\nSuccessful\nTransaction(s) is successfully sent for approval.\nAccount Transfer Information\nReference Number Date\n210122914870 22-01-2021 09:34:57\nFrom Account To Account\n20101700174080 / ROUND 21246660001343 / D&D CONTROL (M) SDN BHD ( RM )\n-THE-WOR\nAmount Fund Transfer Charges\nRM 50.00 RM 0.10\nGST Charges Total Amount to Debit\nRM 0.00 RM 50.10\nIC / ID Number Recipient's Reference\n2021012200004\nOther Payment Details Email Address\nKMT32110059546 ACC@DND.COM.MY\nPayment Advice\nTransfer Type\nImmediate Transfer\nInstructions\nClick on Print button to print the page.\n1 of 1 22/1/2021, 9:38 am",
+    "bank": "RHB",
+    "ref_ids": [
+      "21012204",
+      "DATE210122914870",
+      "ROUND21246660001343",
+      "CORPFUNDTRANSFER3RDPA",
+      "KMT32110059546",
+      "210122914870",
+      "21246660001343",
+      "2021012204"
+    ],
+    "amount": "50.00",
+    "date": "22-01-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "220070bc-d0d0-4b9a-a57c-92873cfbefc8_Pending Approval Transaction (Acknowledgement) (5).pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101220021823203\nService Reference No.: 886357\nPrinted Date/Time: 22/01/2021 12:14 PM\nPending Approval Transaction (Acknowledgement)\nProduct Type Instant Transfer\nReference No 2101220021823203\nService Reference No 886357\nApproval Status Processed\nFrom Account 3176517316 / TAS FREIGHT SERVICES SDN BHD\nBeneficiary Bank RHB Bank Berhad\nTransfer Type Fund Transfer\nBeneficiary Name D&D CONTROL (M) SDN BHD\nBeneficiary Account No 21246660001343\nRecipient Reference D D CONTROL\nAmount MYR 20.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nEmail\nNotification\n1) finance@tasgroup.com.my\nFund Transfer Purpose PAYMENT FOR INV WHS22110062206,OOL221100\nPayment Date 22-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101220021823203\nService Reference No.: 886357\nPrinted Date/Time: 22/01/2021 12:14 PM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker UMADEVI A/P DARMAN 22-Jan-2021 11:07:46 Created\nAuthoriser\nAny 1 from Group AUTHORIS\nBAY TONG HAI 22-Jan-2021 12:14:27 Approved\nAUTHORISER ER\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "21823203",
+      "2101220021823203",
+      "2101220021823203SERVICE",
+      "NO2101220021823203",
+      "NO21246660001343",
+      "WHS22110062206",
+      "OOL221100"
+    ],
+    "amount": "20.00",
+    "date": "22-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "23eb5d65-c130-4eac-a19f-e5a5a30c0612_TT 882117 RM 3640.00 GREAT.pdf",
+    "text": "=== PAGE 1 ===\nPayment - Transaction Status https://reflex.rhbgroup.com/rhbcams/corporate/ePayment/lm_epymt_tran...\nPayment - Transaction Status\n3rd Party Account Transfer Information\nReference Number\n210121882117\nFrom Account To Account\n20122200046301 / GREAT NEPTUNE 21246660001343 / D&D CONTROL (M) SDN BHD\nAmount Fund Transfer Charges\nRM 3,640.00 RM 0.00\nGST Charges Total Amount to Debit\nRM 0.00 RM 3,640.00\nIC / ID Number\nTransfer Type Payment Date\nImmediate Transfer 21-01-2021\nSender`s Name / Beneficiary`s Name Recipient`s Reference\nGREAT NEPTUNE ENTERPRISE SDN BHD / D&D CONTROL (M) SDN BH GREAT NEPTUNE ENTERP\nD\nOther Payment Details Email Address\nPayment Advice\nSource\nStatus\nStatus\nProcessed\nDocument Verification Status\nNo Verification Required\nWorkflow Information\nUser Name Role Action Date & Time Reason\nLAU CHEE PENG Data Entry Submitted 21-01-2021 10:10:51\nLAU CHEE MENG Authorizer Approved 21-01-2021 10:20:23\n*Note:\nThis information will only be available for 99 days.\nInstruction:\nClick on Print button to print the page.\n1 of 2 21/01/2021, 10:21 am",
+    "bank": "RHB",
+    "ref_ids": [
+      "21882117",
+      "210121882117",
+      "21246660001343"
+    ],
+    "amount": "3,640.00",
+    "date": "21-01-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "24651cfd-f3a5-4468-a0af-3e80124370b2_21010011 DND D.pdf",
+    "text": "=== PAGE 1 ===\nInterbank GIRO (IBG)\nReference Number: 976169\nTransaction Status: Successful\nTransaction Date/Time: 19-01-2021 10:09:06\nFrom Account: 3815982207 ( Current )\nAmount: RM 535.00\nPayment Type: Funds Transfer\nBeneficiary Bank: RHB Bank\nBeneficiary Account: 21246660001343\nBeneficiary Name: D&D CONTROL (M) SDN BHD\nOther Payment Details:\nRecipient Reference: GESU6525367 21010011\nBeneficiary ID / IC Checking: Not Required\nInterbank GIRO Service Charge: RM 0.00\nDescription: PAYMENT SNK221 10061460\nApproval Status: APPROVE\nNotification to Beneficiary : Nil\nNote:\nThis is a computer generated receipt and does not require a signature.",
+    "bank": "RHB",
+    "ref_ids": [
+      "GESU6525367",
+      "21010011",
+      "10061460"
+    ],
+    "amount": "535.00",
+    "date": "19-01-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "246fbe98-0b71-4395-8d7d-b187f208dfed_To Other Bank Account Transfer (Acknowledgement) (25).pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101180021610599\nPrinted Date/Time: 18/01/2021 10:31 AM\nTo Other Bank Account Transfer (Acknowledgement)\nReference No 2101180021610599\nApproval Status Pending Authorizer\nMethod of Transfer Instant Transfer\nFrom Account 3817250215 / JUTA CAHAYA GEMILANG SDN. BHD.\nBeneficiary Bank RHB Bank Berhad\nTransfer Type Fund Transfer\nBeneficiary Name D&D CONTROL (M) SDN BHD\nBeneficiary Account No 21246660001343\nRecipient Reference DEMURRAGE CHARGES\nAmount MYR 520.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nPayment Date 18-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101180021610599\nPrinted Date/Time: 18/01/2021 10:31 AM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker TEOH MENG ZONG 18-Jan-2021 10:31:22 Created\nAuthoriser\nAny 1 from Group AUTHORIS\nTEOH MENG ZONG\nAUTHORISER ER\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "2101180021610599",
+      "2101180021610599PRINTED",
+      "2101180021610599APPROVAL",
+      "NO2101180021610599",
+      "NO21246660001343"
+    ],
+    "amount": "520.00",
+    "date": "18-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "2484aeae-9b96-4980-86df-c6edf94e86ec_Pending Approval Transaction (Acknowledgement) (66).pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101180021610292\nService Reference No.: 070777\nPrinted Date/Time: 18/01/2021 11:40 AM\nPending Approval Transaction (Acknowledgement)\nProduct Type Instant Transfer\nReference No 2101180021610292\nService Reference No 070777\nApproval Status Processed\nFrom Account 3176517316 / TAS FREIGHT SERVICES SDN BHD\nBeneficiary Bank RHB Bank Berhad\nTransfer Type Fund Transfer\nBeneficiary Name D&D CONTROL (M) SDN BHD\nBeneficiary Account No 21246660001343\nRecipient Reference D D CONTROL\nAmount MYR 10.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nEmail\nNotification\n1) finance@tasgroup.com.my\nFund Transfer Purpose PAYMENT FOR INV RCL22110061084\nPayment Date 18-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101180021610292\nService Reference No.: 070777\nPrinted Date/Time: 18/01/2021 11:40 AM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker UMADEVI A/P DARMAN 18-Jan-2021 10:27:59 Created\nAuthoriser\nAny 1 from Group AUTHORIS\nBAY TONG HAI 18-Jan-2021 11:39:54 Approved\nAUTHORISER ER\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "21610292",
+      "2101180021610292",
+      "2101180021610292SERVICE",
+      "NO2101180021610292",
+      "NO21246660001343",
+      "RCL22110061084"
+    ],
+    "amount": "10.00",
+    "date": "18-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "273f7c83-bc4b-4dd5-b98d-cc0211f60608_TT 083048 RM 1050.00 MMA FRIEGHT.pdf",
+    "text": "=== PAGE 1 ===\nCREDIT ADVICE\nDate : 21-01-2021\nDear Sir/Madam,\nOrdering Customer : XXXXXXX2170\nOn request of our customer, we have effected payment to your Account Account No.\nas per the details below: Ordering Customer : MMA FREIGHT SERVICES\nAccount Name\nTransaction Details\nTransaction Reference No. : C797210121083048 Beneficiary Name : D&D CONTROL (M) SDN BHD\nPayment Type : DuitNow Payment DuitNow ID Type : Account No.\nValue Date : 21-01-2021 DuitNow ID : RHBBMYKL - XXXXXXXXXX1343\nAmount (MYR) : 1,050.00 DuitNow Reference No. : 20210121HLBBMYKL010OCB26937337\nChannel Reference No. : CMSPCT21012100000124\nRecipient Reference : 32110059354+62+65+440+42+46+553+54+56+58\nOther Payment Details : MMI210100036\nDisclaimer\nThis Electronic Mail (including any attachments) may contain confidential, proprietary,privileged and/or private information. The information is intended to be for the use of the authorized person or entity\ndesignated above. If you are not the intended recipient of this message, please notify Hong Leong Bank immediately, and delete the message and any attachments. Any disclosure, reproduction,\ndistribution or other use of this message or any attachments by an individual or entity other than the intended recipient is prohibited.",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "20210121HLBBMYKL010OCB26937337",
+      "20210121HLBBMYKL010OCB269",
+      "C797210121083048",
+      "CMSPCT21012100124",
+      "32110059354",
+      "C797210121083048BENEFICIARY",
+      "CMSPCT21012100124RECIPIENT",
+      "MMI210100036"
+    ],
+    "amount": null,
+    "date": "21-01-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "29a56465-ec0d-44a7-82b9-11f0d12f5124_10061772.pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101200021713532\nService Reference No.: 207972\nPrinted Date/Time: 20/01/2021 09:18 AM\nPending Approval Transaction (Acknowledgement)\nProduct Type Interbank GIRO (IBG)\nReference No 2101200021713532\nService Reference No 207972\nApproval Status Processed\nFrom Account 3193110714 / SAGA FREIGHTER SDN BHD\nBeneficiary Bank RHB Islamic Bank Berhad\nTransfer Type Fund Transfer\nD&D CONTROL (M) SDN BHD\nBeneficiary Name\nName provided will not be validated. For receiving bank's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you proceed with the transaction.\nRecipient Reference INV: COS22110061772\nOther Payment Details CNTR NO: BSIU9515982\nAmount MYR 10.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nPayment Date 20-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101200021713532\nService Reference No.: 207972\nPrinted Date/Time: 20/01/2021 09:18 AM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker TAN KONG HIN 20-Jan-2021 09:17:49 Created\nAuthoriser\nAUTHORIS\nAny 1 from Group\nER-SAGA\nAUTHORISER-SAGA TAN KONG HIN 20-Jan-2021 09:18:11 Approved\nFREIGHET\nFREIGHETR SDN BHD\nR SDN BHD\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "BSIU9515982",
+      "21713532",
+      "60001343",
+      "2101200021713532",
+      "2101200021713532SERVICE",
+      "NO2101200021713532",
+      "NO21246660001343",
+      "COS22110061772"
+    ],
+    "amount": "10.00",
+    "date": "20-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "30284924-f2e7-4847-b4a3-bd0aeed1b95f_TT 096065 RM 135.00 UNIVERSAL-KFS.pdf",
+    "text": "=== PAGE 1 ===\n1/21/2021 Public Bank Berhad Internet Banking.\nInterbank GIRO (IBG)\nReference Number: 096065\nTransaction Status: Successful\nTransaction Date/Time: 21-01-2021 11:16:14\nFrom Account: 3174958436 ( Current )\nAmount: RM 135.00\nPayment Type: Funds Transfer\nBeneficiary Bank: RHB Islamic Bank Berhad\nBeneficiary Account: 21246660001343\nBeneficiary Name: D N D Control M SDN BHD\nOther Payment Details:\nRecipient Reference: KMT32110059152 KMTC3\nBeneficiary ID / IC Checking: Required\nBeneficiary ID / IC Type: Business Registration No\nBeneficiary ID / IC: 923103K\nInterbank GIRO Service Charge: RM 0.00\nDescription: REF 34335 34329\nApproval Status: APPROVE\nNotification to Beneficiary : Nil\nNote:\nThis is a computer generated receipt and does not require a signature.\nhttps://www2.pbebank.com/myIBK/apppbb/servlet/BxxxServlet?JSID=0D5852ABC9B9E724CCDB553A959E7B2BBFCB4785738FAE319ACB63632A… 1/1",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "KMT32110059152"
+    ],
+    "amount": "135.00",
+    "date": "1/21/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "30ba2a47-866a-41e2-9d2a-f1068a45625e_PB2101 089 DND.PDF",
+    "text": "=== PAGE 1 ===\nReference No.: 2101180021637704\nService Reference No.: 480250\nPrinted Date/Time: 18/01/2021 03:46 PM\nTransaction Approval Status\nProduct Type Interbank GIRO (IBG)\nReference No 2101180021637704\nService Reference No 480250\nApproval Status Processed\nFrom Account 3162449716 / JAGUAR SHIPPING (M) SDN BHD\nBeneficiary Bank RHB Bank Berhad\nTransfer Type Fund Transfer\nD&D CONTRL (M) SDN BHD\nBeneficiary Name\nName provided will not be validated. For receiving bank's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you proceed with the transaction.\nRecipient Reference 22110059865 60646\nOther Payment Details 22110061282\nAmount MYR 1,375.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nEmail\nNotification 1) niki@jaguarpg.com\n2) cynthia@jaguarpg.com\nFund Transfer Purpose PB2101/089\nPayment Date 18-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "21637704",
+      "60001343",
+      "10059865",
+      "2101180021637704",
+      "22110059865",
+      "2101180021637704SERVICE",
+      "NO2101180021637704",
+      "NO21246660001343",
+      "22110061282"
+    ],
+    "amount": "1,375.00",
+    "date": "18-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "30df3fe4-7e0f-48c7-8571-a8634e615c96_DND.pdf",
+    "text": "=== PAGE 1 ===\nr\n1nil2021 Public Bank Berhad lntemet Banking.\nF\nlnstant Transfer to Other Account\nReference Number: 828894\nTransac'tion Status: Accepted for Processing\nTraneaction DatelTime: 25-01 -2021 1 4: 1 0:39\nFrom Account X)(XX)C(9818 ( Cunent\n)\nAmount RM 110.00\nBeneffciary Bank RHB Bank Befiad\nBeneflclary Account 21 246660001 343\nBeneftciary Account Type: SavingdCunent Account\nBeneficiary Name: D&D CONTROL (M) SDN BHD\nRecipient Refierence: JANUARY 2021 CPG\nOther Payment tletalls: JANUARY 2021 CPC\ntnstant Transfur Service Gharge: RM 0.00\nTotal Charges: RM 0.00\nNote:\nThis is a computer generated receipt and does not require a signature.\nFrnE *tr\n=tifiFt\nHrtrGtrOx*nt\nhttps:/Amw2.pbebank.com/mylBl(apppbb/serMef/BrqSeMet?JSID=1837453F50A8232F7FGDE31F902CC9D9C971129243E182ADCF87ECFA0A5... 111",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "1NIL2021",
+      "246660001"
+    ],
+    "amount": "110.00",
+    "date": "21 246660001 343",
+    "confidence": 1.0
+  },
+  {
+    "file": "31162fd1-045e-4d53-a637-bf633fa35e83_DETENTION AND DEMMURAGE PAYMENT BUN KONG.pdf",
+    "text": "=== PAGE 1 ===\nInstant Transfer to Other Account\nReference Number: 583225\nTransaction Status: Accepted for Processing\nTransaction Date/Time: 19-01-2021 06:42:21\nFrom Account: 3812409636 ( Current )\nAmount: RM 1,285.00\nBeneficiary Bank: RHB Bank Berhad\nBeneficiary Account: 21246660001343\nBeneficiary Name: D&D CONTROL (M) SDN BHD\nRecipient Reference: DETENTION BMOU6068231\nOther Payment Details: DEMMURAGE TEMU8652356\nInstant Transfer Service Charge: RM 0.00\nDescription: BUN KONG PRINTING\nApproval Status: APPROVE\nNotification to Beneficiary : Nil\nNote:\nThis is a computer generated receipt and does not require a signature.",
+    "bank": "RHB",
+    "ref_ids": [
+      "BMOU6068231",
+      "TEMU8652356"
+    ],
+    "amount": "1,285.00",
+    "date": "19-01-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "323ba86f-936b-4264-99f5-31f6acba950d_TT 092047 RM 20.00 SRI URUGAN-DEMAND.pdf",
+    "text": "=== PAGE 1 ===\nDomestic Transfers\nResult Message: Domestic Transfers has been successfully released and executed\nDomestic Transfers Pending Task Detail Result\nReference No. : 202101190085092047\nSource Account : 8007765922 / DEMAND TOTAL LOGISTICS SDN BHD (MYR)\nServices : Interbank GIRO (IBG)\nBeneficiary Bank Information\nBank Name : RHB BANK BHD\nBeneficiary Account Information\nAccount No : 21246660001343\nName : D & D CONTROL (M) SDN BHD\nValidate Beneficiary ID : No\nNote:\nYes (Please ensure the Beneficiary ID Type & Account Number is the same as maintained at the\nBeneficiary's bank.\nBeneficiary ID keyed in will be used for validation.)\nNo (Beneficiary ID Validation is not required. ONLY Account Number will be validated at Beneficiary bank.)\nAdditional Information\nAmount : MYR 20.00\nTransaction Fee : MYR 0.10\nTax Rate : 0.00 %\nTax Amount : MYR 0.00\nTotal Debit Amount : MYR 20.10\nRecipient's Reference : D and D\nOther Payment Details : PV-009940\nRemarks :\nPurpose Code Category :\nPurpose Code :\nBeneficiary Notification\nBeneficiary Email : account@demandtpt.com\nInstruction Mode\nToday : 19-Jan-2021\nRelease Time (Information of : 19-Jan-2021 05:49:11\ntime is following GMT+8)\nPrint Close",
+    "bank": "RHB",
+    "ref_ids": [
+      "202101190085092047",
+      "202101190085092047SOURCE",
+      "21246660001343",
+      "8007765922"
+    ],
+    "amount": "20.00",
+    "date": "19-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "3243781e-77dd-4e74-a1f3-b1ee94bc43c3_DDCONTKUL1.pdf",
+    "text": "=== PAGE 1 ===\nTransfer to a bank locally\nGIRO Payment\nImportant\n* Always be vigilant when transferring funds to an account by verifying the recipient's account details on the Semak Mule Application\n(a public police database) before doing so. This is to avoid falling victim to scams or being part of facilitation schemes to move\nillicit funds (derived from illegal activities) to mule accounts. Do not ever share your banking credentials with anyone and never consent\nto anyone using your bank account. Mule account holders can be prosecuted under Malaysian Law.\nRequest submitted!\nYour GIRO request has been submitted for approval.\nOCBC reference no. MYGP251111790268\nCreated on 11 Nov 2025, 5:34 PM\nFrom To\nYour Account Beneficiary Bank\n1671003087-MYR PANDA LOGISTICS (MALAYSIA) SDN BHD RHB BANK KUALA LUMPUR\nValue Date Amount Beneficiary Account No.\n12 Nov 2025 1,560.00MYR 21246660001343\nBeneficiary Name\nD&D CONTROL (M) SDN BH\nRequire ID Checking\nBeneficiary ID Type Beneficiary ID No.\nBusiness Registration No. 923103K\nRecipient's Reference Other Payment Details\nSI25100155 PANDA LOGISTICS\nOther Details\nYour Reference No.\nNotify Beneficiary\nMYGP251111790268\nEmail Address\naccount.my@panda4u.com\nMessage to Beneficiary\nKMT12511731590F KMT12511731591F\nKMT12511731618F KMT12511731648F",
+    "bank": "RHB",
+    "ref_ids": [
+      "1671003087-MYR",
+      "MYGP251790268",
+      "KMT12511731590FKMT12511731591F",
+      "KMT12511731618FKMT12511731648F",
+      "BANK1671003087",
+      "SI25100155",
+      "KMT12511731590F",
+      "KMT12511731591F",
+      "KMT12511731618F",
+      "KMT12511731648F",
+      "1671003087",
+      "21246660001343"
+    ],
+    "amount": "1,560.00",
+    "date": "11 Nov 2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "32892e6e-2809-45dc-87f6-0867306596f4_DD 180121.pdf",
+    "text": "=== PAGE 1 ===\n18/01/2021 OCBC - Velocity@ocbc 2.0\nTransfer to a bank locally\nGIRO Payment\nSuccess!\nThis has been sent for approval\nOCBC reference no. MYGP210118529968\nCreated on 18 Jan 2021, 8:37 AM\nFrom To\nYour Account Beneficiary Bank\n1301018616 - MYR KW AQUATIC SUPPLIES SDN BHD RHB BANK KUALA LUMPUR\nValue Date Amount Beneficiary Account No.\n18 Jan 2021 105.00MYR 21246660001343\nBeneficiary Name\nD & D CONTROL (M) SB\nBeneficiary ID Type Beneficiary ID No. -\n-\nRecipient's Reference - Other Payment Details -\nOther Details\nYour Reference No.\nNotify Beneficiary\nMYGP200729605332\nEmail Address\nsoknee@kwaquatic.com\nMessage to Beneficiary\nWHS22110061146\nWHS22110060213\nKMT22110061197\nhttps://velocity.ocbc.com/tran.view?do=ReLoad 1/1",
+    "bank": "RHB",
+    "ref_ids": [
+      "MYGP210118529968",
+      "MYGP210118529968CREATED",
+      "BANK1301018616",
+      "MYGP200729605332",
+      "WHS22110061146",
+      "WHS22110060213",
+      "KMT22110061197",
+      "1301018616",
+      "21246660001343"
+    ],
+    "amount": "105.00",
+    "date": "18/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "34a6de0a-10a8-4169-9350-9d4d724ebe31_TT 039681 RM 10.00 SM USED.pdf",
+    "text": "=== PAGE 1 ===\nFavourite Interbank Transfer\nStatus: Successful\nReference number: 9082039681\nTransaction date: 21 Jan 2021 11:28:17\nAmount: RM10.00\nBeneficiary Name : D&D CONTROL (M) SDN BHD\nReceiving Bank : RHB BANK\nBeneficiary Account Number : 21246660001343\nRecipient Reference : 20/1/2020\nOther Transfer Details :\nNote: This receipt is computer generated and no signature is required.\nMalayan Banking Berhad (Co. Reg. : 196001000142) | Maybank Islamic Berhad (Co. Reg. : 200701029411)",
+    "bank": "Maybank",
+    "ref_ids": [
+      "9082039681"
+    ],
+    "amount": "10.00",
+    "date": "21 Jan 2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "36722172-8ba9-4852-b9e5-ddad5c3aea87_TT 321150 RM 100.00 GLORIOUS-REGIME.pdf",
+    "text": "=== PAGE 1 ===\nInterbank GIRO (IBG) - Acknowledgement\nTransaction is successfully sent for approval.\nUser ID : Maker03\nDate, Time : 25/01/2021 09:54:05\nBIZ Reference No. : BIZIB321149\nIBG Reference No. : IBGCMSRHB25012021321150\nFrom Account : 18100024074 - REGIME FREIGHT & LOGISTICS SDN\nBHD\nTo Account : 21246660001343\nBeneficiary Name : D&D CONTROL (M)\nBeneficiary Bank : RHB BANK BHD\nRecipient's Reference : RSI21010154-GLORIOUS\nOther Payment Details : WHS32110059919\nID Check : Yes\nID Type : Business Registration\nBusiness Registration : 923103K\nContact No. : 073537231\nPayment Date : 25/01/2021\nAmount (MYR) : 100.00\nService Charge (MYR) : 0.10\nGst Rate - Service Charge (%) : 0.00\nGst Amount - Service Charge (MYR) : 0.00\nTotal Amount (MYR) : 100.10\nSMS Notifications : -\nPage 1 of 2\n=== PAGE 2 ===\nEmail Notifications : account.ap01@regime.com.my\nPage 2 of 2",
+    "bank": "RHB",
+    "ref_ids": [
+      "RSI21010154-GLORIOUS",
+      "WHS32110059919",
+      "BIZIB321149",
+      "IBGCMSRHB25012021321150",
+      "RSI21010154",
+      "073537231"
+    ],
+    "amount": null,
+    "date": "25/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "3d238792-e1ae-4129-a667-f4a1274a680c_TT 982716 RM 100.00 EK AUTO.pdf",
+    "text": "=== PAGE 1 ===\nTransfer Money\nThank You,\nHere's your transaction details.\nSuccessful\nRef 678982716\n20 Jan 2021, 03:32:35 pm\nTo\nAccount Number Recipient Name\n21246660001343 D&D CONTROL (M) SDN BHD\nTransfer Type Bank Name\nTo Other Banks RHB BANK\nTransfer Method Payment Type\nInstant Transfer Fund Transfer\nWhen\nDate Repeat\nToday No\nAmount\nMYR 100.00\nBank charges MYR 0.00\nTransaction Instruction\nRecipient Reference\nekauto\nTotal MYR 100.00\nNote: This is computer generated and no signature is required.",
+    "bank": "RHB",
+    "ref_ids": [
+      "78982716",
+      "REF678982716",
+      "NAME21246660001343",
+      "678982716",
+      "21246660001343"
+    ],
+    "amount": "100.00",
+    "date": "20 Jan 2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "470d7184-a47c-4c29-bb2d-4bea83576eb5_11739919 payment slip .pdf",
+    "text": "=== PAGE 1 ===\nDDDDuuuuiiiittttNNNNoooowwww TTTTrrrraaaannnnssssffffeeeerrrr\nSuccessful\nReference ID\n12 Nov 2025, 9:40 AM\n555577777777999933331111888866665555MMMM\nBeneficiary name\nDDDD&&&&DDDD CCCCOOOONNNNTTTTRRRROOOOLLLL ((((MMMM)))) SSSSDDDDNNNN BBBBHHHHDDDD\nBeneficiary account number\n2222111122224444 6666666666660000 0000000011113333 44443333\nReceiving bank\nRRRRHHHHBBBB BBBBAAAANNNNKKKK\nRecipient reference\n11111111777733339999999911119999\nAmount\nRRRRMMMM 11110000....66660000\nNote: This receipt is computer generated and no\nsignature is required.\nMalayan Banking Berhad (Co. Reg. : 196001000142)\nMaybank Islamic Berhad (Co. Reg. : 200701029411)",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "11739919",
+      "577931865M"
+    ],
+    "amount": "10.60",
+    "date": "12 Nov 2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "47d15d32-2254-46a3-9fa6-cc76b53bdb32_Connect BIZ - Transaction Status Detail.pdf",
+    "text": "=== PAGE 1 ===\n1/18/2021 Connect BIZ - Transaction Status Detail\nTransaction Status Detail\nInterbank Giro\nBIZ Reference No. BIZIB012873\nIBG Reference No. IBGCMSRHB0401202112874\nTransaction Date, Time 04/01/2021 14:38:50\nTransaction Status Successful\nPayer Details\nFrom Account 04300064364 - F-ONE FREIGHT FORWARDING SDN BHD\nBeneficiary Details\nTo Account 21246660001343\nBeneficiary Name D&D CONTROL\nBeneficiary Bank RHB BANK BHD\nRecipient's Reference HAL22010059075/59076\nOther Payment Details PV2012128 2012-149\nPayment Details\nID Check No\nContact No. 0124736630\nPayment Date 04/01/2021\nAmount (MYR) 20.00\nIBG Charges (MYR) 0.10\nGst Rate - Service Charge (%) 0.00\nGst Amount - Service Charge (MYR) 0.00\nhttps://www.hongleongonline.com.my/biz/common/authorization/payment_view_successfail_trx.html?view=&_sourcePage=5aQ_Ge6Z_4Rla7uShisLN9De-akppkYYFdFojSPnJTxcC1F_6CUa-heF_IPwP… 1/3\n=== PAGE 2 ===\n1/18/2021 Connect BIZ - Transaction Status Detail\nAuthorization History\nResults 1 - 2 of 2\nUser ID Role Authorization Status Trans Status Comm\nDate, Time User Action\n04/01/2021 09:20:20 teresa4901053 Maker+Observer CREATE Pending N/A\n04/01/2021 14:38:57 hlbfone4718669 Authorizer+Observer APPROVE Approved Successful\nResults 1 - 2 of 2\nhttps://www.hongleongonline.com.my/biz/common/authorization/payment_view_successfail_trx.html?view=&_sourcePage=5aQ_Ge6Z_4Rla7uShisLN9De-akppkYYFdFojSPnJTxcC1F_6CUa-heF_IPwP… 3/3",
+    "bank": "Hong Leong Bank",
+    "ref_ids": [
+      "FONE4718669",
+      "HLBFONE4718669",
+      "HAL22010059075",
+      "BIZIB012873",
+      "IBGCMSRHB0401202112874",
+      "PV2012128",
+      "TERESA4901053",
+      "0124736630"
+    ],
+    "amount": null,
+    "date": "04/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "4951e887-0336-46c5-9d62-d5fbec106ae5_REFNO 353115-RM20-RONGXUN@XINZHOU.pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101120021353115\nService Reference No.: 785096\nPrinted Date/Time: 12/01/2021 05:13 PM\nTransaction History - Interbank GIRO (IBG)\nReference Number 2101120021353115\nService Reference Number 785096\nCreated By KOH HAN SIANG\nCreated Date Time 12-Jan-2021 16:01:17\nApproval Status Processed\nFrom Account 3210523536 / RONG XUN METAL (M) SDN. BHD.\nMethod of Transfer Interbank GIRO (IBG)\nTransfer Type Fund Transfer\nBeneficiary Bank RHB Islamic Bank Berhad\nBeneficiary Name D & D CONTROL (M) SDN BHD\nBeneficiary Account No 21246660001343\nRecipient Reference NSA32010055160/54261\nAmount MYR 20.00\nFee MYR 0.00\nTotal Fee MYR 0.00\nApproval Matrix Rule\nUser Role User Name Approval Status Approval Date Time\nAuthorizer LEONG YEW SENG Approved 12-Jan-2021 16:34:16\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "NSA32010055160",
+      "21353115",
+      "2101120021353115",
+      "2101120021353115SERVICE",
+      "NO21246660001343"
+    ],
+    "amount": "20.00",
+    "date": "12/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "4aadb4df-a042-4b16-9f15-5be295696ad2_21010002 DND D.pdf",
+    "text": "=== PAGE 1 ===\nInterbank GIRO (IBG)\nReference Number: 166840\nTransaction Status: Successful\nTransaction Date/Time: 18-01-2021 09:08:40\nFrom Account: 3815982207 ( Current )\nAmount: RM 85.00\nPayment Type: Funds Transfer\nBeneficiary Bank: RHB Bank\nBeneficiary Account: 21246660001343\nBeneficiary Name: D&D CONTROL (M) SDN BHD\nOther Payment Details:\nRecipient Reference: WHSU5445612 21010002\nBeneficiary ID / IC Checking: Not Required\nInterbank GIRO Service Charge: RM 0.00\nDescription: PAYMENT WHS22110061297\nApproval Status: APPROVE\nNotification to Beneficiary : Nil\nNote:\nThis is a computer generated receipt and does not require a signature.",
+    "bank": "RHB",
+    "ref_ids": [
+      "WHS22110061297",
+      "WHSU5445612",
+      "21010002"
+    ],
+    "amount": "85.00",
+    "date": "18-01-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "53c08aee-6f71-4dfb-aeb2-1eb7978616c2_Receipt.pdf",
+    "text": "=== PAGE 1 ===\nRECEIPT\nDomestic Transfers\nTransfer Information\nTransaction Status : Executed Successfully\nTransaction Reference No. : 202101200085139354\nSource Account : 8603277850/ALLIED SEA PRODUCTS SDN. BHD.(MYR)\nServices : Interbank GIRO (IBG)\nBeneficiary Bank Information\nBank Name : RHB BANK BHD\nBeneficiary Account Information\nAccount No. : 21246660001343\nName : D&D Control (M) Sdn Bhd\nValidate Beneficiary ID : Yes\nBeneficiary ID : Business Registration No. : 923103K\nAdditional Information\nAmount : MYR 152.00\nTransaction Fee : MYR 0.10\nTax Rate : 0.00 %\nTax Amount : MYR 0.00\nTotal Debit Amount : MYR 152.10\nRecipient's Reference : Allied Sea Products\nOther Payment Details : WHS22110059486-CN\nRemarks : WHS22110059486-CN\nPurpose Code Category :\nPurpose Code :\nBeneficiary Notification\nBeneficiary Email : acct@aspmy.com;dndopnpn@dnd.com.my\nInstruction Mode\nToday : 20-Jan-2021\n* This receipt is generated by BizChannel@CIMB",
+    "bank": "RHB",
+    "ref_ids": [
+      "202101200085139354",
+      "202101200085139354SOURCE",
+      "WHS22110059486",
+      "8603277850",
+      "21246660001343"
+    ],
+    "amount": "152.00",
+    "date": "20-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "584ab260-7a1d-4951-90db-b09e8bfc1ec9_QPV 0253 11 D D CONTROL.pdf",
+    "text": "=== PAGE 1 ===\nDomestic Transfers\nReference No. : 202511070310433039\nSource Account : 8002441094 / QUANTERM LOGISTICS SHAH ALAM QSA (MYR)\nServices : Interbank GIRO (IBG)\nBeneficiary Bank Information\nBank Name : RHB BANK BHD\nBeneficiary Account Information\nAccount No : 21246660001343\nName : D&D CONTROL (M) SDN BHD\nValidate Beneficiary ID : No\nNote:\nYes (Please ensure the Beneficiary ID Type & Account Number is the same as maintained at the\nBeneficiary's bank.\nBeneficiary ID keyed in will be used for validation.)\nNo (Beneficiary ID Validation is not required. ONLY Account Number will be validated at Beneficiary\nbank.)\nAdditional Information\nAmount : MYR 240.00\nTransaction Fee : MYR 0.10\nTax Rate : 0.00 %\nTax Amount : MYR 0.00\nTotal Debit Amount : MYR 240.10\nRecipient's Reference : QPK 251174696\nOther Payment Details : QPV 0253 11\nRemarks : DND 2510210\nPurpose Code Category :\nPurpose Code :\nBeneficiary Notification\nBeneficiary Email : zainudin@rodamulti.com\nInstruction Mode\nToday : 07-Nov-2025\nClose",
+    "bank": "RHB",
+    "ref_ids": [
+      "202511070310433039",
+      "202511070310433039SOURCE",
+      "21246660001343",
+      "QPK251174696",
+      "8002441094",
+      "251174696"
+    ],
+    "amount": "240.00",
+    "date": "07-Nov-2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "59d288ea-a359-4117-97ec-801bf21b680f_20250912) DnD PAYMENT SLIP.PDF.pdf",
+    "text": "=== PAGE 1 ===\nRequest ID: 25255000974\nPrinted On: 12 Sep 2025 16:35 GMT+8\nRequested by: SHTAN1\n财务交易电子回单\nFinancial Transaction Electronic Bank Advice\n交易编号\nMY02202509120000206771\nTxn Ref No.\n财务交易类型\nDuitNow iGTB Ref No. 40000934639\nFinancial Txn Type\n交易日期 交易状态\n2025/09/12 16:30 交易完成 Completed\nTxn Date Txn Status\n付款方 Payer 收款方 Beneficiary\n扣账账户名称 名称及地址\nXUANWEI RESOURCES (M) SDN BHD D&D *************** BHD\nDebit Acct Name Name and Addr.\n扣账账户\n100000402818520\nDebit Acct No.\n开户银行 账户号码\nBank of China **********1343\nPayer Bank Acct No./ IBAN\n扣账金额 收款金额\nMYR 21.20 --------\nDebit Amt Txn Amt\n汇率类型 汇率\n-------- --------\nFX Rate Type FX Rate\n附言/用途\nPAYMENT\nPayment Details\n手续费及代理行费\n用 汇费 代理行费用\nMYR 0.00 --------\nFee & Corr. Bank DuitNow Fee Corr. Bank Charge\nCharge\n费用总金额 扣账账户\nMYR 0.00 100000402818520\nTotal Fee Fee Debit Acct\n扣账账户名称 XUANWEI RESOURCES 账户币种\nMYR\nFee Debit Acct Name (M) SDN BHD Fee Debit Cur\n收款银行资料 国家/地区 银行名称\nMalaysia RHB Bank Berhad\nBene. Bank Country/Reg Bank Name\n省/市/自治区 分/支行名称\n-------- --------\nProv/City Branch Name\n支付代码\n--------\nSWIFT Code\n其他资料 收款人账户类别 客户备考号\n-------- --------\nOther Info Bene. Type Cust. Ref.\n交易摘要\nDuitNow Outward/PAYMENT\nParticular\n重要声明 Important Notice:\n1) 本行概不保证本行在此项服务下不时提供的资料及报告属完整、适时、准确或适合客户的任何特定目的。The Bank does not give any\nwarranty that the information and reports made available by the Bank from time to time under this service are complete, timely, accurate or fit for any\nparticular purpose of the Customer.\nPage 1 of 1",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "25255000974",
+      "40934639",
+      "MY02202509120206771",
+      "100402818520"
+    ],
+    "amount": "21.20",
+    "date": "09/12 16",
+    "confidence": 1.0
+  },
+  {
+    "file": "60eb4193-a55e-45c0-9ab6-ccfec3914c27_TT 892993 RM 435.00 YEO-GREENPEN.pdf",
+    "text": "=== PAGE 1 ===\nFund Transfer To 3rd Party Account -Data Input Page 1 of 1\nFund Transfer To 3rd Party Account - Data Input\nSuccessful\nTransaction(s) is successfully sent for approval.\nAccount Transfer Information\nReference Number Date\n210121892993 21-01-2021 12:54:35\nFrom Account To Account\n20101700097247 / GREENPEN FREI 21246660001343 / D&D CONTROL (M) SDN BHD ( RM )\nAmount Fund Transfer Charges\nRM 435.00 RM 0.10\nGST Charges Total Amount to Debit\nRM 0.00 RM 435.10\nIC / ID Number Recipient's Reference\nJHPV21010254\nOther Payment Details Email Address\nKMT32110059688 maladnd@dnd.com\nPayment Advice\nTransfer Type Transfer Date\nPost Dated Transfer 22-01-2021\nInstructions\nClick on Print button to print the page.\nhttps://reflex.rhbgroup.com/rhbcams/corporate/corpFundTransfer3rdParty/ 1/21/2021",
+    "bank": "RHB",
+    "ref_ids": [
+      "JHPV21010254",
+      "DATE210121892993",
+      "FREI21246660001343",
+      "KMT32110059688",
+      "CORPFUNDTRANSFER3RDPARTY",
+      "210121892993",
+      "21246660001343"
+    ],
+    "amount": "435.00",
+    "date": "21-01-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "651b38b0-35b5-497e-9898-556bc6f5c352_21010026.pdf",
+    "text": "=== PAGE 1 ===\nInterbank GIRO (IBG)\nReference Number: 026635\nTransaction Status: Successful\nTransaction Date/Time: 22-01-2021 10:26:34\nFrom Account: 3815982207 ( Current )\nAmount: RM 10.00\nPayment Type: Funds Transfer\nBeneficiary Bank: RHB Bank\nBeneficiary Account: 21246660001343\nBeneficiary Name: D&D CONTROL (M) SDN BHD\nOther Payment Details:\nRecipient Reference: CBHU8630728 21010026\nBeneficiary ID / IC Checking: Not Required\nInterbank GIRO Service Charge: RM 0.00\nDescription: PAYMENT OOL221 10062117\nApproval Status: APPROVE\nNotification to Beneficiary : Nil\nNote:\nThis is a computer generated receipt and does not require a signature.",
+    "bank": "RHB",
+    "ref_ids": [
+      "CBHU8630728",
+      "21010026",
+      "10062117"
+    ],
+    "amount": "10.00",
+    "date": "22-01-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "6a28dfb9-10d3-47d1-b49f-807681a0447b_C780200121153430.pdf",
+    "text": "=== PAGE 1 ===\nCREDIT ADVICE\nDate : 20/01/2021\nDear Sir/Madam,\nOrdering Customer : XXXXXXX0151\nOn request of our customer, we have effected payment to your Account Account No.\nas per the details below: Ordering Customer : PRESTIGE POOLS CONST\nAccount Name\nTransaction Details\nTransaction Reference No. : C780200121153430 Payment Type : Domestic Fund Transfer - IBG\nValue Date : 20-01-2021 Beneficiary Name : D D CONTROL (M) SDN BHD\nAmount (MYR) : 50.00 Beneficiary Account No. : XXXXXXXXXX1343\nBeneficiary Bank : RHBB,RHB BANK BHD\nBank Reference No. : IBGCMPRHBB2101200001220\nRecipient Reference : INV: WHS22110061839\nOther Payment Details : -\nDisclaimer\nThis Electronic Mail (including any attachments) may contain confidential, proprietary,privileged and/or private information. The information is intended to be for the use of the authorized person or entity\ndesignated above. If you are not the intended recipient of this message, please notify Hong Leong Bank immediately, and delete the message and any attachments. Any disclosure, reproduction,\ndistribution or other use of this message or any attachments by an individual or entity other than the intended recipient is prohibited.",
+    "bank": "RHB",
+    "ref_ids": [
+      "C780200121153430",
+      "IBGCMPRHBB2101201220",
+      "C780200121153430PAYMENT",
+      "IBGCMPRHBB2101201220RECIPIENT",
+      "WHS22110061839"
+    ],
+    "amount": null,
+    "date": "20/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "6c9738f4-3881-4f53-b357-0d92bb3cdd34_D&D CONTROL (WHS22110061680, 61691, 61710 & 61735).pdf",
+    "text": "=== PAGE 1 ===\nConnect BIZ - Transaction Status Detail https://www.hongleongonline.com.my/biz/common/authorization/pay...\n1 of 2 21/1/2021, 8:45 am\n=== PAGE 2 ===\nConnect BIZ - Transaction Status Detail https://www.hongleongonline.com.my/biz/common/authorization/pay...\nPayment Initiated *Funds Received by Beneficiary\nTransfer Day Transfer Time Day Time\nMonday - Before 5:00am Same Business Day By 11:00am\nFriday(Business Days)\n5:00am to 8:00am Same Business Day By 2:00pm\n8:00am to 11:00am Same Business Day By 5:00pm\n11:00am to 2:00pm Same Business Day By 8:20pm\n2:00pm to 5:00pm Same Business Day By 11:00pm\nAfter 5:00pm Next Business Day By 11:00am\nSaturday, Sunday and Anytime Next Business Day By 11:00am\nFederal Territory Public\nHolidays(Non-Business\nDays)\nUser ID Role Authorization Status Trans Status\nDate, Time User Action\n20/01/2021 14:10:04 ctfrankmaker1 Maker+Observer CREATE Pending N/A\n21/01/2021 08:17:47 ctfrankautho1 Authorizer+Observer APPROVE Pending Submitted for Processing\n21/01/2021 08:18:13 System System Processed-Multiple Approval APPROVE Approved Successful\n2 of 2 21/1/2021, 8:45 am",
+    "bank": "Hong Leong Bank",
+    "ref_ids": [
+      "N-BUSINESS",
+      "CTFRANKMAKER1",
+      "CTFRANKAUTHO1"
+    ],
+    "amount": null,
+    "date": "21/1/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "6cc9ed7e-6fab-4658-bd03-77463d6be4e1_10061780.pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101200021713787\nService Reference No.: 214684\nPrinted Date/Time: 20/01/2021 09:22 AM\nPending Approval Transaction (Acknowledgement)\nProduct Type Interbank GIRO (IBG)\nReference No 2101200021713787\nService Reference No 214684\nApproval Status Processed\nFrom Account 3193110714 / SAGA FREIGHTER SDN BHD\nBeneficiary Bank RHB Islamic Bank Berhad\nTransfer Type Fund Transfer\nD&D CONTROL (M) SDN BHD\nBeneficiary Name\nName provided will not be validated. For receiving bank's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you proceed with the transaction.\nRecipient Reference INV: COS22110061780\nOther Payment Details CNTR NO: CSNU7882111\nAmount MYR 10.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nPayment Date 20-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101200021713787\nService Reference No.: 214684\nPrinted Date/Time: 20/01/2021 09:22 AM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker TAN KONG HIN 20-Jan-2021 09:22:01 Created\nAuthoriser\nAUTHORIS\nAny 1 from Group\nER-SAGA\nAUTHORISER-SAGA TAN KONG HIN 20-Jan-2021 09:22:24 Approved\nFREIGHET\nFREIGHETR SDN BHD\nR SDN BHD\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "CSNU7882111",
+      "21713787",
+      "60001343",
+      "2101200021713787",
+      "2101200021713787SERVICE",
+      "NO2101200021713787",
+      "NO21246660001343",
+      "COS22110061780"
+    ],
+    "amount": "10.00",
+    "date": "20-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "74325e40-6561-4f93-b2ce-e5037acded78_10061906.pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101210021773610\nService Reference No.: 583204\nPrinted Date/Time: 21/01/2021 11:02 AM\nPending Approval Transaction (Acknowledgement)\nProduct Type Interbank GIRO (IBG)\nReference No 2101210021773610\nService Reference No 583204\nApproval Status Processed\nFrom Account 3193110714 / SAGA FREIGHTER SDN BHD\nBeneficiary Bank RHB Islamic Bank Berhad\nTransfer Type Fund Transfer\nD&D CONTROL (M) SDN BHD\nBeneficiary Name\nName provided will not be validated. For receiving bank's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you proceed with the transaction.\nRecipient Reference INV: COS22110061906\nOther Payment Details CNTR NO: CCLU6917220\nAmount MYR 10.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nPayment Date 21-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101210021773610\nService Reference No.: 583204\nPrinted Date/Time: 21/01/2021 11:02 AM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker TAN KONG HIN 21-Jan-2021 11:01:37 Created\nAuthoriser\nAUTHORIS\nAny 1 from Group\nER-SAGA\nAUTHORISER-SAGA TAN KONG HIN 21-Jan-2021 11:02:03 Approved\nFREIGHET\nFREIGHETR SDN BHD\nR SDN BHD\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "CCLU6917220",
+      "21773610",
+      "60001343",
+      "2101210021773610",
+      "2101210021773610SERVICE",
+      "NO2101210021773610",
+      "NO21246660001343",
+      "COS22110061906"
+    ],
+    "amount": "10.00",
+    "date": "21-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "7665fcc0-5046-47ee-8612-505854590dc6_CIMBTransferAdvice202101211612585.pdf",
+    "text": "=== PAGE 1 ===\nPAYMENT ADVICE\nCIMB Reference No. : 202101212123404359\nCustomer Reference No. : PV21010108\nDate : 21/01/2021\nTo : D&D CONTROL (M) SDN BHD\nDear Sir / Madam,\nWe have received a request from TRI-MODE SYSTEM (PENANG) SDN BHD to credit the amount of MYR 1,380.00 to\nyour account with RHB BANK BHD (account number: ************1343) on 21/01/2021\nPlease contact TRI-MODE SYSTEM (PENANG) SDN BHD if you do not receive the payment on time.\nDetails below are provided by TRI-MODE SYSTEM (PENANG) SDN BHD.\nPayment Details :\nReference No. Date Description Amount (MYR)\nWHS22010058808,09 20/01/2021 WHS22010058808,09 1,380.00\n*Note: Payment is made at the direction of, and based on information provided by, the originator of the payment instruction. If incorrect information is\ngiven or the originator revokes the payment instruction or any other circumstance arises which is beyond our control, this may result in payment being\ndelayed or not received. The actual date of credit of funds is also dependent on the clearing system(s) used and the beneficiary’s bank.",
+    "bank": "RHB",
+    "ref_ids": [
+      "202101212123404359",
+      "202101212123404359CUSTOMER",
+      "PV21010108",
+      "WHS22010058808"
+    ],
+    "amount": "1,380.00",
+    "date": "21/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "7724d344-5913-4e39-b76b-d28fe5acce0e_C716210121112903.pdf",
+    "text": "=== PAGE 1 ===\nCREDIT ADVICE\nDate : 21/01/2021\nDear Sir/Madam,\nOrdering Customer : XXXXXXX1976\nOn request of our customer, we have effected payment to your Account Account No.\nas per the details below: Ordering Customer : TANJUNG MARINE SDN B\nAccount Name\nTransaction Details\nTransaction Reference No. : C716210121112903 Payment Type : Domestic Fund Transfer - IBG\nValue Date : 21-01-2021 Beneficiary Name : D AND D CONTROL (M) SDN BHD\nAmount (MYR) : 20.00 Beneficiary Account No. : XXXXXXXXXX1343\nBeneficiary Bank : RHBB,RHB BANK BHD\nBank Reference No. : IBGCMPRHBB2101210000902\nRecipient Reference : OOL22110062019\nOther Payment Details : COS22110061973\nDisclaimer\nThis Electronic Mail (including any attachments) may contain confidential, proprietary,privileged and/or private information. The information is intended to be for the use of the authorized person or entity\ndesignated above. If you are not the intended recipient of this message, please notify Hong Leong Bank immediately, and delete the message and any attachments. Any disclosure, reproduction,\ndistribution or other use of this message or any attachments by an individual or entity other than the intended recipient is prohibited.",
+    "bank": "RHB",
+    "ref_ids": [
+      "OOL22110062019",
+      "C716210121112903",
+      "IBGCMPRHBB2101210902",
+      "C716210121112903PAYMENT",
+      "IBGCMPRHBB2101210902RECIPIENT",
+      "COS22110061973"
+    ],
+    "amount": null,
+    "date": "21/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "81678504-13c6-4f86-a31e-2b591ba676ea_IBG SLIP DnD OIPG20110025.pdf",
+    "text": "=== PAGE 1 ===\nDuitNow\nEvent Details\nGroup ID: MULTRANS\nProduct Code: DuitNow\nType: New\nBIB Ref: FT21010031294101\nTransaction ID: 21012202901733\nIssuing Bank Name: UOBM\nFund Transfer Amount: MYR 27,900.00\n1 / 2\n22/01/2021 DuitNow\n=== PAGE 2 ===\nGeneral Details\nCompany ID: MULTRANS Bank: UOBM\nTransfer From: MYR 1723054708 BIB Ref: FT21010031294101\nMULTI-TRANS SDN. BHD.\nApplication 22/01/2021(dd/mm/yyyy)\nPayment Type DuitNow\nDate:\nProcessing Mode: Pay to Account Number\nBeneficiary Details\nName: D&D CONTROL (M) SDN BHD Bank Code: RHBBMYKL\nAccount: 21246660001343 Bank Name: RHB Bank Berhad\nBeneficiary Resident\nResidence\nStatus:\nCredit Type Current Account\nTransaction Details\nTransaction MYR27,900.00 Transfer Date: 22/01/2021(dd/mm/yyyy)\nAmount: Recipient DEMURRAGE LNLUSNH20216530\nOther Payment PGPV21010067 Reference:\nDetails: Charges: MYR0.00\nPayment OIPG20110025 Payment Details: PGPV21010067\nDescription:\n2 / 2\n22/01/2021 DuitNow",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "OIPG20110025",
+      "21012202901733",
+      "FT21010031294101",
+      "PGPV21010067",
+      "FT21010031294101TRANSACTION",
+      "MYR1723054708",
+      "LNLUSNH20216530",
+      "1723054708",
+      "21246660001343"
+    ],
+    "amount": "27,900.00",
+    "date": "22/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "85b5f3b4-cdb2-4bcb-9331-5d6e121a7b62_TT 242391 RM 200.00 MN AGENCIES.pdf",
+    "text": "=== PAGE 1 ===\n1/18/2021 Connect BIZ - Transaction Status Detail\nTransaction Status Detail\nInterbank Giro\nBIZ Reference No. BIZIB242391\nIBG Reference No. IBGCMSRHB18012021242392\nTransaction Date, Time 18/01/2021 16:52:55\nTransaction Status Successful\nPayer Details\nFrom Account 32600005290 - MN AGENCIES SDN BHD\nBeneficiary Details\nTo Account 21246660001343\nBeneficiary Name D&D CONTROL (M) SDN\nBeneficiary Bank RHB BANK BHD\nRecipient's Reference DET BL 024A573285\nOther Payment Details\nPayment Details\nID Check No\nContact No.\nPayment Date 18/01/2021\nAmount (MYR) 200.00\nIBG Charges (MYR) 0.10\nGst Rate - Service Charge (%) 0.00\nGst Amount - Service Charge (MYR) 0.00\nhttps://www.hongleongonline.com.my/biz/common/authorization/payment_view_successfail_trx.html?view=&_sourcePage=x9Mm2YUvZa9la7uShisLN9De-akppkYYFdFojSPnJTxcC1F_6CUa-heF_IPw… 1/3\n=== PAGE 2 ===\n1/18/2021 Connect BIZ - Transaction Status Detail\nTotal Amount (MYR) 200.10\nNotifications\nBeneficiary Payment Alert Email Notifications: mnagencies.acct@gmail.com\n: mnagencies.imp@gmail.com\nSMS Notification: -\nNotes\nPlease ensure that the Beneficiary Details entered are accurate and correct.\nInterbank GIRO Transfer to Beneficiary Account will be based on the account number provided.\nPlease provide Beneficiary ID if you require Beneficiary ID to be checked before fund transfer.\nFor unsuccessful transactions, refund will be credited back to your account upon receipt from the beneficiary bank.\nA notification email will be sent to your respective payment users upon successful initiation of every transaction.\nInterbank GIRO Transfer\nPayment Initiated *Funds Received by Beneficiary\nTransfer Day Transfer Time Day Time\nMonday - Before 5:00am Same Business Day By 11:00am\nFriday(Business Days)\n5:00am to 8:00am Same Business Day By 2:00pm\n8:00am to 11:00am Same Business Day By 5:00pm\n11:00am to 2:00pm Same Business Day By 8:20pm\n2:00pm to 5:00pm Same Business Day By 11:00pm\nAfter 5:00pm Next Business Day By 11:00am\nSaturday, Sunday and Anytime Next Business Day By 11:00am\nFederal Territory Public\nHolidays(Non-Business\nDays)\n*Under normal circumstances\nhttps://www.hongleongonline.com.my/biz/common/authorization/payment_view_successfail_trx.html?view=&_sourcePage=x9Mm2YUvZa9la7uShisLN9De-akppkYYFdFojSPnJTxcC1F_6CUa-heF_IPw… 2/3\n=== PAGE 3 ===\n1/18/2021 Connect BIZ - Transaction Status Detail\nAuthorization History\nResults 1 - 2 of 2\nUser ID Role Authorization Status Trans Status Comme\nDate, Time User Action\n18/01/2021 16:41:59 mnagencies Maker+Observer CREATE Pending N/A\n18/01/2021 16:53:03 mnagencies12 Authorizer+Observer APPROVE Approved Successful APPROV\nResults 1 - 2 of 2\nhttps://www.hongleongonline.com.my/biz/common/authorization/payment_view_successfail_trx.html?view=&_sourcePage=x9Mm2YUvZa9la7uShisLN9De-akppkYYFdFojSPnJTxcC1F_6CUa-heF_IPw… 3/3",
+    "bank": "Hong Leong Bank",
+    "ref_ids": [
+      "N-BUSINESS",
+      "BIZIB242391",
+      "IBGCMSRHB18012021242392",
+      "024A573285",
+      "X9MM2YUVZA9LA7USHISLN9DE",
+      "MNAGENCIES12"
+    ],
+    "amount": null,
+    "date": "18/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "892dc368-7692-4bd0-80fd-381dcc4ad9e3_DND - WHS22110062072-WHS22110062070-WHS22110062065 - MYR300.pdf",
+    "text": "=== PAGE 1 ===\n1/25/2021 BIBPlus - Open Reporting\nEvent Details\nRelease Date/Time: Monday, January 25, 2021 4:07:48 PM MYT\nGroup ID: ACUITYINTERNATIONAL\nProduct Code: DuitNow\nType: New\nBIB Ref: FT21010031430451\nTransaction ID: 21012503327793\nIssuing Bank Name: UOBM\nFund Transfer\nAmount: MYR 300.00\nGeneral Details\nCompany ID: ACUITYINTERNATIONAL Bank: UOBM\nTransfer From: MYR 2313055851 ACUITY INTERNATIONAL SDN. BHD. BIB Ref: FT21010031430451\nPayment Type: DuitNow Application Date: 25/01/2021 (dd/mm/yyyy)\nProcessing Mode: Pay to Account Number\nBeneficiary Details\nBeneficiary Account: 21246660001343 Bank Code: RHBBMYKL\nBeneficiary Name: D&D CONTROL (M) SDN Bank Name : RHB Bank Berhad\nBHD\nBeneficiary Residence Resident\nStatus:\nCredit Type Either saving or current account\nTransaction Details\nTransaction Amount: MYR 300.00 Transfer Date: 25/01/2021 (dd/mm/yyyy)\nOther Payment INVOICE NO: Recipient Reference: INV 62072 - 62070 - 62065\nDetails: 1.WHS22110062072\nCharges: MYR 0.00\n2.WHS22110062070\n3.WHS22110062065\nVESSEL NAME: WANHAI\n283 BL NO: 025A703969\nPayment Description: INVOICE NO:\n1.WHS22110062072\n2.WHS22110062070\n3.WHS22110062065\nVESSEL NAME: WANHAI\n283 BL NO: 025A703969\nBalance of Payments Details\nPurpose Code and Services-Merchanting trade in Malaysia Further Purpose DETENTION CHARGES\nDescription: Description:\nTransactor\nRelationship: N - Non-Affiliated\nBeneficiary\nOriginating Country: MY\nhttps://my.bibplus.uobgroup.com/BIB/portal/screen/ReportingPopup?option=FULL&referenceid=FT21010031430451&tnxid=21012503327793&produc… 1/1",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "N-AFFILIATED",
+      "21012503327793",
+      "FT21010031430451",
+      "025A703969",
+      "FT21010031430451TRANSACTION",
+      "FT21010031430451PAYMENT",
+      "MYR2313055851",
+      "WHS22110062072",
+      "WHS22110062070",
+      "WHS22110062065",
+      "2313055851"
+    ],
+    "amount": "300.00",
+    "date": "25/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "8ae868d4-9f2f-48c1-a692-b1aa82df9661_DND 1.pdf",
+    "text": "=== PAGE 1 ===\nFund Transfer To 3rd Party Account - Data Input\nSuccessful\nTransaction(s) is successfully sent for approval.\nAccount Transfer Information\nReference Number Date\n210122944777 22-01-2021 18:27:08\nFrom Account To Account\n20816435054800 / FOONG H 21246660001343 / D&D CONTROL (M) SDN BHD\nWA PAP\nAmount Fund Transfer Charges\nRM 20.00 RM 0.10\nGST Charges Total Amount to Debit\nRM 0.00 RM 20.10\nIC / ID Number Recipient's Reference\nPVRHBE2101/053\nOther Payment Details Email Address\nIPHK2011122-2nd LOT\nPayment Advice\nTransfer Type Transfer Date\nPost Dated Transfer 25-01-2021\nInstructions\nClick on Print button to print the page.",
+    "bank": "RHB",
+    "ref_ids": [
+      "PVRHBE2101",
+      "DATE210122944777",
+      "IPHK2011122",
+      "210122944777",
+      "21246660001343"
+    ],
+    "amount": "20.00",
+    "date": "22-01-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "91d4ad24-4535-45ac-b478-2d3fd29557ee_MYGP210112408216_D&D_OOL22110060507 & RCL221PEN2020003733_SOON CHUAN HONG & CIPLI.pdf",
+    "text": "=== PAGE 1 ===\n1/12/2021 OCBC - Velocity@ocbc 2.0\nTransfer to a bank locally\nGIRO Payment\nSuccess!\nThis has been sent for approval\nOCBC reference no. MYGP210112408216\nCreated on 12 Jan 2021, 3:03 PM\nFrom To\nYour Account Beneficiary Bank\n1301035197 - MYR TAS SHIPPING N TRANSPORT SDN BHD RHB BANK KUALA LUMPUR\nValue Date Amount Beneficiary Account No.\n12 Jan 2021 25.00MYR 21246660001343\nBeneficiary Name\nD&D CONTROL (M) SDN BH\nBeneficiary ID Type Beneficiary ID No. -\n-\nRecipient's Reference Other Payment Details\nOOL22110060507 RCL221PEN2020003733\nOther Details\nYour Reference No.\nNotify Beneficiary\nMYGP210112408216\nEmail Address\ncheekeet@taship.com\nMessage to Beneficiary\nINVOICE NO: OOL22110060507\nCONTAINER NO: OOLU8364789\nCIPLI IND\nINVOICE NO: RCL221PEN2020003733\nCONTAINER NO: REGU3211284\nSOON CHUAN GONG\nhttps://velocity.ocbc.com/tran.view?do=ReLoad 1/1",
+    "bank": "RHB",
+    "ref_ids": [
+      "OOL22110060507",
+      "OOLU8364789",
+      "RCL221PEN2020003733",
+      "REGU3211284",
+      "MYGP210112408216",
+      "MYGP210112408216CREATED",
+      "RCL221PEN2020003733CONTAINER",
+      "BANK1301035197",
+      "1301035197",
+      "21246660001343"
+    ],
+    "amount": "25.00",
+    "date": "1/12/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "951d7f7f-2bc5-4caf-b1c1-2a2e56f2f98c_10061924.pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101210021773883\nService Reference No.: 589405\nPrinted Date/Time: 21/01/2021 11:05 AM\nPending Approval Transaction (Acknowledgement)\nProduct Type Interbank GIRO (IBG)\nReference No 2101210021773883\nService Reference No 589405\nApproval Status Processed\nFrom Account 3193110714 / SAGA FREIGHTER SDN BHD\nBeneficiary Bank RHB Islamic Bank Berhad\nTransfer Type Fund Transfer\nD&D CONTROL (M) SDN BHD\nBeneficiary Name\nName provided will not be validated. For receiving bank's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you proceed with the transaction.\nRecipient Reference INV: HMM22110061924\nOther Payment Details CNTR NO: BSIU2622572\nAmount MYR 10.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nPayment Date 21-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101210021773883\nService Reference No.: 589405\nPrinted Date/Time: 21/01/2021 11:05 AM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker TAN KONG HIN 21-Jan-2021 11:05:12 Created\nAuthoriser\nAUTHORIS\nAny 1 from Group\nER-SAGA\nAUTHORISER-SAGA TAN KONG HIN 21-Jan-2021 11:05:33 Approved\nFREIGHET\nFREIGHETR SDN BHD\nR SDN BHD\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "BSIU2622572",
+      "21773883",
+      "60001343",
+      "2101210021773883",
+      "2101210021773883SERVICE",
+      "NO2101210021773883",
+      "NO21246660001343",
+      "HMM22110061924"
+    ],
+    "amount": "10.00",
+    "date": "21-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "9702193a-62d5-4c17-84a2-b023f1310f67_DEMMURAGE PAYMENT.pdf",
+    "text": "=== PAGE 1 ===\nRECEIPT\nDuitNow\nTransaction Status : Executed Successfully\nTransaction Reference No. : 202101200085153688\nSource Account : 8603478285 / PERUSAHAAN IMPIAN MAJU SDN BHD (MYR)\nBeneficiary Information\nTransfer To : Account No.\nDuitNow ID : 21246660001343 / D&D CONTROL (M) SDN BHD\nAdditional Information\nAmount : MYR 1,535.00\nTransaction Charges : MYR 0.00\nTax Rate : 0.00 %\nTax Amount : MYR 0.00\nTotal Charges : MYR 0.00\nTotal Debit Amount : MYR 1,535.00\nRecipient Reference : P2118\nOther Payment Details : P2118\nRemarks : -\nPurpose Code Category : -\nPurpose Code : -\nInstruction Mode\nToday : 20-Jan-2021\n* This receipt is generated by BizChannel@CIMB",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "202101200085153688",
+      "21246660001343",
+      "202101200085153688SOURCE",
+      "8603478285"
+    ],
+    "amount": "1,535.00",
+    "date": "20-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "988d0f1f-a6e4-44e4-84dc-c4c383bffb6e_MYGP210125728492_D&D_KMT22110060887(F) & KMT22110059440(P1)_SG STEEL_DEMURRAGE.pdf",
+    "text": "=== PAGE 1 ===\n1/25/2021 OCBC - Velocity@ocbc 2.0\nTransfer to a bank locally\nGIRO Payment\nSuccess!\nThis has been sent for approval\nOCBC reference no. MYGP210125728492\nCreated on 25 Jan 2021, 2:31 PM\nFrom To\nYour Account Beneficiary Bank\n1301035197 - MYR TAS SHIPPING N TRANSPORT SDN BHD RHB BANK KUALA LUMPUR\nValue Date Amount Beneficiary Account No.\n25 Jan 2021 2,435.00MYR 21246660001343\nBeneficiary Name\nD&D CONTROL (M) SDN BH\nBeneficiary ID Type Beneficiary ID No. -\n-\nRecipient's Reference Other Payment Details\nKMT22110060887(F) KMT22110059440(P1)\nOther Details\nYour Reference No.\nNotify Beneficiary\nMYGP210125728492\nEmail Address\ncheekeet@taship.com\nMessage to Beneficiary\nINVOICE NO: KMT22110060887(F) &\nKMT22110059440(P1)\nCONTAINER NO: KMTU9314870\nDEMURRAGE - S.G STEEL\nhttps://velocity.ocbc.com/tran.view?do=ReLoad 1/1",
+    "bank": "RHB",
+    "ref_ids": [
+      "KMT22110060887",
+      "KMTU9314870",
+      "MYGP210125728492",
+      "MYGP210125728492CREATED",
+      "BANK1301035197",
+      "KMT22110059440",
+      "1301035197",
+      "21246660001343"
+    ],
+    "amount": "2,435.00",
+    "date": "1/25/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "9b5ae122-e77f-42d9-a589-7f76527493ea_DND CONTROL-RM340-033A509559.pdf",
+    "text": "=== PAGE 1 ===\nInterbank Giro\nEvent Details\nRelease Date/Time: Tuesday, January 19, 2021 2:44:18 PM MYT\nGroup ID: ESTRATTOSDNBHD\nProduct Code: Interbank Giro\nType: New\nBIB Ref: FT21010031140593\nTransaction ID: 21011902375770\nIssuing Bank Name: UOBM\nOther Payment Details: INV WHS22010059245\n1 / 2\n19/01/2021 Interbank Giro\n=== PAGE 2 ===\nGeneral Details\nCompany ID: ESTRATTOSDNBHD Bank: UOBM\nTransfer From: MYR 2653007088 ESTRATTO BIB Ref: FT21010031140593\nSDN. BHD.\nApplication 19/01/2021(dd/mm/yyyy)\nPayment Type Interbank Giro\nDate:\nTemplate Name: D AND D CONTROL\nBeneficiary Details\nName: D AND D CONTROL M SB Bank/Branch 100002186\nAccount: 21246660001343 Codes:\nBeneficiary Resident Bank Name: RHB BANK\nResidence\nStatus:\nTransaction Details\nAmount: MYR340.00 Transfer Date: 19/01/2021(dd/mm/yyyy)\nOther Payment INV WHS22010059245 Recipient BL 033A509559\nDetails: Reference:\nPayment INV WHS22010059245\nInformation:\nPayment BL 033A509559\nDescription:\nRequest ID Validation Details\nRequest ID No\nVerification:\n2 / 2\n19/01/2021 Interbank Giro",
+    "bank": "RHB",
+    "ref_ids": [
+      "21011902375770",
+      "FT21010031140593",
+      "FT21010031140593TRANSACTION",
+      "MYR2653007088",
+      "WHS22010059245",
+      "033A509559",
+      "2653007088",
+      "21246660001343"
+    ],
+    "amount": "340.00",
+    "date": "19/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "9b70cd86-42fd-4dcf-9f37-74e4a7accfc9_TT 978682 RM 150.00 KEKAL.pdf",
+    "text": "=== PAGE 1 ===\n1/22/2021 Bank Islam IB\nDuitNow Confirmation (Step 3 of 3)\nTransaction Status\nStatus : Successful\nDate / Time : 22-Jan-2021 14:43:45 MYT\nReference Number : 136016978682\nTransfer Details\nFrom Account : Savings Account - 01087020125017 MYR\nTransfer To : Account Number\nTransfer Type : Fund Transfer to Savings/Current\nTransfer Amount : MYR 150.00\nEffective Date : Today\nRecipient Details\nRecipient Bank : RHB Bank Berhad\nRecipient Account 21246660001343\nRecipient Name : D&D CONTROL (M) SDN BHD\nRecipient Reference cpc\n:\nOther Payment kekal tulen\nDetails :\n© Bank Islam Malaysia Berhad (98127-X). All rights reserved.\nhttps://www.bankislam.biz 1/1",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "136016978682",
+      "01087020125017"
+    ],
+    "amount": "150.00",
+    "date": "1/22/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "9c2c2755-b3b6-4907-b3ba-013e644205bf_PAYMENTADVICE.PDF",
+    "text": "=== PAGE 1 ===\nLatexx Manufacturing Sdn. Bhd.\nLot 18374, Jalan Perusahaan 3,\nKamunting Industrial Estate,\n34600 Kamunting, Taiping, Perak, Malaysia\n(Sales Tax NO: A11-1808-21024723)\n(Company No: 198701007271 (165989-U))\nD and D CONTROL (M) SDN BHD\nPayment Advice Letter\n5050 NB TOWER, JALAN BAGAN LUAR,\n12000 Butterworth\nNumber / Date: 2000023681 / 24.12.2020\nYour account with us: 0020000312\nContact person: Team Finance\nPhone: +605 829 5555\nFax: +605 829 5590\nMail: dl.finance.my@semperitgroup.com\nDear Sir/Madam,\nWe have settled the items listed below by bank transfer no 2000023681 to\naccount no. 21246660001343 at RHB Bank Berhad Bank subject to the goods / services supplied\nand invoice therefore being in order.\nCash\nDocument No. Doc. Date Reference Amount Currency\ndiscount\n5130120828 Dec 9, 2020 WHS2201006577 0.00 10.00 MYR\nTotal 10\nLatexx Manufacturing Sdn Bhd\nLot 18374, Jalan Perusahaan 3,\nKamunting Industrial Estate,\n34600 Kamunting,\nPerak Darul Ridzuan, Malaysia\nRegistration No. (UEN) 198701007271(165989-U)\nSales Tax No: A11-1808-21024723",
+    "bank": "RHB",
+    "ref_ids": [
+      "A11-1808-21024723",
+      "198701007271",
+      "WHS2201006577",
+      "21024723",
+      "5130120828"
+    ],
+    "amount": "10",
+    "date": "Dec 9, 2020",
+    "confidence": 1.0
+  },
+  {
+    "file": "9d459d0f-467c-46ab-a8c7-d80a425d39c9_DnD CONTROL - EMC12511748202.pdf",
+    "text": "=== PAGE 1 ===\nRequest ID: 25324000680\nPrinted On: 20 Nov 2025 15:13 GMT+8\nRequested by: C1234\n财务交易电子回单\nFinancial Transaction Electronic Bank Advice\n交易编号\nMY02202511200000294789\nTxn Ref No.\n财务交易类型\nDuitNow iGTB Ref No. 40001189646\nFinancial Txn Type\n交易日期 交易状态\n2025/11/20 15:04 交易完成 Completed\nTxn Date Txn Status\n付款方 Payer 收款方 Beneficiary\n扣账账户名称 TOPASIA INTERNATIONAL LOGISTICS SDN 名称及地址\nD&D *************** BHD\nDebit Acct Name BHD Name and Addr.\n扣账账户\n100000403688054\nDebit Acct No.\n开户银行 账户号码\nBank of China **********1343\nPayer Bank Acct No./ IBAN\n扣账金额 收款金额\nMYR 10.60 --------\nDebit Amt Txn Amt\n汇率类型 汇率\n-------- --------\nFX Rate Type FX Rate\n附言/用途\nEMC12511748202\nPayment Details\n手续费及代理行费\n用 汇费 代理行费用\nMYR 0.00 --------\nFee & Corr. Bank DuitNow Fee Corr. Bank Charge\nCharge\n费用总金额 扣账账户\nMYR 0.00 100000403688054\nTotal Fee Fee Debit Acct\nTOPASIA\n扣账账户名称 账户币种\nINTERNATIONAL MYR\nFee Debit Acct Name Fee Debit Cur\nLOGISTICS SDN BHD\n收款银行资料 国家/地区 银行名称\nMalaysia RHB Bank Berhad\nBene. Bank Country/Reg Bank Name\n省/市/自治区 分/支行名称\n-------- --------\nProv/City Branch Name\n支付代码\n--------\nSWIFT Code\n其他资料 收款人账户类别 客户备考号\n-------- --------\nOther Info Bene. Type Cust. Ref.\n交易摘要\nDuitNow Outward/EMC12511748202\nParticular\n重要声明 Important Notice:\n1) 本行概不保证本行在此项服务下不时提供的资料及报告属完整、适时、准确或适合客户的任何特定目的。The Bank does not give any\nwarranty that the information and reports made available by the Bank from time to time under this service are complete, timely, accurate or fit for any\nparticular purpose of the Customer.\nPage 1 of 1",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "EMC12511748202",
+      "25324000680",
+      "40001189646",
+      "MY02202511200294789",
+      "100403688054"
+    ],
+    "amount": "10.60",
+    "date": "11/20 15",
+    "confidence": 1.0
+  },
+  {
+    "file": "a08151c5-f9ba-45a7-8290-61bd72d4e13a_10061847.pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101200021713670\nService Reference No.: 212292\nPrinted Date/Time: 20/01/2021 09:20 AM\nPending Approval Transaction (Acknowledgement)\nProduct Type Interbank GIRO (IBG)\nReference No 2101200021713670\nService Reference No 212292\nApproval Status Processed\nFrom Account 3193110714 / SAGA FREIGHTER SDN BHD\nBeneficiary Bank RHB Islamic Bank Berhad\nTransfer Type Fund Transfer\nD&D CONTROL (M) SDN BHD\nBeneficiary Name\nName provided will not be validated. For receiving bank's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you proceed with the transaction.\nRecipient Reference INV: COS22110061847\nOther Payment Details CNTR NO: CSNU1067591\nAmount MYR 10.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nPayment Date 20-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101200021713670\nService Reference No.: 212292\nPrinted Date/Time: 20/01/2021 09:20 AM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker TAN KONG HIN 20-Jan-2021 09:20:19 Created\nAuthoriser\nAUTHORIS\nAny 1 from Group\nER-SAGA\nAUTHORISER-SAGA TAN KONG HIN 20-Jan-2021 09:20:50 Approved\nFREIGHET\nFREIGHETR SDN BHD\nR SDN BHD\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "CSNU1067591",
+      "21713670",
+      "60001343",
+      "2101200021713670",
+      "2101200021713670SERVICE",
+      "NO2101200021713670",
+      "NO21246660001343",
+      "COS22110061847"
+    ],
+    "amount": "10.00",
+    "date": "20-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "a1890d40-adea-4ec6-95b0-1550ba5c1ea2_10061990.pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101210021773443\nService Reference No.: 579906\nPrinted Date/Time: 21/01/2021 11:00 AM\nPending Approval Transaction (Acknowledgement)\nProduct Type Interbank GIRO (IBG)\nReference No 2101210021773443\nService Reference No 579906\nApproval Status Processed\nFrom Account 3193110714 / SAGA FREIGHTER SDN BHD\nBeneficiary Bank RHB Islamic Bank Berhad\nTransfer Type Fund Transfer\nD&D CONTROL (M) SDN BHD\nBeneficiary Name\nName provided will not be validated. For receiving bank's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you proceed with the transaction.\nRecipient Reference INV: COS22110061990\nOther Payment Details CNTR NO: RFCU2075386\nAmount MYR 10.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nPayment Date 21-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101210021773443\nService Reference No.: 579906\nPrinted Date/Time: 21/01/2021 11:00 AM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker TAN KONG HIN 21-Jan-2021 10:59:42 Created\nAuthoriser\nAUTHORIS\nAny 1 from Group\nER-SAGA\nAUTHORISER-SAGA TAN KONG HIN 21-Jan-2021 11:00:02 Approved\nFREIGHET\nFREIGHETR SDN BHD\nR SDN BHD\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "RFCU2075386",
+      "21773443",
+      "60001343",
+      "2101210021773443",
+      "2101210021773443SERVICE",
+      "NO2101210021773443",
+      "NO21246660001343",
+      "COS22110061990"
+    ],
+    "amount": "10.00",
+    "date": "21-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "a2eca9c3-ea89-4c85-8f51-621522cf6d7e_DND CONTROL- RM100-033A509559.pdf",
+    "text": "=== PAGE 1 ===\nInterbank Giro\nEvent Details\nRelease Date/Time: Tuesday, January 19, 2021 2:46:50 PM MYT\nGroup ID: ESTRATTOSDNBHD\nProduct Code: Interbank Giro\nType: New\nBIB Ref: FT21010031140775\nTransaction ID: 21011902376844\nIssuing Bank Name: UOBM\nOther Payment Details: INV WHS22110060013\n1 / 2\n19/01/2021 Interbank Giro\n=== PAGE 2 ===\nGeneral Details\nCompany ID: ESTRATTOSDNBHD Bank: UOBM\nTransfer From: MYR 2653007088 ESTRATTO BIB Ref: FT21010031140775\nSDN. BHD.\nApplication 19/01/2021(dd/mm/yyyy)\nPayment Type Interbank Giro\nDate:\nTemplate Name: D AND D CONTROL\nBeneficiary Details\nName: D AND D CONTROL M SB Bank/Branch 100002186\nAccount: 21246660001343 Codes:\nBeneficiary Resident Bank Name: RHB BANK\nResidence\nStatus:\nTransaction Details\nAmount: MYR100.00 Transfer Date: 19/01/2021(dd/mm/yyyy)\nOther Payment INV WHS22110060013 Recipient BL 033A509559\nDetails: Reference:\nPayment INV WHS22110060013\nInformation:\nPayment BL 033A509559\nDescription:\nRequest ID Validation Details\nRequest ID No\nVerification:\n2 / 2\n19/01/2021 Interbank Giro",
+    "bank": "RHB",
+    "ref_ids": [
+      "21011902376844",
+      "FT21010031140775",
+      "FT21010031140775TRANSACTION",
+      "MYR2653007088",
+      "WHS22110060013",
+      "033A509559",
+      "2653007088",
+      "21246660001343"
+    ],
+    "amount": "100.00",
+    "date": "19/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "a3e0a76c-baec-4d47-92da-237361ae7310_10061916.pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101210021773730\nService Reference No.: 585757\nPrinted Date/Time: 21/01/2021 11:03 AM\nPending Approval Transaction (Acknowledgement)\nProduct Type Interbank GIRO (IBG)\nReference No 2101210021773730\nService Reference No 585757\nApproval Status Processed\nFrom Account 3193110714 / SAGA FREIGHTER SDN BHD\nBeneficiary Bank RHB Islamic Bank Berhad\nTransfer Type Fund Transfer\nD&D CONTROL (M) SDN BHD\nBeneficiary Name\nName provided will not be validated. For receiving bank's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you proceed with the transaction.\nRecipient Reference INV: COS22110061916\nOther Payment Details CNTR NO: FSCU8734801\nAmount MYR 10.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nPayment Date 21-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101210021773730\nService Reference No.: 585757\nPrinted Date/Time: 21/01/2021 11:03 AM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker TAN KONG HIN 21-Jan-2021 11:03:25 Created\nAuthoriser\nAUTHORIS\nAny 1 from Group\nER-SAGA\nAUTHORISER-SAGA TAN KONG HIN 21-Jan-2021 11:03:42 Approved\nFREIGHET\nFREIGHETR SDN BHD\nR SDN BHD\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "FSCU8734801",
+      "21773730",
+      "60001343",
+      "2101210021773730",
+      "2101210021773730SERVICE",
+      "NO2101210021773730",
+      "NO21246660001343",
+      "COS22110061916"
+    ],
+    "amount": "10.00",
+    "date": "21-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "a9328c52-b5d5-4d55-87e3-390ce68f714b_TT 913688 RM 10.00 WAH SIN P&O.pdf",
+    "text": "=== PAGE 1 ===\nOpen Interbank\nStatus: Successful\nReference number: 9104913688\nTransaction date: 25 Jan 2021 10:21:55\nAmount: RM10.00\nBeneficiary Name : D&D CONTROL (M) SDN BH\nReceiving Bank : RHB BANK\nBeneficiary Account Number : 21246660001343\nRecipient reference:\nOther payment details: CPC CHARGES\nNote: This receipt is computer generated and no signature is required.",
+    "bank": "RHB",
+    "ref_ids": [
+      "9104913688"
+    ],
+    "amount": "10.00",
+    "date": "25 Jan 2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "ac6b0bca-66bb-419f-9f8d-43237ebefc6f_TT 101547 RM 20.00 QUANTERM.pdf",
+    "text": "=== PAGE 1 ===\nQUANTERM LOGISTICS SDN BHD\n199601013880 (386230-T)\nGST Reg No: (000627539968)\nQUANTERM DISTRICENTRE\nNO1,JALAN BIOLA33/1,SEKSYEN33,40400SHAH ALAM,SELANGOR D.E\nTEL: +603-5121 8000 FAX: +603-5121 7000\nPAYMENT VOUCHER\nPage 1 of 1\nPAY TO : D&D CONTROL (M) SDN BHD NO : PV2101547\nACCT NO. : DDCONTPGU\nDATE : 18/01/2021\nDESCRIPTIONS : QPV 0472/01\nNORATHIRAH\n---------------------------------------------------------------------------------------------\nINVOICE NO. INV DATE DESCRIPTION CUR AMOUNT MYR\n---------------------------------------------------------------------------------------------\nIAL32110059574 15/01/2021 MYR 10.00 10.00\nIAL32110059603 15/01/2021 MYR 10.00 10.00\n39100000QJBADMBANK CHARGES BANK CHARGES QPV 0472/01 MYR 0.10 0.10\n---------------------------------------------------------------------------------------------\nBANK A/C : 61102010QSABRN CHEQUE NO. : EFT 84968017 PAY AMT : MYR 20.10\nCIMB BANK BHD-QSA (PLAZA METRCOH,EKQLUGE) DATE : 18/01/2021 LOCAL AMT : 20.10\n---------------------------------------------------------------------------------------------\nPREPARED BY CHECKED BY APPROVED BY\n----------------- ----------------- -----------------\nAKMA\nREF NO. : PLP0041508\n18-01-2021 11:24:14",
+    "bank": "CIMB",
+    "ref_ids": [
+      "PV2101547",
+      "PLP0041508",
+      "39100QJBADMBANKCHARGES",
+      "BHD199601013880",
+      "EFT84968017",
+      "SEKSYEN33",
+      "40400SHAH",
+      "IAL32110059574",
+      "IAL32110059603",
+      "39100QJBADMBANK",
+      "61102010QSABRN",
+      "84968017",
+      "199601013880",
+      "000627539968"
+    ],
+    "amount": "10.00",
+    "date": "18/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "ad87966d-a716-4f07-97e6-34e107de723a_REFNO 353472-RM4200-RONGXUN@XINZHOU.pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101120021353472\nService Reference No.: 785070\nPrinted Date/Time: 12/01/2021 05:12 PM\nTransaction History - Interbank GIRO (IBG)\nReference Number 2101120021353472\nService Reference Number 785070\nCreated By KOH HAN SIANG\nCreated Date Time 12-Jan-2021 16:03:54\nApproval Status Processed\nFrom Account 3210523536 / RONG XUN METAL (M) SDN. BHD.\nMethod of Transfer Interbank GIRO (IBG)\nTransfer Type Fund Transfer\nBeneficiary Bank RHB Islamic Bank Berhad\nBeneficiary Name D & D CONTROL (M) SDN BHD\nBeneficiary Account No 21246660001343\nRecipient Reference NSA32010055263F\nAmount MYR 4,200.00\nFee MYR 0.00\nTotal Fee MYR 0.00\nApproval Matrix Rule\nUser Role User Name Approval Status Approval Date Time\nAuthorizer LEONG YEW SENG Approved 12-Jan-2021 16:34:16\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "NSA32010055263F",
+      "21353472",
+      "2101120021353472",
+      "2101120021353472SERVICE",
+      "NO21246660001343"
+    ],
+    "amount": "4,200.00",
+    "date": "12/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "AMBANK - CUSTOMER REF.pdf",
+    "text": "=== PAGE 1 ===\nJQ INTERNATIONAL TRADING (GROUP) SDN. BHD.\nTransfer Advice\nReference Number: DTF20251031001662\nMultiple Approval Reference Number: MUL20251031000497\nTransaction Date & Time: 31/10/2025 09:22:00\nFrom Account Number: 8881059256353\nRecipient Bank: RHB BANK\nRecipient Account Number: 21246660001343\nRecipient Name: D&D CONTROL (M) SDN BHD\nTransfer Date: 31/10/2025\nRecipient's Reference: SCC12511726101 (P8)\nOther Payment Details: SITPUPK170684G1\nTransaction Status: Processed\nTransfer Amount: MYR 1,272.00\nTransfer Fee: MYR 0.00\nTotal Debit: MYR 1,272.00\nEmail Notifications: -\nCopyright © AmBank (M) Berhad (8515-D) All Rights Reserved. Computer generated : 31/10/2025 10:36:30\n=== PAGE 2 ===\nINVOICE (DETENTION PROGRESSIVE)\nInvoice To:\nHAI XUN SDN. BHD.\nDate : 30-10-2025\n12-1, LORONG BATU NILAM 21A,\nInvoice No. : SCC12511726101 (P8)\nBANDAR BUKIT TINGGI,\nCust Code : H76059\n41200 KLANG, SELANGOR.\nID : CO5\nBranch : PKG\nAttn: :\nForwarding Name : FENG YING INTERNATIONAL SDN. BHD.\nBeing Detention charges incurred for :-\nContainer No : CXDU1910602 PortVoyageNo : 257XW4\nAgentvoy : 2506S Vessel : JAKARTA VOYAGER\nSize/Type : 286GP BL No : SITPUPK170684G1\nDischarge / GateOut : 30-07-2025 / 28-08-2025 Port : CT2\nUnturned as at 30-10-2025 Depot/Port :\nAMOUNT\nNO. OF DAYS INCURRED CHARGES\n8 X MYR 150.00 per day 1200.00\nTotal : 8 Day(s) RM 1200.00\nAdd SST 6.00% : 72.00\nTotal Amount Due : RM 1272.00\na) Please pay the above charges to D&D Control (M) Sdn Bhd. by 06-11-2025 .\nb) Invoice dispute must be raised within 3 working days upon receiving, otherwise assumed to be accepted.\nc) Please login to CLA Portal, www.clap.my to check on your outstanding, make payment, print receipt and generate reports. For login credentials, drop us an email\nor contact us at 03 3853 0300.\nd) Payment can also be made online or deposited into our bank a/c and upload bankin slip in https://clap.my :-\nBank: RHB Islamic Bank Bhd / Account No. : 2-12466-6000134-3 / Swift Code: RHBAMYKL\ne) Please keyin the Payer's CLA Acct (OR) SSM No in the bank ref1/ref2 column while make online payment for IBG/IBFT fast approval.\n(THIS IS A COMPUTER GENERATED DOCUMENT. NO SIGNATURE IS REQUIRED.)",
+    "bank": "RHB",
+    "ref_ids": [
+      "DTF20251031001662",
+      "MUL20251031000497",
+      "SCC12511726101",
+      "CXDU1910602",
+      "SITPUPK170684G1",
+      "DTF20251031001662MULTIPLE",
+      "MUL20251031000497TRANSACTION",
+      "SITPUPK170684G1TRANSACTION",
+      "SITPUPK170684G1DISCHARGE"
+    ],
+    "amount": "1,272.00",
+    "date": "31/10/2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "b117084c-100f-4029-8c7c-1af1a4f3ef19_DND_WHS22110061125F_01252021.pdf",
+    "text": "=== PAGE 1 ===\nInstant Transfer to Other Account\nReference Number: 984379\nTransaction Status: Accepted for Processing\nTransaction Date/Time: 25-01-2021 17:11:25\nFrom Account: 3207027825 ( Current )\nAmount: RM 180.00\nBeneficiary Bank: RHB Bank Berhad\nBeneficiary Account: 21246660001343\nBeneficiary Name: D&D CONTROL (M) SDN BHD\nRecipient Reference: dnd\nOther Payment Details: demurrage\nInstant Transfer Service Charge: RM 0.00\nDescription: demurrage WHS22110061125F\nApproval Status: APPROVE\nNotification to Beneficiary : Nil\nNote:\nThis is a computer generated receipt and does not require a signature.",
+    "bank": "RHB",
+    "ref_ids": [
+      "WHS22110061125FAPPROVAL",
+      "WHS22110061125F"
+    ],
+    "amount": "180.00",
+    "date": "25-01-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "b45d2475-cfaf-4c05-b4f3-0c3f0a874f42_WHSU5528105.pdf",
+    "text": "=== PAGE 1 ===\nTransaction History Details\n\nSuccessful Ref 677147048 19 Jan 2021, 11:08:07 am\nAmount\nAccount Type\nSaving Account MYR 85.00\nBeneficiary Name Bank Charges MYR 0.00\nD&D CONTROL (M) SDN BHD\nBeneficiary Bank\nRHB BANK\nBeneficiary Account Number\n21246660001343\nRecipient Reference\nWHS22110059980\nOther Payment Details\nWHSU5528105- DEMM",
+    "bank": "RHB",
+    "ref_ids": [
+      "WHS22110059980",
+      "77147048",
+      "REF677147048",
+      "WHSU5528105",
+      "677147048"
+    ],
+    "amount": "85.00",
+    "date": "19 Jan 2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "b4dbe275-c2e7-4e77-b446-9f255c7a1727_TT 112435 RM 20.00 AX FURN.pdf",
+    "text": "=== PAGE 1 ===\nBANK SIMPANAN NASIONAL\nBulk Payment Report\nBatch ID : 20210118000000112435 Org Name : AX FURNITURE SDN BHD\nOrg Code : B4806800 File Format : IBG\nService Type : Bulk Payment Total Amount (RM) : 20.00\nNo Of Records : 3\nCustomer Account Amount (RM) Reference No. 1 New IC Number Old IC Number Other ID Name Bank Code\n21246660001343 20.00 INV.32110059622,31 D AND D CONTROL (M) S/B RHB",
+    "bank": "RHB",
+    "ref_ids": [
+      "20210118000112435",
+      "CODE21246660001343",
+      "B4806800",
+      "21246660001343",
+      "32110059622"
+    ],
+    "amount": null,
+    "date": null,
+    "confidence": 1.0
+  },
+  {
+    "file": "b8ff57b8-6d16-41e6-9e2d-5b979bf9ddc7_210119807518 - DND - 19012021 - 2021011900008.pdf",
+    "text": "=== PAGE 1 ===\nFund Transfer To 3rd Party Account - Data Input Page 1 of 1\nFund Transfer To 3rd Party Account - Data Input\nSuccessful\nTransaction(s) is successfully sent for approval.\nAccount Transfer Information\nReference Number Date\n210119807518 19-01-2021 09:51:34\nFrom Account To Account\n20701900211726 / ROUND-THE-WOR 21246660001343 / D&D CONTROL (M) SDN BHD ( RM )\nAmount Fund Transfer Charges\nRM 200.00 RM 0.10\nGST Charges Total Amount to Debit\nRM 0.00 RM 200.10\nIC / ID Number Recipient's Reference\n2021011900008\nOther Payment Details Email Address\nJANUARY 2021 ACCOUNT@DND.COM.MY\nPayment Advice\nTransfer Type\nImmediate Transfer\nInstructions\nClick on Print button to print the page.\nhttps://reflex.rhbgroup.com/rhbcams/corporate/corpFundTransfer3rdParty/ 19/1/2021",
+    "bank": "RHB",
+    "ref_ids": [
+      "21011908",
+      "DATE210119807518",
+      "WOR21246660001343",
+      "CORPFUNDTRANSFER3RDPARTY",
+      "210119807518",
+      "21246660001343",
+      "2021011908"
+    ],
+    "amount": "200.00",
+    "date": "19-01-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "ba2f5220-1ef5-4c44-838a-4707a34c75b3_IBG CPC EE ENG.PDF",
+    "text": "=== PAGE 1 ===\n@flEybank cu\"h Management sysrem\nPayment\nA, Transaction Details\n55700051780s (iilYR) SEBEMNo WRA FRE|GHT FoRwARDERs sotl\nIn h.niacUon Cumncy\n30,00\n25 Jn 202r MY (UTC+o!:OO)\n25Jln 2O2l ,fi:46:02 MY {UtC+08r00}\nMnG2l0125/tt451,4\nD&orCPC EE ENC (lNV:\ncos221.t0061776/t781lt794)\nB. Beneticlary Details\n4 24666000t3.43\nDAD CONTROL{ir)SoN BHD RHBAMYKL\nRHB IIIAMIC BAXK",
+    "bank": "RHB",
+    "ref_ids": [
+      "55700051780S",
+      "MNG2L0125",
+      "T0061776",
+      "T781LT794",
+      "24666000T3"
+    ],
+    "amount": null,
+    "date": null,
+    "confidence": 1.0
+  },
+  {
+    "file": "babba2de-15eb-48f1-b7e9-24c53ec1f684_DND CONTROL - BIZIB260898 [ALL DEMURRAGE INV].pdf",
+    "text": "=== PAGE 1 ===\nInterbank GIRO (IBG) - Acknowledgement\nTransaction is successfully sent for approval.\nUser ID : TAN TATT MENG\nDate, Time : 19/01/2021 17:36:06\nBIZ Reference No. : BIZIB260898\nIBG Reference No. : IBGCMSRHB19012021260899\nFrom Account : 02200063498 - GLOBAL CONTAINER FREIGHT\n(PENANG ) SDN B\nTo Account : 21246660001343 - D&D CONTROL (M) SDN BHD\nBeneficiary Name : D&D CONTROL (M)\nBeneficiary Bank : RHB BANK BHD\nRecipient's Reference : ALL DEMURRAGE INV\nOther Payment Details :\nID Check : Yes\nID Type : Business Registration\nBusiness Registration : 923103K\nContact No. :\nPayment Date : 19/01/2021\nAmount (MYR) : 15,810.00\nService Charge (MYR) : 0.10\nGst Rate - Service Charge (%) : 0.00\nGst Amount - Service Charge (MYR) : 0.00\nTotal Amount (MYR) : 15,810.10\nSMS Notifications : -\nPage 1 of 2\n=== PAGE 2 ===\nEmail Notifications : gcfdocs@pen.global-gp.com\nPage 2 of 2",
+    "bank": "RHB",
+    "ref_ids": [
+      "BIZIB260898",
+      "IBGCMSRHB19012021260899"
+    ],
+    "amount": null,
+    "date": "19/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "c4873566-966d-4cb0-be66-c128aaf3de1b_MYGP210120630874_D&D_OOL22110059700, 9707, COS22110061790_TAI MIN & YAT TRADING.pdf",
+    "text": "=== PAGE 1 ===\n1/20/2021 OCBC - Velocity@ocbc 2.0\nTransfer to a bank locally\nGIRO Payment\nSuccess!\nThis has been sent for approval\nOCBC reference no. MYGP210120630874\nCreated on 20 Jan 2021, 2:14 PM\nFrom To\nYour Account Beneficiary Bank\n1301035197 - MYR TAS SHIPPING N TRANSPORT SDN BHD RHB BANK KUALA LUMPUR\nValue Date Amount Beneficiary Account No.\n20 Jan 2021 30.00MYR 21246660001343\nBeneficiary Name\nD&D CONTROL (M) SDN BH\nBeneficiary ID Type Beneficiary ID No. -\n-\nRecipient's Reference Other Payment Details\nOOL22110059700/9707 COS22110061790\nOther Details\nYour Reference No.\nNotify Beneficiary\nMYGP210120630874\nEmail Address\ncheekeet@taship.com\nMessage to Beneficiary\nINVOICE NO: OOL22110059700/ OOL22110059707\nCONTAINER NO: OOLU8355452/ OOLU9760188\nTAI MIN\nINVOICE NO: COS22110061790\nCONTAINER NO: TEMU8487544\nYAT TRADING\nhttps://velocity.ocbc.com/tran.view?do=ReLoad 1/1",
+    "bank": "RHB",
+    "ref_ids": [
+      "OOL22110059700",
+      "OOLU8355452",
+      "COS22110061790",
+      "TEMU8487544",
+      "MYGP210120630874",
+      "MYGP210120630874CREATED",
+      "BANK1301035197",
+      "OOL22110059707",
+      "OOLU9760188",
+      "1301035197",
+      "21246660001343"
+    ],
+    "amount": "30.00",
+    "date": "1/20/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "c51bd690-8c82-457e-8132-9339b479be63_25012021_7301122587_MY_GIRO_Details_Report_25012021110822.PDF",
+    "text": "=== PAGE 1 ===\nSearch Criteria\nReport Type Transaction Transaction Type GIRO Payment\nReport Name GIRO Details Report Organisation ID SCABLE\nCountry Malaysia Account No. 7301122587\nPayee Name D&D Date Range 25 Jan 2021 To 25 Jan 2021\nGIRO Payment Details Report\nYour Reference No MYGP200414483476 OCBC Reference No. MYGP210121665079\nTotal Amount MYR - 150.00 Value Date 25 Jan 2021\nYour Account No. 7301122587 - MYR SOUTHERN CABLE SDN BHD\nSource D&D CONTROL\nItem No. 1\nAmount 150.00 MALAYSIAN RINGGIT Require ID Checking N\nPayee Name D&D CONTROL (M) SDN BH\nPayee Account No. 21246660001343 Payee ID No.\nPayee Bank Name RHB BANK KUALA LUMPUR\nRecipient's Reference No. WHS22110061221\nOther Payment Details DEMURRAGE\nItem Status Submitted to Bank\nRemarks\nNotify Payee by Email\nMessage to Payee\n** End of Report **\nPrinted By TAN SIEW CHING Page 1 of 1\nPrinted On 25 Jan 2021 11:08:22",
+    "bank": "RHB",
+    "ref_ids": [
+      "MYGP200414483476",
+      "MYGP210121665079",
+      "WHS22110061221",
+      "7301122587"
+    ],
+    "amount": "150.00",
+    "date": "25 Jan 2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "C735260821093655.pdf",
+    "text": "=== PAGE 1 ===\n8/26/2021 DuitNow\nDuitNow\nReport generated on 26-08-2021 12:01:55 PM by ZULAWATI BT CHE\nTransaction Information\nReference Number C735260821093655 Status Processed by Bank\nMaker Date 26/08/2021 09:37:22 Created By ZULAWATI BT CHE OTHMAN\nDuitNow Reference\nNumber\nDebit Information\nAccount Number 15300050456 Name LNY SRIMAS FORWADING\nFavourite Name -- Type Current Account\nBranch Name BANDAR BKT TINGGI, KLANG\nBeneficiary Information\nBeneficiary Type Adhoc\nDuitNow ID 21246660001343 DuitNow ID Type ACC\nBeneficiary Name D&D CONTROL (M) SDN BHD Favourite Name --\nBeneficiary Code --\nPayment Information\nPayment Start Date -- Execution Frequency --\nNumber of Payments -- Payment End Date --\nPayment Amount 310.00 MYR\nPayment Date 26/08/2021\nRecipient's CPC : Other Payment\nKMT12110451463\nReference MXC12110451332,LEL12110451357 Details\nE-Mail Address dndinvpk@dnd.com.my\nCountry Code &\n--\nMobile Number\nhttps://www.hongleongonline.com.my/iportalweb/ExportServiceServlet 1/1",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "21246660001343",
+      "C735260821093655",
+      "MXC12110451332",
+      "KMT12110451463",
+      "00050456",
+      "60001343",
+      "C735260821093655STATUS",
+      "ID21246660001343",
+      "LEL12110451357"
+    ],
+    "amount": "310.00",
+    "date": "26/08/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "c8115d07-c08d-46fb-9af9-7c68ad70e5d2_PAYMENTADVICE.PDF",
+    "text": "=== PAGE 1 ===\nLatexx Manufacturing Sdn. Bhd.\nLot 18374, Jalan Perusahaan 3,\nKamunting Industrial Estate,\n34600 Kamunting, Taiping, Perak, Malaysia\n(Sales Tax NO: A11-1808-21024723)\n(Company No: 198701007271 (165989-U))\nD and D CONTROL (M) SDN BHD\nPayment Advice Letter\n5050 NB TOWER, JALAN BAGAN LUAR,\n12000 Butterworth\nNumber / Date: 2000024044 / 22.01.2021\nYour account with us: 0020000312\nContact person: Team Finance\nPhone: +605 829 5555\nFax: +605 829 5590\nMail: dl.finance.my@semperitgroup.com\nDear Sir/Madam,\nWe have settled the items listed below by bank transfer no 2000024044 to\naccount no. 21246660001343 at RHB Bank Berhad Bank subject to the goods / services supplied\nand invoice therefore being in order.\nCash\nDocument No. Doc. Date Reference Amount Currency\ndiscount\n5130123364 Jan 11, 2021 HAL22110060482 0.00 10.00 MYR\n5130123365 Jan 11, 2021 HAL22110060483 0.00 10.00 MYR\n5130123366 Jan 11, 2021 HAL22110060484 0.00 10.00 MYR\n5130123367 Jan 11, 2021 HAL22110060485 0.00 10.00 MYR\n5130123368 Jan 11, 2021 HAL22110060486 0.00 10.00 MYR\n5130123369 Jan 11, 2021 HAL22110060487 0.00 10.00 MYR\n5130123380 Jan 11, 2021 HAL22110060488 0.00 10.00 MYR\n5130123381 Jan 11, 2021 WHS22110060516 0.00 10.00 MYR\n5130123382 Jan 11, 2021 WHS22110060549 0.00 10.00 MYR\n5130123383 Jan 11, 2021 WHS22110060566 0.00 10.00 MYR\n5130123384 Jan 11, 2021 WHS22110060575 0.00 10.00 MYR\nLatexx Manufacturing Sdn Bhd\nLot 18374, Jalan Perusahaan 3,\nKamunting Industrial Estate,\n34600 Kamunting,\nPerak Darul Ridzuan, Malaysia\nRegistration No. (UEN) 198701007271(165989-U)\nSales Tax No: A11-1808-21024723\n=== PAGE 2 ===\nDate Jan 22, 2021 Page 2 of 3\nCash\nDocument No. Doc. Date Reference Amount Currency\ndiscount\n5130123385 Jan 11, 2021 WHS22110060576 0.00 10.00 MYR\n5130123386 Jan 11, 2021 WHS22110060577 0.00 10.00 MYR\n5130123387 Jan 11, 2021 WHS22110060579 0.00 10.00 MYR\n5130123388 Jan 11, 2021 WHS22110060581 0.00 10.00 MYR\n5130123389 Jan 11, 2021 WHS22110060582 0.00 10.00 MYR\n5130123390 Jan 8, 2021 WHS22110060116 0.00 10.00 MYR\n5130123391 Jan 8, 2021 WHS22110060114 0.00 10.00 MYR\n5130123392 Jan 6, 2021 WHS22110059785 0.00 10.00 MYR\n5130123393 Jan 6, 2021 WHS22110059788 0.00 10.00 MYR\n5130123394 Jan 6, 2021 WHS22110059796 0.00 10.00 MYR\n5130123395 Jan 6, 2021 WHS22110059799 0.00 10.00 MYR\n5130123396 Jan 6, 2021 WHS22110059791 0.00 10.00 MYR\n5130123397 Jan 6, 2021 WHS22110059810 0.00 10.00 MYR\n5130123398 Jan 6, 2021 WHS22110059805 0.00 10.00 MYR\n5130123399 Jan 6, 2021 WHS22110059816 0.00 10.00 MYR\n5130123410 Jan 6, 2021 WHS22110059800 0.00 10.00 MYR\n5130123411 Jan 6, 2021 WHS22110059802 0.00 10.00 MYR\n5130123412 Jan 6, 2021 WHS22110059817 0.00 10.00 MYR\n5130123413 Jan 6, 2021 WHS22110059818 0.00 10.00 MYR\n5130123363 Jan 11, 2021 HAL22110060481 0.00 10.00 MYR\n5130123303 Jan 12, 2021 WHS22110060824 0.00 10.00 MYR\n5130123304 Jan 12, 2021 WHS22110060826 0.00 10.00 MYR\n5130123305 Jan 12, 2021 WHS22110060823 0.00 10.00 MYR\n5130123306 Jan 12, 2021 WHS22110060813 0.00 10.00 MYR\n5130123307 Jan 12, 2021 WHS22110060808 0.00 10.00 MYR\n5130123308 Jan 12, 2021 WHS22110060814 0.00 10.00 MYR\n5130123309 Jan 13, 2021 WHS22110060985 0.00 10.00 MYR\n5130123340 Jan 13, 2021 WHS22110060987 0.00 10.00 MYR\n5130123341 Jan 13, 2021 WHS22110060990 0.00 10.00 MYR\n5130123342 Jan 13, 2021 WHS22110060996 0.00 10.00 MYR\n5130123343 Jan 13, 2021 WHS22110060997 0.00 10.00 MYR\n5130123344 Jan 13, 2021 WHS22110060998 0.00 10.00 MYR\n5130123345 Jan 13, 2021 WHS22110060999 0.00 10.00 MYR\n5130123346 Jan 13, 2021 WHS22110061000 0.00 10.00 MYR\n5130123347 Jan 11, 2021 HAL22110060459 0.00 10.00 MYR\n5130123348 Jan 11, 2021 HAL22110060460 0.00 10.00 MYR\n5130123349 Jan 11, 2021 HAL22110060461 0.00 10.00 MYR\n5130123350 Jan 11, 2021 HAL22110060462 0.00 10.00 MYR\n5130123351 Jan 11, 2021 HAL22110060464 0.00 10.00 MYR\n5130123352 Jan 11, 2021 HAL22110060467 0.00 10.00 MYR\n5130123353 Jan 11, 2021 HAL22110060469 0.00 10.00 MYR\n5130123354 Jan 11, 2021 HAL22110060471 0.00 10.00 MYR\n5130123355 Jan 11, 2021 HAL22110060472 0.00 10.00 MYR\nLatexx Manufacturing Sdn Bhd\nLot 18374, Jalan Perusahaan 3,\nKamunting Industrial Estate,\n34600 Kamunting,\nPerak Darul Ridzuan, Malaysia\nRegistration No. (UEN) 198701007271(165989-U)\nSales Tax No: A11-1808-21024723\n=== PAGE 3 ===\nDate Jan 22, 2021 Page 3 of 3\nCash\nDocument No. Doc. Date Reference Amount Currency\ndiscount\n5130123356 Jan 11, 2021 HAL22110060473 0.00 10.00 MYR\n5130123357 Jan 11, 2021 HAL22110060475 0.00 10.00 MYR\n5130123358 Jan 11, 2021 HAL22110060476 0.00 10.00 MYR\n5130123359 Jan 11, 2021 HAL22110060477 0.00 10.00 MYR\n5130123360 Jan 11, 2021 HAL22110060478 0.00 10.00 MYR\n5130123361 Jan 11, 2021 HAL22110060479 0.00 10.00 MYR\n5130123362 Jan 11, 2021 HAL22110060480 0.00 10.00 MYR\nTotal 610\nLatexx Manufacturing Sdn Bhd\nLot 18374, Jalan Perusahaan 3,\nKamunting Industrial Estate,\n34600 Kamunting,\nPerak Darul Ridzuan, Malaysia\nRegistration No. (UEN) 198701007271(165989-U)\nSales Tax No: A11-1808-21024723",
+    "bank": "RHB",
+    "ref_ids": [
+      "A11-1808-21024723",
+      "198701007271",
+      "MYR5130123365",
+      "MYR5130123366",
+      "MYR5130123367",
+      "MYR5130123368",
+      "MYR5130123369",
+      "MYR5130123380",
+      "MYR5130123381",
+      "MYR5130123382",
+      "MYR5130123383",
+      "MYR5130123384",
+      "MYR5130123386",
+      "MYR5130123387",
+      "MYR5130123388",
+      "MYR5130123389",
+      "MYR5130123390",
+      "MYR5130123391",
+      "MYR5130123392",
+      "MYR5130123393",
+      "MYR5130123394",
+      "MYR5130123395",
+      "MYR5130123396",
+      "MYR5130123397",
+      "MYR5130123398",
+      "MYR5130123399",
+      "MYR5130123410",
+      "MYR5130123411",
+      "MYR5130123412",
+      "MYR5130123413",
+      "MYR5130123363",
+      "MYR5130123303",
+      "MYR5130123304",
+      "MYR5130123305",
+      "MYR5130123306",
+      "MYR5130123307",
+      "MYR5130123308",
+      "MYR5130123309",
+      "MYR5130123340",
+      "MYR5130123341",
+      "MYR5130123342",
+      "MYR5130123343",
+      "MYR5130123344",
+      "MYR5130123345",
+      "MYR5130123346",
+      "MYR5130123347",
+      "MYR5130123348",
+      "MYR5130123349",
+      "MYR5130123350",
+      "MYR5130123351",
+      "MYR5130123352",
+      "MYR5130123353",
+      "MYR5130123354",
+      "MYR5130123355",
+      "MYR5130123357",
+      "MYR5130123358",
+      "MYR5130123359",
+      "MYR5130123360",
+      "MYR5130123361",
+      "MYR5130123362",
+      "HAL22110060482",
+      "HAL22110060483",
+      "HAL22110060484",
+      "HAL22110060485",
+      "HAL22110060486",
+      "HAL22110060487",
+      "HAL22110060488",
+      "WHS22110060516",
+      "WHS22110060549",
+      "WHS22110060566",
+      "WHS22110060575",
+      "WHS22110060576",
+      "WHS22110060577",
+      "WHS22110060579",
+      "WHS22110060581",
+      "WHS22110060582",
+      "WHS22110060116",
+      "WHS22110060114",
+      "WHS22110059785",
+      "WHS22110059788",
+      "WHS22110059796",
+      "WHS22110059799",
+      "WHS22110059791",
+      "WHS22110059810",
+      "WHS22110059805",
+      "WHS22110059816",
+      "WHS22110059800",
+      "WHS22110059802",
+      "WHS22110059817",
+      "WHS22110059818",
+      "HAL22110060481",
+      "WHS22110060824",
+      "WHS22110060826",
+      "WHS22110060823",
+      "WHS22110060813",
+      "WHS22110060808",
+      "WHS22110060814",
+      "WHS22110060985",
+      "WHS22110060987",
+      "WHS22110060990",
+      "WHS22110060996",
+      "WHS22110060997",
+      "WHS22110060998",
+      "WHS22110060999",
+      "WHS22110061000",
+      "HAL22110060459",
+      "HAL22110060460",
+      "HAL22110060461",
+      "HAL22110060462",
+      "HAL22110060464",
+      "HAL22110060467",
+      "HAL22110060469",
+      "HAL22110060471",
+      "HAL22110060472",
+      "HAL22110060473",
+      "HAL22110060475",
+      "HAL22110060476",
+      "HAL22110060477",
+      "HAL22110060478",
+      "HAL22110060479",
+      "HAL22110060480",
+      "21024723",
+      "5130123364",
+      "5130123365",
+      "5130123366",
+      "5130123367",
+      "5130123368",
+      "5130123369",
+      "5130123380",
+      "5130123381",
+      "5130123382",
+      "5130123383",
+      "5130123384",
+      "5130123385",
+      "5130123386",
+      "5130123387",
+      "5130123388",
+      "5130123389",
+      "5130123390",
+      "5130123391",
+      "5130123392",
+      "5130123393",
+      "5130123394",
+      "5130123395",
+      "5130123396",
+      "5130123397",
+      "5130123398",
+      "5130123399",
+      "5130123410",
+      "5130123411",
+      "5130123412",
+      "5130123413",
+      "5130123363",
+      "5130123303",
+      "5130123304",
+      "5130123305",
+      "5130123306",
+      "5130123307",
+      "5130123308",
+      "5130123309",
+      "5130123340",
+      "5130123341",
+      "5130123342",
+      "5130123343",
+      "5130123344",
+      "5130123345",
+      "5130123346",
+      "5130123347",
+      "5130123348",
+      "5130123349",
+      "5130123350",
+      "5130123351",
+      "5130123352",
+      "5130123353",
+      "5130123354",
+      "5130123355",
+      "5130123356",
+      "5130123357",
+      "5130123358",
+      "5130123359",
+      "5130123360",
+      "5130123361",
+      "5130123362"
+    ],
+    "amount": "610",
+    "date": "Jan 11, 2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "ccde00e5-c497-452f-91c3-881957019991_TT 325138 RM 70.00 LITA-DEMAND.pdf",
+    "text": "=== PAGE 1 ===\nBizChannel@CIMB\nDomestic Transfers\nTransfer Information\nTransaction Status : Executed Successfully\nTransaction Reference No. : 202101220085325138\nSource Account : 8007765922/DEMAND TOTAL LOGISTICS SDN BHD(MYR)\nServices : Interbank GIRO (IBG)\nBeneficiary Bank Information\nBank Name : RHB BANK BHD\nBeneficiary Account Information\nAccount No. : 21246660001343\nName : D & D CONTROL (M) SDN BHD\nValidate Beneficiary ID : No\nAdditional Information\nAmount : MYR 70.00\nTransaction Fee : MYR 0.10\nTax Rate : 0.00 %\nTax Amount : MYR 0.00\nTotal Debit Amount : MYR 70.10\nRecipient's Reference : D and D\nOther Payment Details : PV-009967\nRemarks :\nPurpose Code Category :\nPurpose Code :\nBeneficiary Notification\nBeneficiary Email : account@demandtpt.com\nInstruction Mode\nToday : 22-Jan-2021\nTransaction History\nAction Date Action Type Action Status Action By Amount Transaction Status\n22-Jan-2021 16:16:54 Execute Success System MYR 70.00 Executed Successfully\n22-Jan-2021 16:16:49 Approve Success TIENGEE - HON TIENG EE MYR 70.00 Pending Execution\n22-Jan-2021 15:56:43 Create Success ADMIN - KEE ENG CHEW MYR 70.00 Pending Approval\n* This document is generated by BizChannel@CIMB",
+    "bank": "CIMB",
+    "ref_ids": [
+      "202101220085325138",
+      "202101220085325138SOURCE",
+      "8007765922",
+      "21246660001343"
+    ],
+    "amount": "70.00",
+    "date": "22-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "cddb0db3-cf97-429f-aa86-f275239caefe_DND - RM255.pdf",
+    "text": "=== PAGE 1 ===\n1/25/2021 Payment - Transaction Status\nPayment - Transaction Status\n3rd Party Account Transfer Information\nReference Number\n210125967774\nFrom Account To Account\n20702800080431 / CT FRANK TECH 21246660001343 / D&D CONTROL (M) SDN BHD\nAmount Fund Transfer Charges\nRM 255.00 RM 0.10\nGST Charges Total Amount to Debit\nRM 0.00 RM 255.10\nIC / ID Number\nTransfer Type Payment Date\nImmediate Transfer 25-01-2021\nSender`s Name / Beneficiary`s Name Recipient`s Reference\nCT FRANK TECHNOLOGY (M) SDN BHD / D&D CONT RPPV-2101032\nROL (M) SDN BHD\nOther Payment Details Email Address\nPayment Advice\nWHS22110061652\nSource\nSimplified\nStatus\nStatus\nProcessed\nDocument Verification Status\nNo Verification Required\nWorkflow Information\nUser Name Role Action Date & Time Reason\nTeoh Soo Houn Data Entry Submitted 25-01-2021\n09:46:25\nCT Frank Authorizer Approved 25-01-2021\n09:51:09\nhttps://reflex.rhbgroup.com/rhbcams/corporate/login.jsp 1/2\n=== PAGE 2 ===\n1/25/2021 Payment - Transaction Status\n*Note:\nThis information will only be available for 99 days.\nInstruction:\nClick on Print button to print the page.\nhttps://reflex.rhbgroup.com/rhbcams/corporate/login.jsp 2/2",
+    "bank": "RHB",
+    "ref_ids": [
+      "25967774",
+      "TECH21246660001343",
+      "WHS22110061652",
+      "210125967774",
+      "21246660001343"
+    ],
+    "amount": "255.00",
+    "date": "1/25/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "CIMB - DIFF REF FRM STATEMENT.pdf",
+    "text": "=== PAGE 1 ===\njamry.rosli@interway.com.my\nFrom: mybusinesscare@cimb.com\nSent: Friday, 31 October, 2025 3:56 PM\nTo: fwdg-wp@interway.com.my\nSubject: Transaction Notification : Success\nDear Sir / Madam,\nWe are pleased to inform you that a request to transfer into your account has been submitted to CIMB Bank for processing.\nPlease refer to the payment details below:\nDate/Time : 31-10-2025 15:55:32\nReference No. : 202510310309176178\nTransaction Type : Domestic Transfers - IBG\nFrom Account Name : INTERWAY TRANSPORT SDN BHD\nTo Account : **********1343\nAmount : MYR 53.00\nRemark : WI251000047\nStatus : Success\nShould you have any queries, please contact the Payer\nFor further enquiries, please contact us at 1 300 888 828 Monday to Friday from 8AM to 7PM and Saturday from 8AM to 5PM (excluding public\nholidays) or send an email to mybusinesscare@cimb.com\nTo discover more about our products and services, please log on to www.cimb.bizchannel.com.my\nWarm Regards\nBizChannel@CIMB Team\n******************************************************************************************************************************************************\nPrivileged/confidential information may be contained in this message. If this message is received by anyone other than the intended addressee,\nplease return the message to the sender by replying to it and then delete the message from your computer. Unintended recipients are prohibited\nfrom taking action on the basis of information in this e-mail. No confidentiality or privilege is waived or lost by CIMB Group including its affiliates\n(CIMB Group) by any mistransmission of this e-mail. CIMB Group does not accept responsibility or liability for the accuracy or completeness of, or\npresence of any virus or disabling code in, this e-mail. CIMB Group reserves the right to monitor e-mail communications through its networks (in\naccordance with applicable laws). Opinions, conclusions, statements and other information in this message that do not relate to the official business\nof CIMB Group shall be understood as neither given nor endorsed by it.\nCIMB Group Sdn Bhd (incorporated in Malaysia, (Company No: 706803-D)). Registered Office: 13th Floor, Menara CIMB, Jalan Stesen Sentral 2,\nKuala Lumpur Sentral,, 50470 Kuala Lumpur, Malaysia.\nVisit our website at www.cimb.com\n******************************************************************************************************************************************************\n1",
+    "bank": "CIMB",
+    "ref_ids": [
+      "706803-D",
+      "202510310309176178",
+      "202510310309176178TRANSACTION",
+      "WI251047"
+    ],
+    "amount": "53.00",
+    "date": "31-10-2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "CTB - BANK REF.pdf",
+    "text": "=== PAGE 1 ===\nPayment Advice\nPage. 1 of 1 12-Nov-2025\nFor the attention of: D&D CONTROL (M) SDN BHD\nCitibank PayLink GIRO - Beneficiary Advice\nDear Sir/ Madam,\nPlease be advised that the following PayLink GIRO payments will be made to your account on behalf of\nKINTETSU WORLD EXPRESS (M) SDN BHD\nTransaction Reference: 546767200100001\nPayer/ Remitter's Name: KINTETSU WORLD EXPRESS (M) SDN BHD\nPayer/ Remitter's Ref.No.: 31550SV3IMM\nBeneficiary Bank: RHBA RHB ISLAMIC BANK BERHAD\nBeneficiary Branch: MYKL KUALA LUMPUR, MY\nAccount No: 21***********3\nPayment Amount: 200.00\nCurrency: MYR\nValue Date: 11-Nov-2025\n(This is subject to final clearance by the\nClearingHouse & Beneficiary Bank)\nPayment Details:\nInvoice Details:\nINV# RCL12511734455 / NGBCB25045622\nINV# RCL12511734456 / NGBCB25046381\nINV# SNK12511731638 / SNKO323251000005\nCitibank Berhad, Malaysia\nNote. The contents of this advice are confidential and may be legally privileged. This advice is issued at the request of the bank's client\nand purports to set out certain details of the transaction our bank was instructed to effect. This is not a confirmation. The bank bears no\nliability for any direct, indirect or consequential loss arising out of this advice being sent by email/fax by the bank or other third parties. If\nyou are not an intended recipient, you are hereby notified that any dissemination, distribution or copying of this advice is strictly\nprohibited. If you have received this advice in error, please notify the sender and permanently delete this advice immediately. You should\nnot retain, copy or use this advice for any purpose, nor disclose all or any part of the contents to any other person. If you need to forward\nthe advice back to Citi please fax it to the following fax number +603 2383 3000.\n=== PAGE 2 ===\nPayment Advice\nPage. 2 of 1 12-Nov-2025\nPV:031536-PKG / MIZA\nCitibank Berhad, Malaysia\nNote. The contents of this advice are confidential and may be legally privileged. This advice is issued at the request of the bank's client\nand purports to set out certain details of the transaction our bank was instructed to effect. This is not a confirmation. The bank bears no\nliability for any direct, indirect or consequential loss arising out of this advice being sent by email/fax by the bank or other third parties. If\nyou are not an intended recipient, you are hereby notified that any dissemination, distribution or copying of this advice is strictly\nprohibited. If you have received this advice in error, please notify the sender and permanently delete this advice immediately. You should\nnot retain, copy or use this advice for any purpose, nor disclose all or any part of the contents to any other person. If you need to forward\nthe advice back to Citi please fax it to the following fax number +603 2383 3000.",
+    "bank": "Citibank",
+    "ref_ids": [
+      "SNKO323251005",
+      "31550SV3IMM",
+      "RCL12511734455",
+      "NGBCB25045622",
+      "RCL12511734456",
+      "NGBCB25046381",
+      "SNK12511731638",
+      "546767200101"
+    ],
+    "amount": "200.00",
+    "date": "11-Nov-2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "d1cb2839-ba60-422d-b197-ea35e8a091e3_Transaction Approval - CPC - SHARIL - HMM22110061851.pdf",
+    "text": "=== PAGE 1 ===\nPrinted Date/Time: 21/01/2021 04:07 PM\nTransaction Approval - Pending Approval\nCreation Effective From Beneficiary\nReference No Service Amount Status\nDate Date Account/Name Account/Name\n3134019307 /\nInterbank 21246660001343 /\nBINEX MYR\n2101210021796611 21-Jan-2021 21-Jan-2021 GIRO D&D CONTROL Processed\nLOGISTICS (M) 20.00\n(IBG) (M) SDN BHD\nSDN BHD\nSubmission Date 21-Jan-2021 16:07:56\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "NAME3134019307",
+      "MYR2101210021796611",
+      "3134019307",
+      "21246660001343",
+      "2101210021796611"
+    ],
+    "amount": null,
+    "date": "21-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "d2e9b91c-a258-4291-8b2c-da3f6420d974_CIMB Clicks.pdf",
+    "text": "=== PAGE 1 ===\nTransfer Money Acknowledgement\n\nSuccessful Ref 675604849 18 Jan 2021, 09:54:36 am\nAmount\nTo\nMYR 70.00\nAccount Number\n21246660001343 Bank charges MYR 0.00\nRecipient Name\nBank Name\nD&D CONTROL (M) SDN BHD\nRHB BANK\nNickname\nPayment Type\nDND\nFund Transfer\nTransfer Type\nTo Other Banks\nTransfer Method\nInstant Transfer\nTransaction Instruction\nOther Payment Details\nRecipient Reference\nES ENG SOON (J)\nCPC\nWhen\nDate Repeat\nToday No\nTotal MYR 70.00",
+    "bank": "RHB",
+    "ref_ids": [
+      "75604849",
+      "60001343",
+      "REF675604849",
+      "675604849"
+    ],
+    "amount": "70.00",
+    "date": "18 Jan 2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "d4c29142-5987-48b4-9b05-91b9db2df312_BIS.PDF",
+    "text": "=== PAGE 1 ===\n{Jublic i3:tirK Uerhacl Intornet lSanklng\n1 t') it2a?'1\nlnstant Transfer to Favourite Account\nReference Number: 362234\nTransacticn Status: Acceptcd for Proccssirlg\n\"lransaction Date/Time: 23-O1-'2O)1 10 45:05\nFnom Acc;ount; 3189390335 ( Current )\nAmount: RM 180.00\nBeneficiarY Bank: RHB Bank Berhad\nB'eneficierry Account: 21 24666000'1 343\nBeneficierry Name: tJ&D CION tftol iNli St)l'J Brlt)\nFiecipient Reference: i OCA| Ctr/\\flCl S\nOther PaYment Details: 1B St:l\nlnstant Transfer Service Charge: RM 0 00\nDescriPtion: 18 SETS\nApproval Status: APPROVE\nllotification to Beneficiary : Nil\nl{ ote:\nlhis rs a compufer generated receipt and does not require a signature\n.,;I {r,\n., ))'\nI rif ir,:i ir il ; r'i?'\"\"r\"-+\n=== PAGE 2 ===\n(As Detention / Demunage Charges Collection Agent)\nLevel S,Suite 3, 5050 NB Tower,\nJalan Bagan Luar,\n12000 Buttenruorth,\nPulau Pinang, Malaysia.\nTel : (04) 32928001329280113292802 Fax: (04) 3322804 Website :t/vww.dnd.com.my\nIIIVOICE (CPC)\nlnvoice To:\nECOLOG'YTRADE SDN BHD Date :18-01-2021\nPLOT 181, JALAN PERINDUSTRIAN BUKtr MINYAK 7 hwice No. : HMMZ2'!10061570\nBUKII Mll,lYAK, 14000 SIMPANG AMPAT, Cust Code : E01035\nPENANG ID : PNG\n,Attn:\nlForwarding Name :LEAD GLOBAL SOLUTIONS SDN BHD\nBeing CI]C charges incuned for:-\nContainer No : CA1U4349667 Portuoy :211OO2\nAgent\\oy :160 Vessel\n: DANUM'160\nSize/T1p,-' :45G1 No.\nB/L : OHPN38IZ3207\nPort\nDischarge / GateOut :1041-2021 I 15-01-2021 : NBI\nDate lnto DeooVPort DepoVPort :\nPARTICULARS AMOUNT\nContainr;r CPC Charges\nTotal Los;s Container Coverage, Damage & Disputes Management by Neutral Party)\nTotal : 0 Day(s) RM 10.00\n0.00\nTotal Amount Due RM 10.00\n:\nThis Ct)C is covering\n:\n1. The 1:otral loss container (actual or constructive) of the subject-matter insured caused byfire, a,ocident, theft and hijack.\nLimil of Liability: GP = RM30,000.00/per container & SP = RM80,000.00/per container .\n2. D antage D ispute Claims Management seM ce by Neutral Party\na) Please paythe above charges to D&D Control (M) Sdn Bhd. within 0 days i.e by 18-01-202.1 .\nb) Payrnent is deemed received upon clearance cf cheque or physical receipt of cash.\no) hformation shown here will be considered correct unless notification of any discrepancy is receir'ed within 3 day; from date r>f invcice\nd) Please login to our Website WWW.DND.COM.MYto check on your outstanding charges to-date. You may refer to our office (Iel: 03-\n33245ii00) for User D & Password.\ne) Payment can also be made online or cheque/cash deposited into our aic as follow :-\nBank: RHB lslamic Bank Bhd / Account No . i 2-1246660001343 / Swift Code: RHBAIvD,KL\nCTH|S |S ACOMPUTER GENERATED DOCUMENT. NOSIGNATURE IS REQIJIRED.)\n=== PAGE 3 ===\nffiffi\nffiffiffiffiffiH*ffiffi\n(As Detention / Demurrage Charges Collection Agent)\nLevel S.Suite 3. 5050 NB Tower,\nJalan Bagan Luar,\n12000 Bufterworth,\nPulau Pinang, Malaysia.\nTel : (04) 32928001329280113292802 Fax: (04) 3322804 Website :vnrrw.dnd.com.my\nrr{vorcE (cPc)\nlnvoice To:\nSH\\€ GU/\\N PLASTIC INDUSTRIES SDN BHD Date :18-01-2021\nNO.1 I.PEIiSARAN KILANG PENGKALAN 32 hwice No. :HMM221100615,71\nKAWASAI{ PERINDUSTRIAN PENGKALAN MAJU Cust Code : 541662\n31500 LAIIAT,PERAK ID : PNG\nAttn:\nf:orwardirl; Name : LEAD GLOBAL SOLUTIONS SDN BHD\nBeing CF'|C charges incuned for:-\nContainer No : CA|U7691 1 38 Portvoy :211028\nAgentrcy :632N Vessel : SINAR SI\\BANG\nSizeff)4ot: :45G0 B/L No. : O1PN3828622\nDischarge / GateOd :1241-2O21 I 15-0'l-2021 Port : NB1\nDate Into DepoVPort : DepoVPort\nPARTICULARS AMdJNT\nContainer CPC Charges\nTotal Los;s Container Coverage, Damage & Disputes Management by Neutral Pafi)\nTotal : lo oay(s) RM 10.00\n0.00\nTotalAmount Due RM 10.00\n:\nThis CPC is covering :\n'l . The total loss container (actual or constructive) of the subject-matter insured caused byfire, a'ccident, theft and hijack'\nLimit of Liability: GP = RM30,000.00/per contiainer & SP = RM80,000.00/per container .\n2-Danage Disptrte Claims Management service by Neutral Party\na) Please paythe above charges to D&D Control (M) Sdn Bhd. within 0 days i.e by 18-o'l-2o21 .\nb) Payment is deemed receired upon clearance of cheque or physical receipt of cash.\nc) lnformertion shown here will be considered conect unless notification of any discreparrcy is receired within 3 days from date cf irvoice.\nd) PleaselogintoourWebsiteWWW.DND.COM.MYtocheckonyouroutstandingchargesto-datr:.Youmayrefertoourofiice(Tel: 03-\n332451300) for User lD & Password.\ni\ne) Payment can also be made online or cheque/cash deposited into our a/c as follow\nBank: RHB lslamic Bank Bhd /Account No. : 2.124666000134€ / Swift Gode: RHBAlvl/KL\ncrHs s A GoMPUTER GENERATED DOCUMENT. NO SIGNATURE] lS REQUIRED\")\n=== PAGE 4 ===\n(As Detention / De$ffi3:.??ilr_Tcoilection Aeenq\nJalan Bagan Luar'\n12000 Butterworth'\nPulau Pinang, MalaYsia'\nTe|:(04)32g2loo|32g28o1l32g28o2Fax:(-0+)3322804Website:y.lww.dnd.com.my'\nTNVOICE (CPC)\nlnvoice Trc: Date :'18-O1-2021\nuNlcoRN INDUSTRY(M) SDN BHD hvoice No. : COS!22'110061s{irg\nPLOT NO 92, LORONG PERINDUSTRIAN Cust Code :U11322\ntsUKI]- MN{YAK 1 l,TAMAN PERINDUSTRAN D : PNG\nEUKII MN.IYAK 141 OO SEBEMNG PERAI,PENANG\nAttn:\nForwardirrg Name : LEAD GLOBAL SOLUTIONS SDN BHD\n: TEMU7764520 :2OCO24\n:201S : XIN YNC; KOU\n:7014441760\n:45G0\nDischar,tre / GateOut :29-12-2O20 | 16-01-2021 Port\nDate Intrt DePoVPorl\nContairer CPC Charges\nTota| Loss Container Coverage, Damage & Disputes Management by Neutral Par|y)\nTo'tal Amount Due :\nT 1. h i T s h t e lP to C ta l i s l o c s o s v e co ri n n t g a i : rer (actual or constructive) of the subiecl-matterlryyrd caused byfire' accident' theft and hijack'\nLirnit of Liability : Op = Afr,f3O,O00.00/per container & SP = RM80,000.00/per container '\n2. Dtrmage Dispr.rte Claims Management seMce by Neutral Party\na) plearse pay the above charges to D&D Control (M) Sdn Bhd. within 0 days i.e by 18-01'202'l '\nb)Pay.rerrtisdeemedreceirreduponc|earanceofchequeorphpica|receiptofcash.\nc) Inforrnation shown here will be considered conect unless notification of any discrepancy is re<:eired within 3 dale from date of irvoice'\n03-\nd) pleaselogintoourwebsitewww.DND.COM.Mytocheckonyouroutstandingchargestod'ate.Youmayrefelrtoouroffi<p(Tel:\n3322i5300) for User D & Password. i\ne) paynent can also be made online or cheque/cash deposited into our a/c as follow\nBank: RHB tslamic Bank Bhd /Account No. : 2.124666000134€ / Swift Gode: RHBAMYIG\nFHIS IS ACOITTPUTER GENERATED DOCUMENT. NO SIGNATUIRE lS REQUIRED')\n=== PAGE 5 ===\nrr,T- l;\nI\ni\na\n$\n!tE lii;{r!{s,7a: ;i$*:\n(As Detention / Demunage Charges Collection Agent)\nLevel S,Suite 3, 5050 NB Tower'\nJalan Bagan Luar,\n12000 Butterworth,\nPulau Pinang, MalaYsia'\nrel : (04) 3?s2so::o!32s2801t32s2802 Fax: (04) 3322804 Website : liww.d nd'com.mY\nINVOICE (CPC)\nlnvoice To: Date :18-Ol-2O21\nUNICORI.,I INDUSTRY(M) SDN BHD hroice No. :CO5221100615€;7\nPLOT NC, 92, LORONG PERINDUSTRIAN Cust Code :U11322\nBUKiI MINYAK 11,TAMAN PERINDUSTRAN ID : PNC;\nBUKI-I MINYAK 14100 SEBEMNG PERAI,PENANG\nAttn:\nForwardirrg Name : LEAD GLOBAL SOLUTIONS SDN BHD\n:2OCO24\n: XIN YNG KOU\n:70144512180\nDischarge / GateOut\nDate Inlo DePoUPort\nContainer CPC Charges\nTota| Lcss Container Coverage, Damage & Disputes Management by Neutra| Party)\nTo,tal Anount Due :\nThis CPC is covering : accident'theftandhijack'\nl.Ttretotal losscontainer(actual orconstructive)ofthesubject-matte1lryggacausedbyfire\nLirnit of Liabi|ity: cp = nuoo,o00.00/per container & SP = RM80,000.00/per container .\nPafi\n2. Dilmage Dispr.rte Claims Management seMce by Neutral\na) please pay the above charges to D&D Gontrol (M) Sdn Bhd. within 0 days i.e by 18-01-20121 '\nb) Paynent is deemed receired upon clearance of cheque or physical receipt of cash.\nc) lnformation shown here will be considered conect unless notification of any discrepancy is re,:eirred within 3 daye from date of irvoice\nd) please login to our website www.DND.COM.Myto check on your outstanding charges to-date. You may refer to our ofiice (Tel: 03-\n33245300) for User lD & Password\ne) Paynent can also be made online or cheque/cash deposited into our a/c as follow :-\nBank RHB lslamic Bank Bhd /Account No .:2-124666000134'3 /Swift code: RHBAMYI(L\nIrHIS lS ACOMPUTER GENERATED DOCUMENT. NO SIGNATURE lS REOUIRED')\n=== PAGE 6 ===\n(As D ete nti o n /D e c o lle cti o n Ae e nt )\n3;[j $!ilt-T\n3:\nJalan Bagan Luar'\n12000 Bufterworth\nPulau Pinang, MalaYsia.\nTe| : (04) 32g28oo|32g2801|g2g2802 Fax: (04) 3322804 Website : ]nnilil.dnd'com.my\nrr{volcE (cPc)\nlnvoice f o: Date '. 18-01-2021\nH & FRIENDS GTL (MALAYSA) SDN hvcice No. : KM]22110061579\nNO.15-19F 1gTH FLOOR Cust Code : H00613\nMENAM NORTHAM ID : PNG\nJALAN SULTAN AHMAD SHAH\n1O5OO PENANG\nAttn:\nForwardirrg Name ; LEAD GLOBAL SOLUTIONS SDN BHD\ni\nBeing C,PC charges incuned for\n:20C087\nContainer No : FFAU1080940\nAgenMry :20135 : KMTC CTNGDAO\n:45G0 : PUSD6,z6973\nSize/Tyre\nDischarge / GateOut\nDate Inlo DepoUPort\nContainer CPC Charges\nTotal L,rss Container coverage, Damage & Disputes Management by Neutral Party)\nTotal Amount Due :\nT 1 h . i T s le C P to C ta l i s l o c s o s v e co ri n n t g a i : rnr (actual or constructive) of the subject-matterl!ty!9d caused by fire' accident' thefi and hijack\nLimit of Liability : GP = RM30,000.00/per container & sP = RM80,000'00/per container '\n2. Ditmage Disprlte Claims Management seMce by Neutral Party\na) Please pay the above charges to D&D Controt (M) Sdn Bhd. within 0 days i.e by 18'0'l-20211 '\nb) Paynent is deemed receired upon ciearance of cheque or physical receipt of cash.\nc) hrfonnation shown here will be considered conect unless notification of any discrepancy is rer:eired within 3 dals from da'h of invoice\nd) pleaselogintoourwebsitewMry.DND.COM.Mytocheckonyouroutstandingchargesto{ate'Youmayrefr:rtoourclffice(Tel:03-\n33245300) for User lD & Password.\ni\ne) Paynent can also be made onlire or cheque/cash deposited into our aic as follow\nBank: RHB lslamic Bank Bhd /Account No. : 2'1246660001343 / Swift code: RHBAMYI(L\nfl'Hls ls AcoMPuTER GENERATED DOCUMENT' NO SIGNATURE lS REOUIRE:D')\n=== PAGE 7 ===\n(As Detention / Demunage Charges Collection Agent)\nLevel8,Suite 3, 5050 NB Tower,\nJalan Bagan Luar,\n12000 Butterworth,\nPulau Pinang, Malaysia.\nTef : (04) 32928001329280113292802 Fax: (04) 3322804 Website :-unrvw.dnd.com.ml1\nTNVOTCE (CPC)\nInvoice To:\nCSH RECYCLE SDN BHD Date :18-01-2021\nLOT 941,I.-ORONG MAKMUR 1 /2 hvcice No. : COS:Z21 1006151i6\nKAWASAN PERINDUSTRIAN TAMAN MAKMUR Cust Code : C10733\n]SUNGAI S;ELUANG,O9600 LUNAS KEDAH ID : PNG\nAttn:\nForuvarding Name : LEAD GLOBAL SOLUTIONS SDN BHD\ni\nBeing CI'C charges incuned for\nNo FSCU8580780 Portvoy\nContainer : :211028\nAgentvoy 631N Vessel\nI : SINAR S/\\BANG\nSizeffyp,-' 45G1 No.\nI B/L : 62790161170\nDischarge / GateOut :1141-2021 I 15-01-2021 Port : NB1\nDate Into DepoVPort DepoVPort\n:\nPARTICULARS ATT'IOI'|NI\nConiainr:r CPC Charges\nTotial Los;s Contiainer Coverage, Damage & Disputes Management by Ner.rtral Party)\nTotal : o oux\"l RM 10.00\nI\n0.00\nTotal Amount Due : RM 10.00\nThis CPC is covering\n:\n1 . The total loss container (actual or constructive) of the subject-matter insured caused by fire, ar:cident, thefl and hijack.\nLimit of Liability : GP = RM30,000.00/per container & SP = RM80,000.00/per container .\n2. Damage Dispute Claims Management service by Neutral Party\na) Please paythe above charges to D&D Control (M) Sdn Bhd. within 0 dals i.e by 1B-O1-2O21\nb) Payrnent is deemed receired upon clearance of cheque or physical receipt of cash.\nc) Mormation shown here will be considered conect unless notjfication of any discrepancy is recei,,,ed within 3 dap from date ol invrrice.\nd) PleaselogintoourWebsite\\Mil ,V.DND.COM.MYtocheckonyouroutstandingchargesto-dat€.Youmayrefert,)ourofiice(-l-el:\n03-\n33245300) for User lD & Password.\ne) Payment can also be made onlire or cheque/cash deposited into our a/c as follow :-\nBank: IRHB lslamic Bank Bhd/AccountNo.: 2-12466€000134€/SwiftCode: RHBAI\\TIYKL\nfrH|s lS A COMPUTER GENERATED DOCUMENT. NO S|GNATURE tS REQURED.)\n=== PAGE 8 ===\n(As Detentlon / Demunage Charges Collection Agenl)\nLevel 8,Suite 3, 5050 NB Tower,\nJalan Bagan Luar,\n'12000 Butterurorth,\nPulau Pinang, Malaysia.\n: (04) 3292800R29280113292802 Fax: (04) 3322804 website :yrrww.dnd.com.my\n,Tef\nrt\\I\\/otcE (cPc)\nInvoice To:\nH & FR|EI.JDS GTL (MALA\\€A) SDN Date :18-01-2021\nNO.15-19tr 1gTH FLOOR hrcice No. : KMf2211006151\"1\nNIENAM NORTHAM Cust Code : H00613\n.JALAN SULTAN AHMAD SHAH ID : PNG\nlO5OO PENANG\nAftn:\nForwarding Name : LEAD GLOBAL SOLUTIONS SDN BHD\nBeing CF,C charges incuned\nContainer No : CA1U4709260 Portvoy\nAgentury' :20135 Vessel :KMTC QhIGDAO\nSize/Type :45G0 B/L No. : PUSD67ti973\nDischarg e / GateOut : 1 341 -2021 I 1 6-01 -2021 Port : NB t\nDate Into DepoVPort DepoVPort\n:\nAMOI'NT\nTotal Loss container corerage, Damage & Disputes Management by Neutral party)\nTotal: RM 10.0i1\n0.0r1\nTotal Anount Due :\nThis CF'C is covering :\n1. The t,rtal loss container (actual or constructive) of the subject-matter insured caused byfire, ac:cident, theft and hijack.\nLimit of Liability : GP = RM30,000.00/per container & sp = p R a M fi g0,000.00/per container .\n2. Damiage Dispute Claims Management service by Neutral\na) Pfease pay the above charges to D&D control (M) sdn Bhd. within 0 dap i.e by 18-o1-2o21 .\nb) Paymerd is deemed received upon clearance of cheque or phpical receipt of cash.\nc) lnformation shown here will be considered conect unless notification of any discrepancy is receired within 3 dap fiom date of inrpice.\nd) Please ogin lo our Website \\|/WW.DND.COM.MyIo check on yrour outstanding charges to-date. you may refer t<l our offce (T-el: 03_\n33245300) for User lD & Password.\ne) Paymert can also be made online or cheque/cash deposited into our a/c as follow i\nBank: tlHB lslamic Bank Bhd / Account No . : 2-1246660001343 / Swift Gode: RHBAIVIyKL\nITH|S |S A COMPUTER GENERATED DOCUMENT. NO SIGNATURE IS REQIJIRED.)\n=== PAGE 9 ===\nffiffiilfu$\nffiffiffiffiffiffi\n(As Detention / Demunage Charges Collection Agenl)\nLevel 8,Suite 3, 5050 NB Tower,\nJalan Bagan Luar,\n12000 Buttenrvorth\nPulau Pinang, Malaysia.\nTel : (04) 32928OU3 Fax: (04) 3322804 Website : www.dnd.com.my\n-29:80113292802\nTNVOICE (CPC)\nInvoice To:\nOCEAN FIARDWARE PAINTSDN BHD Date :19-0'l-2021\nS.P.K 25Ii3 LOT 282 MUKIM KELADI hrcice No. : COS221 10061774\nDAEMH KULIM Cust Code :0002165\nO9OOO KLILM KEDAH ID : PNG\n,Attn:\nForwarding Name : LEAD GLOBAL SOLUTIONS SDN BHD\ni\nBeing CPC charges incuned for\nContainer No :CCLU7847827 Portuoy :211053\nAgentroy :OBG2PN1NC Vessel : MOUNTCAMERON\nSize/ryp:' :45G1 B/L No. :72289001100\nDischarge / GateOut :1841-2021 I 18-01-2021 Port : NBC\nDate hto DepoUPort : DepoVPort\n'.\nPARTICULARS\nAIITCXJNT\nContiainerr CPC Charges\nTotal Loss contiainer coverage, Damage & Disputes Management by Neutral party)\nTotal ; 0 Da(s) RM 10,00\n0.00\nTotall Amount Due ; RM 't0.0iC\nThis CF'C is covering\n:\n1. The t'rtal loss container (actual or constructive) of the subject-matter insured caused byfire, ac;cident, theft and hijack.\nLimit of Liability: GP = RM30,000.00/per contiainer & SP = RM80,000.00/per contiainer.\npafi\n2. Damiage Dispute Claims Management seMce by Neutral\na) Please paythe above charges to D&D control (M) sdn Bhd. within 0 dap i.e by 19-01-2021\n.\nb) Paymer{ is deemed receired upon clearance of cheque or phpical receipt of cash.\nc) Information shown here will be considered conect unless notification of any discreparrcy is receired within 3 dap from date c,f inurice.\nd) Please ogin to our Website \\I/WW.DND.COM.MYto check on your outstanding charges todate. You may refer to our office (l-el: 03-\n33245300) for User lD & Password.\ne) Paymerrt can also be made online or cheque/cash deposited into our a/c as follow i\nBank ltHB lslamic Bank Bhd / Account No. : 2-12466{0001343 / Swift Code: RHBAtiyKL\nITH|S ls ACOMPUTER GENERATED D@UMENT. NO SIGNATURE IS REQUIRED.)\n=== PAGE 10 ===\nffiffi%\nffi,ffi$ffi#ffiffii\n(As Detention / Demunage Charges Collection Agent)\nLevel 8,Suite 3, 5050 NB Tower,\nJalan Bagan Luar,\n12000 Buttenrrorth,\nPulau Pinang, Malaysia.\nTel ; (04) 32928001329280113292802 Fax: (04) 3322a04 website :www.dnd.com.my\nrr{votcE (cPc)\nlnvoice To:\nCSH REC:YCLE SDN BHD Date :19-01-2021\nK LO A T W 9 A 4 S 1 A ,I - N O P R E O R N IN G D M US A T K R M 1 U A R N 1 T /2 AMAN MAKMUFI C hr u o s i t c C e o N d o e . : : C CO 10 S 7 2 3 2 3 1 1 0061 784\nSUNGAI SELUANG,O96OO LUNAS KEDAH ID : PNG\n,Attn:\nForurarding Name : LEAD GLOBAL SOLUTIONS SDN BHD\nBeing CPC charges incurred for i\nContainer No : OOCUT'240004 portury :211028\nAgentvcl' :631N Vessel\n: SINAR SABANG\nSize/Typ: :45G1 Bl No.\n: 627e0161170\nDischarge / GateOut :1241-2021 I 18-01-2021 Port\n: NB1\nDate lnto DepoUPort DepoVPort\n:\nI'ARTICULARS\nAMOUNT\n\\,enr.at n€)r uru u narges\nTotal Loss Contiainer Coverage, Damage & Disp,uts5 Management by Neutral party)\nTotal : 0 Da(s) RM 10\"00\n0.00\nTotallAmount Due : RM 10.00\nThis CF'C is covering\n:\n1 . The t'rtal loss container (actual or constnrctiver) of the subject-matter insured caused by fire, ar;cident, thefi and hijack.\nLimit of Liability: GP = RM30,000.00/per container & sp = p R a M fi 80,000.00/per container .\n2. Damiage Dispute Claims Management seMc;e by Neutral\na) Pfease paythe above charges to D&D control (M) sdn Bhd. within 0 days i.e by 1g-o1-2o21\n.\nb) Payment is deemed received upon clearance of cheque or phpical receipt of cash.\nc) lnformalion shown here will be considered conect unless notification of any discrepancy is receired within 3 days from date c,f inroice.\nd) PleaseloglntoourWebsiteWWW.DND.COM.lvlYtocheckonyouroutstandingchargesto{ate.youmayrefertpouroffice(1-el:\n03-\n33245300) for User lD & password.\ne) Paymerrt can also be made online or cheque/cash deposited into our a/c as follow :-\nBank: ftHB lslamic Bank Bhd / Account No . : 2-1246660001343 / Swift Code: RHBAITiyKL\nCTH|S |s A COMPUTER GENERATED D@UMENT. NO SIGNATURE IS REQI'IRED.)\n=== PAGE 11 ===\nW'.\n.\nG.\n(As Detention / Demunage Charges Collection Agent)\nLevel S,Suite 3, 5050 NB Tower,\nJalan Bagan Luar,\n12000 Buttenvorth\nrel : (04) 32s?ao!E2szyl1,r;r$!ii Fff l3#35S'S. website : www.d nd.com.my\nTNVO|CE (CPC)\nInvoice To:\nUNICORT\\I NDUSTRY(M) SDN BHD Date :19-01-2O21\nPLOT NO 92, LORONG PERINDUSTR]AN hrcice No. : COS22'\\ '10061783\nBUKIT MII{YAK 1 l,TAMAN PERINDUSTRAN Cust Code : U11322\nBUKTT Mil{YAK 141 OO SEBEMNG PERAI.PENANG D : PNG\n,Attn:\nForwarding Name: LEAD GLOBAL SOLUTONS SDN BHD\nBeing CfrC charges incuned for i\ncontainer No oocu64g7852 portvoy :20c253 i\n:\nAgentrcl' :0005N Vessel KAFiTINI i\nSizeffypr: :45G0 No. : : 7 Sp 0 lL 1 4452127o I\nB/L\nI\nDischarge / GateOut :0441-2Q21 109-01-2021 Port : NB1\nDate Into DepoUPort DepoVPort\n:\nPARTICULARS AMOUNT\nvuilEtr|elt uru unarges\nTotal Loss container coverage, Damage & Disputes Management by Neutral party)\nTotal : 0 Day(s) RM 10.00\n0.0rc\nTotal Amount Due: RM 10.0t)\nThis CF'C is covering\n:\n1 . The t':tal loss container (actual or constructive) of the subject-matter insured caused by f re, ac:cident, theft and hijack.\n2. L D i a m m it ;r o g f e L i D ab ls i p li r t . y rt e : G C P la = im R s M M 3 a 0 n , a 0 g 0 e 0 m .0 e 0 n /p t e s r e c M on c t e ra i b ne y r N & e u S tr P a l = p R a M fi 80,000.00/per contiainer .\na) Please oay the abore charges to D&D Control (M) Sdn Bhd. within 0 dap i.e by 1941-2021\n.\nb) Payrnerrt is deemed receired upon clearance of cheque or physical receipt of cash.\nc) lnformation shown here will be considered conect unless notification of any discrepancy is receired within 3 days from date of irnoice.\nd) PleaselogintoourWebsiteVI/WW.DND.COM.MYtocheckonyouroutstandingchargestodate.youmayrefertoourofiice(T'el:\n03-\n332453)0) for User D & password.\ne) Payrnert can also be made online or chequeicash deposited into our a/c as follow i\nBank: ftHB lslamic Bank Bhd / Account No. : 2-12466$000134.3 / Swift Gode: RHBAIVIVKL\nITHFi IS A COMPUTER GENERATED D@UMENT. NO STGNATURE IS REQTJIRED.)\n=== PAGE 12 ===\n(As Detention / Demunage Charges Collection Agent)\nLevel S,Suite 3, 5050 NB Tower,\nJalan Bagan Luar.\n12000 Buttenrvorth.\nPulau Pinang, Malaysia.\nTel : (04) 329280013292a011J292802 Fax: (04) 332z1o4 website : www.dnd.com.mv\nIT.IVO|CE (CPC)\nInvoice To:\nuNtcoRNt TNDUSTRY(M) SDN BHD Date :19-O1-2021\nPLOT NO 92, LORONG PERINDUSTRIAN hrcice No. : COS221 10061782\nBUK]T MhIYAK 1 l,TAMAN PERINDUSTRAN Cust Code :U1'1322\nBUKTT MhIYAK 141 OO SEBERANG PERAI,PENANG D : PNG\n,Attn:\nForwarding Name : LEAD GLOBAL SOLUTTONS SDN BHD\nBeing Cf)C charges incuned for:\nContainer No :FC1U9141020 Portvoy :2OCO24\nAgenhol, :201S Vessel :XlN VNG KOU\nSize/Typr: :45G0 B/L No. :7014446',t20\nDischarge / GateOut : 30-12-2020 I 18-01-2021 Port :NB1\nDate Into DepoVPort DepoVPort\n'.\nPARTICULARS AMOUNI\nContainerr CPC Charges\nTotal Loss container coverage, Damage & Disputes Management by Neutral party)\nRM 10 0C\n0.0r)\nTotallAmount Due : RM 10.0t1\nThis CF'C is covering\n:\n1. The t'rtal loss container (actual or constructive) of the subject-matter insured caused by fire, ac:cident, theft and hijack.\nLimit of Liability: GP = RM30,000.00/per contiainer & Sp = RMg0,000.00/per container .\n2. Damiage Dispute Claims Management seMce by Neutral party\na) Please paythe above charges to D&D control (M) sdn Bhd. within 0 days i.e by 19-01-2oz,l\n.\nb) Payment is deemed rer:eir^ed upon clearance of cheque or phpical receipt of cash.\nc) ffiormation shown here will be considered conect unless notification of any discrepancy is receir,ed within 3 days from date c,f inroice.\nd) 3 P 3 le 2 a 4 s 5 e 3 0 ro 0 g ) in fo t r o U o s u e r r W lD e b & s i P te a s \\{ s W wo W rd .D . ND.COM.MYIo check on your outstanding charges to-date. You may refer to our ofiicer 1'1-el: 03-\ne) Paymerfi can also be naade online or cheque/cash deposited into our a/c as follow i\nBank llHB lslamic Bank Bhd /Account No. : 2-'12466600013{3 /Swift Code: RHBAIIfyKL\nfl.HIS IS A COTT,IPUTER GENERATED D@UMENT. No SIGNATURE Is REGItJIRED.)\n=== PAGE 13 ===\nffiffi%\nffiHffiffi\n(As Detention / Demurrage Charges Collection Agent)\nLevel S,Suite 3, 5050 NB Tower.\nJalan Bagan Luar,\n12000 Buttenirrrorth,\nPulau Pinang, Malaysia.\nTel: (04)329':28t0::9R29280113292802 Fax:(o4)3322804 Website:www.dnd.com.my\nrt{votcE (cPc)\nlnvoice To:\nOCEAN FIARDWARE PI\\INT SDN BHD Date :20-01-2021\nS.P.K 25€;3 LOT 282 MUKIM KELADI hloice No :COS221 I 0061 907\nDAERAH KULIM Cust Code : 000265\nO9OOO KULM KEDAH ID : PNG\nAttn:\nFonvarding Name : LEADr GLOBAL SOLUTIONS SDN BHD\nF;;\n3 charges incuned for:-\nI Container l N t o : CCLU7168662 portvrry :21i053\nAgent\\oy :0BG2PN1NC Vesset\nI : MOUNTCAMERON\n:45G1 No.\nB/L : 7228900i100\nlSize/TWr:\nf \"\"\"*\",;'/ GateOut :1841-2021 I 19-01-2021 Port : NB1\no\"t\" rn o oD,epoVPort : DepoVPort\nLI -: :\nPARTICULARS AII,IOUNI\nI Containe'r (UHU Unarges\nrotatt-oss tContainer Covrerage, Damage & Disputes Management by Neutral party)\nt*-*\nf\nI t lo-tal:-- 0 Day(s) RM 10.00\nt-:\n0.00\nTotallAmount Due : RM 10.0)\nThis CF'C is covering\n:\n1- The tr:tal loss container (actual or constructive) of the subjecfmatter insured caused by fire, ac:cident, theft and hijack.\nLimit of Liability: GP = RM30,000.00/per contrainer & Sp = RMg0,000.00/per container.\n2. Damilge Dispute Claims Management seMce by Neutral party\na) Please pay the above charges to D&D control (M) sdn Bhd. within 0 dap i.e by 20-01-2021\n.\nb) Payment is deemed receired upon clearance of cheque or phpical receipt of cash.\nc) Informalion shown here will be considered correct unless notification of any discrepancy is receired within 3 days from date c,f inroice.\nd) Please login to our Website WWW.DND.COM.MYto check on your outstandirg charges to-date. You may refer to our officer (l-el: 03-\n33245300) for User D ,& Password.\ne) Paymerrt can also be made online or cheque/cash deposited into our a/c as folklw :-\nBank IIHB lslamic Bank Bhd /Account No. : 2-12466.60001343 /Swift Code: RHBAI\\I|yKL\nfiHls ls AcoltlPUTER GENERATED DocuMENT. NoS|GNATURE ts REQURED.)\n=== PAGE 14 ===\n(As Detention i Demunage Charges Collection Agent)\nLevel S,Suite 3, 5050 NB Tower,\nJalan Bagan Luar,\n12000 Buttenruorth,\nPulau Pinang, Malaysia.\nTel : (04) 32928001329280113292802 Fax: (04) 3322804 website : www.dnd.com.mv\nIr.rvotcE (cPc)\nInvoice To:\nUNICORIiI INDUSTRY(M)r SDN BHD Date :20-01-2021\nPLOT NO 92, LORONG PERINDUSTR1AN hwice No. :CO522110061922\nBUKTI MII{YAK .1 1,TAMA.N PERINDUSTRAN Cust Code :U11322\nBUKr|- MhJYAK 14100 SEBERANG PERAI.PENANG ID : PNG\n,Attn:\nForwarding Name : LEAEI GLOBAL SOLUTTONS SDN BHD\nF'*;\n) charges incuned for i\nI Container lNro : TGHU6525190 Portroy :20C253\nI Agentroy :0005N Vessel : SPIL KAF|TINI\nmSize/TVRr-;. :45G0 B/L No. :7014452',29O\nI\n; / GateOut :O4-01-2021 119-01-2021 Port : NB1\nout\" ntJ oD,epoUPort DepoVPort\nI :\n[: PARTICULARS AMOUNT\nI Containerr (\\,ru unargeli\nrotat t-oss tContainer Coverage, Damage & Disputes Management by Neutral party)\nt--\nf\nflTo-tal:-- 0 Day(s) RM '10.00\nt*-: 0.00\nTotallAmount Due : RM 10.00\nThis CF,C is covering :\n1. The t'rtal loss container (actual or constructive) of the subject-matter insured caused byfire, ac;cident, theft and hijack.\nLimit of Liability : GP = RM30,000.00/per container & sp = RMg0,000.00/per container .\n2. Dam;age Dispute Claims Management service by Neutral party\na) Please paythe above charges to D&D control (M) sdn Bhd. within 0 dap i.e by20-01-2021 .\nb) Paymerfi is deemed rer:eired upon clearance of cheque or physical receipt of cash.\nc) hformalion shown here will be considered conect unless notification of any discrepancy is receircd within 3 days from date o,f inoice.\nd) PleaseogintoourWebsiteVvI/VW.DND.COM.MYtocheckonyouroutstandingchargesto-date.Youmayrefertoourofficer(l-el:\n03-\n33245300) for User lD ,& Password.\ne) Payrnerrt can also be made online or cheque/cash deposited into our a/c as follow i\nBank llHB lslamic Bank Bhd / Account No. : 2-1246660001343 / Swift Gode: RHBAIUIyKL\nTT.HIS IS ACOMPUTER GENERATED DOCUMENT. NO SIGNATURE IS REQTJIRED.)\n=== PAGE 15 ===\nffiffiffiA,J\nffiffiffiffiffi\n(As Detention / Demunage Charges Collection Agent)\nLevel B,Suite 3,5050 NB Tower,\nJalan Bagan Luar,\n12000 Butterworth,\nrer: oot32szrso1t32ri;i?:trift#38t'S.\n(011,if,,,,,,,,,,,,,,,,0*ze website :www.dnd com.my\nrNVolC;\niCpCl\nInvoice To:\nuNtcoRNt TNDUSTRY(M) SDN BHD Date :20-01-2021\nP B L U O K T II N M O II { 9 Y 2 A , K L O 1 R 1 O ,T N A G M A P ,N E R P I E N R D I U N S D T U R S 1A T N RAN C hv u c st i c C e o N d o e : : C U O 11 S 3 2 2 2 2 1 1 0061 921\nBUKTT MIh.IYAK 14100 SEBERANG PERAI ,PENANG ID : PNG\nAttn:\nFonvarding Name : LEAEI GLOBAL SOLUTIONS SDN BHD\nBeing CPC charges incuned for i\nContainer No : TCNU59191 14 portvoy :2OCO24\nAgentwy' :201s Vessel\nSize/Typr: :45G0 No. :XlN VNG KOU\nB/L :101445208O\nDischarge / GateOtrt :29-12-202O I 19-01-2021 Port : NB1\nDate Into DepoVPort DepoVPort\n:\nPARTICULARS\nAIITOIJNT\n\\,untatrrcrr uru unarges\nTotial Loss container coverage, Damage & Disputes Management by Neutral party)\nTotal : 0 Da(s) RM 10.00\n0.00\nTotal Amount Due : RM 10.00\nThis CF,C is covering :\n'1. The t'rtal loss container (actual or constructive) of the subject-matter insured caused byfire, ac:cident, theft and hijack.\nLimit of Liability : GP = RM30,000.00/per container & sp = RMg0,000.00/per container .\n2. Damiage Dispute Claims Management service by Neutral party\na) Please pay the above charges to D&D Control (M) Sdn Bhd. within 0 dayrs i.e by 20-01-2021\n.\nb) Payment is deemed received upon clearance of cheque or phpical receipt of cash.\nc) hformation shown here will be considered conect unless notification of any discrepancy is receired within 3 days from date of invcice.\nd) Please ogin to our Website \\ MW.DND.COM.MYto check on your outstanding charges to-date. you may refer to our officer (l-el: 03-\n33245300) for User lD ,& password.\ne) Paymerrt can also be made online or cheque/cash deposited into our a/c as follow i\nBank: ltHB lslamic Bank Bhd /Account No. : 2-124665000134€ / Swift Code: RHBAIITVKL\n([.HIS IS A COITiPUTER GENERATED DOCUMENT. NO SIGNATURE IS REQIJIRED.)\n=== PAGE 16 ===\n(As Detention / Demunage Charges Collection Agenl)\nLevel S,Suite 3, 5050 NB Tower,\nJalan Bagan Luar,\n12000 Butterworth,\nPulau Pinang, Malaysia.\nFax:(04)3322804 website:www.dnd.com.my\n--*!.]ttulsz9280o_1329280113292a02\nIr.fvotcE (cPc)\nlnvoice To:\nTHONG SHENG FOOD '']IECHNOLOGYSDN BHD Date :20-01-2021\nNO 8, LOITONG INDUSTIRIRINGAN PERMATANG hloice No. : OOL221'10062017\nTINGGI 4, KAWASAN INTIUSTRI RINGAN Cust Code : T01 235\nPERMAT,\\NG TINGGI ID : PNG\n1 41 OO Sh'PANG AMPA-I- PENANG\n,Attn:\nForwarding Name :LEAD GLOBAL SOLUTIONS SDN BHD\nBeing CtrC charges incuned for i\nContainer No : OOLUI 179433 Portvoy :211032\nAgentrcy, Vessel :XIN RIZHAO\nSize/Typr: B/L No. : 2655539ti1 0\nDischarge / GateOd : 1941 -2021 | 1 9-01 -2021 Port : NBI\nDate Into DepoVPort DepoVPort\n:\nPARTICULARS\nContaine,r CPC Charges\nTotal Loss contairer coverage, Damage & Disputes Management by Nerrral party)\nTotal Amount Due :\nThis CF'C is covering\n:\n1. The trltal loss contairrer (actual or constnrctive) of the subject-matter insured caused byfire, ac:cident, theft and hijack.\n2. L D im am it ir o g f e L i D ab is i p lit u y t : e G C P la = im R s M M 3 a 0 n ,0 a 0 g 0 e . m 00 e / n p t e s r e c rv o i n c t e a i b n y e r N & e u s tr p a l = p a R r M ty g0,000.00/per container .\na) Pfease lraythe above c;harges to D&D Gontrol (M) sdn Bhd. within 0 days i.e by2o-o1-2021 .\nb) Paynerrt is deemed re<;eired upon cleararrce of cheque or physical receipt of cash.\nc) lnformation shown here will be considered conect unless notification of any discrepancy is receired within 3 days from date of inrrcice\nd) PleaselogintoourWebsiteWVW.DND.COM.MYtocheckonl,ouroutstandingchargesto{ate.Youmayrefertoourofiice(I'el:03-\n332453t10) for User lD il Password.\ne) Payrnent can also be made online or cheque/cash deposited into our a/c as follow i\nBank FIHB lslamic Bank Bhd / Account No . : 2-124665000134€ / Swift Code: RHBAIVIVKL\nOHIS IS ACOMPUTER GENERATED D@UMENT. NOSIGNATURE IS REGITJIRED.)\n=== PAGE 17 ===\nffiffi\n(As Detention / Demunage Charges Collection Agent)\nLevel S,Suite 3, 5050 NB Tower,\nJalan Bagan Luar,\n12000 Butterworth\n.\nrel : !94) 32s28oo t32s2t o,,rrnl|Jii Ftriid#35]5fr websire : www d nd com.mv\ntNVoLi\ntcpcl\nInvoice'l'o:\nECOLOGYTMDE SDNBHD\nDate :22-01-2021\nP P B E L U O N K T A rI N 1 M G 8 I 1 N , Y J A A K L , A 1 N 4 O P O E O R S IN T D \\4 U P S A T N R G 1 A A N M P B A U T KT . T MNYAK 7 C t h n u rc s i t c C e o N d o e . : : C E0 O 1 S 0 2 3 2 5 1'1006:2it95\n: PNG\nAttn:\nForwardirrg Name: LEAD GLOBAL SOLUTTONS SDN BHD\nBeing ClrC charges incuned for i\nContaine,r No : CCLU7327110 Portvoy :211032\nAgentrov :322N Vessel :XlN RlZl-lAO\n,1uo:\n:,r\"1T' B/L No. : 62830691 79\nDischarge / Gate0lrt : 2041 -2021 | 21 -01 -2021 Port : NB1\nDate Into DepoVPort DepoVPort\n:\nPARTICULARS\nAMOTJNT\nvt v vildtgEiS\nTotal Loss container coverage, Damage & Disputes Management by Neutral party)\nTotal: 0 Da(s)\nRM 10.00\n0.00\nTotalAmount Due : RM 10.00\nThis CF,C is covering\n:\n1 ' The trtal loss <;ontairrer (actual or constructive) of the subjectmatter insured caused by fire, a<:cident, theft and hijack.\nLimit of Liability: GP = RM30,000.00/per container & sp= RMg0,000.00/per container.\n2. Dam,age Dispute Claims Management service by Neutral party\na) Please pay the above c;harges to D&D control (M) sdn Bhd. within 0 dap i.e by 22-01-2021 .\nb) Paymerrt is deenred rer:eired upon clearance of cheque or physical receipt of cash.\nc) hformation shown here will be considered conect unless notification of any discrepancy is receired within 3 days from date of inrnrice.\nd) P 33 le 2 a 4 s 5 e 3 0 'o 0 g ) i n f o t r o U o s u e r r W D e b ,& s i p te a s W sw W o W rd . . DND.CoM.MYto check on your or.rtstranding charges todate. you may refer to our officel ll'l-el: 03-\ne) Payrnerrt can also be made online or cheque/cash deposited into our a/c as follow i\nBank: ftHB lslamic Biank Bhd / Account No. : 2-1246650001343 / Swift Gode: RHBAIvfyKL\nOHIS IS ACOMPUTER GENERATED DOCUMENT. NO STGNATURE IS REQI'IRED.)\n=== PAGE 18 ===\n(As Detention / Demunage Charges Collection Agent)\nLevel 8,Suite 3, 5050 NB Tower,\nJalan Bagan Luar,\n12000 Butteniruorth,\nr,rrnllii Ftrlid###S.\nrer : (04 ) 32sz8oo t3zs2uo websire, www.dnd.com.mv\nrr{votcE (cPc)\n-[o:\nInvoice\nECOLO(;YTRADE SDII BHD Date :22-Q1Q.O21\nPLOT 181 , JALAN PER]INDUSTRAN BUKIT MNYAK 7 hucice No. : COS22110062i191\nBUKTT M NYAK, 14OOO SiIMPANG AMPAT. Cust Code : 801035\nPENANC;\nID : PNG\nAttn:\nForwardirrg Name :LEAD GLOBAL SOLUTIONS SDN BHD\nF;;\ni\nJ charges incuned for\nI Containrtr l N r o : BMOU5091392 portvoy :211032\nAgent\\o/ 322N Vessel\nI : : XtN Rl Z{AO\nSize/Tvle :45G1 No.\nB/L :628437262O\nI\nI Dischartle) // Gateout :2041-2021 I 21-01-2021 port : NBI\nDate Intc DDtepoVPort DepoVPort\n:\n$\nt*\nPARTICULARS\nAMOUNT\nI Contrain,r:rr (vrv utElges\nrotalLor;s;s tContainer Coverage, Damage & Disputes Management by Neutral party)\nLf -*\nr\nlTotral\n:: 0 Da(s)\nRM 10.cr0\nt---*\n0.00\nTotal Anount Due : RM 10.00\nThis CI)C is cov:ring :\n1' The lotal loss container (actual or constnrctive) of the subject-matter insured caused byfire, ar:cident, theft and hijack.\n- Limil of Liabilirsr: GF' = RM30,000.00/per container & Sp= RMg0,0oo.0o/per container\n2. Damage Dispute Claims Management service by Neutral party .\na) Please paythe above charges to D&D Gontrol (M) sdn Bhd. within 0 days i.e by22-0't-2021\nb) Paymer{ is deenred receired upon clearance of cheque or physical receipt of cash.\nc;) hformalionshownherewill beconsideredconectunlessnotificationofanydiscrepancyisrecei,redwithin3daysfromdateolirnoice.\nd) Please login to our Welbsite WWW.DND.coM.MYto check on lour outstranding charges to-date. you may refer to our off ce (-fell: 03-\n33245300) for User lD & password.\ne) Payment can also be nrade online or cheque/cash deposited into our a/c as follow :-\nBank: ltHB lslamic Bank Bhd /Account No. : 2-124666000134.3 / Swift code: RHBAI\\|IYKL\nfl.HIS IS ACOTTIPUTER GENERATED DOCUMENT. NO SIGNATURE IS REQI,IRED.)\n=== PAGE 19 ===\nr'i\nTfr#f\nH#:*\n(As Detention / Demunage Charges Collection Agent)\nLevel8,Suite 3, 5050 NB Tower,\nJalan Bagan Luar,\n12000 Butterworth,\nrer : (04) 32s28oo t32s2*',,rr1lo!3i Ffi,?#3|;t';r, Websire : www d nd com.my\nrt\\r\\/otcE (cPc)\nInvoice'[o:\nECOLOC}YTRADE SDNI BHD\nDate :22-01-2021\nB P U LO KT T T 1 M 8 1 N , Y J A A K L , A N 14 I O P O E O R I S IN iI D M U P S A T N R G 1A A N M P B A U T KT . T MNYAK 7 hrcice No, : COS221 10062314\nPENANG, Cust Code : E01035\nID : PNG\nAttn:\nForwardirrg Name :LEAD GLOBAL SOLUTTONS SDN BHD\nBeing CPC charges incuned for:-\nContainr:r No : OOLU9807665 Portvoy :211032\nAgentvo,/ :322N Vessel :XlN Rl Zl-lAO\nSize/rlpe\n:45G1 B/L No. :6283096710\nDischargre / GateOut : 1 94'l -2021 I 21 -01 -2021 Port : NB1\nDate Intc DepoVPort DepoVPort\n: :\nPARTICULARS\nAMOU|\\IT\nvrv wtHtges\nTotial Loris container c''erage, Damage & Disputes Management by Neutral party)\nTotal: 0 Day(s)\nRM 10.cr0\n0.cr0\nTotalAmount Due : RM 10.00\nThis Ct)C is cov,.ring\n:\n1' The total loss r:ontainer Gctu€l or constructive) of the subject-matter insured caused by fire, ar:cident, theft and hijack.\n_ Limit of Liabiliry : GF' = RM30,000.00/per contrainer & sp = RMg0,000.00/per contiainer .\n2. Damage Dispute Cliaims Management seMce by Neutral party\na) Pleasepaytheabover:hargestoD&Dcontrol (M)sdnBhd.within0daye i.e by22-01-2021\nb) Paymert is deenred receired upon crearance of cheque or phpicar receipt of cash.\nc) hforma |ion shown here will be considered conecl unless notification of any discrepancy is recei'ued within 3 days from date ol invcice.\nd) 3 P 3 le 2 a 4 s 5 e 3 0 lo 0 g ) i n f o t r o U o s u e r r w D el b & s i p te a s v s t w /w o w rd 'D . ND-coM.MYto check on lour outstanding charges to-dat€. you may refer to our off ce (-ferl 03-\ne) Paymerrt can also be nrade online or cheque/cash deposited into our a/c as follow i\nBank: llHB lslamic Bank Bhd/AccountNo.: 2-12466s000134-3/Swiftcode: RHBAIvIyKL\nO-HIS IS A COMPUTER GENERATED DOCUMENT. NO SIGNATURE IS REQI'IRED.)",
+    "bank": "RHB",
+    "ref_ids": [
+      "18-01-2021",
+      "20-01-2021",
+      "CA1U4349667",
+      "FFAU1080940",
+      "FSCU8580780",
+      "CA1U4709260",
+      "CCLU7847827",
+      "OOCU64G7852",
+      "FC1U9141020",
+      "TCNU59191",
+      "CCLU7327110",
+      "OOLU9807665",
+      "22110061579",
+      "MATTE1LRYGGACAUSEDBYFIRELIRNIT",
+      "OHPN38IZ3207",
+      "33245II00",
+      "HMM221100615",
+      "O1PN3828622",
+      "32G28O1L32G28O2FAX",
+      "3322804WEBSITE",
+      "TEMU7764520",
+      "3322I5300",
+      "32S2801T32S2802",
+      "CO5221100615",
+      "MATTE1LRYGGACAUSEDBYFIRE",
+      "1006151I6",
+      "3292800R29280113292802",
+      "KMF2211006151",
+      "PUSD67TI973",
+      "32928OU3",
+      "OBG2PN1NC",
+      "627E0161170",
+      "4452127O",
+      "329280013292A011J292802",
+      "9R29280113292802",
+      "CCLU7168662",
+      "0BG2PN1NC",
+      "7228900I100",
+      "PERINDUSTR1AN",
+      "CO522110061922",
+      "TGHU6525190",
+      "OOT32SZRSO1T32RI",
+      "101445208O",
+      "2655539TI1",
+      "332453T10",
+      "GATE0LRT",
+      "COS22110062I191",
+      "BMOU5091392",
+      "628437262O",
+      "WITHIN0DAYE",
+      "12466S000134",
+      "24666000",
+      "32928001329280113292802",
+      "10061570",
+      "33245300",
+      "10061774",
+      "10061783",
+      "10061782",
+      "60001343",
+      "10062017",
+      "62830691",
+      "10062314",
+      "3189390335",
+      "1246660001343",
+      "332451300",
+      "124666000134",
+      "7014441760",
+      "70144512180",
+      "62790161170",
+      "80113292802",
+      "72289001100",
+      "12466600013",
+      "124665000134",
+      "1246650001343",
+      "6283096710"
+    ],
+    "amount": "180.00",
+    "date": "18-01-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "d6cbdee9-5d5d-4b84-96c6-8635ab6b8fbd_TT 01067 RM 10.00 LYONEL-ARS.pdf",
+    "text": "=== PAGE 1 ===\n1/22/2021 OCBC - Velocity@ocbc 2.0\nTransfer to a bank locally\nGIRO Payment\nTransaction Status: Submitted to Bank\nCreation Date: 22 Jan 2021 16:15:46\nFrom To\nYour Account Beneficiary Bank\n7911021539 - MYR ARS GLOBAL SOLUTIONS (MALAYSIA) SDN BHD RHB BANK KUALA LUMPUR\nValue Date Amount Beneficiary Account No.\n22 Jan 2021 10.00MYR 21246660001343\nBeneficiary Name\nD&D CONTROL\nBeneficiary ID Type Beneficiary ID No. -\n-\nRecipient's Reference Other Payment Details\nWHS32110059928 PV01067\nOther Details\nYour Reference No.\nNotify Beneficiary\nD&D\nEmail Address\ndndopnjb@dnd.com.my;dnddocjb@dnd.com.my;finance_kul@\narsglobal.com.my\nMessage to Beneficiary\nPOB Lyondellbasell for WHS32110059928\nhttps://velocity.ocbc.com/tran.view?do=ReLoad 1/1",
+    "bank": "RHB",
+    "ref_ids": [
+      "BANK7911021539",
+      "WHS32110059928",
+      "7911021539",
+      "21246660001343"
+    ],
+    "amount": "10.00",
+    "date": "22 Jan 2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "da575b9c-06f5-4398-b5a2-9a1d6aa1f265_D&D CONTROL - BIZIB272162 [DEMURRAGE] [S240442 & S240455].pdf",
+    "text": "=== PAGE 1 ===\nInterbank GIRO (IBG) - Acknowledgement\nTransaction is successfully sent for approval.\nUser ID : TAN TATT MENG\nDate, Time : 20/01/2021 14:36:34\nBIZ Reference No. : BIZIB272162\nIBG Reference No. : IBGCMSRHB20012021272163\nFrom Account : 02200063498 - GLOBAL CONTAINER FREIGHT\n(PENANG ) SDN B\nTo Account : 21246660001343 - D&D CONTROL (M) SDN BHD\nBeneficiary Name : D&D CONTROL (M)\nBeneficiary Bank : RHB BANK BHD\nRecipient's Reference : TGCU0164981\nOther Payment Details : WHLU5640681\nID Check : Yes\nID Type : Business Registration\nBusiness Registration : 923103K\nContact No. :\nPayment Date : 20/01/2021\nAmount (MYR) : 5,090.00\nService Charge (MYR) : 0.10\nGst Rate - Service Charge (%) : 0.00\nGst Amount - Service Charge (MYR) : 0.00\nTotal Amount (MYR) : 5,090.10\nSMS Notifications : -\nPage 1 of 2\n=== PAGE 2 ===\nEmail Notifications : gcfdocs@pen.global-gp.com\nPage 2 of 2",
+    "bank": "RHB",
+    "ref_ids": [
+      "TGCU0164981",
+      "WHLU5640681",
+      "BIZIB272162",
+      "IBGCMSRHB20012021272163"
+    ],
+    "amount": null,
+    "date": "20/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "DUITNOW - INV REF.pdf",
+    "text": "=== PAGE 1 ===\nRECEIPT\nDuitNow\nTransaction Status : Executed Successfully\nTransaction Reference No. : 202510310309084157\nSource Account : 8001877790 / ATLANTIC CONTAINER LINES SDN BHD (MYR)\nBeneficiary Information\nTransfer To : Account No.(DuitNow ID)\nDuitNow ID : 21246660001343 / D&D CONTROL (M) SDN BHD\nAdditional Information\nAmount : MYR 10.60\nTransaction Charges : MYR 0.00\nTax Rate : 0.00 %\nTax Amount : MYR 0.00\nTotal Charges : MYR 0.00\nTotal Debit Amount : MYR 10.60\nRecipient Reference : ONE12511727163\nOther Payment Details : TCNU3882103\nRemarks : OUR REF: 2025103103\nPurpose Code Category : -\nPurpose Code : -\nInstruction Mode\nToday : 31-Oct-2025\n* This receipt is generated by BizChannel@CIMB",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "202510310309084157",
+      "21246660001343",
+      "202510310309084157SOURCE",
+      "ONE12511727163",
+      "2025103103",
+      "TCNU3882103",
+      "8001877790"
+    ],
+    "amount": "10.60",
+    "date": "31-Oct-2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "e1279052-fc55-4a80-921e-8f400f9220ae_10061788.pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101200021713292\nService Reference No.: 199655\nPrinted Date/Time: 20/01/2021 09:13 AM\nPending Approval Transaction (Acknowledgement)\nProduct Type Interbank GIRO (IBG)\nReference No 2101200021713292\nService Reference No 199655\nApproval Status Processed\nFrom Account 3193110714 / SAGA FREIGHTER SDN BHD\nBeneficiary Bank RHB Islamic Bank Berhad\nTransfer Type Fund Transfer\nD&D CONTROL (M) SDN BHD\nBeneficiary Name\nName provided will not be validated. For receiving bank's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you proceed with the transaction.\nRecipient Reference INV: COS22110061788\nOther Payment Details CNTR NO: TCKU1015259\nAmount MYR 10.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nPayment Date 20-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101200021713292\nService Reference No.: 199655\nPrinted Date/Time: 20/01/2021 09:13 AM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker TAN KONG HIN 20-Jan-2021 09:12:55 Created\nAuthoriser\nAUTHORIS\nAny 1 from Group\nER-SAGA\nAUTHORISER-SAGA TAN KONG HIN 20-Jan-2021 09:13:44 Approved\nFREIGHET\nFREIGHETR SDN BHD\nR SDN BHD\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "TCKU1015259",
+      "21713292",
+      "60001343",
+      "2101200021713292",
+      "2101200021713292SERVICE",
+      "NO2101200021713292",
+      "NO21246660001343",
+      "COS22110061788"
+    ],
+    "amount": "10.00",
+    "date": "20-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "e85ca759-1c3f-4c44-a20c-9c5029575c08_DnD EngKah WHS2211006051 0984 1164.pdf",
+    "text": "=== PAGE 1 ===\n1/25/2021 Public Bank Berhad Internet Banking.\nInstant Transfer to Favourite Account\nReference Number: 206946\nTransaction Status: Accepted for Processing\nTransaction Date/Time: 25-01-2021 11:45:26\nFrom Account: 3207997012 ( Current )\nAmount: RM 105.00\nBeneficiary Bank: RHB Bank Berhad\nBeneficiary Account: 21246660001343\nBeneficiary Name: D&D CONTROL (M) SDN BHD\nRecipient Reference: EngKah dem n CPC\nOther Payment Details: CO EngKah dem n CPC\nInstant Transfer Service Charge: RM 0.00\nDescription: WHS2211006051 0984 1164\nApproval Status: APPROVE\nNotification to Beneficiary : Nil\nNote:\nThis is a computer generated receipt and does not require a signature.\nhttps://www2.pbebank.com/myIBK/apppbb/servlet/BxxxServlet?JSID=3E753BE57BD6C1CA58DBB0E777BA360A70DB39DB0B2E57D219CF79DBF… 1/1",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "WHS2211006051"
+    ],
+    "amount": "105.00",
+    "date": "1/25/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "e9368ba7-f39f-4ad5-90c9-5e24d2300e4b_TT 451891 RM 30.00 DEMAND.pdf",
+    "text": "=== PAGE 1 ===\nDomestic Transfers\nResult Message: Domestic Transfers has been successfully released and executed\nDomestic Transfers Pending Task Detail Result\nReference No. : 202101250085451891\nSource Account : 8007765922 / DEMAND TOTAL LOGISTICS SDN BHD (MYR)\nServices : Interbank GIRO (IBG)\nBeneficiary Bank Information\nBank Name : RHB BANK BHD\nBeneficiary Account Information\nAccount No : 21246660001343\nName : D & D CONTROL (M) SDN BHD\nValidate Beneficiary ID : No\nNote:\nYes (Please ensure the Beneficiary ID Type & Account Number is the same as maintained at the\nBeneficiary's bank.\nBeneficiary ID keyed in will be used for validation.)\nNo (Beneficiary ID Validation is not required. ONLY Account Number will be validated at Beneficiary bank.)\nAdditional Information\nAmount : MYR 30.00\nTransaction Fee : MYR 0.10\nTax Rate : 0.00 %\nTax Amount : MYR 0.00\nTotal Debit Amount : MYR 30.10\nRecipient's Reference : D and D\nOther Payment Details : PV-009984\nRemarks :\nPurpose Code Category :\nPurpose Code :\nBeneficiary Notification\nBeneficiary Email : account@demandtpt.com\nInstruction Mode\nToday : 25-Jan-2021\nRelease Time (Information of : 25-Jan-2021 03:58:58\ntime is following GMT+8)\nPrint Close",
+    "bank": "RHB",
+    "ref_ids": [
+      "202101250085451891",
+      "202101250085451891SOURCE",
+      "21246660001343",
+      "8007765922"
+    ],
+    "amount": "30.00",
+    "date": "25-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "ea9be1fb-4f7f-4df1-a495-0535d04b0ef5_10061594.pdf",
+    "text": "=== PAGE 1 ===\nReference No.: 2101190021662084\nService Reference No.: 104187\nPrinted Date/Time: 19/01/2021 09:56 AM\nPending Approval Transaction (Acknowledgement)\nProduct Type Interbank GIRO (IBG)\nReference No 2101190021662084\nService Reference No 104187\nApproval Status Processed\nFrom Account 3193110714 / SAGA FREIGHTER SDN BHD\nBeneficiary Bank RHB Islamic Bank Berhad\nTransfer Type Fund Transfer\nD&D CONTROL (M) SDN BHD\nBeneficiary Name\nName provided will not be validated. For receiving bank's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you proceed with the transaction.\nRecipient Reference INV: OOL22110061594\nOther Payment Details CNTR NO: TGBU2340957\nAmount MYR 10.00\nFee MYR 0.00\nTotal Fee Charges MYR 0.00\nPayment Date 19-Jan-2021\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED\n=== PAGE 2 ===\nReference No.: 2101190021662084\nService Reference No.: 104187\nPrinted Date/Time: 19/01/2021 09:56 AM\nApproval Matrix Rule\nBy Group - no Sequence\nRule Name Group User Name Action Taken On Action\nMaker\nMaker Maker TAN KONG HIN 19-Jan-2021 09:56:14 Created\nAuthoriser\nAUTHORIS\nAny 1 from Group\nER-SAGA\nAUTHORISER-SAGA TAN KONG HIN 19-Jan-2021 09:56:36 Approved\nFREIGHET\nFREIGHETR SDN BHD\nR SDN BHD\nNote: This is a computer generated receipt and no signature is required.\nCopyright © 2021 Public Bank Berhad (6463-H). ALL RIGHTS RESERVED",
+    "bank": "Public Bank",
+    "ref_ids": [
+      "TGBU2340957",
+      "21662084",
+      "60001343",
+      "2101190021662084",
+      "2101190021662084SERVICE",
+      "NO2101190021662084",
+      "NO21246660001343",
+      "OOL22110061594"
+    ],
+    "amount": "10.00",
+    "date": "19-Jan-2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "f551b289-92bf-4f9a-b41d-230addd86bc9_DND CONTROL - BIZIB246666 [S238896 & S240963].pdf",
+    "text": "=== PAGE 1 ===\nInterbank GIRO (IBG) - Acknowledgement\nTransaction is successfully sent for approval.\nUser ID : TAN TATT MENG\nDate, Time : 19/01/2021 09:19:44\nBIZ Reference No. : BIZIB246666\nIBG Reference No. : IBGCMSRHB19012021246667\nFrom Account : 02200063498 - GLOBAL CONTAINER FREIGHT\n(PENANG ) SDN B\nTo Account : 21246660001343 - D&D CONTROL (M) SDN BHD\nBeneficiary Name : D&D CONTROL (M)\nBeneficiary Bank : RHB BANK BHD\nRecipient's Reference : WHS22010058810/60247\nOther Payment Details : S238896 & S240963\nID Check : Yes\nID Type : Business Registration\nBusiness Registration : 923103K\nContact No. :\nPayment Date : 19/01/2021\nAmount (MYR) : 250.00\nService Charge (MYR) : 0.10\nGst Rate - Service Charge (%) : 0.00\nGst Amount - Service Charge (MYR) : 0.00\nTotal Amount (MYR) : 250.10\nSMS Notifications : -\nPage 1 of 2\n=== PAGE 2 ===\nEmail Notifications : gcfdocs@pen.global-gp.com\nPage 2 of 2",
+    "bank": "RHB",
+    "ref_ids": [
+      "WHS22010058810",
+      "BIZIB246",
+      "IBGCMSRHB19012021246667"
+    ],
+    "amount": null,
+    "date": "19/01/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "f5ac253b-8cd1-466f-8a2f-e256763c540f_71865Y401YD8.pdf",
+    "text": "=== PAGE 1 ===\nPriority Payment\nThe status for payment 71865Y401YD8 is: Processed by bank\nDebit account and beneficiary details\nPay from EFL MALAYSIA SDN. BHD.\nMY MYHBMSCA001-768316-021 MYR\nDebit currency MYR\nPay to\nBeneficiary name and address D D Control (M) Sdn Bhd\nBeneficiary bank Malaysia\nRHB ISLAMIC BANK BERHAD\nRHB CENTRE\nTOWER ONE FLOOR 10\n426 JALAN TUN RAZAK\nAccount number 21246660001343\nSWIFT-BIC RHBAMYKL\nPayment details\nAmount MYR 200.00\nValue date 22 January 2021\nPayment system Interbank GIRO\nCharges Sender pays\nYour reference WHS22110061550\nAdditional details\nPurpose of payment 11110 Freight by air\nTime of report: 22 Jan 2021 08:04:34 GMT",
+    "bank": "RHB",
+    "ref_ids": [
+      "SWIFT-BIC",
+      "71865Y401YD8",
+      "WHS22110061550",
+      "MYHBMSCA001"
+    ],
+    "amount": "200.00",
+    "date": "22 January 2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "f80c197f-9a1f-4cc4-bc1f-7d31d56de282_TT 228845 RM 20.00 LIAN TAAT.pdf",
+    "text": "=== PAGE 1 ===\n1/25/2021 View Successful / Failed - Detail\nView Successful / Failed - Detail\nDuitNow (Pay to Account / Instant Transfer)\nReference No :AOBIFT30122020228845\nTransaction Status :Successful\nTransaction Date, Time :30/12/2020 12:38:46\nPayer Details\nFrom Account :511530010009344 - LIAN TAAT FOOD SDN B ( MYR )\nBeneficiary Details\nTo Account :21246660001343\nBeneficiary Name :D&D CONTROL (M) SDN BHD\nBeneficiary Bank :RHB BANK BHD\nRecipient's Reference :HMM32010058098/9\nOther Payment Details :LIAN TAAT FOOD SB\nPayment Details\nPayment Type :Fund Transfer\nPayment Date :30/12/2020\nAmount (MYR) :20.00\nService Charge(MYR) :0.00\nTotal Amount (MYR) :20.00\nNotifications\nSMS Notification :-\nE-Mail :-\nAuthorisation History\nResults 1 - 2 of 2\nDate, Time User ID Role Action Comments\n30/12/2020\naccliantaat Maker+Observer CREATE\n10:54:01\n30/12/2020\ncassandra Authorizer+Observer APPROVE\n12:38:46\nResults 1 - 2 of 2\nhttps://www.alliancebizsmart.com.my/business/ 1/1",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "AOBIFT30122020228845",
+      "HMM32010058098"
+    ],
+    "amount": null,
+    "date": "30/12/2020",
+    "confidence": 1.0
+  },
+  {
+    "file": "f85fcbf2-0725-441e-b26d-e34a8156f504_MYGP210120631136_D&D_WHS22010058698_T.H.HIN_DETENTION.pdf",
+    "text": "=== PAGE 1 ===\n1/20/2021 OCBC - Velocity@ocbc 2.0\nTransfer to a bank locally\nGIRO Payment\nSuccess!\nThis has been sent for approval\nOCBC reference no. MYGP210120631136\nCreated on 20 Jan 2021, 2:18 PM\nFrom To\nYour Account Beneficiary Bank\n1301035197 - MYR TAS SHIPPING N TRANSPORT SDN BHD RHB BANK KUALA LUMPUR\nValue Date Amount Beneficiary Account No.\n20 Jan 2021 100.00MYR 21246660001343\nBeneficiary Name\nD&D CONTROL (M) SDN BH\nBeneficiary ID Type Beneficiary ID No. -\n-\nRecipient's Reference Other Payment Details\nDETENTION WHS22010058698\nOther Details\nYour Reference No.\nNotify Beneficiary\nMYGP210120631136\nEmail Address\ncheekeet@taship.com\nMessage to Beneficiary\nINVOICE NO: WHS22010058698\nCONTAINER NO: WHSU5813592\nDETENTION - T.H.HIN\nhttps://velocity.ocbc.com/tran.view?do=ReLoad 1/1",
+    "bank": "RHB",
+    "ref_ids": [
+      "WHS22010058698",
+      "WHSU5813592",
+      "MYGP210120631136",
+      "MYGP210120631136CREATED",
+      "BANK1301035197",
+      "1301035197",
+      "21246660001343"
+    ],
+    "amount": "100.00",
+    "date": "1/20/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "f8cfe0b0-49e5-4627-9c18-18ef08dd11be_JABIL.pdf",
+    "text": "=== PAGE 1 ===\nMaybank M2E Page 1 of 4\nCash Management System\nPayment\nCompleted\nTask submitted\nA. Transaction Details\nDebit From Account No. Transaction Currency\n007134215300 (MYR) NNR GLOBAL MYR\nLOGISTICS (M) SDN BHD\nTransaction Amount\nPayment Mode In Transaction Currency\nOutward ACH\n33,610.00\nDestination Country\nMY - MALAYSIA Value Date (dd-mm-yyyy)\n20 Jan 2021 MY (UTC+08:00)\nDate and Time\n20 Jan 2021 16:56:37 MY (UTC+08:00)\nReference No.\nMYIG210120345904\nCustomer Ref No. Debit Reference\ninvoice 7/1/2021 - invoice 7/1/2021 -\n18/1/2021 18/1/2021\nDebit Description\ninvoice 7/1/2021 - 18/1/2021\nB. Beneficiary Details\nBeneficiary Account No. Resident\n21246660001343 Yes\nBeneficiary Name Beneficiary Bank Code\nD&D CONTROL (M) SDN BHD RHBAMYKL\nBeneficiary Bank Name\n-\nRHB ISLAMIC BANK\nhttps://www.maybank2e.com/m2e/payment.action?do=SignSubmit 1/20/2021",
+    "bank": "Maybank",
+    "ref_ids": [
+      "MYIG210120345904",
+      "MYIG210120345904CUSTOMER",
+      "MAYBANK2E",
+      "007134215300",
+      "21246660001343"
+    ],
+    "amount": null,
+    "date": "7/1/2021",
+    "confidence": 1.0
+  },
+  {
+    "file": "fe89c037-1f2d-4000-93f1-da2af9960d1d_Payment_AdviceDND1211.pdf",
+    "text": "=== PAGE 1 ===\nAdvice sending date: 11 Nov 2025\nAdvice reference no: A2mSjOdhlcRO\nPayment Advice Page: 1/1\nRecipient's name and contact information:\nnazirah.zakaria@gac.com\nTransaction type: ACH credits\nBeneficiary's name: D AND D CONTROL (M) Remittance amount: MYR10.60\nBeneficiary's bank: RHB BANK BERHAD Value date: 11 Nov 2025\nMalaysia Remitter's name: GAC CARGO SYS ( M )\nBeneficiary's account:212466600***** Remitting bank: HSBC Bank Malaysia Berhad\n(Part of the account number is shown Instruction reference:9002A34ZUUYE\nas ***** for security reasons.)\nCustomer reference: 2146\n2nd party reference: D and D Cont\nRemitter to beneficiary information:\n/EREF/OOL12511727720\nOOL12511727720\nDocument Number Amount Date Reference Type\nOOL12511727720 MYR -10.600 31/10/2025 006718\nImportant notes:\nThis Advice is issued at the request of our customer. It purports to set out certain details of the transaction that our Bank was instructed\nto effect. This is NOT a confirmation that the transaction has been or will be effected. You should conduct your own verification and\nconfirmation regarding the information set out in this Advice including, without limitation, the status of the transaction mentioned in it.\nThis Advice is for your reference only and is not to be relied upon by you or any one for any purpose. We have not verified the content\nof this Advice and bear no responsibility therefor. Where this Advice is sent by facsimile or over the internet, you should take note that\ncommunication by facsimile or over the internet may be interrupted, delayed or fail. In particular, e-mail messages sent via the internet\ncannot be guaranteed to be secure, error or virus-free as information could be intercepted, corrupted, lost, arrive late or contain viruses.\nThe Bank shall bear no liability whatsoever for any direct, indirect or consequential loss arising out of this Advice being sent by facsimile\nor over the internet whether caused by the Bank or other third parties. The information contained in this Advice is confidential. It may also\nbe legally privileged. If you are not the addressee you may not copy, forward, disclose or use any part of it.\nIssued by HSBC Bank Malaysia Berhad",
+    "bank": "HSBC",
+    "ref_ids": [
+      "A2MSJODHLCRO",
+      "9002A34ZUUYE",
+      "OOL12511727720",
+      "212466600"
+    ],
+    "amount": "10.60",
+    "date": "11 Nov 2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "HANA_771a6100-9d8f-4b30-bf95-a78ac92c8d3b_D-D-60.00.pdf (SECURED).pdf",
+    "text": "=== PAGE 1 ===\nPriority Payment\nYou have submitted this payment for authorisation\nThe status for payment 33817B600YO8 is: Pending authorisation\nDebit account and beneficiary details\nPay from MYWWM-MYR\nMY MYHBMBCA105-859763-102 MYR\nDebit currency MYR\nPay to\nBeneficiary name and address D D CONTROL (M) SDN BHD\nBeneficiary bank Malaysia\nRHB ISLAMIC BANK BERHAD\nRHB CENTRE\nTOWER ONE FLOOR 10\n426 JALAN TUN RAZAK\nAccount number 21246660001343\nSWIFT-BIC RHBAMYKL\nPayment details\nAmount MYR 60.00\nExpected value date Fri 21 Nov 2025\nPayment system Interbank GIRO\nCharges Share\nYour reference JAS\nAdditional details\nInformation for the beneficiary SIT22510573651, SIT22510573652\nSIT22510573653, IAL22510573598\nMED22510573647\nPurpose of payment 11130 - Freight by other modes of transportation\n=== PAGE 2 ===\nTime of report: 21 Nov 2025 02:52:27 GMT",
+    "bank": "RHB",
+    "ref_ids": [
+      "SWIFT-BIC",
+      "33817B600YO8",
+      "MYHBMBCA105",
+      "SIT22510573651",
+      "SIT22510573652",
+      "SIT22510573653",
+      "IAL22510573598",
+      "MED22510573647"
+    ],
+    "amount": "60.00",
+    "date": "21 Nov 2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "HONG LEONG BANK - REF INV.pdf",
+    "text": "=== PAGE 1 ===\nReference Number 20251031HLBBMYKL010ORB89327394\nTransaction Status Successful\nTransaction Date, Time 31 Oct 2025 12:35PM\nFrom XXXXXXX5041\nRecipient Bank / Wallet Name RHB BANK BERHAD\nAccount Type Current / Savings\nAccount Number XXXXXXXXXX1343\nRecipient Name D&D CONTROL (M) SDN BHD\nTransfer Type DuitNow to Account (previously Instant Transfer)\nAmount (MYR) 20.00\nTotal Amount (MYR) 20.00\nWhen to Transfer Now\nRecipient Reference Fund transfer\nOther Payment Detail SCC12511727263\nSMS:\nNotify Recipient\nEmail:\nThis is a system generated receipt. No signature is required.",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "HLBBMYKL010ORB89327394",
+      "SCC12511727263"
+    ],
+    "amount": null,
+    "date": "31 Oct 2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "HSBC - REF NAME.pdf",
+    "text": "=== PAGE 1 ===\nPriority Payment\nThe status for payment 17797AK00WM5 is: Processed by bank\nDebit account and beneficiary details\nPay from GOLDEN FRESH SDN B\nMY MYHBMBCA373-283001-101 MYR\nDebit currency MYR\nPay to\nBeneficiary name and address D AND D CONTROL (M) SDN BHD\nBeneficiary bank Malaysia\nRHB BANK BERHAD\n89-91 G/F WISMA DATUK HOOI YOU CHEE\nJALAN BUKIT BINTANG\n55100 KUALA LUMPUR MALAYSIA\nAccount number 21246660001343\nBank code 18\nPayment details\nAmount MYR 21.20\nValue date Thu 30 Oct 2025\nPayment system Interbank GIRO\nCharges Sender pays\nYour reference APPV026816\nAdditional details\nInformation for the beneficiary /INV/ CSE22510561018\nPurpose of payment 09000 - Commodities and miscellaneous transactions, not classified\nelsewhere\nTime of report: 30 Oct 2025 01:59:23 GMT",
+    "bank": "RHB",
+    "ref_ids": [
+      "17797AK00WM5",
+      "APPV026816",
+      "60001343",
+      "MYHBMBCA373",
+      "CSE22510561018"
+    ],
+    "amount": "21.20",
+    "date": "30 Oct 2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "HSBC - REF- INV NUMBER.pdf",
+    "text": "=== PAGE 1 ===\nAdvice sending date: 31 Oct 2025\nAdvice reference no: A2mz7DtE6DPr\nPayment Advice Page: 1/1\nRecipient's name and contact information:\nSEA IMPORT TEAM\not-seaimport.pkl@ytoglobal.com\nTransaction type: Priority payment\nBeneficiary's name: D&D CONTROL (M) SDN BHD Debit amount: MYR100.00\nBeneficiary's bank: RHBBMYKL Remittance amount: MYR100.00\n426, JALAN TUN RAZAK Handling fee\nKUALA LUMPUR of remitting bank:\nMALAYSIA Value date: 31 Oct 2025\nBeneficiary's account:212466600***** Remitter's name: ON TIME WORLDWIDE LOGISTICS\n(Part of the account number is shown Remitting bank: HSBC Bank Malaysia Berhad\nas ***** for security reasons.) Instruction reference:20267AL0040J\nCustomer reference: PPK2251011462 SI Other reference: NAM12511723210\nRemitter to beneficiary information:\nSMPK225201643\n176178936102753\nImportant notes:\nThis Advice is issued at the request of our customer. It purports to set out certain details of the transaction that our Bank was instructed\nto effect. This is NOT a confirmation that the transaction has been or will be effected. You should conduct your own verification and\nconfirmation regarding the information set out in this Advice including, without limitation, the status of the transaction mentioned in\nit. This Advice is for your reference only and is not to be relied upon by you or any one for any purpose. We have not verified the\ncontent of this Advice and bear no responsibility therefor. Where this Advice is sent by facsimile or over the internet, you should take\nnote that communication by facsimile or over the internet may be interrupted, delayed or fail. In particular, e-mail messages sent via\nthe internet cannot be guaranteed to be secure, error or virus-free as information could be intercepted, corrupted, lost, arrive late or\ncontain viruses. The Bank shall bear no liability whatsoever for any direct, indirect or consequential loss arising out of this Advice\nbeing sent by facsimile or over the internet whether caused by the Bank or other third parties. The information contained in this Advice\nis confidential. It may also be legally privileged. If you are not the addressee you may not copy, forward, disclose or use any part of it.\nIssued by HSBC Bank Malaysia Berhad",
+    "bank": "HSBC",
+    "ref_ids": [
+      "20267AL0040J",
+      "A2MZ7DTE6DPR",
+      "PPK2251011462",
+      "NAM12511723210",
+      "176178936102753IMPORTANT",
+      "SMPK225201643",
+      "212466600",
+      "176178936102753"
+    ],
+    "amount": "100.00",
+    "date": "31 Oct 2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "MAYBANK - REF.pdf",
+    "text": "=== PAGE 1 ===\nOpen Interbank\nStatus: Successful\nReference number: 7901990048\nTransaction date: 31 Oct 2025 12:09:52\nAmount: RM10.60\nBeneficiary Name : D&D CONTROL (M) SDN BHD\nReceiving Bank : RHB BANK\nBeneficiary Account Number : 21246660001343\nRecipient reference: MXC12511726684\nOther payment details:\nNote: This receipt is computer generated and no signature is required.",
+    "bank": "RHB",
+    "ref_ids": [
+      "MXC12511726684",
+      "7901990048"
+    ],
+    "amount": "10.60",
+    "date": "31 Oct 2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "MAYBANK PERSONAL - INVOICE NUM.pdf",
+    "text": "=== PAGE 1 ===\nDDuuiittNNooww TTrraannssffeerr\nSuccessful\nReference ID\n31 Oct 2025, 12:16 PM\n557711000077776633MM\nBeneficiary name\nDD&&DD CCOONNTTRROOLL ((MM)) SSDDNN BBHHDD\nBeneficiary account number\n22112244 66666600 00001133 4433\nReceiving bank\nRRHHBB BBAANNKK\nRecipient reference\nKKMMTT1122551111772211332244\nPayment details\nKKMMTTUU99332277221199\nAmount\nRRMM 449988..2200\nNote: This receipt is computer generated and no\nsignature is required.\nMalayan Banking Berhad (Co. Reg. : 196001000142)\nMaybank Islamic Berhad (Co. Reg. : 200701029411)",
+    "bank": "Maybank",
+    "ref_ids": [
+      "KKMMTT1122551772211332244",
+      "557711076633MM",
+      "KKMMTTUU99332277221199"
+    ],
+    "amount": null,
+    "date": "31 Oct 2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "PUBLIC BANK -PERSONAL INVOICE NUM.pdf",
+    "text": "=== PAGE 1 ===\n11/3/25, 2:48 PM Public Bank Berhad Internet Banking.\nDuitNow Transfer to Other Account\nReference Number: 154047\nDuitNow Reference No: 20251103PBBEMYKL010ORB14417721\nDuitNow Status Code: U000\nTransaction Status: Successful\nTransaction Date/Time: 03-11-2025 14:48:23\nFrom Account: XXXXXX7529 ( Current )\nAmount: RM 32.40\nBeneficiary Bank: RHB Bank Berhad\nBeneficiary Account: 21246660001343\nBeneficiary Account Type: Savings/Current Account\nBeneficiary Name: D&D CONTROL (M) SDN BHD\nRecipient Reference: KMT12511727962\nOther Payment Details: DAMAGE CHARGES TEMU 6357460\nBeneficiary ID / IC Checking: Not Required\nDuitNow Transfer Service Charge: RM 0.00\nTotal Charges: RM 0.00\nNote:\nThis is a computer generated receipt and does not require a signature.\nhttps://secure.pbebank.com/myIBK/apppbb/servlet/BxxxServlet?JSID=FA31FFBC535DBB02005914BA19F268A29EDADF8455F176AC215030B… 1/1",
+    "bank": "DuitNow",
+    "ref_ids": [
+      "20251103PBBEMYKL010ORB144",
+      "20251103PBBEMYKL010ORB14417721",
+      "KMT12511727962"
+    ],
+    "amount": "32.40",
+    "date": "11/3/25",
+    "confidence": 1.0
+  },
+  {
+    "file": "SCB - INV REF.pdf",
+    "text": "=== PAGE 1 ===\nStraight2Bank\nPAYEE ADVICE\nSCB Ref : MY00150Q0323515\nCustomer Ref : CPDDC\nDate : 29/10/2025\nTo: D&D CONTROL (M) SDN BHD Invoice Total 10.00\n- Benef. Charge 0.00\nMALAYSIA\n- Discount 0.00\nUTR Reference SB25962510295135\nDear Sir / Madam (s),\nWe have on 29/10/2025 made a payment to your account xxxxxxxxxx1343 at RHB ISLAMIC BANK BERHAD for MYR 10.00 as\ninstructed by DHL GLOBAL FORWARDING (M'SIA) SDN B.\nShould you not receive the payment in time, please contact DHL GLOBAL FORWARDING (M'SIA) SDN B at 60380202000 for\nfurther investigations.\nRemittance Advice\nThis section includes details as supplied by DHL GLOBAL FORWARDING (M'SIA) SDN B\nPayment Details : S2504677217\nReference Date Description Amount ( MYR )\nE12511722712 29/10/2025 10.00\nPage 1\n*Note: Payment is made at the direction of, and based on information provided by, the originator of the payment instruction. If incorrect information is given or the originator revokes the payment instruction\nor any other circumstances arises which is beyond our control, this may result in payment being delayed or not received. The actual date of credit funds is also dependent on the clearing system(s) used\nand the beneficiary's bank.",
+    "bank": "Standard Chartered",
+    "ref_ids": [
+      "MY00150Q0323515",
+      "SB25962510295135",
+      "S2504677217",
+      "MY00150Q0323515CUSTOMER",
+      "AT60380202000",
+      "STRAIGHT2BANK",
+      "E12511722712",
+      "60380202000"
+    ],
+    "amount": "10.00",
+    "date": "29/10/2025",
+    "confidence": 1.0
+  },
+  {
+    "file": "SCB -BANK REF.pdf",
+    "text": "=== PAGE 1 ===\nPayment Transaction Details\nGenerated by:PHPABELUNA\nGenerated on:Oct 31, 2025 2:50 PM SGT\nPayment Identification\nEnd to End ID (Your Reference) MY42-307FE-D2010 Bank Payment Reference R0582704\n8bb6d05a-cb60-4092-b6d0-\nUETR Number Back Office Reference MY2OL2510310268M\n5acb6050928c\nImport Reference 25103114nf880634745422000 Batch Reference D0069493\nStatus Credit Successful\nDebtor Details\nKUEHNE + NAGEL SDN BHD -\nDebit Account 312194438935 - SCBLMYKXXXX - Company Name KUEHNE NAGEL SDN B\nMY - MYR\nAccount Held In MY\nPayment Details\nDebit Amount MYR 10,060.00 Credit Amount MYR 10,060.00\nDebit Date 31/10/2025 Value Date 31/10/2025\nPayment Type Real Time Gross Settlement (RTGS) Sub Payment Type -\nLocal Charges SHARED Overseas Charges SHARED\nAmount Priority Credit Amount Charges Amount -\nBeneficiary Details\nNickname Beneficiary Bank Country/Market MY - MALAYSIA\nName DD CONTROL (M) SDN BHD Beneficiary Country/Market MY - MALAYSIA\nInquired Beneficiary Name -\nBeneficiary Address Details\nTown Klang\nDepartment - Floor -\nBuilding Number - Building Name -\nStreet Name Jalan Bayu Tinggi 6 KS 6 Post Box -\nPost Code 41200 Province/ State -\nAddress Line 1 - Address Line 2 -\nPage 1 of3\n=== PAGE 2 ===\nBeneficiary Name and Address in Local Language\nDD CONTROL (M) SDN BHD\nBeneficiary Name in Local\nLanguage\n-\nJalan Bayu Tinggi 6 KS 6\n41200 Klang MALAYSIA\nAddress in Local Language\n-\n-\nAccount Details\nACCOUNT 21246660001343\nBeneficiary Bank\nBank Code Type - Bank Code RHBBMYKLXXX\nBank Name RHB Bank Branch Code -\nBranch Name - Sub Branch Code -\nBank Address 1 - Bank Address 2 -\nBank Address 3 - Branch Address 1 -\nBranch Address 2 - Clearing Zone Code -\nCreditor Agent Account Number - Other Bank Details RHBBMYKLXXX/RHB Bank//MY\nAdditional Information\npravinadnd@dnd.com.my,knasp.\nEmail Address Mobile No. -\npaymentadvice@kuehne-nagel.com\nFax Number -\nClearing & Regulatory\nJoint Beneficiary Identification - Joint Beneficiary Identification Type -\nJoint Beneficiary Name -\nPage 2 of3\n=== PAGE 3 ===\nInvoice Details\nInvoice Type 4-Column Invoice\nReference Description Invoice Date Invoice Amount\nREFER DESC WHS12511722921(F) 28/10/2025 690.00\nREFER DESC SCC12511722913(F) 28/10/2025 150.00\nREFER DESC WHS12511721675(P4) 27/10/2025 1,380.00\nREFER DESC WHS12511723171(F) 28/10/2025 480.00\nREFER DESC WHS12511723532(F) 28/10/2025 690.00\nREFER DESC WHS12511723531(F) 28/10/2025 920.00\nREFER DESC WHS12511723530(F) 28/10/2025 690.00\nREFER DESC WHS12511723529(F) 28/10/2025 920.00\nREFER DESC WHS12511723528(F) 28/10/2025 920.00\nREFER DESC WHS12511723173(F) 28/10/2025 920.00\nREFER DESC WHS12511723174(F) 28/10/2025 690.00\nREFER DESC WHS12511723175(F) 28/10/2025 690.00\nREFER DESC WHS12511723177(F) 28/10/2025 920.00\nMYR 10,060.00\nTotal Amount\nMYR Ten Thousand Sixty ringgit\nPage 3 of3",
+    "bank": "RHB",
+    "ref_ids": [
+      "R0582704",
+      "MY2OL2510310268M",
+      "NF880634745422000",
+      "D0069493",
+      "MY2OL2510310268M5ACB6050928C",
+      "8BB6D05A",
+      "5ACB6050928C",
+      "25103114NF880634745422000",
+      "WHS12511722921",
+      "SCC12511722913",
+      "WHS12511721675",
+      "WHS12511723171",
+      "WHS12511723532",
+      "WHS12511723531",
+      "WHS12511723530",
+      "WHS12511723529",
+      "WHS12511723528",
+      "WHS12511723173",
+      "WHS12511723174",
+      "WHS12511723175",
+      "WHS12511723177",
+      "312194438935",
+      "21246660001343"
+    ],
+    "amount": "10,060.00",
+    "date": "31/10/2025",
+    "confidence": 1.0
+  }
+]

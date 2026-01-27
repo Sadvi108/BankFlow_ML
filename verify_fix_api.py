@@ -11,7 +11,8 @@ if os.name == 'nt':
 
 def verify_api():
     url = "http://localhost:8081/extract"
-    file_path = "Receipts/PUBLIC BANK - INVOICE.pdf"
+    # Testing the DnD receipt (DuitNow Outward)
+    file_path = "Receipts/9d459d0f-467c-46ab-a8c7-d80a425d39c9_DnD CONTROL - EMC12511748202.pdf"
     
     if not os.path.exists(file_path):
         print(f"File not found: {file_path}")
@@ -21,18 +22,32 @@ def verify_api():
     
     try:
         with open(file_path, 'rb') as f:
-            files = {'file': (os.path.basename(file_path), f, 'application/pdf')}
-            response = requests.post(url, files=files)
+            # Send raw binary for simple server
+            data = f.read()
+            headers = {'Content-Type': 'application/pdf'}
+            response = requests.post(url, data=data, headers=headers)
             
         if response.status_code == 200:
             result = response.json()
             print("\nAPI Response:")
             print(json.dumps(result, indent=2))
             
-            ids = result.get('data', {}).get('all_ids', [])
-            expected_id = "2510300265794708"
+            # The API returns 'transaction_id' (single) and 'all_ids' (list)
+            # We check if our target ID is in the list or is the main ID
+            ids = result.get('transaction_ids', []) # Note: Structure might vary, checking dump
+            if not ids:
+                 ids = result.get('all_ids', [])
             
-            if expected_id in ids:
+            # Additional fallback for different response structures
+            if not ids and 'transaction_id' in result:
+                ids = [result['transaction_id']]
+
+            expected_id = "EMC12511748202"
+            
+            # Normalize for comparison
+            ids_norm = [str(x).replace(' ', '').upper() for x in ids]
+            
+            if expected_id in ids_norm:
                 print(f"\n✅ SUCCESS: Found expected ID {expected_id}")
             else:
                 print(f"\n❌ FAILURE: Expected ID {expected_id} not found. Got: {ids}")
