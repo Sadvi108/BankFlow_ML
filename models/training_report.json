@@ -1,0 +1,85 @@
+{
+  "overall_results": {
+    "overall_accuracy": 0.0,
+    "bank_detection_accuracy": 0.0,
+    "transaction_extraction_accuracy": 0.9,
+    "amount_extraction_accuracy": 0.0,
+    "total_samples": 20
+  },
+  "bank_specific_results": {
+    "Maybank": {
+      "overall_accuracy": 0.0,
+      "bank_detection_accuracy": 0.0,
+      "transaction_extraction_accuracy": 0.5,
+      "amount_extraction_accuracy": 0.0,
+      "total_samples": 2
+    },
+    "CIMB": {
+      "overall_accuracy": 0.0,
+      "bank_detection_accuracy": 0.0,
+      "transaction_extraction_accuracy": 1.0,
+      "amount_extraction_accuracy": 0.0,
+      "total_samples": 2
+    },
+    "Public Bank": {
+      "overall_accuracy": 0.0,
+      "bank_detection_accuracy": 0.0,
+      "transaction_extraction_accuracy": 1.0,
+      "amount_extraction_accuracy": 0.0,
+      "total_samples": 2
+    },
+    "RHB": {
+      "overall_accuracy": 0.0,
+      "bank_detection_accuracy": 0.0,
+      "transaction_extraction_accuracy": 1.0,
+      "amount_extraction_accuracy": 0.0,
+      "total_samples": 2
+    },
+    "Hong Leong Bank": {
+      "overall_accuracy": 0.0,
+      "bank_detection_accuracy": 0.0,
+      "transaction_extraction_accuracy": 1.0,
+      "amount_extraction_accuracy": 0.0,
+      "total_samples": 2
+    },
+    "AmBank": {
+      "overall_accuracy": 0.0,
+      "bank_detection_accuracy": 0.0,
+      "transaction_extraction_accuracy": 1.0,
+      "amount_extraction_accuracy": 0.0,
+      "total_samples": 2
+    },
+    "HSBC": {
+      "overall_accuracy": 0.0,
+      "bank_detection_accuracy": 0.0,
+      "transaction_extraction_accuracy": 1.0,
+      "amount_extraction_accuracy": 0.0,
+      "total_samples": 2
+    },
+    "UOB": {
+      "overall_accuracy": 0.0,
+      "bank_detection_accuracy": 0.0,
+      "transaction_extraction_accuracy": 1.0,
+      "amount_extraction_accuracy": 0.0,
+      "total_samples": 2
+    },
+    "Standard Chartered": {
+      "overall_accuracy": 0.0,
+      "bank_detection_accuracy": 0.0,
+      "transaction_extraction_accuracy": 0.5,
+      "amount_extraction_accuracy": 0.0,
+      "total_samples": 2
+    },
+    "DuitNow": {
+      "overall_accuracy": 0.0,
+      "bank_detection_accuracy": 0.0,
+      "transaction_extraction_accuracy": 1.0,
+      "amount_extraction_accuracy": 0.0,
+      "total_samples": 2
+    }
+  },
+  "timestamp": "2025-11-17T14:15:01.379696",
+  "model_version": "2.0",
+  "target_accuracy": 0.98,
+  "achieved_accuracy": 0.0
+}

@@ -1,0 +1,36 @@
+# Heavy ML models and training data
+app/models/
+app/app/
+models/
+data/
+Receipts/
+pattern_training_results/
+test_reports/
+testsprite_tests/
+
+# Debug output
+debug_failures/
+debug_failures_images/
+debug_ocr_output/
+*.log
+*.txt
+*.jpg
+*.png
+*.pdf
+
+# Python artifacts
+__pycache__/
+*.pyc
+.venv/
+env/
+venv/
+
+# Git
+.git/
+.gitignore
+
+# Large individual files
+*.pt
+*.pkl
+*.bin
+*.tfevents*
