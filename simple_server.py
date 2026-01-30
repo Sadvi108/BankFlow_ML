@@ -14,6 +14,11 @@ from datetime import datetime
 import re
 import io
 import csv
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
 from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
 from app.history_manager import history_manager
 from app.db import get_db
