@@ -93,13 +93,13 @@ class LayoutAwareExtractor:
                 
             # RULE: Proximity to Reference labels
             if self._is_near_keyword(match_tokens, tokens, ["REFERENCE", "REF", "TRX", "TXN", "ID", "INVOICE"]):
-                score += 80
-                logger.debug(f"Keyword proximity boost for {tid}: +80")
+                score += 150 # Increased boost from 80
+                logger.debug(f"Keyword proximity boost for {tid}: +150")
                 
-            # RULE: Penalty for being near "Recipient" or "Payment Description"
-            if self._is_near_keyword(match_tokens, tokens, ["RECIPIENT", "SAY", "DESCRIPTION", "MEMO", "REMARK"]):
-                score -= 60
-                logger.debug(f"Non-system ref penalty for {tid}: -60")
+            # RULE: Penalty for being near "Recipient" or "Payment Description" or "Terminal" or "Merchant"
+            if self._is_near_keyword(match_tokens, tokens, ["RECIPIENT", "SAY", "DESCRIPTION", "MEMO", "REMARK", "TERMINAL", "MERCHANT", "MID", "TID", "TRACE", "BATCH", "APPR", "AUTH"]):
+                score -= 100 # Increased penalty
+                logger.debug(f"Non-system ref penalty for {tid}: -100")
                 
             # RULE: Explicit SST exclusion
             is_sst = False

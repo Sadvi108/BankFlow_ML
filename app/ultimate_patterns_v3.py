@@ -734,14 +734,15 @@ class UltimatePatternMatcherV3:
                          'SUCCESSFUL', 'COMPLETED', 'PENDING', 'FAILED', 'ACCEPTED', 'REJECTED',
                          'MAYBANK2USIZ', 'MAYBANK2UBIZ', 'MAYBANK2UCOM', 'BIZCHANNEL', 'BIZCHANNELCIMB',
                          'MAYBONK2U', 'ELUARAN', 'BAYARAN', 'SIMPANAN', 'DEPOSIT', 'WITHDRAWAL', 'MAKER', 'CHECKER',
-                         'AUTHORISER', 'APPROVAL', 'REJECT', 'ACCEPT']
+                         'AUTHORISER', 'APPROVAL', 'REJECT', 'ACCEPT', 'MERCHANT', 'TERMINAL', 'BATCH', 'TRACE', 
+                         'APP', 'CODE', 'AUTH', 'STAN', 'INVOICE']
         
         if tid_clean in noise_list:
             return False
             
         # Substring noise check for long IDs (e.g. 3ELUARAN)
         if len(tid_clean) > 5:
-             if any(noise in tid_clean for noise in ['ELUARAN', 'BAYARAN', 'SIMPANAN', 'DEPOSIT', 'SUCCESS', 'REJECT']):
+             if any(noise in tid_clean for noise in ['ELUARAN', 'BAYARAN', 'SIMPANAN', 'DEPOSIT', 'SUCCESS', 'REJECT', 'MERCHANT', 'TERMINAL']):
                  return False
 
         # 3. Date rejection (YYYYMMDD or DDMMYYYY)
@@ -787,13 +788,17 @@ class UltimatePatternMatcherV3:
         # Rejects emails
         if '@' in tid_clean:
             return False
+        
+        # Rejects Phone Numbers (012-3456789 or 6012...)
+        if re.match(r'^(?:60|0)1\d{8,9}$', tid_clean):
+            return False
 
         # Rejects sequences of too many repeating chars (noise)
         if re.search(r'([A-Z0-9])\1{5,}', tid_clean):
             return False
             
         # Rejects noise headers that got sucked in
-        if any(x in tid_clean for x in ['ERENCE', 'AMOUNT', 'DATE', 'NUMBER', 'TIME', 'TOTAL', 'BALANCE']):
+        if any(x in tid_clean for x in ['ERENCE', 'AMOUNT', 'DATE', 'NUMBER', 'TIME', 'TOTAL', 'BALANCE', 'MERCHANT', 'TERMINAL']):
             if len(tid_clean) > 15 and ('ERENCE' in tid_clean or 'AMOUNT' in tid_clean):
                 return False
                 

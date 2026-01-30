@@ -24,7 +24,7 @@ class OCRPipeline:
     def __init__(self):
         self.tesseract_config = {
             'lang': 'eng',
-            'config': '--oem 1 --psm 6 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,/-:# '
+            'config': '--oem 1 --psm 6 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,/-:#*&() '
         }
         
         # Preprocessing parameters
@@ -159,20 +159,28 @@ class OCRPipeline:
         if not skip_rotation:
             gray = self._auto_rotate_text(gray)
 
-        # 4. Noise Removal (Bilateral Filter preserves edges better than Gaussian)
+        # 4. Sharpening (New step for thermal receipts)
+        # Unsharp Masking: Original + (Original - Blurred) * Amount
+        gaussian = cv2.GaussianBlur(gray, (0, 0), 3.0)
+        sharpened = cv2.addWeighted(gray, 1.5, gaussian, -0.5, 0)
+
+        # 5. Noise Removal (Bilateral Filter preserves edges better than Gaussian)
         # d=9, sigmaColor=75, sigmaSpace=75
-        denoised = cv2.bilateralFilter(gray, 9, 75, 75)
+        denoised = cv2.bilateralFilter(sharpened, 9, 75, 75)
         
-        # 5. Adaptive Thresholding with Large Block Size
+        # 6. Adaptive Thresholding with Large Block Size
         # Key for shadows/uneven lighting. Block size 31 or 41 is much better than 11.
         thresh = cv2.adaptiveThreshold(
             denoised, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
             cv2.THRESH_BINARY, 31, 15  # Block size 31, C=15 (removes more background noise)
         )
         
-        # 6. Morphological Opening (Remove small salt noise)
+        # 7. Morphological Opening (Remove small salt noise)
         kernel = np.ones((2,2), np.uint8)
         processed = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
+        
+        # 8. Optional Dilation to thicken text (Helps with dot matrix)
+        # processed = cv2.dilate(processed, kernel, iterations=1)
         
         return processed
 
