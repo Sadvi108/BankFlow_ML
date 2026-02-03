@@ -1,0 +1,44 @@
+[
+  {
+    "projectId": "2985fe1a-16b1-4cb3-acfa-31a32bd953af",
+    "testId": "b2e777eb-83b4-4292-a5e3-ac6020010f53",
+    "userId": "046824a8-20f1-70c4-558d-cd80c8187b2f",
+    "title": "TC001-extract receipt api upload and extraction",
+    "description": "Test the /extract POST endpoint by uploading various receipt files (image and PDF) and verify that the response contains correctly extracted transaction details including bank, transaction_id, amount, and date.",
+    "code": "import requests\n\ndef test_tc001_extract_receipt_api_upload_and_extraction():\n    base_url = \"http://localhost:8081/http://localhost:8081\"\n    endpoint = f\"{base_url}/extract\"\n    timeout = 30\n    headers = {}\n    # Prepare sample files (image and PDF). As we cannot use real files here,\n    # assume files named 'sample_receipt.jpg' and 'sample_receipt.pdf' exist in the working directory.\n    # In real testing, these files should contain valid receipts.\n    file_paths = [\"sample_receipt.jpg\", \"sample_receipt.pdf\"]\n\n    for file_path in file_paths:\n        try:\n            with open(file_path, \"rb\") as f:\n                files = {\"file\": (file_path, f)}\n                response = requests.post(endpoint, files=files, headers=headers, timeout=timeout)\n            # Validate response status code\n            assert response.status_code == 200, f\"Expected status 200 but got {response.status_code}\"\n\n            json_resp = response.json()\n            # Validate success field\n            assert \"success\" in json_resp and isinstance(json_resp[\"success\"], bool), \"Missing or invalid 'success' field\"\n            assert json_resp[\"success\"] is True, \"'success' should be True\"\n\n            # Validate data field\n            assert \"data\" in json_resp and isinstance(json_resp[\"data\"], dict), \"Missing or invalid 'data' field\"\n\n            data = json_resp[\"data\"]\n            # Validate required extraction fields presence and types\n            for key in [\"bank\", \"transaction_id\", \"amount\", \"date\"]:\n                assert key in data, f\"Missing '{key}' in response data\"\n                assert isinstance(data[key], str), f\"'{key}' should be of type string\"\n                # Additional non-empty check for extracted fields\n                assert data[key].strip() != \"\", f\"'{key}' should not be empty\"\n\n        except (requests.exceptions.RequestException, AssertionError) as e:\n            raise AssertionError(f\"Test failed for file '{file_path}': {str(e)}\")\n\ntest_tc001_extract_receipt_api_upload_and_extraction()",
+    "testStatus": "FAILED",
+    "testError": "Test execution timed out after 15 minutes",
+    "testType": "BACKEND",
+    "createFrom": "mcp",
+    "created": "2026-02-03T07:56:02.177Z",
+    "modified": "2026-02-03T07:57:27.678Z"
+  },
+  {
+    "projectId": "2985fe1a-16b1-4cb3-acfa-31a32bd953af",
+    "testId": "a546f55a-6731-4682-bbec-ff62cfd7153a",
+    "userId": "046824a8-20f1-70c4-558d-cd80c8187b2f",
+    "title": "TC002-get history api retrieval",
+    "description": "Test the /history GET endpoint to ensure it returns a list of previously processed receipt extraction data with success status and correct data structure.",
+    "code": "import requests\n\nBASE_URL = \"http://localhost:8081/\"\nTIMEOUT = 30\nHEADERS = {\n    \"Accept\": \"application/json\",\n}\n\ndef test_get_history_api_retrieval():\n    try:\n        response = requests.get(f\"{BASE_URL}history\", headers=HEADERS, timeout=TIMEOUT)\n        response.raise_for_status()\n    except requests.RequestException as e:\n        assert False, f\"Request to /history failed: {e}\"\n\n    json_data = response.json()\n\n    # Validate top-level keys\n    assert isinstance(json_data, dict), \"Response is not a JSON object\"\n    assert \"success\" in json_data, \"'success' key missing in response\"\n    assert \"history\" in json_data, \"'history' key missing in response\"\n\n    # Validate success is True\n    assert json_data[\"success\"] is True, \"'success' key is not True\"\n\n    # Validate history is a list\n    assert isinstance(json_data[\"history\"], list), \"'history' is not a list\"\n\n    # Optionally: validate the structure of items inside history if any\n    for item in json_data[\"history\"]:\n        assert isinstance(item, dict), \"Each item in history should be a dict\"\n\ntest_get_history_api_retrieval()",
+    "testStatus": "FAILED",
+    "testError": "Test execution timed out after 15 minutes",
+    "testType": "BACKEND",
+    "createFrom": "mcp",
+    "created": "2026-02-03T07:56:02.221Z",
+    "modified": "2026-02-03T07:57:27.689Z"
+  },
+  {
+    "projectId": "2985fe1a-16b1-4cb3-acfa-31a32bd953af",
+    "testId": "3dd4e877-5a2d-49d3-8346-2e3c73b83e45",
+    "userId": "046824a8-20f1-70c4-558d-cd80c8187b2f",
+    "title": "TC003-health check api status",
+    "description": "Test the /health GET endpoint to verify that the service returns a healthy status response indicating the operational state of the application.",
+    "code": "import requests\n\nBASE_URL = \"http://localhost:8081/\"\nTIMEOUT = 30\n\ndef test_health_check_api_status():\n    url = BASE_URL + \"health\"\n    headers = {\n        \"Accept\": \"application/json\"\n    }\n    try:\n        response = requests.get(url, headers=headers, timeout=TIMEOUT)\n    except requests.RequestException as e:\n        assert False, f\"Request failed: {e}\"\n\n    assert response.status_code == 200, f\"Expected status code 200 but got {response.status_code}\"\n\n    try:\n        json_data = response.json()\n    except ValueError:\n        assert False, \"Response is not valid JSON\"\n\n    assert \"status\" in json_data, \"'status' field missing in response JSON\"\n    assert isinstance(json_data[\"status\"], str), \"'status' field is not a string\"\n\n    assert json_data[\"status\"].lower() in [\"healthy\", \"ok\", \"up\"], f\"Unexpected status value: {json_data['status']}\"\n\n\ntest_health_check_api_status()",
+    "testStatus": "FAILED",
+    "testError": "Test execution timed out after 15 minutes",
+    "testType": "BACKEND",
+    "createFrom": "mcp",
+    "created": "2026-02-03T07:56:02.272Z",
+    "modified": "2026-02-03T07:57:27.695Z"
+  }
+]
