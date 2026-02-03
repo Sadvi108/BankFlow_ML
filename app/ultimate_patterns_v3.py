@@ -117,15 +117,53 @@ class UltimatePatternMatcherV3:
                 'patterns': [
                     r'\b(?:Hong\s*Leong|HLB|HL\s*Bank|HongLeong)\s*(?:Bank)?\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,20})',
                     r'\b([A-Z0-9]{8,20})\s*(?:Hong\s*Leong|HLB|HL\s*Bank|HongLeong)',
+                    # ENHANCED: Specific HLB formats requested by user
                     r'\bHLB[A-Z0-9]{6,15}\b',
                     r'\bHL[A-Z0-9]{6,12}\b',
                     r'\bHLO[A-Z0-9]{6,12}\b',
                     r'\bHONG[A-Z0-9]{6,12}\b',
+                    # HLB often uses "Reference No :" with pure numeric or alphanumeric
+                    r'\b(?:Ref|Reference)\s*No\.?\s*[:\.]?\s*([A-Z0-9]{8,25})',
                     r'\b(?:Transaction|Txn|Transfer|Payment|Pymt)\s*(?:Ref|ID|No)?\s*\.?\s*:?\s*([A-Z0-9]{8,20})(?:\s+Hong)?',
                     r'\bHong\s*Leong\s*(?:Transaction|Txn|Transfer)\s*(?:Ref|ID|No)?\s*\.?\s*:?\s*([A-Z0-9]{8,20})',
                     r'\bHLB\s*(?:Online|OL)?\s*(?:Transfer|Trx)?\s*(?:Ref|ID)?\s*\.?\s*:?\s*([A-Z0-9]{8,20})',
                 ],
                 'validation': lambda x: len(x) >= 8 and (x.isalnum() or '-' in x),
+            },
+            'OCBC': {
+                'patterns': [
+                    r'\b(?:OCBC|OCBC\s*Bank)\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,25})',
+                    r'\b([A-Z0-9]{8,25})\s*(?:OCBC|OCBC\s*Bank)',
+                    r'\bOCBC[A-Z0-9]{6,15}\b',
+                    r'\bOC[A-Z0-9]{6,15}\b',
+                    r'\b(?:Transaction|Txn|Transfer)\s*(?:Ref|ID|No)?\s*\.?\s*:?\s*([A-Z0-9]{8,25})(?:\s+OCBC)?',
+                ],
+                'validation': lambda x: len(x) >= 8 and (x.isalnum() or '-' in x),
+            },
+            'Touch n Go': {
+                'patterns': [
+                    r'\b(?:Touch\s*n\s*Go|TnG|TNG\s*Digital|TNG)\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,25})',
+                    r'\b([A-Z0-9]{8,25})\s*(?:Touch\s*n\s*Go|TnG|TNG)',
+                    r'\bTNG[A-Z0-9]{6,20}\b',
+                    r'\bRef\s*No\.?\s*[:\s]*(\d{10,25})', # TNG often has long numeric refs
+                    r'\bTransaction\s*No\.?\s*[:\s]*(\d{10,25})',
+                ],
+                'validation': lambda x: len(x) >= 8,
+            },
+            'BNP Paribas': {
+                'patterns': [
+                    r'\b(?:BNP\s*Paribas|BNP)\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,25})',
+                    r'\b([A-Z0-9]{8,25})\s*(?:BNP\s*Paribas|BNP)',
+                    r'\bBNP[A-Z0-9]{6,15}\b',
+                ],
+                'validation': lambda x: len(x) >= 8,
+            },
+            'Alliance Bank': {
+                'patterns': [
+                    r'\b(?:Alliance\s*Bank|Alliance)\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,25})',
+                    r'\bALB[A-Z0-9]{6,15}\b',
+                ],
+                'validation': lambda x: len(x) >= 8,
             },
             'AmBank': {
                 'patterns': [
@@ -332,7 +370,11 @@ class UltimatePatternMatcherV3:
             'Affin Bank': [r'Affin\s*Bank', r'AFFIN'],
             'Citibank': [r'Citibank', r'Citi', r'CTB'],
             'Bank Islam': [r'Bank\s*Islam', r'BIMB'],
-            'BSN': [r'BSN', r'Bank\s*Simpanan\s*Nasional']
+            'BSN': [r'BSN', r'Bank\s*Simpanan\s*Nasional'],
+            'OCBC': [r'OCBC'],
+            'Touch n Go': [r'Touch\s*n\s*Go', r'TnG', r'TNG\s*Digital', r'TNG'],
+            'BNP Paribas': [r'BNP\s*Paribas', r'BNP'],
+            'Alliance Bank': [r'Alliance\s*Bank', r'Alliance']
         }
         
         # Date Patterns

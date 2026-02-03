@@ -92,7 +92,7 @@ class LayoutAwareExtractor:
                 score += 20
                 
             # RULE: Proximity to Reference labels
-            if self._is_near_keyword(match_tokens, tokens, ["REFERENCE", "REF", "TRX", "TXN", "ID", "INVOICE"]):
+            if self._is_near_keyword(match_tokens, tokens, ["REFERENCE", "REF", "TRX", "TXN", "ID", "INVOICE", "IBG", "JOMPAY", "DUITNOW"]):
                 score += 150 # Increased boost from 80
                 logger.debug(f"Keyword proximity boost for {tid}: +150")
                 
