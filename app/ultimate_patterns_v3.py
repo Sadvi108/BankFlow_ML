@@ -278,13 +278,53 @@ class UltimatePatternMatcherV3:
                 ],
                 'validation': lambda x: len(x) >= 8 and (x.isalnum() or '-' in x),
             },
-            'Hana Bank': {
+            'Bank Muamalat': {
                 'patterns': [
-                    r'\b(?:Hana\s*Bank|Hana)\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,20})',
-                    r'\b([A-Z0-9]{8,20})\s*(?:Hana\s*Bank|Hana)',
+                    r'\b(?:Bank\s*Muamalat|Muamalat|BMMB)\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,25})',
+                    r'\b([A-Z0-9]{8,25})\s*(?:Bank\s*Muamalat|Muamalat)',
+                    r'\bBMMB[A-Z0-9]{6,15}\b',
                 ],
-                'validation': lambda x: len(x) >= 8 and (x.isalnum() or '-' in x),
-            }
+                'validation': lambda x: len(x) >= 8,
+            },
+            'Bank Rakyat': {
+                'patterns': [
+                    r'\b(?:Bank\s*Rakyat|Rakyat)\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,25})',
+                    r'\b([A-Z0-9]{8,25})\s*(?:Bank\s*Rakyat|Rakyat)',
+                    r'\bBR[A-Z0-9]{6,15}\b',
+                ],
+                'validation': lambda x: len(x) >= 8,
+            },
+            'Agrobank': {
+                'patterns': [
+                    r'\b(?:Agrobank|Agro)\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,25})',
+                    r'\b([A-Z0-9]{8,25})\s*(?:Agrobank|Agro)',
+                    r'\bAGRO[A-Z0-9]{6,15}\b',
+                ],
+                'validation': lambda x: len(x) >= 8,
+            },
+            'Al Rajhi Bank': {
+                'patterns': [
+                    r'\b(?:Al\s*Rajhi|Rajhi)\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,25})',
+                    r'\b([A-Z0-9]{8,25})\s*(?:Al\s*Rajhi|Rajhi)',
+                    r'\bAR[A-Z0-9]{6,15}\b',
+                ],
+                'validation': lambda x: len(x) >= 8,
+            },
+            'MBSB Bank': {
+                'patterns': [
+                    r'\b(?:MBSB\s*Bank|MBSB)\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,25})',
+                    r'\b([A-Z0-9]{8,25})\s*(?:MBSB\s*Bank|MBSB)',
+                ],
+                'validation': lambda x: len(x) >= 8,
+            },
+            'Kuwait Finance House': {
+                'patterns': [
+                    r'\b(?:Kuwait\s*Finance\s*House|KFH)\s*(?:Ref|Reference|ID|No|Number|Trx|Txn)?\s*\.?\s*:?\s*([A-Z0-9]{8,25})',
+                    r'\b([A-Z0-9]{8,25})\s*(?:Kuwait\s*Finance\s*House|KFH)',
+                    r'\bKFH[A-Z0-9]{6,15}\b',
+                ],
+                'validation': lambda x: len(x) >= 8,
+            },
         }
         
         self.generic_patterns = {
