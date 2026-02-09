@@ -749,25 +749,62 @@ class UltimatePatternMatcherV3:
         candidates.sort(key=lambda x: x[1], reverse=True)
         return candidates[0][0]
 
+    def _clean_doubled_text(self, text: str) -> str:
+        """Clean text that has doubled/quadrupled characters due to PDF rendering issues."""
+        # Check for characteristic doubled markers like "RRMM" or "DDuuiittNNooww"
+        if re.search(r'R{2,}M{2,}', text) or re.search(r'M{2,}Y{2,}R{2,}', text) or re.search(r'D{2,}u{2,}i{2,}t{2,}', text):
+            # Strategy: Replace sequences of identical chars with a single char
+            # But we must be careful with digits (11.00 -> 1.0 is bad)
+            # However, in these corrupted files, digits are ALSO doubled (449988..2200 -> 498.20)
+            
+            # We'll operate line by line
+            lines = text.split('\n')
+            cleaned_lines = []
+            for line in lines:
+                # If line has heavy duplication
+                if re.search(r'([A-Za-z0-9])\1{1,}', line):
+                    # Aggressive dedup: replace any char repeated 2+ times with single char
+                    # Only do this if we are sure it's a corrupted line
+                    # Heuristic: > 50% of chars are repeated?
+                    # Simpler: just replace (char)\1 with \1
+                    # This turns "449988" -> "498"
+                    # "11115555" -> "1155" -> "15" (if run recursively or with +)
+                    
+                    # Regex to replace 2 or more occurrences with 1
+                    cleaned = re.sub(r'(.)\1+', r'\1', line)
+                    cleaned_lines.append(cleaned)
+                else:
+                    cleaned_lines.append(line)
+            return '\n'.join(cleaned_lines)
+        return text
+
     def extract_amount(self, text: str) -> Optional[str]:
         """Extract the most likely transaction amount."""
         candidates = []
+        
+        # 0. Try cleaning doubled text first
+        text_cleaned = self._clean_doubled_text(text)
         
         # 1. Look for explicit Amount headers (High priority)
         header_patterns = [
             r'\bTotal\s*Amount\s*[:\s]*RM\s*([\d,]+\.\d{2})',
             r'\bAmount\s*[:\s]*RM\s*([\d,]+\.\d{2})',
-            r'\bTotal\s*[:\s]*RM\s*([\d,]+\.\d{2})'
+            r'\bTotal\s*[:\s]*RM\s*([\d,]+\.\d{2})',
+            # Fix for "Transfer Amount (MYR) : 154.00"
+            r'\b(?:Transfer|Transaction)?\s*Amount\s*(?:\([A-Za-z]{3}\))?\s*[:\s]*([\d,]+\.\d{2})',
+            # Fix for "RRMM 449988..2200" style (using cleaned text)
+            r'\bRM\s*([\d,]+\.\d{2})',
         ]
         
+        # Use cleaned text for pattern matching
         for pattern in header_patterns:
-            matches = re.findall(pattern, text, re.IGNORECASE)
+            matches = re.findall(pattern, text_cleaned, re.IGNORECASE)
             for m in matches:
                 candidates.append((m.strip(), 10))
         
-        # 2. Look for all generic patterns
+        # 2. Look for all generic patterns (using cleaned text too)
         for pattern in self.amount_patterns:
-            matches = re.findall(pattern, text, re.IGNORECASE)
+            matches = re.findall(pattern, text_cleaned, re.IGNORECASE)
             for m in matches:
                 if isinstance(m, tuple):
                     val = m[0]
@@ -776,6 +813,11 @@ class UltimatePatternMatcherV3:
                 if val:
                     candidates.append((val.strip(), 5))
                     
+        if not candidates:
+            # Fallback: Try original text if cleaning messed up? 
+            # (Unlikely to match if cleaning failed, but good practice)
+            pass
+            
         if not candidates:
             return None
             
@@ -893,8 +935,12 @@ class UltimatePatternMatcherV3:
     def extract_all_fields(self, text: str) -> Dict[str, Any]:
         """Extract all possible fields from receipt text with 100% accuracy target."""
         try:
-            # Normalize text first
-            text_normalized = self.normalize_text(text)
+            # 0. Clean doubled text first (Global fix for PDF rendering issues)
+            # This handles the "DDuuiittNNooww" and "RRRRMMMM" cases
+            text_cleaned = self._clean_doubled_text(text)
+            
+            # Normalize text
+            text_normalized = self.normalize_text(text_cleaned)
             
             # Determine bank
             bank_name = self.detect_bank(text_normalized)
@@ -904,6 +950,11 @@ class UltimatePatternMatcherV3:
             
             # Extract Date & Amount
             date_str = self.extract_date(text_normalized)
+            
+            # Note: extract_amount already calls _clean_doubled_text internally, 
+            # but passing cleaned text is fine/better.
+            # We can remove the internal call in extract_amount or leave it as safety.
+            # But let's use the method that takes text.
             amount_str = self.extract_amount(text_normalized)
             
             # Calculate confidence

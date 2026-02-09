@@ -126,6 +126,11 @@ async def extract_receipt(file: UploadFile = File(...)):
             logger.error(f"OCR failed: {e}")
             ocr_result = {"text": "", "tokens": [], "confidence": 0.0}
 
+        # Check if OCR actually got anything
+        if not ocr_result.get('text') or len(ocr_result['text'].strip()) < 5:
+            logger.warning("OCR extracted little to no text. Image might be invalid, blurry, or empty.")
+            raise HTTPException(status_code=422, detail="Could not extract text from the image. Please ensure the image is clear and contains a receipt.")
+
         # 2. HIGH-PRECISION LAYOUT EXTRACTION
         logger.info("Using local Layout-Aware Extractor")
         layout_results = layout_extractor.extract(ocr_result)
@@ -150,7 +155,8 @@ async def extract_receipt(file: UploadFile = File(...)):
             "date": pattern_results.get("date"),
             "amount": pattern_results.get("amount"),
             "ocr_confidence": ocr_result.get("confidence", 0.5),
-            "method": "layout_aware_local" if layout_results.get("success") else "pattern_fallback"
+            "method": "layout_aware_local" if layout_results.get("success") else "pattern_fallback",
+            "raw_text": ocr_result.get("text", "")
         }
         
         logger.info(f"Extraction completed: {results}")
