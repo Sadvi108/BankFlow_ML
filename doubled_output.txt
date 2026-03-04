@@ -1,0 +1,40 @@
+Processing Receipts/MAYBANK PERSONAL - INVOICE NUM.pdf...
+
+--- EnhancedOCRPipeline ---
+Success: Unknown
+Confidence: 95.0
+Text length: 545
+Text full:
+=== PAGE 1 ===
+DDuuiittNNooww TTrraannssffeerr
+Successful
+Reference ID
+31 Oct 2025, 12:16 PM
+557711000077776633MM
+Beneficiary name
+DD&&DD CCOONNTTRROOLL ((MM)) SSDDNN BBHHDD
+Beneficiary account number
+22112244 66666600 00001133 4433
+Receiving bank
+RRHHBB BBAANNKK
+Recipient reference
+KKMMTT1122551111772211332244
+Payment details
+KKMMTTUU99332277221199
+Amount
+RRMM 449988..2200
+Note: This receipt is computer generated and no
+signature is required.
+Malayan Banking Berhad (Co. Reg. : 196001000142)
+Maybank Islamic Berhad (Co. Reg. : 200701029411)
+
+--- OCRPipeline ---
+Success: True
+Confidence: 88.77777777777777
+Text length: 446
+Text full:
+=== PAGE 1 ===
+Maybank DuitNow Transfer Reference ID 571007'763M 41 Oct 2025, 12:lo PM Beneficiary name D&D CONTROL (M) SDN BHD Beneficiary account number 2124 6660 OO13 43 Receiving bank RHB BANK Recipient reference KMT1I2511721324 Payment details KMTU9327219 Amount RM 498.20 Note: This receipt is computer generated and no
+signature Is required.
+Malayan Banking Berhad (Co. Reg. : 196001000142)
+Maybank Islamic Berhad (Co. Reg. : 200701029411)

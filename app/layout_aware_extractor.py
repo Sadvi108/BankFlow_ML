@@ -19,7 +19,7 @@ class LayoutAwareExtractor:
             r'\bSST\s*No\b'
         ]
         
-    def extract(self, ocr_result: Dict[str, Any]) -> Dict[str, Any]:
+    def extract(self, ocr_result: Dict[str, Any], bank_name: str = None) -> Dict[str, Any]:
         """
         Extract Reference ID using both patterns and layout coordinates.
         """
@@ -30,6 +30,9 @@ class LayoutAwareExtractor:
         
         if not text:
             return {"success": False, "error": "No text extracted"}
+            
+        if not bank_name:
+            bank_name = ultimate_matcher_v3.detect_bank(text)
 
         # 1. Generate Candidates using existing robust patterns
         all_matches = []
@@ -39,6 +42,11 @@ class LayoutAwareExtractor:
                 for match in re.finditer(pattern, text, re.IGNORECASE):
                     if isinstance(match.group(), str):
                         match_text = match.group(1) if match.groups() else match.group()
+                        
+                        # Clean suffix/prefix using UltimatePatternMatcherV3 logic
+                        # This is crucial for multiline patterns that might capture "ID\nTRANSACTION"
+                        match_text = ultimate_matcher_v3._clean_id_suffix(match_text)
+                        
                         if ultimate_matcher_v3.is_valid_transaction_id(match_text):
                             all_matches.append({
                                 'text': match_text.strip().upper().replace(" ", ""),
@@ -53,6 +61,11 @@ class LayoutAwareExtractor:
             for pattern in ultimate_matcher_v3.bank_patterns[bank_name]['patterns']:
                 for match in re.finditer(pattern, text, re.IGNORECASE):
                     match_text = match.group(1) if match.groups() else match.group()
+                    
+                    # Clean suffix/prefix using UltimatePatternMatcherV3 logic
+                    # This is crucial for multiline patterns that might capture "ID\nTRANSACTION"
+                    match_text = ultimate_matcher_v3._clean_id_suffix(match_text)
+                    
                     if ultimate_matcher_v3.is_valid_transaction_id(match_text):
                         all_matches.append({
                             'text': match_text.strip().upper().replace(" ", ""),
@@ -75,6 +88,24 @@ class LayoutAwareExtractor:
             
             # Find coordinates for this match
             match_tokens = self._find_tokens_for_match(match, tokens, text)
+            
+            # Apply content-based rules (independent of layout)
+            # RULE: Alphanumeric bias
+            if not tid.isdigit():
+                score += 30
+            
+            # RULE: Date-based ID boost (e.g. 2025...)
+            if len(tid) >= 12 and tid.startswith('20') and tid[2:4].isdigit():
+                score += 40 # Increased from 25 to prioritize date-based IDs over random strings
+                logger.debug(f"Date-ID boost for {tid}: +40")
+            
+            # RULE: Bank Specific Logic
+            if bank_name == 'Maybank' or bank_name == 'HSBC' or bank_name == 'Public Bank':
+                 # Maybank/HSBC/PBB often has numeric Reference IDs (internal) but users want Alphanumeric Recipient Ref
+                 if not tid.isdigit():
+                     score += 50 # Extra Alpha boost for these banks (Increased to beat Date boost)
+                     logger.debug(f"Bank-specific Alpha boost for {tid}: +50")
+                     
             if not match_tokens:
                 scored_candidates.append({'id': tid, 'score': score})
                 continue
@@ -84,8 +115,8 @@ class LayoutAwareExtractor:
             
             # RULE: Prioritize Header IDs (Top 40% of page)
             if y_pos < 0.4:
-                score += 50
-                logger.debug(f"Header boost for {tid}: +50")
+                score += 20 # Reduced from 50 to allow other signals (like Alpha) to compete
+                logger.debug(f"Header boost for {tid}: +20")
             
             # RULE: Bonus for IDs on the right (frequent in CIMB/Maybank)
             if x_pos > 0.5:
@@ -96,8 +127,9 @@ class LayoutAwareExtractor:
                 score += 150 # Increased boost from 80
                 logger.debug(f"Keyword proximity boost for {tid}: +150")
                 
-            # RULE: Penalty for being near "Recipient" or "Payment Description" or "Terminal" or "Merchant"
-            if self._is_near_keyword(match_tokens, tokens, ["RECIPIENT", "SAY", "DESCRIPTION", "MEMO", "REMARK", "TERMINAL", "MERCHANT", "MID", "TID", "TRACE", "BATCH", "APPR", "AUTH"]):
+            # RULE: Penalty for being near "Payment Description" or "Terminal" or "Merchant"
+            # REMOVED "RECIPIENT" as "Recipient Reference" is a valid ID label (e.g. Maybank)
+            if self._is_near_keyword(match_tokens, tokens, ["SAY", "DESCRIPTION", "MEMO", "REMARK", "TERMINAL", "MERCHANT", "MID", "TID", "TRACE", "BATCH", "APPR", "AUTH"]):
                 score -= 100 # Increased penalty
                 logger.debug(f"Non-system ref penalty for {tid}: -100")
                 
@@ -111,10 +143,6 @@ class LayoutAwareExtractor:
             if is_sst:
                 score -= 150
                 logger.debug(f"SST penalty for {tid}: -150")
-                
-            # RULE: Alphanumeric bias
-            if not tid.isdigit():
-                score += 30
                 
             scored_candidates.append({'id': tid, 'score': score})
 

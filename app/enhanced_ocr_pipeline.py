@@ -59,7 +59,115 @@ class EnhancedOCRPipeline:
         
         # Fall back to OCR with rotation check
         logger.info("Using OCR for text extraction")
+        if file_path.suffix.lower() == '.pdf':
+             return self._process_pdf_with_early_exit(str(file_path))
         return self._process_with_rotation_fallback(str(file_path))
+
+    def _process_pdf_with_early_exit(self, pdf_path: str) -> Dict[str, Any]:
+        """Process PDF pages one by one and stop early if good IDs are found."""
+        try:
+            import fitz
+            doc = fitz.open(pdf_path)
+            
+            all_text_parts = []
+            all_confidences = []
+            
+            # Process page by page
+            for i in range(len(doc)):
+                # 1. Render page
+                page = doc.load_page(i)
+                pix = page.get_pixmap(matrix=fitz.Matrix(3.0, 3.0)) # 300 DPI approx
+                img_data = pix.tobytes("png")
+                nparr = np.frombuffer(img_data, np.uint8)
+                img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+                
+                if img is None:
+                    continue
+                    
+                # 2. OCR this page
+                # Try standard orientation first
+                result = self.ocr_pipeline.extract_text_with_confidence(img)
+                page_text = result['text']
+                page_conf = result['confidence']
+                
+                # 3. Check for IDs immediately
+                extraction = extract_all_fields_v3(page_text)
+                ids = extraction.get('all_ids')
+                
+                if ids and page_conf > 0.8:
+                    logger.info(f"Found high confidence IDs on page {i+1}: {ids}. Stopping early.")
+                    all_text_parts.append(f"=== PAGE {i+1} ===\n{page_text}")
+                    all_confidences.append(page_conf)
+                    
+                    # Return immediately with what we have
+                    avg_conf = sum(all_confidences) / len(all_confidences)
+                    return {
+                        'text': "\n".join(all_text_parts),
+                        'confidence': avg_conf * 100, # convert to %
+                        'method': 'ocr_early_exit',
+                        'processed_successfully': True
+                    }
+                
+                # 4. If no IDs, try rotation for this page ONLY
+                if not ids:
+                    logger.info(f"No IDs on page {i+1}, trying rotation...")
+                    best_rotated_text = page_text
+                    best_rotated_conf = page_conf
+                    
+                    for angle in [90, 180, 270]:
+                        if angle == 90:
+                            rotated = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
+                        elif angle == 180:
+                            rotated = cv2.rotate(img, cv2.ROTATE_180)
+                        elif angle == 270:
+                            rotated = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+                            
+                        rot_res = self.ocr_pipeline.extract_text_with_confidence(rotated, skip_rotation=True)
+                        rot_ids = extract_all_fields_v3(rot_res['text']).get('all_ids')
+                        
+                        if rot_ids:
+                            logger.info(f"Found IDs on page {i+1} with {angle}° rotation: {rot_ids}")
+                            best_rotated_text = rot_res['text']
+                            best_rotated_conf = rot_res['confidence']
+                            # Stop rotation check, we found something
+                            break
+                    
+                    page_text = best_rotated_text
+                    page_conf = best_rotated_conf
+                    
+                    # Check IDs again after rotation
+                    extraction = extract_all_fields_v3(page_text)
+                    ids = extraction.get('all_ids')
+                    if ids and page_conf > 0.8:
+                         logger.info(f"Found high confidence IDs on page {i+1} (rotated). Stopping early.")
+                         all_text_parts.append(f"=== PAGE {i+1} ===\n{page_text}")
+                         all_confidences.append(page_conf)
+                         avg_conf = sum(all_confidences) / len(all_confidences)
+                         return {
+                            'text': "\n".join(all_text_parts),
+                            'confidence': avg_conf * 100,
+                            'method': 'ocr_rotated_early_exit',
+                            'processed_successfully': True
+                         }
+
+                all_text_parts.append(f"=== PAGE {i+1} ===\n{page_text}")
+                all_confidences.append(page_conf)
+            
+            doc.close()
+            
+            # If we finished all pages without early exit
+            avg_conf = sum(all_confidences) / len(all_confidences) if all_confidences else 0
+            return {
+                'text': "\n".join(all_text_parts),
+                'confidence': avg_conf * 100,
+                'method': 'ocr_full_scan',
+                'processed_successfully': True
+            }
+            
+        except Exception as e:
+            logger.error(f"PDF early exit processing failed: {e}")
+            # Fallback to standard full processing
+            return self._process_with_rotation_fallback(pdf_path)
 
     def _process_with_rotation_fallback(self, file_path: str) -> Dict[str, Any]:
         """Run OCR and try rotations if no IDs are found"""

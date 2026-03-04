@@ -15,6 +15,7 @@ import re
 import io
 import csv
 from dotenv import load_dotenv
+import os
 
 # Load environment variables
 load_dotenv()
@@ -78,16 +79,24 @@ async def train_page(request: Request):
 async def extract_receipt(file: UploadFile = File(...)):
     """Extract transaction details from uploaded receipt"""
     try:
-        # Validate file type
-        if not file.content_type or not (
-            file.content_type.startswith("image/") or 
-            file.content_type == "application/pdf"
-        ):
+        # Validate file type (accept by extension or known content types)
+        allowed_exts = {".pdf", ".jpg", ".jpeg", ".png"}
+        file_ext = Path(file.filename).suffix.lower() if file.filename else ""
+        
+        # Ensure content_type is not None
+        content_type = file.content_type or "application/octet-stream"
+        
+        content_ok = (
+            (content_type.startswith("image/") or content_type == "application/pdf")
+            or (content_type == "application/octet-stream" and file_ext in allowed_exts)
+            or (file_ext in allowed_exts)
+        )
+        if not content_ok:
             raise HTTPException(status_code=400, detail="Only image and PDF files are supported")
         
         # Generate unique filename
         file_id = str(uuid.uuid4())
-        file_ext = Path(file.filename).suffix if file.filename else ".jpg"
+        file_ext = file_ext or ".jpg"
         filename = f"{file_id}{file_ext}"
         file_path = UPLOAD_DIR / filename
         
@@ -101,7 +110,7 @@ async def extract_receipt(file: UploadFile = File(...)):
         # 1. OCR PROCESSING (Get text + tokens)
         try:
             # For images, we want the tokens for layout awareness
-            if file.content_type.startswith("image/"):
+            if content_type.startswith("image/") or (content_type == "application/octet-stream" and file_ext in {".jpg", ".jpeg", ".png"}):
                 import cv2
                 import numpy as np
                 nparr = np.frombuffer(content, np.uint8)
@@ -110,12 +119,161 @@ async def extract_receipt(file: UploadFile = File(...)):
             else:
                 # For PDFs, use temp file to avoid large buffer
                 import tempfile
+                # Create a temp file and close it immediately so other processes/libraries can open it
                 with tempfile.NamedTemporaryFile(delete=False, suffix=file_ext) as tmp:
                     tmp.write(content)
                     tmp_path = tmp.name
+                # File is closed here
                 
                 try:
-                    ocr_result = ocr_pipeline.process_file(tmp_path)
+                    # Try embedded text first (fast path)
+                    embedded_text = ""
+                    try:
+                        import fitz
+                        doc = fitz.open(tmp_path)
+                        parts = []
+                        for page in doc:
+                            parts.append(page.get_text("text"))
+                        doc.close()
+                        embedded_text = " ".join(parts).strip()
+                    except Exception:
+                        embedded_text = ""
+
+                    if len(embedded_text) >= 50:
+                        ocr_result = {"text": embedded_text, "tokens": [], "confidence": 0.7}
+                    else:
+                        # Primary pipeline
+                        ocr_result = ocr_pipeline.process_file(tmp_path)
+                        text_primary = (ocr_result.get('text') or "").strip()
+                        if len(text_primary) < 50:
+                            import fitz
+                            import numpy as np
+                            import cv2
+                            from PIL import Image
+                            doc = fitz.open(tmp_path)
+                            texts = []
+                            for page in doc:
+                                t = page.get_text("text")
+                                if t:
+                                    texts.append(t)
+                            if sum(len(t) for t in texts) < 50:
+                                for page in doc:
+                                    pix = page.get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False)
+                                    png_bytes = pix.tobytes("png")
+                                    img = Image.open(io.BytesIO(png_bytes)).convert("RGB")
+                                    arr = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+                                    gray = cv2.cvtColor(arr, cv2.COLOR_BGR2GRAY)
+                                    thr = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 10)
+                                    res_a = ocr_pipeline.extract_text_with_confidence(arr)
+                                    res_b = ocr_pipeline.extract_text_with_confidence(cv2.cvtColor(thr, cv2.COLOR_GRAY2BGR))
+                                    res = res_a if len((res_a.get("text") or "")) >= len((res_b.get("text") or "")) else res_b
+                                    if res.get("text"):
+                                        texts.append(res["text"])
+                            doc.close()
+                            fallback_text = " ".join(texts).strip()
+                            if fallback_text:
+                                ocr_result = {"text": fallback_text, "tokens": [], "confidence": 0.6}
+                            if len(fallback_text) < 50:
+                                try:
+                                    import pdfplumber
+                                    with pdfplumber.open(tmp_path) as pdf:
+                                        pl_texts = []
+                                        for page in pdf.pages:
+                                            pl_texts.append(page.extract_text() or "")
+                                    pl_text = " ".join(pl_texts).strip()
+                                    if pl_text and len(pl_text) > len(fallback_text):
+                                        ocr_result = {"text": pl_text, "tokens": [], "confidence": 0.6}
+                                except Exception:
+                                    pass
+                        import fitz
+                        import numpy as np
+                        import cv2
+                        from PIL import Image
+                        doc = fitz.open(tmp_path)
+                        texts = []
+                        for page in doc:
+                            t = page.get_text("text")
+                            if t:
+                                texts.append(t)
+                        if sum(len(t) for t in texts) < 50:
+                            for page in doc:
+                                pix = page.get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False)
+                                png_bytes = pix.tobytes("png")
+                                img = Image.open(io.BytesIO(png_bytes)).convert("RGB")
+                                arr = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+                                gray = cv2.cvtColor(arr, cv2.COLOR_BGR2GRAY)
+                                thr = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 10)
+                                res_a = ocr_pipeline.extract_text_with_confidence(arr)
+                                res_b = ocr_pipeline.extract_text_with_confidence(cv2.cvtColor(thr, cv2.COLOR_GRAY2BGR))
+                                res = res_a if len((res_a.get("text") or "")) >= len((res_b.get("text") or "")) else res_b
+                                if res.get("text"):
+                                    texts.append(res["text"])
+                        doc.close()
+                        fallback_text = " ".join(texts).strip()
+                        if fallback_text:
+                            ocr_result = {"text": fallback_text, "tokens": [], "confidence": 0.6}
+                        if len(fallback_text) < 50:
+                            try:
+                                import pdfplumber
+                                with pdfplumber.open(tmp_path) as pdf:
+                                    pl_texts = []
+                                    for page in pdf.pages:
+                                        pl_texts.append(page.extract_text() or "")
+                                pl_text = " ".join(pl_texts).strip()
+                                if pl_text and len(pl_text) > len(fallback_text):
+                                    ocr_result = {"text": pl_text, "tokens": [], "confidence": 0.6}
+                                    logger.info(f"pdfplumber fallback success: {len(pl_text)} chars")
+                            except Exception as e:
+                                logger.warning(f"pdfplumber fallback failed: {e}")
+                                pass
+                except Exception as e:
+                    # If pipeline fails, attempt direct text extraction then image OCR
+                    logger.warning(f"Primary PDF OCR failed, attempting fallbacks: {e}")
+                    import fitz
+                    import numpy as np
+                    import cv2
+                    from PIL import Image
+                    fallback_text = ""
+                    try:
+                        doc = fitz.open(tmp_path)
+                        texts = []
+                        for page in doc:
+                            t = page.get_text("text")
+                            if t:
+                                texts.append(t)
+                        if sum(len(t) for t in texts) < 50:
+                            for page in doc:
+                                pix = page.get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False)
+                                png_bytes = pix.tobytes("png")
+                                img = Image.open(io.BytesIO(png_bytes)).convert("RGB")
+                                arr = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+                                gray = cv2.cvtColor(arr, cv2.COLOR_BGR2GRAY)
+                                thr = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 10)
+                                res_a = ocr_pipeline.extract_text_with_confidence(arr)
+                                res_b = ocr_pipeline.extract_text_with_confidence(cv2.cvtColor(thr, cv2.COLOR_GRAY2BGR))
+                                res = res_a if len((res_a.get("text") or "")) >= len((res_b.get("text") or "")) else res_b
+                                if res.get("text"):
+                                    texts.append(res["text"])
+                        doc.close()
+                        fallback_text = " ".join(texts).strip()
+                    except Exception:
+                        pass
+                    if fallback_text:
+                        ocr_result = {"text": fallback_text, "tokens": [], "confidence": 0.6}
+                    else:
+                        try:
+                            import pdfplumber
+                            with pdfplumber.open(tmp_path) as pdf:
+                                pl_texts = []
+                                for page in pdf.pages:
+                                    pl_texts.append(page.extract_text() or "")
+                            pl_text = " ".join(pl_texts).strip()
+                            if pl_text:
+                                ocr_result = {"text": pl_text, "tokens": [], "confidence": 0.6}
+                            else:
+                                ocr_result = {"text": "", "tokens": [], "confidence": 0.0}
+                        except Exception:
+                            ocr_result = {"text": "", "tokens": [], "confidence": 0.0}
                 finally:
                     # Clean up temp file
                     try:
@@ -126,18 +284,19 @@ async def extract_receipt(file: UploadFile = File(...)):
             logger.error(f"OCR failed: {e}")
             ocr_result = {"text": "", "tokens": [], "confidence": 0.0}
 
-        # Check if OCR actually got anything
+        # Check minimal text
         if not ocr_result.get('text') or len(ocr_result['text'].strip()) < 5:
-            logger.warning("OCR extracted little to no text. Image might be invalid, blurry, or empty.")
-            raise HTTPException(status_code=422, detail="Could not extract text from the image. Please ensure the image is clear and contains a receipt.")
-
-        # 2. HIGH-PRECISION LAYOUT EXTRACTION
-        logger.info("Using local Layout-Aware Extractor")
-        layout_results = layout_extractor.extract(ocr_result)
-        
-        # 3. PATTERN-BASED FALLBACK / COMPLEMENT
-        # Extract fields using the robust V3 pattern matcher for non-ID fields (Date, Amount)
+            raise HTTPException(status_code=422, detail="Could not extract text")
+            
+        # 2. PATTERN-BASED EXTRACTION (To get Bank Name first)
         pattern_results = extract_all_fields_v3(ocr_result.get('text', ''))
+        bank_name = pattern_results.get('bank_name', 'Unknown')
+
+        # 3. LAYOUT-AWARE EXTRACTION (Prioritize layout, use patterns as fallback)
+        logger.info(f"Extracting layout... (Tokens: {len(ocr_result.get('tokens', []))})")
+        layout_results = layout_extractor.extract(ocr_result, bank_name)
+        
+        logger.info(f"Layout extraction success: {layout_results.get('success')}")
         
         # 4. MERGE RESULTS
         # Layout extractor is the authority on Reference IDs

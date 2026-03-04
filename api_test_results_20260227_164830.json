@@ -1,0 +1,174 @@
+{
+  "timestamp": "2026-02-27T16:48:30.251350",
+  "total_receipts": 33,
+  "success_count": 0,
+  "failure_count": 33,
+  "accuracy": 0.0,
+  "results": [
+    {
+      "filename": "3243781e-77dd-4e74-a1f3-b1ee94bc43c3_DDCONTKUL1.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "38c11069-2dc5-4e91-a37d-25cbc8518f68.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "470d7184-a47c-4c29-bb2d-4bea83576eb5_11739919 payment slip .pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "4e872411-2964-403c-b304-75712a1dfcad_DND - INV NSA12511748043 (TXI) - RM 10.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "584ab260-7a1d-4951-90db-b09e8bfc1ec9_QPV 0253 11 D D CONTROL.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "59d288ea-a359-4117-97ec-801bf21b680f_20250912) DnD PAYMENT SLIP.PDF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "98c61712-9ceb-43c2-b83f-b25a154a3a83_dnd 10.60.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "9d459d0f-467c-46ab-a8c7-d80a425d39c9_DnD CONTROL - EMC12511748202.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "AFFIN BANK -CUSTOMER REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "AMBANK - CUSTOMER REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "CIMB - DIFF REF FRM STATEMENT.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "CIMB -INV REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "CITIBANK - CUST REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "CTB - BANK REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "DUITNOW - INV REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "DuitNow_Transaction_Report - INVOICE.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "fe89c037-1f2d-4000-93f1-da2af9960d1d_Payment_AdviceDND1211.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "HANA_771a6100-9d8f-4b30-bf95-a78ac92c8d3b_D-D-60.00.pdf (SECURED).pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "HONG LEONG BANK - REF INV.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "HSBC - REF NAME.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "HSBC - REF- INV NUMBER.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "MAYBANK - BANK REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "MAYBANK - BOTH REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "MAYBANK - CUSTOMER REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "MAYBANK - REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "MAYBANK PERSONAL - INVOICE NUM.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "PERSONAL - INV NUM.jpeg",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "PUBLIC BANK - INVOICE.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "PUBLIC BANK -PERSONAL INVOICE NUM.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "RHB - CUSTOMER REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "SCB - INV REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "SCB -BANK REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    },
+    {
+      "filename": "UOB- INV REF.pdf",
+      "success": false,
+      "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
+    }
+  ]
+}

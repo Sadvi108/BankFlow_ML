@@ -1,45 +1,108 @@
-"""Debug the pattern matching for the two failing cases"""
-import re
 
-# Test the patterns directly
+import logging
+from app.ultimate_patterns_v3 import UltimatePatternMatcherV3
 
-# Test case 31 patterns
-test31_text = "SCB_Transfer_SCB251031555555_Success"
-test31_text_upper = test31_text.upper()
+logging.basicConfig(level=logging.INFO)
 
-# Original failing pattern
-pattern31_old = r'\b(?:SCB|Standard\s*Chartered)_(?:Transfer|Payment|Txn)_(SCB[A-Z0-9]{8,20})_'
-# My new pattern
-pattern31_new1 = r'\b(?:SCB|SC|Standard)_(?:Transfer|Payment|Txn|Trx)_([A-Z0-9]{8,25})_'
-pattern31_new2 = r'\b(?:[A-Z]{2,5})_(?:Transfer|Payment|Txn|Trx)_([A-Z0-9]{8,25})_'
+matcher = UltimatePatternMatcherV3()
 
-print("Test 31: SCB_Transfer_SCB251031555555_Success")
-print(f"Text upper: {test31_text_upper}")
-print(f"Old pattern: {re.findall(pattern31_old, test31_text_upper)}")
-print(f"New pattern 1 (SCB-specific): {re.findall(pattern31_new1, test31_text_upper)}")
-print(f"New pattern 2 (generic): {re.findall(pattern31_new2, test31_text_upper)}")
-print()
+text = """=== PAGE 1 ===
+Open Interbank
+Status: Successful
+Reference number: 7901990048
+Transaction date: 31 Oct 2025 12:09:52
+Amount: RM10.60
+Beneficiary Name : D&D CONTROL (M) SDN BHD
+Receiving Bank : RHB BANK
+Beneficiary Account Number : 21246660001343
+Recipient reference: MXC12511726684
+Other payment details:
+Note: This receipt is computer generated and no signature is required."""
 
-# Test case 33 patterns
-test33_text = "Reference No.MYCN251031777777 for your transfer"
-test33_text_upper = test33_text.upper()
+print("Detecting bank...")
+bank = matcher.detect_bank(text)
+print(f"Bank: {bank}")
 
-# Patterns
-pattern33_old = r'\b(?:Ref|Reference)\s*No\.([A-Z0-9]{8,20})\b'
-pattern33_new = r'\b(?:Ref|Reference)\s*No\.\s*([A-Z0-9]{8,20})\b'
+print("\nExtracting IDs...")
+# We need to access the internal method to see scores
+matcher_ids = matcher.extract_transaction_ids(text, bank)
+print(f"IDs found: {matcher_ids}")
 
-print("Test 33: Reference No.MYCN251031777777")
-print(f"Text upper: {test33_text_upper}")
-print(f"Old pattern: {re.findall(pattern33_old, test33_text_upper)}")
-print(f"New pattern: {re.findall(pattern33_new, test33_text_upper)}")
-print()
+# Let's debug the scoring manually by copying the logic from extract_transaction_ids
+print("\n--- Detailed Scoring Debug ---")
+text_normalized = matcher.normalize_text(text)
+text_upper = text_normalized.upper()
+candidates = []
 
-# Try alternative patterns
-# For test 33 - the issue is \s* means zero or more spaces, so it should work
-# Let's try without  word boundary at the end
-pattern33_alt1 = r'(?:Ref|Reference)\s*No\.([A-Z0-9]{8,20})'
-print(f"Alt pattern (no \\b): {re.findall(pattern33_alt1, test33_text_upper)}")
+# 1. Generic patterns
+print("Checking generic patterns...")
+for pattern in matcher.generic_patterns['transaction_ids']:
+    import re
+    matches = re.findall(pattern, text_upper, re.IGNORECASE)
+    is_labeled = any(k in pattern for k in ['Ref', 'Reference', 'ID', 'No', 'Trx', 'Txn', 'Invoice', 'Bill'])
+    base_score = 60 if is_labeled else 10
+    
+    for m in matches:
+        val = m[0] if isinstance(m, tuple) else m
+        if val:
+            print(f"Match: '{val}' | Pattern: {pattern} | Base Score: {base_score}")
+            candidates.append((val, base_score, "generic"))
 
-# Try with explicit no space
-pattern33_alt2 = r'\b(?:Ref|Reference)\s*No\.([A-Z0-9]+)'
-print(f"Alt pattern (no length limit): {re.findall(pattern33_alt2, test33_text_upper)}")
+# 2. Bank patterns
+print(f"Checking {bank} patterns...")
+if bank in matcher.bank_patterns:
+    for pattern in matcher.bank_patterns[bank]['patterns']:
+        matches = re.findall(pattern, text_upper, re.IGNORECASE)
+        for m in matches:
+            val = m[0] if isinstance(m, tuple) else m
+            if val:
+                print(f"Match: '{val}' | Pattern: {pattern} | Score: 80")
+                candidates.append((val, 80, "bank_specific"))
+
+# Scoring logic
+print("\nScoring...")
+valid_scored_ids = []
+seen = set()
+blacklist = set() # Assume empty for now
+
+for tid, initial_score, source in candidates:
+    tid_repaired = matcher._repair_ocr_digits(tid)
+    tid_repaired = matcher._clean_id_suffix(tid_repaired)
+    
+    if matcher.is_valid_transaction_id(tid_repaired):
+        tid_clean = tid_repaired.strip().upper().replace(' ', '').replace("'", "")
+        if tid_clean not in seen:
+            seen.add(tid_clean)
+            final_score = initial_score
+            
+            if not tid_clean.isdigit():
+                final_score += 10
+                print(f"'{tid_clean}' +10 Alpha boost")
+            
+            if any(c in tid for c in ['-', ':', ' ']):
+                final_score += 5
+                print(f"'{tid_clean}' +5 Complex boost")
+                
+            if len(tid_clean) >= 12 and tid_clean.startswith('20') and tid_clean[2:4].isdigit():
+                final_score += 25
+                print(f"'{tid_clean}' +25 Date-ID boost")
+                
+            if tid_clean.isdigit() and 9 <= len(tid_clean) <= 17:
+                 if tid_clean.startswith('20') and len(tid_clean) >= 12:
+                     pass
+                 elif source == "bank_specific" or (source == "generic" and initial_score >= 60):
+                     pass
+                 else:
+                     final_score -= 30
+                     print(f"'{tid_clean}' -30 Numeric penalty")
+            
+            prox_boost = matcher._label_proximity_boost(text_upper, tid_clean)
+            if prox_boost > 0:
+                final_score += prox_boost
+                print(f"'{tid_clean}' +{prox_boost} Proximity boost")
+                
+            print(f"Candidate: {tid_clean} | Final Score: {final_score}")
+            valid_scored_ids.append((tid_clean, final_score))
+
+valid_scored_ids.sort(key=lambda x: x[1], reverse=True)
+print(f"\nSorted Results: {valid_scored_ids}")
