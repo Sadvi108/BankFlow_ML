@@ -12,7 +12,8 @@ if os.name == 'nt':
     import io
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
-sys.path.append('.')
+# Add parent directory to path to import app modules
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from app.ultimate_patterns_v3 import extract_all_fields_v3
 
