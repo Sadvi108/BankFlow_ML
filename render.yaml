@@ -6,3 +6,8 @@ services:
     plan: free
     healthCheckPath: /health
     autoDeploy: true
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: PYTHONPATH
+        value: /app
