@@ -1,0 +1,7 @@
+File: MAYBANK - CUSTOMER REF.pdf
+Method: ocr
+================================================================================
+=== PAGE 1 ===
+Thank You Here's your receipt. Transaction Successful
+GIRO/DuitNow Transter
+  31 Oct 2025, 10:31:57   Reference ID Status Transfer To Account Number Recipient Bank. Transfer Type Transfer Mode Recipien! Reference Payment Details 7901764116 Suscessiul D&D CONTROL (Mj SON BHD 2124 6660 0013 435 RHB BANK Funds Transfer DuitNow Transfer DEMURAGE BL-ASB/2025-26/141A   Amount RM 1,144.80       

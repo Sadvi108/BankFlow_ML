@@ -1,0 +1,29 @@
+Processing Receipts/MAYBANK - REF.pdf...
+
+--- EnhancedOCRPipeline ---
+Success: Unknown
+Confidence: 95.0
+Text length: 375
+Text full:
+=== PAGE 1 ===
+Open Interbank
+Status: Successful
+Reference number: 7901990048
+Transaction date: 31 Oct 2025 12:09:52
+Amount: RM10.60
+Beneficiary Name : D&D CONTROL (M) SDN BHD
+Receiving Bank : RHB BANK
+Beneficiary Account Number : 21246660001343
+Recipient reference: MXC12511726684
+Other payment details:
+Note: This receipt is computer generated and no signature is required.
+
+--- OCRPipeline ---
+Success: True
+Confidence: 94.65384615384616
+Text length: 391
+Text full:
+=== PAGE 1 ===
+Open Interbank Status: Successful Reference number: 7901990048 Transaction date: 31 Oct 2025 12:09:52 Amount: RM10.60 Beneficiary Name : D&D CONTROL (M) SDN BHD
+Receiving Bank : RHB BANK
+Beneficiary Account Number : 21246660001343 Recipient reference: MXC12511726684 Other payment details: Note: This receipt is computer generated and no signature is required.   maybank2u.com

@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Enhanced Bank Receipt Extractor - 98% Accuracy</title>
+    <style>
+      body { 
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif; 
+        margin: 2rem; 
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+      .container { max-width: 1200px; margin: 0 auto; }
+      .card { 
+        background: white;
+        border-radius: 16px; 
+        padding: 2rem; 
+        margin: 1rem 0;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        border: 1px solid #e5e7eb;
+      }
+      h1 { 
+        font-size: 2.5rem; 
+        margin-bottom: 1rem; 
+        color: #1f2937;
+        text-align: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      h2 { font-size: 1.5rem; margin: 1.5rem 0 1rem 0; color: #374151; }
+      h3 { font-size: 1.25rem; margin: 1rem 0 0.5rem 0; color: #4b5563; }
+      .subtitle { 
+        text-align: center; 
+        color: #6b7280; 
+        font-size: 1.1rem; 
+        margin-bottom: 2rem;
+      }
+      .row { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+      .row > * { flex: 1; min-width: 200px; }
+      .actions { margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+      button { 
+        padding: 0.75rem 1.5rem; 
+        border-radius: 12px; 
+        border: none; 
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white; 
+        cursor: pointer; 
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+      button:hover { 
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+      button:disabled { 
+        background: #9ca3af; 
+        cursor: not-allowed; 
+        transform: none;
+        box-shadow: none;
+      }
+      .secondary-btn {
+        background: white;
+        color: #667eea;
+        border: 2px solid #667eea;
+      }
+      .secondary-btn:hover {
+        background: #667eea;
+        color: white;
+      }
+      .status { 
+        margin-top: 1rem; 
+        color: #374151; 
+        font-size: 1rem; 
+        padding: 1rem;
+        border-radius: 8px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+      }
+      .status.success { background: #f0fdf4; border-color: #22c55e; color: #15803d; }
+      .status.error { background: #fef2f2; border-color: #ef4444; color: #b91c1c; }
+      .status.info { background: #eff6ff; border-color: #3b82f6; color: #1d4ed8; }
+      pre { 
+        background: #1e293b; 
+        color: #e2e8f0;
+        padding: 1.5rem; 
+        border-radius: 12px; 
+        overflow: auto; 
+        max-height: 400px; 
+        border: 1px solid #334155;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+      .result-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin: 1rem 0;
+      }
+      .result-item {
+        background: #f8fafc;
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+      }
+      .result-item .label {
+        font-weight: 600;
+        color: #4b5563;
+        margin-bottom: 0.25rem;
+      }
+      .result-item .value {
+        color: #1f2937;
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+      .confidence-high { color: #059669 !important; }
+      .confidence-medium { color: #d97706 !important; }
+      .confidence-low { color: #dc2626 !important; }
+      .accuracy-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-left: 1rem;
+      }
+      .accuracy-excellent { background: #dcfce7; color: #166534; }
+      .accuracy-good { background: #fef3c7; color: #92400e; }
+      .accuracy-needs-improvement { background: #fee2e2; color: #b91c1c; }
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+      .feature-card {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid #cbd5e1;
+      }
+      .feature-card h4 {
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+      }
+      .feature-card p {
+        color: #6b7280;
+        margin: 0;
+      }
+      footer {
+        text-align: center;
+        margin-top: 3rem;
+        color: #9ca3af;
+        font-size: 0.9rem;
+      }
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #f3f4f6;
+        border-top: 3px solid #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-left: 0.5rem;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .hidden { display: none; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1>Enhanced Bank Receipt Extractor</h1>
+        <p class="subtitle">98% Accuracy Target with Advanced ML & Pattern Recognition</p>
+        
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4>🎯 98% Accuracy Target</h4>
+            <p>Advanced pattern matching and ML validation for superior extraction accuracy</p>
+          </div>
+          <div class="feature-card">
+            <h4>🏦 All Malaysian Banks</h4>
+            <p>Comprehensive support for Maybank, CIMB, Public Bank, RHB, HSBC, UOB, and more</p>
+          </div>
+          <div class="feature-card">
+            <h4>🤖 Enhanced OCR</h4>
+            <p>Advanced preprocessing and text cleaning for optimal character recognition</p>
+          </div>
+          <div class="feature-card">
+            <h4>📊 ML Validation</h4>
+            <p>Machine learning models validate and enhance extraction results</p>
+          </div>
+        </div>
+
+        <h2>Upload Bank Receipt</h2>
+        <p>Upload a PDF or image (PNG/JPG) for enhanced extraction with comprehensive field detection.</p>
+        
+        <div class="row">
+          <input id="fileInput" type="file" accept="image/*,.pdf" />
+        </div>
+        
+        <div class="actions">
+          <button id="enhancedExtractBtn">Enhanced Extract (98% Target)</button>
+          <button id="standardExtractBtn" class="secondary-btn">Standard Extract</button>
+          <button id="trainModelsBtn" class="secondary-btn">Train Models</button>
+          <button id="runTestsBtn" class="secondary-btn">Run Comprehensive Tests</button>
+          <button id="resetBtn" type="button">Reset</button>
+        </div>
+        
+        <div id="status" class="status hidden"></div>
+        
+        <div id="resultsSection" class="hidden">
+          <h2>Extraction Results</h2>
+          <div class="result-grid">
+            <div class="result-item">
+              <div class="label">Bank</div>
+              <div class="value" id="bankName">-</div>
+            </div>
+            <div class="result-item">
+              <div class="label">Transaction ID</div>
+              <div class="value" id="transactionId">(not found)</div>
+            </div>
+            <div class="result-item">
+              <div class="label">Reference Number</div>
+              <div class="value" id="refValue">(not found)</div>
+            </div>
+            <div class="result-item">
+              <div class="label">DuitNow Reference</div>
+              <div class="value" id="duitnowRef">(not found)</div>
+            </div>
+            <div class="result-item">
+              <div class="label">Amount</div>
+              <div class="value" id="amountValue">(not found)</div>
+            </div>
+            <div class="result-item">
+              <div class="label">Date</div>
+              <div class="value" id="dateValue">(not found)</div>
+            </div>
+            <div class="result-item">
+              <div class="label">Confidence</div>
+              <div class="value" id="confidenceValue">-</div>
+            </div>
+            <div class="result-item">
+              <div class="label">Method</div>
+              <div class="value" id="methodValue">-</div>
+            </div>
+          </div>
+          
+          <h3>Raw JSON Response</h3>
+          <pre id="result"></pre>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <p>Enhanced Bank Receipt Extraction System - Powered by Advanced ML & Pattern Recognition</p>
+    </footer>
+
+    <script>
+      const $ = (sel) => document.querySelector(sel);
+      const fileInput = $('#fileInput');
+      const enhancedExtractBtn = $('#enhancedExtractBtn');
+      const standardExtractBtn = $('#standardExtractBtn');
+      const trainModelsBtn = $('#trainModelsBtn');
+      const runTestsBtn = $('#runTestsBtn');
+      const resetBtn = $('#resetBtn');
+      const statusEl = $('#status');
+      const resultEl = $('#result');
+      const resultsSection = $('#resultsSection');
+
+      function showStatus(message, type = 'info') {
+        statusEl.textContent = message;
+        statusEl.className = `status ${type}`;
+        statusEl.classList.remove('hidden');
+      }
+
+      function hideStatus() {
+        statusEl.classList.add('hidden');
+      }
+
+      function updateResults(data) {
+        resultsSection.classList.remove('hidden');
+        
+        // Determine which extraction method was used
+        const isEnhanced = data.accuracy_target === '98%' || data.method === 'enhanced_v2';
+        const extraction = isEnhanced ? data.enhanced_extraction : (data.extraction || data.fields || {});
+        
+        // Update display fields
+        const bank = data.bank?.name || extraction.bank_name || 'Unknown';
+        const transactionId = extraction.transaction_ids?.[0] || data.transaction_id || extraction.transaction_id || null;
+        const refNumber = extraction.reference_numbers?.[0] || extraction.reference_number || null;
+        const duitnowRef = extraction.duitnow_references?.[0] || extraction.duitnow_reference || null;
+        const amount = extraction.amounts?.[0] || extraction.amount || data.amount || null;
+        const date = extraction.dates?.[0] || extraction.date || data.date || null;
+        const confidence = data.confidence || extraction.confidence || 0;
+        const method = data.method || extraction.method || 'unknown';
+        
+        $('#bankName').textContent = bank;
+        $('#transactionId').textContent = transactionId || '(not found)';
+        $('#refValue').textContent = refNumber || '(not found)';
+        $('#duitnowRef').textContent = duitnowRef || '(not found)';
+        $('#amountValue').textContent = amount || '(not found)';
+        $('#dateValue').textContent = date || '(not found)';
+        
+        // Confidence styling
+        const confidenceEl = $('#confidenceValue');
+        confidenceEl.textContent = confidence ? `${(confidence * 100).toFixed(1)}%` : '-';
+        confidenceEl.className = 'value ' + (
+          confidence >= 0.9 ? 'confidence-high' :
+          confidence >= 0.7 ? 'confidence-medium' : 'confidence-low'
+        );
+        
+        $('#methodValue').textContent = method;
+        resultEl.textContent = JSON.stringify(data, null, 2);
+      }
+
+      resetBtn.addEventListener('click', () => {
+        fileInput.value = '';
+        hideStatus();
+        resultEl.textContent = '';
+        resultsSection.classList.add('hidden');
+      });
+
+      async function extractFile(endpoint, button) {
+        if (!fileInput.files || fileInput.files.length === 0) {
+          alert('Please select a file first.');
+          return;
+        }
+        
+        const file = fileInput.files[0];
+        const form = new FormData();
+        form.append('file', file);
+        
+        const originalText = button.innerHTML;
+        button.disabled = true;
+        button.innerHTML = originalText + ' <span class="loading"></span>';
+        
+        showStatus('Processing receipt with enhanced extraction...', 'info');
+        
+        try {
+          const resp = await fetch(endpoint, { method: 'POST', body: form });
+          const data = await resp.json();
+          
+          if (resp.ok) {
+            if (data.error) {
+              showStatus(`Error: ${data.error}`, 'error');
+            } else {
+              updateResults(data);
+              const confidence = data.confidence || 0;
+              const accuracyTarget = data.accuracy_target || 'Standard';
+              showStatus(
+                `Extraction completed! Confidence: ${(confidence * 100).toFixed(1)}% (Target: ${accuracyTarget})`,
+                confidence >= 0.9 ? 'success' : 'info'
+              );
+            }
+          } else {
+            showStatus(`Server error: ${data.detail || 'Unknown error'}`, 'error');
+          }
+        } catch (err) {
+          console.error(err);
+          showStatus('Network error during extraction.', 'error');
+        } finally {
+          button.disabled = false;
+          button.innerHTML = originalText;
+        }
+      }
+
+      enhancedExtractBtn.addEventListener('click', () => {
+        extractFile('/extract_enhanced', enhancedExtractBtn);
+      });
+
+      standardExtractBtn.addEventListener('click', () => {
+        extractFile('/extract', standardExtractBtn);
+      });
+
+      trainModelsBtn.addEventListener('click', async () => {
+        const originalText = trainModelsBtn.innerHTML;
+        trainModelsBtn.disabled = true;
+        trainModelsBtn.innerHTML = originalText + ' <span class="loading"></span>';
+        
+        showStatus('Training enhanced models for 98% accuracy... This may take several minutes.', 'info');
+        
+        try {
+          const resp = await fetch('/train_enhanced', { method: 'POST' });
+          const data = await resp.json();
+          
+          if (resp.ok) {
+            const accuracy = data.accuracy_achieved || 0;
+            const targetMet = data.target_met || false;
+            showStatus(
+              `Training completed! Accuracy achieved: ${(accuracy * 100).toFixed(1)}% ${targetMet ? '(Target Met!)' : '(Below Target)' }`,
+              targetMet ? 'success' : 'info'
+            );
+            resultEl.textContent = JSON.stringify(data, null, 2);
+            resultsSection.classList.remove('hidden');
+          } else {
+            showStatus(`Training error: ${data.error || 'Unknown error'}`, 'error');
+          }
+        } catch (err) {
+          console.error(err);
+          showStatus('Network error during training.', 'error');
+        } finally {
+          trainModelsBtn.disabled = false;
+          trainModelsBtn.innerHTML = originalText;
+        }
+      });
+
+      runTestsBtn.addEventListener('click', async () => {
+        const originalText = runTestsBtn.innerHTML;
+        runTestsBtn.disabled = true;
+        runTestsBtn.innerHTML = originalText + ' <span class="loading"></span>';
+        
+        showStatus('Running comprehensive tests for all Malaysian banks... This may take several minutes.', 'info');
+        
+        try {
+          const resp = await fetch('/test_comprehensive');
+          const data = await resp.json();
+          
+          if (resp.ok) {
+            const overallAccuracy = data.overall_accuracy || 0;
+            const targetMet = data.target_accuracy >= 0.98;
+            showStatus(
+              `Testing completed! Overall accuracy: ${(overallAccuracy * 100).toFixed(1)}% ${targetMet ? '(98% Target Met!)' : '(Below 98% Target)' }`,
+              targetMet ? 'success' : 'info'
+            );
+            updateResults(data);
+          } else {
+            showStatus(`Testing error: ${data.error || 'Unknown error'}`, 'error');
+          }
+        } catch (err) {
+          console.error(err);
+          showStatus('Network error during testing.', 'error');
+        } finally {
+          runTestsBtn.disabled = false;
+          runTestsBtn.innerHTML = originalText;
+        }
+      });
+    </script>
+  </body>
+</html>

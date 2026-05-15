@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dataset Builder — Bank Receipt OCR</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif; margin: 2rem; }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 1rem; }
+      h1, h2 { margin-top: 0; }
+      input[type="file"] { width: 100%; }
+      button { padding: .5rem 1rem; border-radius: 6px; border: 1px solid #1f2937; background: #111827; color: white; cursor: pointer; }
+      button:disabled { background: #6b7280; border-color: #6b7280; cursor: not-allowed; }
+      pre { background: #f8fafc; padding: 1rem; border-radius: 8px; overflow: auto; max-height: 300px; border: 1px solid #e5e7eb; }
+      label { display: block; font-size: .9rem; color: #374151; margin-top: .5rem; }
+      input[type="text"] { width: 100%; padding: .4rem .6rem; border: 1px solid #cbd5e1; border-radius: 6px; }
+      .row { display: flex; gap: .5rem; align-items: center; }
+    </style>
+  </head>
+  <body>
+    <h1>Build Training Dataset</h1>
+    <p>Upload multiple receipts (PDF or images) to create labeled dataset entries for future model training.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Bulk Upload (23 receipts)</h2>
+        <input id="bulkFiles" type="file" accept="image/*,.pdf" multiple />
+        <div class="row" style="margin-top:.75rem;">
+          <button id="uploadBulkBtn">Upload & Extract</button>
+          <button id="clearBtn">Clear</button>
+        </div>
+        <div id="bulkStatus" style="margin-top:.5rem; color:#374151;"></div>
+        <h3>Upload Results</h3>
+        <pre id="bulkResult"></pre>
+      </div>
+
+      <div class="card">
+        <h2>Dataset Summary</h2>
+        <div class="row">
+          <button id="refreshSummaryBtn">Refresh Summary</button>
+          <button id="ingestBtn" title="Process all files in local Receipts folder">Ingest Receipts Folder</button>
+        </div>
+        <pre id="summary"></pre>
+
+        <h3>Recent Items</h3>
+        <div class="row">
+          <button id="loadItemsBtn">Load Items</button>
+        </div>
+        <pre id="items"></pre>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1.5rem;">
+      <h2>Set Ground Truth (optional)</h2>
+      <p>Use this to correct bank name or transaction/reference numbers for an item ID.</p>
+      <label>Item ID</label>
+      <input id="gt_id" type="text" placeholder="e.g., d41d8cd98f00b204e9800998ecf8427e" />
+      <label>Bank Name</label>
+      <input id="gt_bank" type="text" placeholder="e.g., Maybank" />
+      <label>Reference Number</label>
+      <input id="gt_ref" type="text" />
+      <label>Transaction ID</label>
+      <input id="gt_txn" type="text" />
+      <label>Invoice Number</label>
+      <input id="gt_inv" type="text" />
+      <label>Amount</label>
+      <input id="gt_amt" type="text" placeholder="e.g., 123.45" />
+      <label>Date</label>
+      <input id="gt_date" type="text" placeholder="yyyy-mm-dd or dd/mm/yyyy" />
+      <div class="row" style="margin-top:.75rem;">
+        <button id="saveGtBtn">Save Ground Truth</button>
+      </div>
+      <div id="gtStatus" style="margin-top:.5rem; color:#374151;"></div>
+    </div>
+
+    <script>
+      const $ = sel => document.querySelector(sel);
+      const bulkFiles = $('#bulkFiles');
+      const uploadBulkBtn = $('#uploadBulkBtn');
+      const clearBtn = $('#clearBtn');
+      const bulkStatus = $('#bulkStatus');
+      const bulkResult = $('#bulkResult');
+      const refreshSummaryBtn = $('#refreshSummaryBtn');
+      const ingestBtn = $('#ingestBtn');
+      const summaryEl = $('#summary');
+      const loadItemsBtn = $('#loadItemsBtn');
+      const itemsEl = $('#items');
+      const saveGtBtn = $('#saveGtBtn');
+      const gtStatus = $('#gtStatus');
+      const gt_id = $('#gt_id');
+      const gt_bank = $('#gt_bank');
+      const gt_ref = $('#gt_ref');
+      const gt_txn = $('#gt_txn');
+      const gt_inv = $('#gt_inv');
+      const gt_amt = $('#gt_amt');
+      const gt_date = $('#gt_date');
+
+      clearBtn.addEventListener('click', () => {
+        bulkFiles.value = '';
+        bulkStatus.textContent = '';
+        bulkResult.textContent = '';
+      });
+
+      uploadBulkBtn.addEventListener('click', async () => {
+        if (!bulkFiles.files || bulkFiles.files.length === 0) {
+          alert('Please select files.');
+          return;
+        }
+        const form = new FormData();
+        for (const f of bulkFiles.files) form.append('files', f);
+        uploadBulkBtn.disabled = true;
+        bulkStatus.textContent = 'Uploading and extracting...';
+        bulkResult.textContent = '';
+        try {
+          const resp = await fetch('/upload_bulk', { method: 'POST', body: form });
+          const json = await resp.json();
+          bulkResult.textContent = JSON.stringify(json, null, 2);
+          bulkStatus.textContent = `Uploaded ${json.uploaded}, Errors: ${json.errors?.length || 0}`;
+        } catch (err) {
+          console.error(err);
+          bulkStatus.textContent = 'Error during upload.';
+        } finally {
+          uploadBulkBtn.disabled = false;
+        }
+      });
+
+      async function refreshSummary() {
+        try {
+          const resp = await fetch('/dataset/summary');
+          const json = await resp.json();
+          summaryEl.textContent = JSON.stringify(json, null, 2);
+        } catch (err) { console.error(err); }
+      }
+      refreshSummaryBtn.addEventListener('click', refreshSummary);
+      // Auto-load summary on page open
+      refreshSummary();
+
+      loadItemsBtn.addEventListener('click', async () => {
+        try {
+          const resp = await fetch('/dataset/items?limit=100');
+          const json = await resp.json();
+          itemsEl.textContent = JSON.stringify(json, null, 2);
+        } catch (err) { console.error(err); }
+      });
+
+      ingestBtn.addEventListener('click', async () => {
+        ingestBtn.disabled = true;
+        summaryEl.textContent = 'Ingesting Receipts...';
+        try {
+          // Optional: path param if you use a custom folder, default is "Receipts"
+          const resp = await fetch('/ingest_receipts', { method: 'POST' });
+          const json = await resp.json();
+          summaryEl.textContent = 'Ingested ' + json.processed + ' items. Errors: ' + (json.errors?.length || 0);
+          await refreshSummary();
+        } catch (err) {
+          console.error(err);
+          summaryEl.textContent = 'Error during ingestion.';
+        } finally {
+          ingestBtn.disabled = false;
+        }
+      });
+
+      saveGtBtn.addEventListener('click', async () => {
+        const payload = {
+          id: gt_id.value.trim(),
+          bank_name: gt_bank.value.trim() || null,
+          reference_number: gt_ref.value.trim() || null,
+          transaction_id: gt_txn.value.trim() || null,
+          invoice_number: gt_inv.value.trim() || null,
+          amount: gt_amt.value.trim() || null,
+          date: gt_date.value.trim() || null,
+        };
+        gtStatus.textContent = 'Saving...';
+        try {
+          const resp = await fetch('/dataset/update', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const json = await resp.json();
+          if (json.updated) {
+            gtStatus.textContent = 'Saved.';
+            await refreshSummary();
+          } else {
+            gtStatus.textContent = 'Error: ' + (json.error || 'Unknown');
+          }
+        } catch (err) {
+          console.error(err);
+          gtStatus.textContent = 'Error saving.';
+        }
+      });
+    </script>
+  </body>
+  </html>

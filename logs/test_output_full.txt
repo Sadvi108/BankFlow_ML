@@ -1,0 +1,720 @@
+INFO:app.enhanced_ocr_pipeline:PDF text extraction yielded insufficient text, falling back to OCR
+INFO:app.enhanced_ocr_pipeline:Using OCR for text extraction
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1191, 1684, 3)
+WARNING:app.ocr_pipeline:Auto-rotation failed: (1, 'Estimating resolution as 115 Warning. Invalid resolution 0 dpi. Using 70 instead. Too few characters. Skipping this page Error during processing.')
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 4 words, confidence: 95.0%
+INFO:app.enhanced_ocr_pipeline:No IDs found with standard OCR, attempting rotation fallback
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1191, 1684, 3)
+INFO:app.ocr_pipeline:Auto-rotated image by 270° (confidence: 0.64)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 8 words, confidence: 95.0%
+WARNING:app.ocr_pipeline:Auto-rotation failed: (1, 'Estimating resolution as 115 Warning. Invalid resolution 0 dpi. Using 70 instead. Too few characters. Skipping this page Error during processing.')
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 13 words, confidence: 87.8%
+INFO:app.ocr_pipeline:Auto-rotated image by 90° (confidence: 0.69)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 8 words, confidence: 95.0%
+INFO:app.enhanced_ocr_pipeline:Rotation fallback yielded no new IDs
+INFO:app.enhanced_ocr_pipeline:PDF text extraction yielded insufficient text, falling back to OCR
+INFO:app.enhanced_ocr_pipeline:Using OCR for text extraction
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 2, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 3, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 52 words, confidence: 83.6%
+INFO:app.ocr_pipeline:Auto-rotated image by 90° (confidence: 1.52)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 20 words, confidence: 78.0%
+WARNING:app.ocr_pipeline:Auto-rotation failed: (1, 'Estimating resolution as 205 Warning. Invalid resolution 0 dpi. Using 70 instead. Too few characters. Skipping this page Error during processing.')
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 3 words, confidence: 95.0%
+INFO:app.enhanced_ocr_pipeline:No IDs found with standard OCR, attempting rotation fallback
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 2, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 3, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Auto-rotated image by 90° (confidence: 7.75)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 42 words, confidence: 77.3%
+INFO:app.ocr_pipeline:Auto-rotated image by 270° (confidence: 1.31)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 30 words, confidence: 73.2%
+WARNING:app.ocr_pipeline:Auto-rotation failed: (1, 'Estimating resolution as 122 Warning. Invalid resolution 0 dpi. Using 70 instead. Too few characters. Skipping this page Error during processing.')
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 3 words, confidence: 95.0%
+INFO:app.ocr_pipeline:Auto-rotated image by 180° (confidence: 8.06)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 52 words, confidence: 83.6%
+INFO:app.ocr_pipeline:Auto-rotated image by 270° (confidence: 1.52)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 20 words, confidence: 78.0%
+WARNING:app.ocr_pipeline:Auto-rotation failed: (1, 'Estimating resolution as 205 Warning. Invalid resolution 0 dpi. Using 70 instead. Too few characters. Skipping this page Error during processing.')
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 13 words, confidence: 95.0%
+INFO:app.ocr_pipeline:Auto-rotated image by 270° (confidence: 7.75)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 42 words, confidence: 77.3%
+INFO:app.ocr_pipeline:Auto-rotated image by 90° (confidence: 1.31)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 30 words, confidence: 73.2%
+WARNING:app.ocr_pipeline:Auto-rotation failed: (1, 'Estimating resolution as 122 Warning. Invalid resolution 0 dpi. Using 70 instead. Too few characters. Skipping this page Error during processing.')
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 12 words, confidence: 95.0%
+INFO:app.enhanced_ocr_pipeline:Rotation fallback yielded no new IDs
+INFO:app.enhanced_ocr_pipeline:PDF text extraction successful: 2179 characters, IDs found
+INFO:app.enhanced_ocr_pipeline:PDF text extraction successful: 2464 characters, IDs found
+INFO:app.enhanced_ocr_pipeline:PDF text extraction yielded insufficient text, falling back to OCR
+INFO:app.enhanced_ocr_pipeline:Using OCR for text extraction
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1684, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 2, shape: (1684, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 3, shape: (1684, 1191, 3)
+INFO:app.ocr_pipeline:Auto-rotated image by 180° (confidence: 4.43)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 52 words, confidence: 56.8%
+INFO:app.ocr_pipeline:Auto-rotated image by 270° (confidence: 5.41)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 80 words, confidence: 74.7%
+INFO:app.ocr_pipeline:Auto-rotated image by 90° (confidence: 15.34)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 57 words, confidence: 44.6%
+INFO:app.enhanced_ocr_pipeline:PDF text extraction yielded insufficient text, falling back to OCR
+INFO:app.enhanced_ocr_pipeline:Using OCR for text extraction
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 2, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 3, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 29 words, confidence: 79.9%
+WARNING:app.ocr_pipeline:Auto-rotation failed: (1, 'Estimating resolution as 121 Warning. Invalid resolution 0 dpi. Using 70 instead. Too few characters. Skipping this page Error during processing.')
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 17 words, confidence: 83.9%
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 118 words, confidence: 72.2%
+INFO:app.enhanced_ocr_pipeline:PDF text extraction successful: 704 characters, IDs found
+INFO:app.enhanced_ocr_pipeline:PDF text extraction yielded insufficient text, falling back to OCR
+INFO:app.enhanced_ocr_pipeline:Using OCR for text extraction
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1584, 1224, 3)
+INFO:app.ocr_pipeline:Auto-rotated image by 180° (confidence: 10.55)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 29 words, confidence: 77.6%
+INFO:app.enhanced_ocr_pipeline:No IDs found with standard OCR, attempting rotation fallback
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1584, 1224, 3)
+INFO:app.ocr_pipeline:Auto-rotated image by 90° (confidence: 9.77)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 39 words, confidence: 73.5%
+INFO:app.ocr_pipeline:Auto-rotated image by 180° (confidence: 10.77)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 42 words, confidence: 66.5%
+INFO:app.ocr_pipeline:Auto-rotated image by 270° (confidence: 10.62)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 53 words, confidence: 71.8%
+INFO:app.enhanced_ocr_pipeline:Rotation fallback yielded no new IDs
+INFO:app.enhanced_ocr_pipeline:PDF text extraction successful: 586 characters, IDs found
+INFO:app.enhanced_ocr_pipeline:PDF text extraction successful: 782 characters, IDs found
+INFO:app.enhanced_ocr_pipeline:PDF text extraction successful: 2236 characters, IDs found
+INFO:app.enhanced_ocr_pipeline:PDF text extraction yielded insufficient text, falling back to OCR
+INFO:app.enhanced_ocr_pipeline:Using OCR for text extraction
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Auto-rotated image by 180° (confidence: 12.04)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 71 words, confidence: 45.1%
+INFO:app.enhanced_ocr_pipeline:No IDs found with standard OCR, attempting rotation fallback
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 109 words, confidence: 86.4%
+INFO:app.enhanced_ocr_pipeline:Found IDs with 90° rotation: ['2025103IMBBEMYKLOIOOCBO00', 'MYCN2510319836082', 'RPC25103101000009556', 'ONE12511727672']
+INFO:app.enhanced_ocr_pipeline:PDF text extraction yielded insufficient text, falling back to OCR
+INFO:app.enhanced_ocr_pipeline:Using OCR for text extraction
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1677, 1189, 3)
+INFO:app.ocr_pipeline:Auto-rotated image by 270° (confidence: 13.54)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 50 words, confidence: 82.3%
+INFO:app.enhanced_ocr_pipeline:PDF text extraction yielded insufficient text, falling back to OCR
+INFO:app.enhanced_ocr_pipeline:Using OCR for text extraction
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1584, 1224, 3)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 59 words, confidence: 86.5%
+INFO:app.enhanced_ocr_pipeline:No IDs found with standard OCR, attempting rotation fallback
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1584, 1224, 3)
+INFO:app.ocr_pipeline:Auto-rotated image by 90° (confidence: 15.69)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 51 words, confidence: 84.2%
+INFO:app.enhanced_ocr_pipeline:Found IDs with 90° rotation: ['7901784116']
+INFO:app.enhanced_ocr_pipeline:PDF text extraction successful: 375 characters, IDs found
+INFO:app.enhanced_ocr_pipeline:PDF text extraction successful: 545 characters, IDs found
+INFO:app.enhanced_ocr_pipeline:PDF text extraction yielded insufficient text, falling back to OCR
+INFO:app.enhanced_ocr_pipeline:Using OCR for text extraction
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 2, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 3, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 4, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 17 words, confidence: 80.2%
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 20 words, confidence: 86.2%
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 33 words, confidence: 82.1%
+INFO:app.ocr_pipeline:Auto-rotated image by 180° (confidence: 5.9)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 23 words, confidence: 72.3%
+INFO:app.enhanced_ocr_pipeline:No IDs found with standard OCR, attempting rotation fallback
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 2, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 3, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Processed PDF page 4, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Auto-rotated image by 90° (confidence: 4.86)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 10 words, confidence: 61.5%
+INFO:app.ocr_pipeline:Auto-rotated image by 180° (confidence: 7.1)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 11 words, confidence: 56.0%
+INFO:app.ocr_pipeline:Auto-rotated image by 90° (confidence: 7.31)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 12 words, confidence: 66.1%
+INFO:app.ocr_pipeline:Auto-rotated image by 90° (confidence: 7.07)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 21 words, confidence: 65.7%
+INFO:app.ocr_pipeline:Auto-rotated image by 180° (confidence: 6.7)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 17 words, confidence: 80.2%
+INFO:app.ocr_pipeline:Auto-rotated image by 180° (confidence: 7.0)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 20 words, confidence: 86.2%
+INFO:app.ocr_pipeline:Auto-rotated image by 180° (confidence: 6.5)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 33 words, confidence: 82.1%
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 23 words, confidence: 72.3%
+INFO:app.ocr_pipeline:Auto-rotated image by 270° (confidence: 4.86)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 10 words, confidence: 61.5%
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 11 words, confidence: 56.0%
+INFO:app.ocr_pipeline:Auto-rotated image by 270° (confidence: 7.31)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 12 words, confidence: 66.1%
+INFO:app.ocr_pipeline:Auto-rotated image by 270° (confidence: 7.07)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 21 words, confidence: 65.7%
+INFO:app.enhanced_ocr_pipeline:Rotation fallback yielded no new IDs
+INFO:app.enhanced_ocr_pipeline:PDF text extraction successful: 893 characters, IDs found
+INFO:app.enhanced_ocr_pipeline:PDF text extraction yielded insufficient text, falling back to OCR
+INFO:app.enhanced_ocr_pipeline:Using OCR for text extraction
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1685, 1191, 3)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 35 words, confidence: 84.1%
+INFO:app.enhanced_ocr_pipeline:PDF text extraction successful: 1201 characters, IDs found
+INFO:app.enhanced_ocr_pipeline:PDF text extraction successful: 2792 characters, IDs found
+INFO:app.enhanced_ocr_pipeline:PDF text extraction yielded insufficient text, falling back to OCR
+INFO:app.enhanced_ocr_pipeline:Using OCR for text extraction
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1684, 1190, 3)
+INFO:app.ocr_pipeline:Processed PDF page 2, shape: (1684, 1190, 3)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 9 words, confidence: 78.2%
+INFO:app.ocr_pipeline:Auto-rotated image by 180° (confidence: 2.02)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 22 words, confidence: 75.4%
+INFO:app.enhanced_ocr_pipeline:No IDs found with standard OCR, attempting rotation fallback
+INFO:app.ocr_pipeline:Processed PDF page 1, shape: (1684, 1190, 3)
+INFO:app.ocr_pipeline:Processed PDF page 2, shape: (1684, 1190, 3)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 16 words, confidence: 81.1%
+INFO:app.ocr_pipeline:Auto-rotated image by 90° (confidence: 3.32)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 12 words, confidence: 92.2%
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 19 words, confidence: 63.3%
+INFO:app.ocr_pipeline:Auto-rotated image by 270° (confidence: 1.64)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 16 words, confidence: 63.9%
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 7 words, confidence: 77.9%
+INFO:app.ocr_pipeline:Auto-rotated image by 270° (confidence: 3.31)
+INFO:app.ocr_pipeline:Contrast enhanced with CLAHE
+INFO:app.ocr_pipeline:Image denoised
+INFO:app.ocr_pipeline:Image sharpened
+INFO:app.ocr_pipeline:Adaptive thresholding applied
+INFO:app.ocr_pipeline:Morphological operations completed
+INFO:app.ocr_pipeline:Image preprocessing completed successfully
+INFO:app.ocr_pipeline:OCR completed: 18 words, confidence: 89.2%
+INFO:app.enhanced_ocr_pipeline:Rotation fallback yielded no new IDs
+
+================================================================================
+TESTING ENHANCED EXTRACTION ON 22 RECEIPTS
+================================================================================
+
+38c11069-2dc5-4e91-a37d-25cbc8518f68.pdf
+--------------------------------------------------------------------------------
+  Method: unknown
+  Confidence: 95.00%
+  Text Length: 21 chars
+  âŒ No IDs found (Bank: Unknown)
+
+AFFIN BANK -CUSTOMER REF.pdf
+--------------------------------------------------------------------------------
+  Method: unknown
+  Confidence: 85.54%
+  Text Length: 332 chars
+  âŒ No IDs found (Bank: RHB)
+
+AMBANK - CUSTOMER REF.pdf
+--------------------------------------------------------------------------------
+  Method: pdf_text_extraction
+  Confidence: 95.00%
+  Text Length: 2179 chars
+  âœ… Bank: RHB
+  âœ… IDs: ['DTF20251031001662', 'MUL20251031000497', '8881059256353', '21246660001343', 'SCC12511726101', 'CXDU1910602', 'SITPUPK170684G1']
+
+CIMB - DIFF REF FRM STATEMENT.pdf
+--------------------------------------------------------------------------------
+  Method: pdf_text_extraction
+  Confidence: 95.00%
+  Text Length: 2464 chars
+  âœ… Bank: CIMB
+  âœ… IDs: ['706803-D', '202510310309176178', 'WI251000047']
+
+CIMB -INV REF.pdf
+--------------------------------------------------------------------------------
+  Method: ocr
+  Confidence: 58.70%
+  Text Length: 922 chars
+  âœ… Bank: Unknown
+  âœ… IDs: ['20259310309000839']
+
+CITIBANK - CUST REF.pdf
+--------------------------------------------------------------------------------
+  Method: ocr
+  Confidence: 78.69%
+  Text Length: 744 chars
+  âœ… Bank: RHB
+  âœ… IDs: ['YML12519724138', 'IAL12511724064']
+
+DUITNOW - INV REF.pdf
+--------------------------------------------------------------------------------
+  Method: pdf_text_extraction
+  Confidence: 95.00%
+  Text Length: 704 chars
+  âœ… Bank: DuitNow
+  âœ… IDs: ['21246660001343', 'ONE12511727163', '2025103103', '202510310309084157']
+
+DuitNow_Transaction_Report - INVOICE.pdf
+--------------------------------------------------------------------------------
+  Method: unknown
+  Confidence: 77.55%
+  Text Length: 102 chars
+  âŒ No IDs found (Bank: Unknown)
+
+HONG LEONG BANK - REF INV.pdf
+--------------------------------------------------------------------------------
+  Method: pdf_text_extraction
+  Confidence: 95.00%
+  Text Length: 586 chars
+  âœ… Bank: DuitNow
+  âœ… IDs: ['20251031HLBBMYKL010ORB893', 'XXXXXXXXXX1343', 'SCC12511727263']
+
+HSBC - REF NAME.pdf
+--------------------------------------------------------------------------------
+  Method: pdf_text_extraction
+  Confidence: 95.00%
+  Text Length: 782 chars
+  âœ… Bank: RHB
+  âœ… IDs: ['17797AK00WM5', '21246660001343', 'APPV026816', 'CSE22510561018']
+
+HSBC - REF- INV NUMBER.pdf
+--------------------------------------------------------------------------------
+  Method: pdf_text_extraction
+  Confidence: 95.00%
+  Text Length: 2236 chars
+  âœ… Bank: HSBC
+  âœ… IDs: ['A2MZ7DTE6DPR', '20267AL0040J', 'PPK2251011462', 'NAM12511723210', 'SMPK225201643']
+
+MAYBANK - BANK REF.pdf
+--------------------------------------------------------------------------------
+  Method: ocr_rotated_90
+  Confidence: 86.43%
+  Text Length: 756 chars
+  âœ… Bank: DuitNow
+  âœ… IDs: ['2025103IMBBEMYKLOIOOCBO00', 'MYCN2510319836082', 'RPC25103101000009556', 'ONE12511727672']
+
+MAYBANK - BOTH REF.pdf
+--------------------------------------------------------------------------------
+  Method: ocr
+  Confidence: 82.32%
+  Text Length: 352 chars
+  âœ… Bank: RHB
+  âœ… IDs: ['APS12511723202']
+
+MAYBANK - CUSTOMER REF.pdf
+--------------------------------------------------------------------------------
+  Method: ocr_rotated_90
+  Confidence: 84.20%
+  Text Length: 355 chars
+  âœ… Bank: DuitNow
+  âœ… IDs: ['7901784116']
+
+MAYBANK - REF.pdf
+--------------------------------------------------------------------------------
+  Method: pdf_text_extraction
+  Confidence: 95.00%
+  Text Length: 375 chars
+  âœ… Bank: RHB
+  âœ… IDs: ['7901990048', '21246660001343', 'MXC12511726684']
+
+MAYBANK PERSONAL - INVOICE NUM.pdf
+--------------------------------------------------------------------------------
+  Method: pdf_text_extraction
+  Confidence: 95.00%
+  Text Length: 545 chars
+  âœ… Bank: Maybank
+  âœ… IDs: ['22112244', 'KKMMTT1122551111772211332']
+
+PUBLIC BANK - INVOICE.pdf
+--------------------------------------------------------------------------------
+  Method: unknown
+  Confidence: 80.19%
+  Text Length: 361 chars
+  âŒ No IDs found (Bank: Unknown)
+
+PUBLIC BANK -PERSONAL INVOICE NUM.pdf
+--------------------------------------------------------------------------------
+  Method: pdf_text_extraction
+  Confidence: 95.00%
+  Text Length: 893 chars
+  âœ… Bank: DuitNow
+  âœ… IDs: ['20251103PBBEMYKL010ORB144', 'KMT12511727962']
+
+RHB - CUSTOMER REF.pdf
+--------------------------------------------------------------------------------
+  Method: ocr
+  Confidence: 84.06%
+  Text Length: 198 chars
+  âœ… Bank: RHB
+  âœ… IDs: ['WHS12511799']
+
+SCB - INV REF.pdf
+--------------------------------------------------------------------------------
+  Method: pdf_text_extraction
+  Confidence: 95.00%
+  Text Length: 1201 chars
+  âœ… Bank: Standard Chartered
+  âœ… IDs: ['MY00150Q0323515', 'SB25962510295135', 'S2504677217']
+
+SCB -BANK REF.pdf
+--------------------------------------------------------------------------------
+  Method: pdf_text_extraction
+  Confidence: 95.00%
+  Text Length: 2792 chars
+  âœ… Bank: RHB
+  âœ… IDs: ['R0582704', 'MY2OL2510310268M', '25103114NF880634745422000', 'D0069493', 'WHS12511722921', 'SCC12511722913', 'WHS12511721675', 'WHS12511723171', 'WHS12511723532', 'WHS12511723531', 'WHS12511723530', 'WHS12511723529', 'WHS12511723528', 'WHS12511723173', 'WHS12511723174', 'WHS12511723175', 'WHS12511723177']
+
+UOB- INV REF.pdf
+--------------------------------------------------------------------------------
+  Method: unknown
+  Confidence: 76.79%
+  Text Length: 124 chars
+  âŒ No IDs found (Bank: Unknown)
+
+================================================================================
+SUMMARY
+================================================================================
+âŒ 38c11069-2dc5-4e91-a37d-25cbc8518f68.pdf: No IDs
+âŒ AFFIN BANK -CUSTOMER REF.pdf: No IDs
+âœ… AMBANK - CUSTOMER REF.pdf: ['DTF20251031001662', 'MUL20251031000497', '8881059256353', '21246660001343', 'SCC12511726101', 'CXDU1910602', 'SITPUPK170684G1']
+âœ… CIMB - DIFF REF FRM STATEMENT.pdf: ['706803-D', '202510310309176178', 'WI251000047']
+âœ… CIMB -INV REF.pdf: ['20259310309000839']
+âœ… CITIBANK - CUST REF.pdf: ['YML12519724138', 'IAL12511724064']
+âœ… DUITNOW - INV REF.pdf: ['21246660001343', 'ONE12511727163', '2025103103', '202510310309084157']
+âŒ DuitNow_Transaction_Report - INVOICE.pdf: No IDs
+âœ… HONG LEONG BANK - REF INV.pdf: ['20251031HLBBMYKL010ORB893', 'XXXXXXXXXX1343', 'SCC12511727263']
+âœ… HSBC - REF NAME.pdf: ['17797AK00WM5', '21246660001343', 'APPV026816', 'CSE22510561018']
+âœ… HSBC - REF- INV NUMBER.pdf: ['A2MZ7DTE6DPR', '20267AL0040J', 'PPK2251011462', 'NAM12511723210', 'SMPK225201643']
+âœ… MAYBANK - BANK REF.pdf: ['2025103IMBBEMYKLOIOOCBO00', 'MYCN2510319836082', 'RPC25103101000009556', 'ONE12511727672']
+âœ… MAYBANK - BOTH REF.pdf: ['APS12511723202']
+âœ… MAYBANK - CUSTOMER REF.pdf: ['7901784116']
+âœ… MAYBANK - REF.pdf: ['7901990048', '21246660001343', 'MXC12511726684']
+âœ… MAYBANK PERSONAL - INVOICE NUM.pdf: ['22112244', 'KKMMTT1122551111772211332']
+âŒ PUBLIC BANK - INVOICE.pdf: No IDs
+âœ… PUBLIC BANK -PERSONAL INVOICE NUM.pdf: ['20251103PBBEMYKL010ORB144', 'KMT12511727962']
+âœ… RHB - CUSTOMER REF.pdf: ['WHS12511799']
+âœ… SCB - INV REF.pdf: ['MY00150Q0323515', 'SB25962510295135', 'S2504677217']
+âœ… SCB -BANK REF.pdf: ['R0582704', 'MY2OL2510310268M', '25103114NF880634745422000', 'D0069493', 'WHS12511722921', 'SCC12511722913', 'WHS12511721675', 'WHS12511723171', 'WHS12511723532', 'WHS12511723531', 'WHS12511723530', 'WHS12511723529', 'WHS12511723528', 'WHS12511723173', 'WHS12511723174', 'WHS12511723175', 'WHS12511723177']
+âŒ UOB- INV REF.pdf: No IDs
+
+================================================================================
+Success Rate: 17/22 (77.3%)
+Improvement from baseline: 10% -> 77.3%
+================================================================================

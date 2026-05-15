@@ -1,0 +1,28 @@
+Sending Receipts/9d459d0f-467c-46ab-a8c7-d80a425d39c9_DnD CONTROL - EMC12511748202.pdf to http://localhost:8081/extract...
+
+API Response:
+{
+  "success": true,
+  "bank": "DuitNow",
+  "transaction_ids": [
+    "EMC12511748202",
+    "MY02202511200294789",
+    "25324000680",
+    "40001189646",
+    "100403688054"
+  ],
+  "all_ids": [
+    "EMC12511748202",
+    "MY02202511200294789",
+    "25324000680",
+    "40001189646",
+    "100403688054"
+  ],
+  "amount": "10.60",
+  "date": "11/20 15",
+  "confidence": 95.0,
+  "method": "pdf_text_extraction",
+  "text_preview": "=== PAGE 1 ===\nRequest ID: 25324000680\nPrinted On: 20 Nov 2025 15:13 GMT+8\nRequested by: C1234\n\u8d22\u52a1\u4ea4\u6613\u7535"
+}
+
+✅ SUCCESS: Found expected ID EMC12511748202

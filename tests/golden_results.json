@@ -1,0 +1,917 @@
+{
+  "total": 33,
+  "passed": 27,
+  "failed": 6,
+  "accuracy": 81.81818181818183,
+  "results": [
+    {
+      "filename": "3243781e-77dd-4e74-a1f3-b1ee94bc43c3_DDCONTKUL1.pdf",
+      "success": true,
+      "expected": "MYGP251111790268",
+      "actual": "MYGP251111790268",
+      "bank": "RHB",
+      "all_ids": [
+        {
+          "id": "MYGP251111790268",
+          "score": 130
+        },
+        {
+          "id": "SI25100155",
+          "score": 130
+        },
+        {
+          "id": "MYGP251111790268\nNOTIFY",
+          "score": 130
+        },
+        {
+          "id": "KMT12511731590FKMT12511731591F",
+          "score": 130
+        },
+        {
+          "id": "KMT12511731618FKMT12511731648F",
+          "score": 130
+        }
+      ]
+    },
+    {
+      "filename": "38c11069-2dc5-4e91-a37d-25cbc8518f68.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "202511030309528104",
+      "bank": "CIMB",
+      "all_ids": [
+        {
+          "id": "202511030309528104",
+          "score": 140
+        },
+        {
+          "id": "SS29R24Q",
+          "score": 130
+        },
+        {
+          "id": "MASIA9763",
+          "score": 130
+        },
+        {
+          "id": "212466600",
+          "score": 100
+        },
+        {
+          "id": "8002120555",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "470d7184-a47c-4c29-bb2d-4bea83576eb5_11739919 payment slip .pdf",
+      "success": false,
+      "expected": "111111117777333399999999111199",
+      "actual": "200701029411",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "200701029411",
+          "score": 140
+        },
+        {
+          "id": "577931865M",
+          "score": 130
+        },
+        {
+          "id": "7931865M",
+          "score": 130
+        },
+        {
+          "id": "11739919",
+          "score": 100
+        },
+        {
+          "id": "196001000142",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "4e872411-2964-403c-b304-75712a1dfcad_DND - INV NSA12511748043 (TXI) - RM 10.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "202511200CBCMYKL0100CB081",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "202511200CBCMYKL0100CB081",
+          "score": 170
+        },
+        {
+          "id": "202511200CBCMYKL0100CB08169941",
+          "score": 170
+        },
+        {
+          "id": "MYDN251120994027",
+          "score": 130
+        },
+        {
+          "id": "NSA12511748043",
+          "score": 130
+        },
+        {
+          "id": "7051369866",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "584ab260-7a1d-4951-90db-b09e8bfc1ec9_QPV 0253 11 D D CONTROL.pdf",
+      "success": true,
+      "expected": "202511070310433039",
+      "actual": "202511070310433039",
+      "bank": "RHB",
+      "all_ids": [
+        {
+          "id": "202511070310433039",
+          "score": 140
+        },
+        {
+          "id": "QPK251174696",
+          "score": 130
+        },
+        {
+          "id": "21246660001343",
+          "score": 100
+        },
+        {
+          "id": "8002441094",
+          "score": 100
+        },
+        {
+          "id": "251174696",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "59d288ea-a359-4117-97ec-801bf21b680f_20250912)\u00a0DnD\u00a0PAYMENT\u00a0SLIP.PDF.pdf",
+      "success": false,
+      "expected": "40000934639",
+      "actual": "MY02202509120000206771",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "MY02202509120000206771",
+          "score": 130
+        },
+        {
+          "id": "ACCT\n100000402818520",
+          "score": 130
+        },
+        {
+          "id": "25255000974",
+          "score": 100
+        },
+        {
+          "id": "40000934639",
+          "score": 100
+        },
+        {
+          "id": "100000402818520",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "98c61712-9ceb-43c2-b83f-b25a154a3a83_dnd 10.60.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "2511110268788548\nRECIPIENT",
+      "bank": "Public Bank",
+      "all_ids": [
+        {
+          "id": "2511110268788548\nRECIPIENT",
+          "score": 160
+        },
+        {
+          "id": "1AL12511738527",
+          "score": 160
+        },
+        {
+          "id": "2511110268788548",
+          "score": 100
+        },
+        {
+          "id": "10171125",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "9d459d0f-467c-46ab-a8c7-d80a425d39c9_DnD CONTROL - EMC12511748202.pdf",
+      "success": false,
+      "expected": "40001189646",
+      "actual": "MY02202511200000294789",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "MY02202511200000294789",
+          "score": 130
+        },
+        {
+          "id": "EMC12511748202",
+          "score": 130
+        },
+        {
+          "id": "ACCT\n100000403688054",
+          "score": 130
+        },
+        {
+          "id": "25324000680",
+          "score": 100
+        },
+        {
+          "id": "40001189646",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "AFFIN BANK -CUSTOMER REF.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "1G251031263175",
+      "bank": "RHB",
+      "all_ids": [
+        {
+          "id": "1G251031263175",
+          "score": 130
+        },
+        {
+          "id": "GEMILANG1",
+          "score": 130
+        },
+        {
+          "id": "ERENCE\n11M20",
+          "score": 130
+        },
+        {
+          "id": "100070022028",
+          "score": 100
+        },
+        {
+          "id": "21246660001343",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "AMBANK - CUSTOMER REF.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "DTF20251031001662",
+      "bank": "RHB",
+      "all_ids": [
+        {
+          "id": "DTF20251031001662",
+          "score": 130
+        },
+        {
+          "id": "MUL20251031000497",
+          "score": 130
+        },
+        {
+          "id": "SCC12511726101",
+          "score": 130
+        },
+        {
+          "id": "DTF20251031001662\nMULTIPLE",
+          "score": 130
+        },
+        {
+          "id": "SITPUPK170684G1",
+          "score": 130
+        }
+      ]
+    },
+    {
+      "filename": "CIMB - DIFF REF FRM STATEMENT.pdf",
+      "success": true,
+      "expected": "202510310309176178",
+      "actual": "202510310309176178",
+      "bank": "CIMB",
+      "all_ids": [
+        {
+          "id": "202510310309176178",
+          "score": 140
+        },
+        {
+          "id": "WI251000047",
+          "score": 130
+        }
+      ]
+    },
+    {
+      "filename": "CIMB -INV REF.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "202510310309060639",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "202510310309060639",
+          "score": 140
+        },
+        {
+          "id": "LYSPV2510-0246",
+          "score": 130
+        },
+        {
+          "id": "B10-2403-32000966",
+          "score": 130
+        },
+        {
+          "id": "LYSMARKETING95",
+          "score": 130
+        },
+        {
+          "id": "CSLU6120460",
+          "score": 130
+        }
+      ]
+    },
+    {
+      "filename": "CITIBANK - CUST REF.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "30350SG74E4",
+      "bank": "RHB",
+      "all_ids": [
+        {
+          "id": "30350SG74E4",
+          "score": 130
+        },
+        {
+          "id": "50SG74E4",
+          "score": 130
+        },
+        {
+          "id": "YML12511724138",
+          "score": 130
+        },
+        {
+          "id": "14L12511724064",
+          "score": 130
+        },
+        {
+          "id": "2-12466-6000134-3",
+          "score": 130
+        }
+      ]
+    },
+    {
+      "filename": "CTB - BANK REF.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "31550SV3IMM",
+      "bank": "Citibank",
+      "all_ids": [
+        {
+          "id": "31550SV3IMM",
+          "score": 130
+        },
+        {
+          "id": "SNKO323251000005\nPAYMENT",
+          "score": 130
+        },
+        {
+          "id": "RCL12511734455",
+          "score": 130
+        },
+        {
+          "id": "NGBCB25045622",
+          "score": 130
+        },
+        {
+          "id": "RCL12511734456",
+          "score": 130
+        }
+      ]
+    },
+    {
+      "filename": "DUITNOW - INV REF.pdf",
+      "success": true,
+      "expected": "202510310309084157",
+      "actual": "202510310309084157",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "202510310309084157",
+          "score": 140
+        },
+        {
+          "id": "ONE12511727163",
+          "score": 130
+        },
+        {
+          "id": "TCNU3882103",
+          "score": 130
+        },
+        {
+          "id": "2025103103",
+          "score": 100
+        },
+        {
+          "id": "21246660001343",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "DuitNow_Transaction_Report - INVOICE.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "202510310309046545",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "202510310309046545",
+          "score": 140
+        },
+        {
+          "id": "HASLCO1251004719\nREMARKS",
+          "score": 130
+        },
+        {
+          "id": "HALI2511727581",
+          "score": 130
+        },
+        {
+          "id": "HASLCO1251004719",
+          "score": 130
+        },
+        {
+          "id": "21246660001343",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "fe89c037-1f2d-4000-93f1-da2af9960d1d_Payment_AdviceDND1211.pdf",
+      "success": true,
+      "expected": "A2MSJODHLCRO",
+      "actual": "A2MSJODHLCRO",
+      "bank": "HSBC",
+      "all_ids": [
+        {
+          "id": "A2MSJODHLCRO",
+          "score": 160
+        },
+        {
+          "id": "9002A34ZUUYE",
+          "score": 160
+        },
+        {
+          "id": "OOL12511727720",
+          "score": 160
+        },
+        {
+          "id": "212466600",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "HANA_771a6100-9d8f-4b30-bf95-a78ac92c8d3b_D-D-60.00.pdf (SECURED).pdf",
+      "success": true,
+      "expected": null,
+      "actual": "SWIFT-BIC",
+      "bank": "RHB",
+      "all_ids": [
+        {
+          "id": "SWIFT-BIC",
+          "score": 130
+        },
+        {
+          "id": "33817B600YO8",
+          "score": 130
+        },
+        {
+          "id": "MYHBMBCA105",
+          "score": 130
+        },
+        {
+          "id": "SIT22510573651",
+          "score": 130
+        },
+        {
+          "id": "SIT22510573652",
+          "score": 130
+        }
+      ]
+    },
+    {
+      "filename": "HONG LEONG BANK - REF INV.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "20251031HLBBMYKL010ORB893",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "20251031HLBBMYKL010ORB893",
+          "score": 170
+        },
+        {
+          "id": "20251031HLBBMYKL010ORB89327394",
+          "score": 170
+        },
+        {
+          "id": "HLBBMYKL010ORB89327394",
+          "score": 130
+        },
+        {
+          "id": "SCC12511727263",
+          "score": 130
+        },
+        {
+          "id": "ERENCE\nFUND",
+          "score": 130
+        }
+      ]
+    },
+    {
+      "filename": "HSBC - REF NAME.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "APPV026816",
+      "bank": "RHB",
+      "all_ids": [
+        {
+          "id": "APPV026816",
+          "score": 130
+        },
+        {
+          "id": "17797AK00WM5",
+          "score": 130
+        },
+        {
+          "id": "MYHBMBCA373",
+          "score": 130
+        },
+        {
+          "id": "CSE22510561018",
+          "score": 130
+        },
+        {
+          "id": "60001343",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "HSBC - REF- INV NUMBER.pdf",
+      "success": false,
+      "expected": "A2MZ7DTE6DPR",
+      "actual": "20267AL0040J",
+      "bank": "HSBC",
+      "all_ids": [
+        {
+          "id": "20267AL0040J",
+          "score": 200
+        },
+        {
+          "id": "A2MZ7DTE6DPR",
+          "score": 160
+        },
+        {
+          "id": "PPK2251011462",
+          "score": 160
+        },
+        {
+          "id": "NAM12511723210",
+          "score": 160
+        },
+        {
+          "id": "176178936102753\nIMPORTANT",
+          "score": 160
+        }
+      ]
+    },
+    {
+      "filename": "MAYBANK - BANK REF.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "2025103IMBBEMYKLOIOOCBO0009556CUSTOMER",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "2025103IMBBEMYKLOIOOCBO0009556CUSTOMER",
+          "score": 170
+        },
+        {
+          "id": "2025103IMBBEMYKLOIOOCBO00",
+          "score": 170
+        },
+        {
+          "id": "MYCN2510319836082",
+          "score": 130
+        },
+        {
+          "id": "RPC25103101000009556",
+          "score": 130
+        },
+        {
+          "id": "IMBBEMYKLOIOOCBO0009556",
+          "score": 130
+        }
+      ]
+    },
+    {
+      "filename": "MAYBANK - BOTH REF.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "APS12511723202",
+      "bank": "Maybank",
+      "all_ids": [
+        {
+          "id": "APS12511723202",
+          "score": 160
+        },
+        {
+          "id": "7904638230",
+          "score": 100
+        },
+        {
+          "id": "21246660001343",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "MAYBANK - CUSTOMER REF.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "200701029411",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "200701029411",
+          "score": 140
+        },
+        {
+          "id": "MAYBANK2UZIZ",
+          "score": 130
+        },
+        {
+          "id": "ERENCE\nPAYMENT",
+          "score": 130
+        },
+        {
+          "id": "7901784116",
+          "score": 100
+        },
+        {
+          "id": "196001000142",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "MAYBANK - REF.pdf",
+      "success": true,
+      "expected": "MXC12511726684",
+      "actual": "MXC12511726684",
+      "bank": "RHB",
+      "all_ids": [
+        {
+          "id": "MXC12511726684",
+          "score": 130
+        },
+        {
+          "id": "7901990048",
+          "score": 100
+        },
+        {
+          "id": "21246660001343",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "MAYBANK PERSONAL - INVOICE NUM.pdf",
+      "success": false,
+      "expected": "KKMMTT1122551111772211332244",
+      "actual": "200701029411",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "200701029411",
+          "score": 140
+        },
+        {
+          "id": "571007763M",
+          "score": 130
+        },
+        {
+          "id": "KMT12511721324",
+          "score": 130
+        },
+        {
+          "id": "1007763M",
+          "score": 130
+        },
+        {
+          "id": "KMTU9327219",
+          "score": 130
+        }
+      ]
+    },
+    {
+      "filename": "PERSONAL - INV NUM.jpeg",
+      "success": true,
+      "expected": null,
+      "actual": "20251031PBBEMYKLO100R",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "20251031PBBEMYKLO100R",
+          "score": 340
+        },
+        {
+          "id": "20251031PBBEMYKLO100RM10169596",
+          "score": 340
+        },
+        {
+          "id": "M10169596",
+          "score": 320
+        },
+        {
+          "id": "BMOU6094210",
+          "score": 300
+        },
+        {
+          "id": "SNK12511715202",
+          "score": 280
+        }
+      ]
+    },
+    {
+      "filename": "PUBLIC BANK - INVOICE.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "2510300265794708\nSERVICE",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "2510300265794708\nSERVICE",
+          "score": 130
+        },
+        {
+          "id": "OOLI2511718542",
+          "score": 130
+        },
+        {
+          "id": "OOCU7079728",
+          "score": 130
+        },
+        {
+          "id": "TCNUSS10213",
+          "score": 130
+        },
+        {
+          "id": "COCU649588",
+          "score": 130
+        }
+      ]
+    },
+    {
+      "filename": "PUBLIC BANK -PERSONAL INVOICE NUM.pdf",
+      "success": false,
+      "expected": "20251103PBBEMYKL010ORB14417721",
+      "actual": "20251103PBBEMYKL010ORB144",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "20251103PBBEMYKL010ORB144",
+          "score": 170
+        },
+        {
+          "id": "20251103PBBEMYKL010ORB14417721\nDUITNOW",
+          "score": 170
+        },
+        {
+          "id": "20251103PBBEMYKL010ORB14417721",
+          "score": 170
+        },
+        {
+          "id": "KMT12511727962",
+          "score": 130
+        },
+        {
+          "id": "21246660001343",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "RHB - CUSTOMER REF.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "WHS12511709963",
+      "bank": "RHB",
+      "all_ids": [
+        {
+          "id": "WHS12511709963",
+          "score": 130
+        },
+        {
+          "id": "21246660001343",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "filename": "SCB - INV REF.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "MY00150Q0323515",
+      "bank": "Standard Chartered",
+      "all_ids": [
+        {
+          "id": "MY00150Q0323515",
+          "score": 130
+        },
+        {
+          "id": "SB25962510295135",
+          "score": 130
+        },
+        {
+          "id": "MY00150Q0323515\nCUSTOMER",
+          "score": 130
+        },
+        {
+          "id": "S2504677217",
+          "score": 130
+        },
+        {
+          "id": "STRAIGHT2BANK",
+          "score": 130
+        }
+      ]
+    },
+    {
+      "filename": "SCB -BANK REF.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "R0582704",
+      "bank": "RHB",
+      "all_ids": [
+        {
+          "id": "R0582704",
+          "score": 130
+        },
+        {
+          "id": "MY2OL2510310268M",
+          "score": 130
+        },
+        {
+          "id": "D0069493",
+          "score": 130
+        },
+        {
+          "id": "25103114NF880634745422000",
+          "score": 130
+        },
+        {
+          "id": "NF880634745422000",
+          "score": 130
+        }
+      ]
+    },
+    {
+      "filename": "UOB- INV REF.pdf",
+      "success": true,
+      "expected": null,
+      "actual": "201901013429",
+      "bank": "DuitNow",
+      "all_ids": [
+        {
+          "id": "201901013429",
+          "score": 140
+        },
+        {
+          "id": "FT25100152504491",
+          "score": 130
+        },
+        {
+          "id": "B10-2403-32000262",
+          "score": 130
+        },
+        {
+          "id": "UMPV2510-0299",
+          "score": 130
+        },
+        {
+          "id": "MAXIMLOGISTICSOL1",
+          "score": 130
+        }
+      ]
+    }
+  ]
+}

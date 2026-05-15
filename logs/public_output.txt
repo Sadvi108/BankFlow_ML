@@ -1,0 +1,205 @@
+Processing Receipts/PUBLIC BANK - INVOICE.pdf...
+
+--- EnhancedOCRPipeline ---
+Success: True
+Confidence: 89.66803994749237
+Text length: 6604
+Text full:
+=== PAGE 1 ===
+Reference No. : 2510300265794708   Product Type Reference No Service Reference No
+Approval Status
+From Account Transfer Mode Favourite Name Recipient's DuitNow ID Type
+Recipient Bank
+Transfer Type Recipient's DuitNow ID/Account No. Recipient Reference
+Amount
+Fee Total Fee Charges
+SMS Fee
+Payment Date DuitNow Transfer 2510300265794708 938653 Success 3820990512 / PRISMA USAHASAMA SDN. BHD.
+Favourite Account Transfer
+DND CONTROL Account Number RHB Bank Berhad Fund Transfer 21246660001343/D&D CONTROL (M) SDN BHD
+CPC
+MYR 31.80 MYR 0.00 MYR 0.00 MYR 0.00 30-Oct-2025   S 3 enterprise Printed Date/Time: 30 October 2025 17:53:25 Note: This is a computer generated receipt and no signature is required, PUBLIC BANK Excellence Is Qur Commitment               Copyright © 2025 Public Bank Berhad (6463-H}. ALL RIGHTS RESERVED 
+=== PAGE 2 ===
+              ™ D&D CONTROL (M) SDN BHD
+SST No. : B1I0-2311-32000014
+Tel: +603 3853 0300
+                                                                                                                                                                                                                                     * Corporate Website: www.dnd.com.my |
+SIMPLIFYING LOGISTICS PAYMENT Logistics Community Portal: www.clap.my __ Prasiodl> he) Co)
+INVOICE (CPC)
+Invoice To:
+AURORA SMART RESOURCES
+:23-
+C-16-GALAM N QOL
+JALAN SERAI WANGI G 16/1 SEKSYEN 16, Cust Ce de
+40200 SHAH
+ID :CO3 Branch :PKG Attn: : RABIATULADAWIYAH/ Zulkifli Forwarding Name : ZFZ LOGISTIC SDN BHD Being CPC charges incurred for -
+BLNo 22311764290 Port VoyageNo >
+Agentvoy > 124N Vessel XIN QIN HUANG DAO
+Discharge / GateOut : 20-10-2025 / 21-10-2025 Port
+Depot/Port
+Container Protection Coverage (CPC)
+1 X MYR 10.00 per unit
+Container(s) : O0CU7079728, Add SST 6.00% : Total Amount Due : RM 10.60 For more information, please read CPC ~ Terms of Reference at CLA Portal, https://clap.my/Files/CLA-CPC-TOR,   a) Please pay the above charges to D&D Control (M) Sdn Bhd. within 0 days ie by 23-10-2025 .
+b) Invoice dispute must be raised within 3 working days upon receiving, otherwise assumed to be accepted.
+c) Please login to CLA Portal, www.clap.my to check on your outstanding, make payment, print receipt and generate reports. For login credentials, drop us an enail
+or contact us at 03 3853 0300.
+d) Payment can also be made online or deposited into our bank a/c and upload bankin slip in https://clap.ny :-
+Bank: RHB Islamic Bank Bhd/ Account No. : 2-12466-6000134-3 / Swift Code: RHBAMYKL
+e) Please keyin the Payers CLA Acct (OR) SSM No in the bank refl/ref2 column while nake online payment for IBG/IBFT fast approval. (THIS IS A COMPUTER GENERATED DOCUMENT. NO SIGNATURE IS REQUIRED.)
+=== PAGE 3 ===
+            ™ D&D CONTROL (M) SDN BHD (223102-«)
+SST No. ; 810-231I-32000014
+Tel: +603 3853 0300
+Corporate Website: www.dnd.com.my
+                                                                                                                                                                                                                               a,   SIMPLIFYING LOGISTICS PAYMENT Logistics Community Portak www.clap.my PL2510D 15] 1th ©
+INVOICE (CPC)
+Invoice To:
+AURORA SMART RESOURCES ;
+C-16-GALAM AVENUESL, Date 23-10-2025
+Invoice No. :00L12511718544
+JALAN SERAI WANGI G 16/1 SEKSYEN 16, Cust Code
+40200 SHAH ALAM,SELANGOR. 8 Ae
+ID :CO3
+Branch :PKG
+Attn: : RABIATULADAWIYAH/ Zulkifli Forwarding Name : ZFZ LOGISTIC SDN BHD Being CPC charges incurred for ~
+BLNo : 2311764560 PortVoyageNo —_: BLNO-CPC-2311764560
+Agentvoy > 124N Vessel : XIN QIN HUANG DAO
+Discharge / GateOut : 20-10-2025 / 21-10-2025 Port
+Depot/Port
+PARTICULARS Container Protection Coverage (CPC)
+1X MYR 10.00 per unit
+Containers) : 10213, pee
+Total Amount Due : RM 10.60
+For more information, please read CPC - Terms of Reference at CLA Portal, https ://clap.my/Files/CLA-CPC-TOR. pif   a) Please pay the above charges to D&D Control (M) Sdn Bhd. within 0 days i.e by 23-10-2025 .
+b) Invoice dispute must be raised within 3 working days upon receiving, otherwise assumed to be accepted.
+c} Please login to CLA Portal, www.clap.my to check on your outstanding, make payment, print receipt and generate reports. For login credentials, drop us an e:ail
+or contact us at 03 3853 0300.
+d) Payment can also be made online or deposited into our bank a/c and upload bankin slip in :-
+Bank: RHB Islamic Bank Bhd/ Account No. : 2-12466-6000134-3 / Swift Code: RHBAMYKL
+e) Please keyin the Payer’s CLA Acct (OR) SSM No in the bank refl/ref2 column while make online payment for IBG’IBFT fast approval. (THIS IS A COMPUTER GENERATED DOCUMENT. NO SIGNATURE JS REQUIRED.)
+=== PAGE 4 ===
+        ‘ ™ D&D CONTROL (M) SDN BHD (23103-k)
+SST No, : 810-2311-32000014
+Tel: +603 3853 0300 Corporate Website: www.dnd.com.my SIMPLIFYING LOGISTICS PAYMENT Logistics Community Portal: www.clap.my PL25 Kealtes (tra) Coy INVOICE (CPC)                                                                                                                                                                                                 To:
+AURORA SMART RESOURCES
++ 33-10-
+C-16GALAM Date :23 10-2025 . Invoice No. :00OL12511718543
+JALAN SERAI WANG G 16/1 SEKSYEN 16, Cust Cod
+40200 SHAH ALAM.SELANGOR. st Code :
+ID :CO3 Branch :PKG Attn: : RABIATULADA WIYAHY Zulkifli Forwarding Name : ZFZ LOGISTIC SDN BHD Being CPC charges incurred for :-
+BLNo 22311764520 PortVoyageNo —: BLNO-CPC-2311764520
+Agentvoy > 124N Vessel > XIN QIN HUANGDAO
+Discharge / GateOut : 20-10-2025 / 21-10-2025 Port
+Depot/Port
+  PARTICULARS Container Protection Coverage (CPC) 10.00
+1 X MYR 10.00 per unit
+Container(s) : OOCU6949588,
+Total Amount Due : RM 10,60   For more information, please read CPC - Terms of Reference at CLA Portal, https ://clap.my/Files/CLA-CPC-TOR. pat a) Please pay the above charges to D&D Control (M) Sdn Bhd. within 0 days i.e by 23-10-2025 .
+b) Invoice dispute must be raised within 3 working days upon receiving, otherwise assumed to be accepted.
+c) Please login to CLA Portal, www.clap.my to check on your outstanding, make payment, print receipt and generate reports. For login credentials, drop us an email
+or contact us at 03 3853 0300.
+d) Payment can also be nude online or deposited into our bank a/c and upload bankin slip in https://clap.my :-
+Bank: RHB Islamic Bank Bhd/ Account No. : 2-12466-6000134-3 / Swift Code: RHBAMYKL
+e) Please keyin the CLA Acct (OR) SSM No in the bank refl/ref2 column while make online payment for IBG/IBFT fast approval. (THIS IS A COMPUTER GENERATED DOCUMENT. NO SIGNATURE IS REQUIRED.)
+
+--- OCRPipeline ---
+Success: True
+Confidence: 89.66803994749237
+Text length: 6604
+Text full:
+=== PAGE 1 ===
+Reference No. : 2510300265794708   Product Type Reference No Service Reference No
+Approval Status
+From Account Transfer Mode Favourite Name Recipient's DuitNow ID Type
+Recipient Bank
+Transfer Type Recipient's DuitNow ID/Account No. Recipient Reference
+Amount
+Fee Total Fee Charges
+SMS Fee
+Payment Date DuitNow Transfer 2510300265794708 938653 Success 3820990512 / PRISMA USAHASAMA SDN. BHD.
+Favourite Account Transfer
+DND CONTROL Account Number RHB Bank Berhad Fund Transfer 21246660001343/D&D CONTROL (M) SDN BHD
+CPC
+MYR 31.80 MYR 0.00 MYR 0.00 MYR 0.00 30-Oct-2025   S 3 enterprise Printed Date/Time: 30 October 2025 17:53:25 Note: This is a computer generated receipt and no signature is required, PUBLIC BANK Excellence Is Qur Commitment               Copyright © 2025 Public Bank Berhad (6463-H}. ALL RIGHTS RESERVED 
+=== PAGE 2 ===
+              ™ D&D CONTROL (M) SDN BHD
+SST No. : B1I0-2311-32000014
+Tel: +603 3853 0300
+                                                                                                                                                                                                                                     * Corporate Website: www.dnd.com.my |
+SIMPLIFYING LOGISTICS PAYMENT Logistics Community Portal: www.clap.my __ Prasiodl> he) Co)
+INVOICE (CPC)
+Invoice To:
+AURORA SMART RESOURCES
+:23-
+C-16-GALAM N QOL
+JALAN SERAI WANGI G 16/1 SEKSYEN 16, Cust Ce de
+40200 SHAH
+ID :CO3 Branch :PKG Attn: : RABIATULADAWIYAH/ Zulkifli Forwarding Name : ZFZ LOGISTIC SDN BHD Being CPC charges incurred for -
+BLNo 22311764290 Port VoyageNo >
+Agentvoy > 124N Vessel XIN QIN HUANG DAO
+Discharge / GateOut : 20-10-2025 / 21-10-2025 Port
+Depot/Port
+Container Protection Coverage (CPC)
+1 X MYR 10.00 per unit
+Container(s) : O0CU7079728, Add SST 6.00% : Total Amount Due : RM 10.60 For more information, please read CPC ~ Terms of Reference at CLA Portal, https://clap.my/Files/CLA-CPC-TOR,   a) Please pay the above charges to D&D Control (M) Sdn Bhd. within 0 days ie by 23-10-2025 .
+b) Invoice dispute must be raised within 3 working days upon receiving, otherwise assumed to be accepted.
+c) Please login to CLA Portal, www.clap.my to check on your outstanding, make payment, print receipt and generate reports. For login credentials, drop us an enail
+or contact us at 03 3853 0300.
+d) Payment can also be made online or deposited into our bank a/c and upload bankin slip in https://clap.ny :-
+Bank: RHB Islamic Bank Bhd/ Account No. : 2-12466-6000134-3 / Swift Code: RHBAMYKL
+e) Please keyin the Payers CLA Acct (OR) SSM No in the bank refl/ref2 column while nake online payment for IBG/IBFT fast approval. (THIS IS A COMPUTER GENERATED DOCUMENT. NO SIGNATURE IS REQUIRED.)
+=== PAGE 3 ===
+            ™ D&D CONTROL (M) SDN BHD (223102-«)
+SST No. ; 810-231I-32000014
+Tel: +603 3853 0300
+Corporate Website: www.dnd.com.my
+                                                                                                                                                                                                                               a,   SIMPLIFYING LOGISTICS PAYMENT Logistics Community Portak www.clap.my PL2510D 15] 1th ©
+INVOICE (CPC)
+Invoice To:
+AURORA SMART RESOURCES ;
+C-16-GALAM AVENUESL, Date 23-10-2025
+Invoice No. :00L12511718544
+JALAN SERAI WANGI G 16/1 SEKSYEN 16, Cust Code
+40200 SHAH ALAM,SELANGOR. 8 Ae
+ID :CO3
+Branch :PKG
+Attn: : RABIATULADAWIYAH/ Zulkifli Forwarding Name : ZFZ LOGISTIC SDN BHD Being CPC charges incurred for ~
+BLNo : 2311764560 PortVoyageNo —_: BLNO-CPC-2311764560
+Agentvoy > 124N Vessel : XIN QIN HUANG DAO
+Discharge / GateOut : 20-10-2025 / 21-10-2025 Port
+Depot/Port
+PARTICULARS Container Protection Coverage (CPC)
+1X MYR 10.00 per unit
+Containers) : 10213, pee
+Total Amount Due : RM 10.60
+For more information, please read CPC - Terms of Reference at CLA Portal, https ://clap.my/Files/CLA-CPC-TOR. pif   a) Please pay the above charges to D&D Control (M) Sdn Bhd. within 0 days i.e by 23-10-2025 .
+b) Invoice dispute must be raised within 3 working days upon receiving, otherwise assumed to be accepted.
+c} Please login to CLA Portal, www.clap.my to check on your outstanding, make payment, print receipt and generate reports. For login credentials, drop us an e:ail
+or contact us at 03 3853 0300.
+d) Payment can also be made online or deposited into our bank a/c and upload bankin slip in :-
+Bank: RHB Islamic Bank Bhd/ Account No. : 2-12466-6000134-3 / Swift Code: RHBAMYKL
+e) Please keyin the Payer’s CLA Acct (OR) SSM No in the bank refl/ref2 column while make online payment for IBG’IBFT fast approval. (THIS IS A COMPUTER GENERATED DOCUMENT. NO SIGNATURE JS REQUIRED.)
+=== PAGE 4 ===
+        ‘ ™ D&D CONTROL (M) SDN BHD (23103-k)
+SST No, : 810-2311-32000014
+Tel: +603 3853 0300 Corporate Website: www.dnd.com.my SIMPLIFYING LOGISTICS PAYMENT Logistics Community Portal: www.clap.my PL25 Kealtes (tra) Coy INVOICE (CPC)                                                                                                                                                                                                 To:
+AURORA SMART RESOURCES
++ 33-10-
+C-16GALAM Date :23 10-2025 . Invoice No. :00OL12511718543
+JALAN SERAI WANG G 16/1 SEKSYEN 16, Cust Cod
+40200 SHAH ALAM.SELANGOR. st Code :
+ID :CO3 Branch :PKG Attn: : RABIATULADA WIYAHY Zulkifli Forwarding Name : ZFZ LOGISTIC SDN BHD Being CPC charges incurred for :-
+BLNo 22311764520 PortVoyageNo —: BLNO-CPC-2311764520
+Agentvoy > 124N Vessel > XIN QIN HUANGDAO
+Discharge / GateOut : 20-10-2025 / 21-10-2025 Port
+Depot/Port
+  PARTICULARS Container Protection Coverage (CPC) 10.00
+1 X MYR 10.00 per unit
+Container(s) : OOCU6949588,
+Total Amount Due : RM 10,60   For more information, please read CPC - Terms of Reference at CLA Portal, https ://clap.my/Files/CLA-CPC-TOR. pat a) Please pay the above charges to D&D Control (M) Sdn Bhd. within 0 days i.e by 23-10-2025 .
+b) Invoice dispute must be raised within 3 working days upon receiving, otherwise assumed to be accepted.
+c) Please login to CLA Portal, www.clap.my to check on your outstanding, make payment, print receipt and generate reports. For login credentials, drop us an email
+or contact us at 03 3853 0300.
+d) Payment can also be nude online or deposited into our bank a/c and upload bankin slip in https://clap.my :-
+Bank: RHB Islamic Bank Bhd/ Account No. : 2-12466-6000134-3 / Swift Code: RHBAMYKL
+e) Please keyin the CLA Acct (OR) SSM No in the bank refl/ref2 column while make online payment for IBG/IBFT fast approval. (THIS IS A COMPUTER GENERATED DOCUMENT. NO SIGNATURE IS REQUIRED.)

@@ -1,0 +1,43 @@
+============================================================
+PATTERN LEARNING REPORT
+============================================================
+
+Total Receipts Analyzed: 101
+Successful Extractions: 97
+Failed Extractions: 4
+Success Rate: 96.0%
+
+
+PER-BANK PERFORMANCE:
+------------------------------------------------------------
+RHB                 :  47 successful extractions
+Public Bank         :  21 successful extractions
+DuitNow             :  15 successful extractions
+CIMB                :   4 successful extractions
+Maybank             :   3 successful extractions
+Hong Leong Bank     :   3 successful extractions
+HSBC                :   2 successful extractions
+Citibank            :   1 successful extractions
+Standard Chartered  :   1 successful extractions
+
+
+LEARNED PATTERNS:
+------------------------------------------------------------
+
+DuitNow: 55 patterns learned
+
+Public Bank: 82 patterns learned
+
+CIMB: 18 patterns learned
+
+RHB: 402 patterns learned
+
+Maybank: 6 patterns learned
+
+Hong Leong Bank: 17 patterns learned
+
+Citibank: 6 patterns learned
+
+HSBC: 11 patterns learned
+
+Standard Chartered: 6 patterns learned

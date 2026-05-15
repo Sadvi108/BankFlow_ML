@@ -1,0 +1,17 @@
+[
+  {
+    "id": "TC001",
+    "title": "extract receipt api upload and extraction",
+    "description": "Test the /extract POST endpoint by uploading various receipt files (image and PDF) and verify that the response contains correctly extracted transaction details including bank, transaction_id, amount, and date."
+  },
+  {
+    "id": "TC002",
+    "title": "get history api retrieval",
+    "description": "Test the /history GET endpoint to ensure it returns a list of previously processed receipt extraction data with success status and correct data structure."
+  },
+  {
+    "id": "TC003",
+    "title": "health check api status",
+    "description": "Test the /health GET endpoint to verify that the service returns a healthy status response indicating the operational state of the application."
+  }
+]

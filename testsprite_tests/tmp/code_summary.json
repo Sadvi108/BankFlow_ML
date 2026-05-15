@@ -1,0 +1,140 @@
+{
+  "tech_stack": [
+    "Python",
+    "FastAPI",
+    "Supabase",
+    "OpenCV",
+    "Jinja2"
+  ],
+  "features": [
+    {
+      "name": "Extract Receipt API",
+      "description": "Main endpoint to upload a receipt (image/PDF) and extract transaction details like bank, amount, date, and reference ID.",
+      "files": [
+        "simple_server.py",
+        "app/ultimate_patterns_v3.py",
+        "app/layout_aware_extractor.py",
+        "app/enhanced_ocr_pipeline.py"
+      ],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {
+          "title": "Bank Receipt Extractor",
+          "version": "1.0.0"
+        },
+        "paths": {
+          "/extract": {
+            "post": {
+              "summary": "Extract transaction details from uploaded receipt",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "multipart/form-data": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "file": {
+                          "type": "string",
+                          "format": "binary",
+                          "description": "The receipt image or PDF"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Extraction successful",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "object",
+                        "properties": {
+                          "success": { "type": "boolean" },
+                          "data": {
+                            "type": "object",
+                            "properties": {
+                              "bank": { "type": "string" },
+                              "transaction_id": { "type": "string" },
+                              "amount": { "type": "string" },
+                              "date": { "type": "string" }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Get History API",
+      "description": "Retrieve the history of processed receipts.",
+      "files": [
+        "simple_server.py",
+        "app/history_manager.py"
+      ],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "paths": {
+          "/history": {
+            "get": {
+              "summary": "Get extraction history",
+              "responses": {
+                "200": {
+                  "description": "History list",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "object",
+                        "properties": {
+                          "success": { "type": "boolean" },
+                          "history": { "type": "array" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Health Check API",
+      "description": "Simple health check endpoint.",
+      "files": ["simple_server.py"],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "paths": {
+          "/health": {
+            "get": {
+              "summary": "Health check",
+              "responses": {
+                "200": {
+                  "description": "Service is healthy",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "object",
+                        "properties": {
+                          "status": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

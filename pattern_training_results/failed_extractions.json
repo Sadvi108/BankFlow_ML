@@ -1,0 +1,54 @@
+[
+  {
+    "file": "0989d13d-ef7b-4ad9-a219-a5f70cafc2b0_dnd.pdf",
+    "text": "=== PAGE 1 ===\n(cid:0)(cid:1)(cid:2)(cid:2)(cid:1)(cid:2)(cid:3)(cid:2)(cid:0) (cid:4)(cid:5)(cid:6)(cid:5)(cid:7)(cid:8)(cid:7)(cid:9)(cid:10)(cid:11)(cid:12)(cid:13)(cid:14)(cid:15)(cid:16)(cid:17)(cid:12)(cid:13)(cid:18)(cid:13)(cid:7)(cid:2)(cid:19)(cid:3)\n*+,-./0+1&(1,12,-314(5,446\n#$%&’()\n*+,-.,5&%(-17&,&$.817$550../$4\n9+0,&%(-1#,&081::1;,-1:<:=1=>8?<8=?\n@+(A *(\n*+,-./0+1*6T01\nB($+1C55($-&1\n@$-S1*+,-./0+\n==>=<<DD::1E1FBG1119F71HIJK7*K971LFM17#’N1OP#N\nO0-0/%5%,+61O,-31’,A01\nR,4$01#,&01 CA($-&1 GPO1OC’V1OUGPC#\n::1;,-1:<:= Q<<N<<FBG O0-0/%5%,+61C55($-&1’(N1\n:=:?>>><<<=W?W\n7,A01S,61T,6A0-&\nO0-0/%5%,+61’,A01\n#X#19I’*GIH1LFM17#’1OP#\nR,4$01&%A0\n::1;,-1:<:=1KFFU#KC*U G05%T%0-&Y.1G0/0+0-501 I&\\0+1],6A0-&1#0&,%4.1\nVF*::<=<<Z>><D[1Z>=?Z E\n],6’0&1G0/0+0-501’(N1\n:<:=<=::I9O9FBVH<=<I9OWD:Q:?W=\nI&\\0+1#0&,%4.1^_‘ab_cdef\nB($+1G0/0+0-501’(N1\nFB#’:=<=::Q=?>=D\n(cid:20)(cid:15)(cid:15)(cid:21)(cid:22)(cid:23)(cid:1)(cid:1)(cid:24)(cid:10)(cid:11)(cid:12)(cid:13)(cid:14)(cid:15)(cid:16)(cid:19)(cid:12)(cid:13)(cid:18)(cid:13)(cid:19)(cid:13)(cid:12)(cid:25)(cid:1)(cid:15)(cid:26)(cid:27)(cid:28)(cid:19)(cid:24)(cid:14)(cid:10)(cid:29)(cid:30)(cid:31)(cid:12) !(cid:10)\"(cid:12)(cid:27)(cid:31) (cid:0)(cid:1)(cid:0)",
+    "bank": "Unknown",
+    "ref_ids": [
+      "1E1FBG1119F71HIJK7",
+      "K971LFM17",
+      "GIH1LFM17",
+      "I9O9FBVH"
+    ],
+    "amount": null,
+    "date": null,
+    "confidence": 0.95
+  },
+  {
+    "file": "37c889f7-dbe7-4373-98ef-2f644f1e8347_cpc fyee 4 CONT.PDF",
+    "text": "=== PAGE 1 ===\n..--=.'-...%-FE!\nk\ncash Management System\nDetails\n5570905i7805(MYR) SESERANG WIRA FREIGHI FORWARD€RS SDN\nBHD\nInTr.Gscllon Cumncy\n11 J.n202l MY{UlC+08i0)\nl1 J.n 2021 12104:t6 MY {UTC+03.00)\nv\nB. Beneliciary Delails\noaD coNtRot {M) sot{ Bto\nAddirlonal Beneliclary Oerails",
+    "bank": "Unknown",
+    "ref_ids": [
+      "5570905I7805"
+    ],
+    "amount": null,
+    "date": null,
+    "confidence": 0.95
+  },
+  {
+    "file": "6437dbca-4851-45f4-894e-d12a79c479e0_REF 805805-RM40-NEWWOOD.pdf",
+    "text": "=== PAGE 1 ===\nFund Transfer To 3rd Party Account - Data Input\nSuccessful\nTransaction(s) is successfully sent for approval.\nAccount Transfer Information\nReference Number Date\n210119805805 19-01-2021 09:17:46\nFrom Account To Account\n20102600145183 / NEO WOODW 21246660001343 / D&D CONTROL (M) SDN BHD\nORKING MACHINERY SB\nAmount Fund Transfer Charges\nRM 40.00 RM 0.00\nGST Charges Total Amount to Debit\nRM 0.00 RM 40.00\nIC / ID Number Recipient's Reference\nWHS32110059378,9381\nOther Payment Details Email Address\nWHS32010058163,9380 dndopnjb@dnd.com.my\nPayment Advice\nTransfer Type\nImmediate Transfer\nInstructions\nClick on Print button to print the page.",
+    "bank": "Unknown",
+    "ref_ids": [
+      "WHS32110059378",
+      "DATE210119805805",
+      "WOODW21246660001343",
+      "WHS32010058163",
+      "210119805805",
+      "21246660001343"
+    ],
+    "amount": "40.00",
+    "date": "19-01-2021",
+    "confidence": 0.95
+  },
+  {
+    "file": "d621d546-12c3-4cc3-89df-f28090594098_cpc fyee.PDF",
+    "text": "=== PAGE 1 ===\nCash Management System\nt\nnsaction Detaits\nSEBERANO WIRA FREIGHT FORWARDERS SDN TIYR\nACH ln Transactlo n Cun€n cy\n13 J.n202l MY(UTC+o3:OO)\n13 n 2021 12:07:01MY (UTC+03:00)\n011870963t\nDA\n! (M) SON BHD\n**\"*\n:' \"- ''",
+    "bank": "Unknown",
+    "ref_ids": [
+      "011870963T"
+    ],
+    "amount": null,
+    "date": "13 n 2021",
+    "confidence": 0.95
+  }
+]
