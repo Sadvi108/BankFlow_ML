@@ -28,8 +28,14 @@ from app.db import get_db
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Initialize DB
-db = get_db()
+# Initialize DB. Persistence is optional: SUPABASE_URL/KEY without the postgrest
+# package raises at import, which would take the whole service down on boot.
+try:
+    db = get_db()
+except Exception as e:
+    db = None
+    logger.warning(f"Supabase unavailable, continuing without persistence: {e}")
+
 if db:
     logger.info("Supabase connection initialized")
 else:
