@@ -244,6 +244,7 @@ async def extract_receipt(file: UploadFile = File(...)):
                 nparr = np.frombuffer(content, np.uint8)
                 image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
                 ocr_result = ocr_pipeline.extract_text_with_confidence(image)
+                ocr_result.setdefault("source", "ocr")  # images always go through OCR
                 image_png_for_llm = content  # raw image bytes are LLM-ready
             else:
                 import tempfile
@@ -266,7 +267,10 @@ async def extract_receipt(file: UploadFile = File(...)):
 
         # 2. PATTERN + LAYOUT extraction
         text = ocr_result.get('text', '')
-        pattern_results = extract_all_fields_v3(text)
+        # Text lifted from a PDF's own text layer has no OCR misreads, so the
+        # digit-repair pass must not run over it.
+        ocr_used = ocr_result.get("source") not in ("embedded", "pdfplumber")
+        pattern_results = extract_all_fields_v3(text, ocr_used=ocr_used)
         bank_name = pattern_results.get('bank_name', 'Unknown')
 
         layout_results = layout_extractor.extract(ocr_result, bank_name)
