@@ -1,11 +1,14 @@
-fastapi==0.121.2
-uvicorn==0.38.0
-python-multipart==0.0.20
-jinja2==3.1.6
-opencv-python-headless==4.11.0.86
-numpy==2.3.5
-pytesseract==0.3.13
-Pillow==12.0.0
-PyMuPDF==1.26.6
-pdfplumber==0.11.8
-python-dotenv==1.2.1
+fastapi>=0.100.0
+uvicorn>=0.20.0
+python-multipart>=0.0.6
+jinja2>=3.0.0
+opencv-python-headless>=4.5.0
+numpy>=1.22.0
+pytesseract>=0.3.10
+Pillow>=9.0.0
+PyMuPDF>=1.20.0
+pdfplumber>=0.10.0
+python-dotenv>=1.0.0
+# Supabase persistence (app/db.py). Without it SUPABASE_URL/KEY are ignored and
+# extractions are only kept in the local history file.
+postgrest>=0.13.0
