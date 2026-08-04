@@ -434,7 +434,10 @@ class UltimatePatternMatcherV3:
         self.amount_patterns = [
             # Currency symbol + amount (RM 1,234.56) - allow noisy dash/-
             # Enhanced to allow >3 digits without comma (e.g. 1500.00)
-            r'\b(?:RM|MYR|Amount|Currency|Total)\s*[:#-]?\s*(?:RM|MYR)?\s*(\d+(?:[,\s]\d{3})*(?:\.\d{2}|,\s*00)?)\b',
+            # NOTE: "Currency" is deliberately NOT a keyword here. On column-layout
+            # receipts "Transaction Currency" is a header sitting directly above the
+            # debit account number, so it captured the account no. as the amount.
+            r'\b(?:RM|MYR|Amount|Total)\s*[:#-]?\s*(?:RM|MYR)?\s*(\d+(?:[,\s]\d{3})*(?:\.\d{2}|,\s*00)?)\b',
             # Amount with suffix (1,560.00MYR)
             r'\b(\d{1,3}(?:[,\s]\d{3,})*\.\d{2})\s*(?:MYR|RM)\b',
             # "Total Amount" context with noisy currency (RAYR 10.66)
@@ -444,6 +447,23 @@ class UltimatePatternMatcherV3:
             # Strict currency format with RM
             r'\bRM\s*(\d+(?:\.\d{2})?)\b'
         ]
+
+        # Column-layout receipts (Maybank M2E, CIMB BizChannel) print a block of
+        # labels followed by a block of values, so the value is several lines below
+        # its label. These find the label, then the first plausible value after it.
+        self._amount_label_re = re.compile(
+            r'\b(?:Transaction|Transfer|Payment|Total|Gross|Net|Debit|Credit)\s*Amount\b',
+            re.IGNORECASE)
+        self._money_re = re.compile(r'\b(\d{1,3}(?:,\d{3})*\.\d{2}|\d{1,9}\.\d{2})\b')
+        self._date_label_re = re.compile(
+            r'\b(?:Value|Transaction|Txn|Transfer|Payment|Posting|Effective)\s*Date\b',
+            re.IGNORECASE)
+        # A browser print header/footer stamps the date next to a wall-clock time
+        # ("04/08/2026, 07:57"). That is the day the PDF was printed, not the
+        # transaction date, so it must never outrank a labelled date.
+        self._print_stamp_re = re.compile(r'^\s*,?\s*\d{1,2}\s*:\s*\d{2}\b')
+        # How far after a label to look for its value.
+        self._label_window = 200
 
     def normalize_text(self, text: str) -> str:
         """Normalize text for better pattern matching."""
@@ -630,8 +650,15 @@ class UltimatePatternMatcherV3:
                     
         return "Generic" # Changed from "Unknown" to trigger generic processing if needed explicitly
 
-    def extract_transaction_ids(self, text: str, bank_name: str = None) -> List[str]:
-        """Extract transaction IDs with enhanced pattern matching and scoring."""
+    def extract_transaction_ids(self, text: str, bank_name: str = None,
+                                ocr_used: bool = True) -> List[str]:
+        """Extract transaction IDs with enhanced pattern matching and scoring.
+
+        `ocr_used=False` means the text came straight out of the PDF's own text
+        layer, so there are no OCR misreads to repair and the digit-repair pass
+        must be skipped — it would corrupt genuine letters in a reference
+        (MYIG2608033918802 -> MY162608033918802).
+        """
         # Normalize text first
         text_normalized = self.normalize_text(text)
         text_upper = text_normalized.upper()
@@ -725,8 +752,8 @@ class UltimatePatternMatcherV3:
         seen = set()
         
         for tid, initial_score, source in candidates:
-            # Attempt to repair OCR errors
-            tid_repaired = self._repair_ocr_digits(tid)
+            # Attempt to repair OCR errors (only if OCR actually produced this text)
+            tid_repaired = self._repair_ocr_digits(tid) if ocr_used else tid
             
             # Clean common concatenated suffixes
             tid_repaired = self._clean_id_suffix(tid_repaired)
@@ -821,10 +848,27 @@ class UltimatePatternMatcherV3:
             return 0
         return boost
 
+    def _first_date_after(self, window: str) -> Optional[str]:
+        """Earliest date-shaped token in `window`, across all date patterns."""
+        best = None
+        for pattern in self.date_patterns:
+            m = re.search(pattern, window, re.IGNORECASE)
+            if m and (best is None or m.start() < best.start()):
+                best = m
+        return best.group(1).strip() if best else None
+
     def extract_date(self, text: str) -> Optional[str]:
         """Extract the most likely date from text."""
         candidates = []
-        
+
+        # 0. Highest priority: a date introduced by a transaction-date label.
+        #    Handles column layouts where the value is lines below the label, and
+        #    labels carrying a format hint ("Value Date (dd/mm/yyyy)").
+        for lm in self._date_label_re.finditer(text):
+            found = self._first_date_after(text[lm.end():lm.end() + self._label_window])
+            if found:
+                candidates.append((found, 20))
+
         # 1. Look for explicit Date headers first (High priority)
         header_patterns = [
             r'\bDate\s*:?\s*(\d{1,2}[-\/\s]\w+[-\/\s]\d{2,4})\b',
@@ -839,14 +883,15 @@ class UltimatePatternMatcherV3:
         
         # 2. Look for all date patterns
         for pattern in self.date_patterns:
-            matches = re.findall(pattern, text, re.IGNORECASE)
-            for m in matches:
-                # Assign lower score to generic matches
-                candidates.append((m.strip(), 5))
-                
+            for m in re.finditer(pattern, text, re.IGNORECASE):
+                # Assign lower score to generic matches, and demote print
+                # header/footer stamps ("04/08/2026, 07:57 Maybank M2E").
+                is_print_stamp = bool(self._print_stamp_re.match(text[m.end():m.end() + 12]))
+                candidates.append((m.group(1).strip(), 1 if is_print_stamp else 5))
+
         if not candidates:
             return None
-            
+
         # Sort by priority score
         candidates.sort(key=lambda x: x[1], reverse=True)
         return candidates[0][0]
@@ -880,10 +925,25 @@ class UltimatePatternMatcherV3:
             return '\n'.join(cleaned_lines)
         return text
 
+    @staticmethod
+    def _is_plausible_amount(value: str) -> bool:
+        """Reject account/reference numbers that a money regex happened to match."""
+        s = value.strip().replace(' ', '')
+        if not s.replace(',', '').replace('.', '').isdigit():
+            return False
+        int_part = s.split('.')[0].replace(',', '')
+        if len(int_part) > 9:
+            # Above RM 999,999,999 — an account or reference number, not an amount.
+            return False
+        if '.' not in s and ',' not in s and len(int_part) >= 7:
+            # A bare 7+ digit run with no thousands separator and no sen.
+            return False
+        return True
+
     def extract_amount(self, text: str) -> Optional[str]:
         """Extract the most likely transaction amount."""
         candidates = []
-        
+
         # 0. Try cleaning doubled text first
         text_cleaned = self._clean_doubled_text(text)
         
@@ -911,6 +971,13 @@ class UltimatePatternMatcherV3:
             for m in matches:
                 candidates.append((m.strip(), 10))
         
+        # 1b. Column layout: label block, then value block. Take the first money
+        #     token after an amount label.
+        for lm in self._amount_label_re.finditer(text_cleaned):
+            m = self._money_re.search(text_cleaned[lm.end():lm.end() + self._label_window])
+            if m:
+                candidates.append((m.group(1).strip(), 8))
+
         # 2. Look for all generic patterns (using cleaned text too)
         for pattern in self.amount_patterns:
             matches = re.findall(pattern, text_cleaned, re.IGNORECASE)
@@ -930,9 +997,12 @@ class UltimatePatternMatcherV3:
                     if val and val not in ('0', '00'):
                         candidates.append((val, 3))
 
+        # 4. Drop anything that cannot be money (account nos., reference nos.)
+        candidates = [c for c in candidates if self._is_plausible_amount(c[0])]
+
         if not candidates:
             return None
-            
+
         # Sort by priority
         candidates.sort(key=lambda x: x[1], reverse=True)
         return candidates[0][0]
@@ -1045,8 +1115,11 @@ class UltimatePatternMatcherV3:
 
         return True
 
-    def extract_all_fields(self, text: str) -> Dict[str, Any]:
-        """Extract all possible fields from receipt text with 100% accuracy target."""
+    def extract_all_fields(self, text: str, ocr_used: bool = True) -> Dict[str, Any]:
+        """Extract all possible fields from receipt text with 100% accuracy target.
+
+        Pass `ocr_used=False` when `text` came from a PDF's embedded text layer.
+        """
         try:
             # 0. Clean doubled text first (Global fix for PDF rendering issues)
             # This handles the "DDuuiittNNooww" and "RRRRMMMM" cases
@@ -1059,7 +1132,7 @@ class UltimatePatternMatcherV3:
             bank_name = self.detect_bank(text_normalized)
             
             # Extract transaction IDs
-            transaction_ids = self.extract_transaction_ids(text_normalized, bank_name)
+            transaction_ids = self.extract_transaction_ids(text_normalized, bank_name, ocr_used)
             
             # Extract Date & Amount
             date_str = self.extract_date(text_normalized)
@@ -1109,16 +1182,18 @@ class UltimatePatternMatcherV3:
 ultimate_matcher_v3 = UltimatePatternMatcherV3()
 
 
-def extract_all_fields_v3(text: str) -> Dict[str, Any]:
+def extract_all_fields_v3(text: str, ocr_used: bool = True) -> Dict[str, Any]:
     """Main function to extract all fields from receipt text with 100% accuracy."""
-    return ultimate_matcher_v3.extract_all_fields(text)
+    return ultimate_matcher_v3.extract_all_fields(text, ocr_used)
 
 
 _SST_PATTERNS = [
     re.compile(r'^[WC]\d{2}-\d{4}-\d{8}$', re.IGNORECASE),
     re.compile(r'^[WC]10-', re.IGNORECASE),
 ]
-_AMOUNT_RE = re.compile(r'^\d{1,3}(,\d{3})*(\.\d{2})?$|^\d+\.\d{2}$|^\d+$')
+# Integer part capped at 9 digits: anything longer is an account or reference
+# number, not a receipt amount, and must fail validation so needs_review is set.
+_AMOUNT_RE = re.compile(r'^(?:\d{1,3}(?:,\d{3})*|\d{1,9})(?:\.\d{2})?$')
 _TIME_TAIL = r'( \d{1,2}:\d{2}(:\d{2})?( ?[AaPp][Mm])?)?$'
 _DATE_RES = [
     # DD-MM-YYYY / DD Mon YYYY

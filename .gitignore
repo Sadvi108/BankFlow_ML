@@ -17,6 +17,12 @@ test_reports/
 debug_ocr_output/
 debug_failures_images/
 
+# Contain OCR dumps of real receipts (live account numbers, company reg. numbers).
+# Never commit these.
+logs/
+debug_failures/
+pattern_training_results/
+
 # System files
 nul
 .DS_Store
