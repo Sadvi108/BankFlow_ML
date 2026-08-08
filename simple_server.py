@@ -70,6 +70,7 @@ from app.enhanced_ocr_pipeline import EnhancedOCRPipeline, is_text_garbage
 from app.layout_aware_extractor import layout_extractor
 from app.result_merger import merge as merge_results
 from app.ibg.extractor import extract_ibg_fields
+from app import ocr_vision
 
 # Initialize enhanced OCR pipeline
 ocr_pipeline = EnhancedOCRPipeline()
@@ -105,6 +106,22 @@ def _pdf_to_text(tmp_path: str) -> Dict[str, Any]:
                     "confidence": conf, "source": ocr_res.get("method", "ocr")}
     except Exception as e:
         logger.warning(f"OCR pipeline failed on PDF: {e}")
+
+    # 2b. Apple Vision. The pipeline above needs a `tesseract` binary; without
+    #     it every scanned receipt failed with 422 and no text ever reached the
+    #     extractors. Vision ships with macOS, so this recovers those uploads.
+    if ocr_vision.available():
+        try:
+            vision_res = ocr_vision.pdf_to_text(tmp_path)
+            text = (vision_res.get("text") or "").strip()
+            if text and not is_text_garbage(text):
+                logger.info("Apple Vision OCR recovered %d chars (conf %.2f)",
+                            len(text), vision_res.get("confidence", 0.0))
+                return {"text": text, "tokens": [],
+                        "confidence": vision_res.get("confidence", 0.7),
+                        "source": "vision"}
+        except Exception as e:
+            logger.warning(f"Apple Vision OCR failed on PDF: {e}")
 
     # 3. pdfplumber
     try:
@@ -276,6 +293,17 @@ async def extract_receipt(file: UploadFile = File(...)):
                 image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
                 ocr_result = ocr_pipeline.extract_text_with_confidence(image)
                 ocr_result.setdefault("source", "ocr")  # images always go through OCR
+                # Same Tesseract-absent recovery as the PDF path: a photo of a
+                # receipt is the most common upload and produced no text at all
+                # without a tesseract binary.
+                if len((ocr_result.get("text") or "").strip()) < 5 and ocr_vision.available():
+                    vision_res = ocr_vision.ndarray_to_text(image)
+                    if (vision_res.get("text") or "").strip():
+                        logger.info("Apple Vision OCR recovered image text (conf %.2f)",
+                                    vision_res.get("confidence", 0.0))
+                        ocr_result = {"text": vision_res["text"], "tokens": [],
+                                      "confidence": vision_res.get("confidence", 0.7),
+                                      "source": "vision"}
                 image_png_for_llm = content  # raw image bytes are LLM-ready
             else:
                 import tempfile

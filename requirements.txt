@@ -12,3 +12,10 @@ python-dotenv>=1.0.0
 # Supabase persistence (app/db.py). Without it SUPABASE_URL/KEY are ignored and
 # extractions are only kept in the local history file.
 postgrest>=0.13.0
+
+# OCR fallback via Apple's Vision framework (app/ocr_vision.py), used when no
+# `tesseract` binary is on PATH -- otherwise every scanned receipt fails with a
+# 422 and no text reaches the extractors. macOS-only, so the marker keeps the
+# Linux image and the Render deploy building.
+pyobjc-framework-Vision>=9.0; sys_platform == "darwin"
+pyobjc-framework-Quartz>=9.0; sys_platform == "darwin"

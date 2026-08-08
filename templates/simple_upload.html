@@ -597,11 +597,24 @@
           populateResults(json.data);
           document.getElementById('headerNewUploadBtn').style.display = 'flex'; // Show header button
         } else {
-          addLog(`Error: ${json.error}`, 'danger');
-          alert(`Extraction Error: ${json.error}`);
+          // FastAPI raises HTTPException, which serialises as {"detail": ...}.
+          // Reading json.error gave "undefined" and hid the real reason.
+          let msg = json.detail || json.error || `HTTP ${res.status}`;
+          let hint = '';
+          if (/could not extract text/i.test(msg)) {
+            hint = 'This looks like a scanned or photographed PDF with no text '
+                 + 'layer, so it needs OCR. Tesseract is not installed on this '
+                 + 'machine — install it (macOS: brew install tesseract), or '
+                 + 'upload a PDF saved directly from the bank portal, which '
+                 + 'carries real text.';
+          }
+          addLog(`Error: ${msg}`, 'danger');
+          if (hint) addLog(hint, 'danger');
+          alert(hint ? `${msg}\n\n${hint}` : `Extraction Error: ${msg}`);
         }
       } catch (err) {
         overlay.style.display = 'none';
+        addLog(`Request failed: ${err && err.message ? err.message : err}`, 'danger');
         alert('Connection to server lost. Is the backend running?');
       }
     }
