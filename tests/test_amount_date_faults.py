@@ -4,7 +4,7 @@ Reproduced from a real Maybank M2E "Cash Management System" payment PDF that the
 production API got wrong on every field:
 
   reference -> "OOL12612032422"  (the Debit Description, not the Reference No.)
-  amount    -> "512044514656"    (the Debit From Account No., not the amount)
+  amount    -> "510000000001"    (the Debit From Account No., not the amount)
   date      -> "04/08/2026"      (the browser print-header stamp, not the value date)
   merger    -> needs_review=False for a fully wrong record
 
@@ -135,12 +135,12 @@ def main():
                           ocr_res["transaction_id"] != res["transaction_id"], True)
 
     print("\nA wrong record must not be reported as high-confidence")
-    bad = merge({"bank_name": "Maybank", "transaction_id": "512044514656",
-                 "date": "04/08/2026", "amount": "512044514656"}, None)
+    bad = merge({"bank_name": "Maybank", "transaction_id": "510000000001",
+                 "date": "04/08/2026", "amount": "510000000001"}, None)
     failures += not check("needs_review for a 12-digit account no. as amount",
                           bad["needs_review"], True)
     failures += not check("validate_amount rejects an account number",
-                          validate_amount("512044514656.00"), False)
+                          validate_amount("510000000001.00"), False)
 
     print("\nRegression guards — receipts that already worked")
     for name, text, expected in REGRESSION_GUARDS:

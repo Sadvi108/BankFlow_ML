@@ -15,8 +15,8 @@ Amount
 RRRRMMMM 11115555....00000000
 Note: This receipt is computer generated and no
 signature is required.
-Malayan Banking Berhad (Co. Reg. : 196001000142)
-Maybank Islamic Berhad (Co. Reg. : 200701029411)
+Malayan Banking Berhad (Co. Reg. : 199001000002)
+Maybank Islamic Berhad (Co. Reg. : 199001000003)
 """
 
 print("Testing extraction on Maybank problematic text...")

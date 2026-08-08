@@ -5,6 +5,25 @@ from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
+
+def _phrase_pattern(phrase: str) -> str:
+    """Turn a human label ("Total Debit Amount") into a regex fragment that
+    tolerates flexible whitespace/hyphen spacing between its words, e.g.
+    'Total\\s*[-\\s]*Debit\\s*[-\\s]*Amount'.
+    """
+    parts = [p for p in re.split(r'[\s-]+', phrase) if p]
+    return r'\s*[-\s]*\s*'.join(re.escape(p) for p in parts)
+
+
+def _labels_regex(phrases: List[str]) -> "re.Pattern":
+    """Compile a case-insensitive, word-bounded alternation over `phrases`,
+    longest phrase first so multi-word labels are preferred over the
+    single words they contain (e.g. 'Total Debit Amount' over bare 'Amount').
+    """
+    ordered = sorted(phrases, key=len, reverse=True)
+    body = '|'.join(_phrase_pattern(p) for p in ordered)
+    return re.compile(r'\b(?:' + body + r')\b', re.IGNORECASE)
+
 class UltimatePatternMatcherV3:
     """Enhanced Ultimate pattern matcher V3 with 100% accuracy targeting.
     
@@ -431,29 +450,70 @@ class UltimatePatternMatcherV3:
         ]
         
         # Amount Patterns
+        #
+        # A1 fix: the old pattern 0 made the decimal group optional and let an
+        # unbounded `\d+` soak up an arbitrarily long integer, so a label like
+        # "Amount" bound to a six-digit reference number sitting on the same
+        # (post-normalize, whitespace-flattened) line. Every alternative below
+        # now either (a) is anchored on an explicit currency symbol (RM/MYR),
+        # in which case a bare integer is unambiguous and decimals stay
+        # optional, or (b) is anchored on a bare label (Amount/Total) with NO
+        # currency symbol, in which case the decimal group is MANDATORY -- a
+        # bare label plus a bare integer is exactly the reference-number shape
+        # this defect let through. The integer part is bounded to 3-digit
+        # comma/space groups (`\d{1,3}(?:[,\s]\d{3})*`), never a raw `\d+`.
+        # `[ \t]*` (not `\s*`) between the label and the value keeps these
+        # patterns from crossing a newline in text that reaches this function
+        # without having gone through `normalize_text` first.
         self.amount_patterns = [
-            # Currency symbol + amount (RM 1,234.56) - allow noisy dash/-
-            # Enhanced to allow >3 digits without comma (e.g. 1500.00)
-            # NOTE: "Currency" is deliberately NOT a keyword here. On column-layout
-            # receipts "Transaction Currency" is a header sitting directly above the
-            # debit account number, so it captured the account no. as the amount.
-            r'\b(?:RM|MYR|Amount|Total)\s*[:#-]?\s*(?:RM|MYR)?\s*(\d+(?:[,\s]\d{3})*(?:\.\d{2}|,\s*00)?)\b',
-            # Amount with suffix (1,560.00MYR)
-            r'\b(\d{1,3}(?:[,\s]\d{3,})*\.\d{2})\s*(?:MYR|RM)\b',
-            # "Total Amount" context with noisy currency (RAYR 10.66)
-            r'\b(?:Amount|Total)\s*:?\s*(?:[A-Z]{2,5}\s*)?(\d{1,3}(?:[,\s]\d{3,})*(?:\.\d{2})?)\b',
-            # Floating total (TOTAL 20.00)
-            r'\bTOTAL\s*(\d+\.\d{2})\b',
-            # Strict currency format with RM
-            r'\bRM\s*(\d+(?:\.\d{2})?)\b'
+            # Currency-led: RM/MYR directly in front of the number. The
+            # currency symbol itself disambiguates from a reference number,
+            # so decimals stay optional here.
+            r'\b(?:RM|MYR)[ \t]*[:#-]?[ \t]*(\d{1,3}(?:[,\s]\d{3})*(?:\.\d{2})?)\b',
+            # Label-led, no currency symbol: "Amount: 500000" is exactly the
+            # column-scrambled reference-number shape this defect let through,
+            # so the decimal group is mandatory here.
+            r'\b(?:Amount|Total)[ \t]*[:#-]?[ \t]*(\d{1,3}(?:[,\s]\d{3})*\.\d{2})\b',
+            # Amount with suffix (1,560.00MYR) -- already decimal-mandatory.
+            r'\b(\d{1,3}(?:[,\s]\d{3})*\.\d{2})[ \t]*(?:MYR|RM)\b',
+            # "Total Amount" context with a noisy currency code in front
+            # (RAYR 10.66) -- currency code present, decimals optional.
+            r'\b(?:Amount|Total)[ \t]*:?[ \t]*[A-Z]{2,5}[ \t]*(\d{1,3}(?:[,\s]\d{3})*(?:\.\d{2})?)\b',
+            # Same label with no currency code at all -- decimal mandatory.
+            r'\b(?:Amount|Total)[ \t]*:?[ \t]*(\d{1,3}(?:[,\s]\d{3})*\.\d{2})\b',
+            # Floating total (TOTAL 20.00) -- already decimal-mandatory.
+            r'\bTOTAL[ \t]*(\d{1,3}(?:[,\s]\d{3})*\.\d{2})\b',
+            # Strict currency format with RM, decimal optional (symbol present).
+            r'\bRM[ \t]*(\d{1,3}(?:[,\s]\d{3})*(?:\.\d{2})?)\b',
         ]
 
-        # Column-layout receipts (Maybank M2E, CIMB BizChannel) print a block of
-        # labels followed by a block of values, so the value is several lines below
-        # its label. These find the label, then the first plausible value after it.
-        self._amount_label_re = re.compile(
-            r'\b(?:Transaction|Transfer|Payment|Total|Gross|Net|Debit|Credit)\s*Amount\b',
-            re.IGNORECASE)
+        # A4 fix: fee-label exclusion + amount-label priority tiers.
+        #
+        # Column-layout receipts (Maybank M2E, CIMB BizChannel, Public Bank
+        # DuitNow) print a block of labels followed by a block of values, so
+        # the value is several lines (post-flatten: many words) below its
+        # label. These three regexes classify every label found in that
+        # block into a priority tier so the value search (further below)
+        # never lets a fee or a derived total outrank the real amount:
+        #   - primary:   Amount / Transaction Amount / Payment Amount /
+        #                Transfer Amount -- the actual transaction amount.
+        #   - secondary: Total Debit Amount / Total Amount to Debit /
+        #                Total Debit -- amount + fee, ranks BELOW primary.
+        #   - fee:       Fee / Service Charge / Tax Amount / ... -- must
+        #                never be returned as the amount at all.
+        self._amount_primary_label_re = _labels_regex([
+            'Transaction Amount', 'Payment Amount', 'Transfer Amount', 'Amount',
+        ])
+        self._amount_secondary_label_re = _labels_regex([
+            'Total Debit Amount', 'Total Amount to Debit', 'Total Debit',
+        ])
+        self._fee_label_re = _labels_regex([
+            'Total Fee Charges', 'SMS Fee', 'Service Charge', 'Transaction Fee',
+            'Fund Transfer Charges', 'Service Tax Charges', 'Tax Amount',
+            'GST Amount-Service Charge', 'GST Amount Service Charge',
+            'Remittance Commission', 'Total Charges', 'Transfer Fee',
+            'Benef. Charge', 'Benef Charge', 'Discount', 'Charges', 'Fee',
+        ])
         self._money_re = re.compile(r'\b(\d{1,3}(?:,\d{3})*\.\d{2}|\d{1,9}\.\d{2})\b')
         self._date_label_re = re.compile(
             r'\b(?:Value|Transaction|Txn|Transfer|Payment|Posting|Effective)\s*Date\b',
@@ -461,7 +521,15 @@ class UltimatePatternMatcherV3:
         # A browser print header/footer stamps the date next to a wall-clock time
         # ("04/08/2026, 07:57"). That is the day the PDF was printed, not the
         # transaction date, so it must never outrank a labelled date.
-        self._print_stamp_re = re.compile(r'^\s*,?\s*\d{1,2}\s*:\s*\d{2}\b')
+        #
+        # The comma is REQUIRED and seconds must be ABSENT. The previous pattern
+        # made the comma optional and ended at \b, which succeeds at the colon
+        # before the seconds -- so "03 Aug 2026 12:23:57" and "31 Oct 2025,
+        # 10:31:57" were both classified as print stamps and genuine transaction
+        # timestamps got demoted. A bank audit timestamp carries seconds; a
+        # browser's print-time toLocaleString() stamp characteristically does
+        # not, so requiring both signals is what separates them.
+        self._print_stamp_re = re.compile(r'^\s*,\s*\d{1,2}:\d{2}(?!\s*:\s*\d{2})')
         # How far after a label to look for its value.
         self._label_window = 200
 
@@ -685,7 +753,7 @@ class UltimatePatternMatcherV3:
             r'Tax\s*Invoice\s*(?:No|Num)?\s*[:\.]?\s*(\d{6,25})',
             r'Invoice\s*No\.?\s*[:\s]*(\d{6,25})',
             # D&D Control Account Number blacklist (Hardcoded for this project context as it appears frequently as noise)
-            r'(21246660001343)',
+            r'(21000000000001)',
         ]
         for pat in account_patterns:
             acc_matches = re.findall(pat, text_normalized, re.IGNORECASE)
@@ -927,7 +995,18 @@ class UltimatePatternMatcherV3:
 
     @staticmethod
     def _is_plausible_amount(value: str) -> bool:
-        """Reject account/reference numbers that a money regex happened to match."""
+        """Reject account/reference numbers that a money regex happened to match.
+
+        A2 fix: the previous rule only rejected a *bare* (no comma, no
+        decimal) digit run of 7+ characters, leaving a 4-6 digit hole wide
+        open -- exactly the length of a Malaysian Service Reference No.,
+        batch number, postcode or branch code. Every Malaysian receipt
+        carries several of these, so the hole was not a corner case, it was
+        the common case (this is what let a 6-digit Service Reference No.
+        come back as the transaction amount). The rule now covers 4-9
+        digits; only a bare 1-3 digit integer (RM 1..999, an unremarkable
+        whole-ringgit amount) is still let through with no comma or decimal.
+        """
         s = value.strip().replace(' ', '')
         if not s.replace(',', '').replace('.', '').isdigit():
             return False
@@ -935,18 +1014,48 @@ class UltimatePatternMatcherV3:
         if len(int_part) > 9:
             # Above RM 999,999,999 — an account or reference number, not an amount.
             return False
-        if '.' not in s and ',' not in s and len(int_part) >= 7:
-            # A bare 7+ digit run with no thousands separator and no sen.
+        if '.' not in s and ',' not in s and len(int_part) >= 4:
+            # A bare 4+ digit run with no thousands separator and no sen --
+            # a reference/batch/postcode/branch number, not an amount.
             return False
         return True
 
+    @staticmethod
+    def _looks_like_digit_fragment(text: str, start: int, end: int) -> bool:
+        """True when text[start:end] is actually the middle or edge of a
+        longer digit run -- i.e. a pattern under-captured part of a longer
+        reference/account number -- rather than a standalone value. A digit
+        character immediately adjoining the match on either side means it
+        is a fragment, not a complete token.
+        """
+        if start > 0 and text[start - 1].isdigit():
+            return True
+        if end < len(text) and text[end].isdigit():
+            return True
+        return False
+
     def extract_amount(self, text: str) -> Optional[str]:
         """Extract the most likely transaction amount."""
+        # candidates: (value, score, start, end, source)
         candidates = []
 
         # 0. Try cleaning doubled text first
         text_cleaned = self._clean_doubled_text(text)
-        
+
+        # A4 fix: locate every fee-label span, and every primary/secondary
+        # amount-label span, up front. This is what stops a fee value (a
+        # "0.00" printed next to "Fee") or a derived total ("Total Debit
+        # Amount" = amount + fee) from ever outranking -- or even competing
+        # on equal footing with -- the real transaction amount, regardless
+        # of which order the labels print in.
+        fee_spans = [m.span() for m in self._fee_label_re.finditer(text_cleaned)]
+        primary_label_spans = [m.span() for m in self._amount_primary_label_re.finditer(text_cleaned)]
+        secondary_label_spans = [m.span() for m in self._amount_secondary_label_re.finditer(text_cleaned)]
+
+        def _overlaps_fee(span):
+            s, e = span
+            return any(fs < e and s < fe for fs, fe in fee_spans)
+
         # 1. Look for explicit Amount headers (High priority)
         header_patterns = [
             r'\bTotal\s*Amount\s*[:\s]*(?:RM|MYR)\s*([\d,]+\.\d{2})',
@@ -964,48 +1073,102 @@ class UltimatePatternMatcherV3:
             r'\b(?:Transfer|Transaction|Total|Payment)?\s*Amount\s*\(?\s*(?:RM|MYR)?\s*\)?\s*[:\s]*(?:RM|MYR)?\s*(\d{1,3}(?:,\d{3})*)(?!\.?\d)',
             r'\b(?:RM|MYR)\s*(\d{1,3}(?:,\d{3})*)(?!\.?\d)',
         ]
-        
-        # Use cleaned text for pattern matching
+
+        # Use cleaned text for pattern matching. finditer (not findall) so
+        # every candidate carries the position of its captured value --
+        # needed by the fee/fragment filtering below.
         for pattern in header_patterns:
-            matches = re.findall(pattern, text_cleaned, re.IGNORECASE)
-            for m in matches:
-                candidates.append((m.strip(), 10))
-        
-        # 1b. Column layout: label block, then value block. Take the first money
-        #     token after an amount label.
-        for lm in self._amount_label_re.finditer(text_cleaned):
+            for m in re.finditer(pattern, text_cleaned, re.IGNORECASE):
+                candidates.append((m.group(1).strip(), 10, m.start(1), m.end(1), "header"))
+
+        # 1b. Column layout: label block, then value block. Take the first
+        # decimal-shaped money token after an amount label. Primary labels
+        # (Amount, Transaction Amount, Payment Amount, Transfer Amount) are
+        # scored above secondary/derived totals (Total Debit Amount = amount
+        # + fee); a label that is actually part of a fee phrase (e.g. "Tax
+        # Amount") is skipped entirely, never generating a candidate here.
+        for lm in self._amount_primary_label_re.finditer(text_cleaned):
+            if _overlaps_fee(lm.span()):
+                continue
             m = self._money_re.search(text_cleaned[lm.end():lm.end() + self._label_window])
             if m:
-                candidates.append((m.group(1).strip(), 8))
+                s, e = lm.end() + m.start(1), lm.end() + m.end(1)
+                candidates.append((m.group(1).strip(), 9, s, e, "label_primary"))
+
+        for lm in self._amount_secondary_label_re.finditer(text_cleaned):
+            if _overlaps_fee(lm.span()):
+                continue
+            m = self._money_re.search(text_cleaned[lm.end():lm.end() + self._label_window])
+            if m:
+                s, e = lm.end() + m.start(1), lm.end() + m.end(1)
+                candidates.append((m.group(1).strip(), 4, s, e, "label_secondary"))
 
         # 2. Look for all generic patterns (using cleaned text too)
         for pattern in self.amount_patterns:
-            matches = re.findall(pattern, text_cleaned, re.IGNORECASE)
-            for m in matches:
-                if isinstance(m, tuple):
-                    val = m[0]
-                else:
-                    val = m
+            for m in re.finditer(pattern, text_cleaned, re.IGNORECASE):
+                val = m.group(1)
                 if val:
-                    candidates.append((val.strip(), 5))
-                    
+                    candidates.append((val.strip(), 5, m.start(1), m.end(1), "generic"))
+
         # 3. Integer-amount fallback only if no decimal amount found
         if not candidates:
             for pattern in int_patterns:
-                for m in re.findall(pattern, text_cleaned, re.IGNORECASE):
-                    val = (m[0] if isinstance(m, tuple) else m).strip()
+                for m in re.finditer(pattern, text_cleaned, re.IGNORECASE):
+                    val = m.group(1).strip()
                     if val and val not in ('0', '00'):
-                        candidates.append((val, 3))
+                        candidates.append((val, 3, m.start(1), m.end(1), "int_fallback"))
 
-        # 4. Drop anything that cannot be money (account nos., reference nos.)
-        candidates = [c for c in candidates if self._is_plausible_amount(c[0])]
+        # 4. Fee-context exclusion + secondary-total downranking. Skipped for
+        # "label_primary"/"label_secondary" candidates -- those already
+        # resolved their own (correct) label unambiguously in step 1b, and
+        # re-checking "what label is nearest the VALUE" would wrongly punish
+        # a primary amount whose value sits far down a column-layout value
+        # block, after a fee label that belongs to an earlier column.
+        # header/generic/int_fallback candidates, by contrast, are only ever
+        # produced by a label sitting *immediately* next to the value, so a
+        # short lookback reliably finds the label that actually produced
+        # them -- this is what catches "Tax Amount RM 5.00" and
+        # "Total Charges RM 5.00", which contain the bare trigger words
+        # "Amount"/"Total" that the generic patterns react to.
+        SMALL_LOOKBACK = 35
 
-        if not candidates:
+        def _nearest_label_type(pos):
+            best_type, best_dist = None, None
+            for spans, typ in (
+                (fee_spans, "fee"),
+                (secondary_label_spans, "secondary"),
+                (primary_label_spans, "primary"),
+            ):
+                for s, e in spans:
+                    if e <= pos:
+                        d = pos - e
+                        if d <= SMALL_LOOKBACK and (best_dist is None or d < best_dist):
+                            best_dist, best_type = d, typ
+            return best_type
+
+        filtered = []
+        for val, score, start, end, source in candidates:
+            # A digit run under-captured by a bounded pattern is a fragment
+            # of something else (an account/reference number), not a value.
+            if self._looks_like_digit_fragment(text_cleaned, start, end):
+                continue
+            if source in ("header", "generic", "int_fallback"):
+                label_type = _nearest_label_type(start)
+                if label_type == "fee":
+                    continue
+                if label_type == "secondary":
+                    score = min(score, 4)
+            filtered.append((val, score))
+
+        # 5. Drop anything that cannot be money (account nos., reference nos.)
+        filtered = [c for c in filtered if self._is_plausible_amount(c[0])]
+
+        if not filtered:
             return None
 
         # Sort by priority
-        candidates.sort(key=lambda x: x[1], reverse=True)
-        return candidates[0][0]
+        filtered.sort(key=lambda x: x[1], reverse=True)
+        return filtered[0][0]
 
     def is_valid_transaction_id(self, tid_text: str) -> bool:
         """Stricter ID Filtering for 'Perfect' extraction"""

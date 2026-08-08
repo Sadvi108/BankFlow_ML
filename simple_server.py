@@ -69,6 +69,7 @@ from app.ultimate_patterns_v3 import extract_all_fields_v3
 from app.enhanced_ocr_pipeline import EnhancedOCRPipeline, is_text_garbage
 from app.layout_aware_extractor import layout_extractor
 from app.result_merger import merge as merge_results
+from app.ibg.extractor import extract_ibg_fields
 
 # Initialize enhanced OCR pipeline
 ocr_pipeline = EnhancedOCRPipeline()
@@ -144,7 +145,8 @@ async def train_page(request: Request):
     return templates.TemplateResponse("train.html", {"request": request})
 
 def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
-                    raw_text: str, ocr_confidence: float, llm_used: bool) -> Dict[str, Any]:
+                    raw_text: str, ocr_confidence: float, llm_used: bool,
+                    ibg: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """Persist to history/Supabase, build the JSON response shape the UI expects."""
     results = {
         "bank": merged["bank_name"],
@@ -164,6 +166,22 @@ def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
         "raw_text": raw_text,
     }
 
+    # Everything the IBG engine found, added alongside the legacy keys rather
+    # than replacing them, so existing consumers keep working unchanged.
+    if ibg:
+        results["references"] = ibg.get("references", [])
+        results["references_by_role"] = ibg.get("references_by_role", {})
+        results["reference_count"] = ibg.get("reference_count", 0)
+        results["fee"] = ibg["fee"]["value"]
+        results["total_debit"] = ibg["total_debit"]["value"]
+        results["beneficiary_bank"] = ibg["beneficiary_bank"]["value"]
+        results["review_reasons"] = ibg.get("review_reasons", [])
+        results["field_detail"] = dict(
+            (k, ibg[k]) for k in
+            ("reference_id", "bank_name", "beneficiary_bank",
+             "transaction_date", "amount", "fee", "total_debit")
+        )
+
     try:
         entry_id = history_manager.add_entry({
             "id": file_id,
@@ -173,6 +191,13 @@ def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
             "amount": results["amount"],
             "date": results["date"],
             "confidence": round(results["overall_confidence"] * 100, 1),
+            # Carried so the CSV export and the history view can show every
+            # reference, not just the elected primary.
+            "references": results.get("references", []),
+            "fee": results.get("fee"),
+            "total_debit": results.get("total_debit"),
+            "beneficiary_bank": results.get("beneficiary_bank"),
+            "needs_review": results.get("needs_review"),
         })
         results["entry_id"] = entry_id
     except Exception as e:
@@ -279,6 +304,19 @@ async def extract_receipt(file: UploadFile = File(...)):
         pattern_results = extract_all_fields_v3(text, ocr_used=ocr_used)
         bank_name = pattern_results.get('bank_name', 'Unknown')
 
+        # The IBG engine runs on every receipt. Where it resolves a field, it
+        # wins: it ranks by which label introduced a value rather than by the
+        # shape of the token, which is what stopped account numbers and payer
+        # free-text being reported as the bank's reference. Where it finds
+        # nothing, the legacy V3 answer stands, so non-interbank receipts are
+        # unaffected.
+        try:
+            ibg_results = extract_ibg_fields(text, ocr_used=ocr_used)
+        except Exception as e:
+            logger.error(f"IBG extraction failed, falling back to V3: {e}",
+                         exc_info=True)
+            ibg_results = None
+
         layout_results = layout_extractor.extract(ocr_result, bank_name)
         logger.info(f"Layout success={layout_results.get('success')} bank={bank_name}")
 
@@ -295,6 +333,23 @@ async def extract_receipt(file: UploadFile = File(...)):
             "amount": pattern_results.get("amount"),
         }
 
+        if ibg_results:
+            # The reference is AUTHORITATIVE, including when it is None.
+            # The legacy engine ranks candidates by token shape, which is
+            # precisely what let a debit account number be reported as the
+            # transaction reference. If the label-driven engine found no
+            # bank-issued reference, the honest answer is "none on this
+            # document" -- not the best-looking number on the page.
+            local_dict["transaction_id"] = ibg_results["reference_id"]["value"]
+
+            # For the other fields a missing IBG answer means "did not
+            # resolve", so the legacy value is still worth keeping.
+            for legacy_key, ibg_key in (("bank_name", "bank_name"),
+                                        ("date", "transaction_date"),
+                                        ("amount", "amount")):
+                if ibg_results[ibg_key]["value"] is not None:
+                    local_dict[legacy_key] = ibg_results[ibg_key]["value"]
+
         # 3. Validate locally (no API). Merger flags needs_review when fields fail.
         merged = merge_results(local_dict, None)
         llm_used = False
@@ -304,11 +359,17 @@ async def extract_receipt(file: UploadFile = File(...)):
             if layout_results.get("success") else [merged["transaction_id"]]
         ) or [merged["transaction_id"]]
 
+        # The IBG engine knows why it is unsure; prefer its verdict.
+        if ibg_results:
+            merged["needs_review"] = ibg_results["needs_review"]
+            merged["overall_confidence"] = ibg_results["overall_confidence"]
+
         return _build_response(
             file_id, file.filename, merged,
             raw_text=text,
             ocr_confidence=ocr_result.get("confidence", 0.5),
             llm_used=llm_used,
+            ibg=ibg_results,
         )
 
     except HTTPException:
@@ -335,10 +396,21 @@ async def export_history():
     history = history_manager.get_all()
     
     output = io.StringIO()
-    writer = csv.DictWriter(output, fieldnames=["timestamp", "filename", "bank_name", "reference_id", "amount", "date", "status"])
+    # Existing columns kept in place and order so anything already consuming
+    # this file keeps working; the reference and money breakdown is appended.
+    writer = csv.DictWriter(output, fieldnames=[
+        "timestamp", "filename", "bank_name", "reference_id", "amount", "date",
+        "status", "fee", "total_debit", "beneficiary_bank",
+        "bank_references", "payer_references", "needs_review",
+    ])
     writer.writeheader()
-    
+
     for entry in history:
+        refs = entry.get("references") or []
+        bank_refs = [r["value"] for r in refs
+                     if r.get("role", "").startswith("bank_")]
+        payer_refs = [r["value"] for r in refs
+                      if r.get("role") == "payer_supplied"]
         writer.writerow({
             "timestamp": entry.get("timestamp"),
             "filename": entry.get("filename"),
@@ -346,7 +418,13 @@ async def export_history():
             "reference_id": entry.get("reference_id"),
             "amount": entry.get("amount"),
             "date": entry.get("date"),
-            "status": entry.get("status")
+            "status": entry.get("status"),
+            "fee": entry.get("fee"),
+            "total_debit": entry.get("total_debit"),
+            "beneficiary_bank": entry.get("beneficiary_bank"),
+            "bank_references": " | ".join(bank_refs),
+            "payer_references": " | ".join(payer_refs),
+            "needs_review": entry.get("needs_review"),
         })
     
     output.seek(0)

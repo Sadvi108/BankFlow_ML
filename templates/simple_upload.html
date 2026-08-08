@@ -456,6 +456,40 @@
           <input type="text" id="fieldAmount" class="value-input" value="Calculating...">
         </div>
 
+        <!-- Fee and total debit are separate numbers from the amount. On a CIMB
+             IBG slip: amount 106.00, fee 0.10, total debit 106.10. Reporting the
+             total as the amount breaks invoice reconciliation. -->
+        <div id="feeRow" style="display:none; gap:1rem;">
+          <div class="detail-card" style="flex:1">
+            <div class="label">Fee (MYR) <span id="feeConf" class="conf-badge">--</span></div>
+            <input type="text" id="fieldFee" class="value-input" value="--">
+          </div>
+          <div class="detail-card" style="flex:1">
+            <div class="label">Total Debit (MYR) <span id="totalConf" class="conf-badge">--</span></div>
+            <input type="text" id="fieldTotal" class="value-input" value="--">
+          </div>
+        </div>
+
+        <div class="detail-card" id="beneRow" style="display:none">
+          <div class="label">Beneficiary Bank <span id="beneConf" class="conf-badge">--</span></div>
+          <input type="text" id="fieldBene" class="value-input" value="--">
+        </div>
+
+        <!-- Every reference on the slip, grouped by who issued it. The bank's
+             own reference is what reconciles; the payer's free text is not, and
+             conflating them is the defect this whole panel exists to prevent. -->
+        <div class="detail-card" id="refsCard" style="display:none">
+          <div class="label" style="display:flex; justify-content:space-between; align-items:center">
+            <span>All References <span id="refCount" class="conf-badge">0</span></span>
+          </div>
+          <div id="refsList" style="margin-top:0.6rem"></div>
+        </div>
+
+        <div class="detail-card" id="reviewCard" style="display:none; border-color:var(--warning)">
+          <div class="label" style="color:var(--warning)">Why this needs review</div>
+          <ul id="reviewReasons" style="margin:0.4rem 0 0 1rem; font-size:0.82rem; color:var(--text-dim)"></ul>
+        </div>
+
         <div class="console">
           <div class="console-header"><i data-lucide="terminal" size="14"></i> ANALYSIS LOG</div>
           <div id="logEntries"></div>
@@ -593,6 +627,101 @@
       })[m] || 'Local ML';
     }
 
+    const ROLE_META = {
+      bank_primary:   { label: 'Bank reference',      color: 'var(--success, #10b981)' },
+      bank_secondary: { label: 'Clearing / system',   color: 'var(--accent, #6366f1)' },
+      payer_supplied: { label: 'Payer supplied',      color: 'var(--text-dim, #94a3b8)' },
+    };
+    const ROLE_ORDER = ['bank_primary', 'bank_secondary', 'payer_supplied'];
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    function renderMoney(data, fd) {
+      const row = document.getElementById('feeRow');
+      const hasFee = data.fee != null, hasTotal = data.total_debit != null;
+      if (!hasFee && !hasTotal) { row.style.display = 'none'; return; }
+      row.style.display = 'flex';
+      document.getElementById('fieldFee').value = hasFee ? data.fee : '--';
+      document.getElementById('fieldTotal').value = hasTotal ? data.total_debit : '--';
+      setConf(document.getElementById('feeConf'), fd.fee ? fd.fee.confidence : 0);
+      setConf(document.getElementById('totalConf'), fd.total_debit ? fd.total_debit.confidence : 0);
+    }
+
+    function renderBeneficiary(data, fd) {
+      const row = document.getElementById('beneRow');
+      if (!data.beneficiary_bank) { row.style.display = 'none'; return; }
+      row.style.display = 'block';
+      document.getElementById('fieldBene').value = data.beneficiary_bank;
+      setConf(document.getElementById('beneConf'),
+              fd.beneficiary_bank ? fd.beneficiary_bank.confidence : 0);
+    }
+
+    function renderReferences(data) {
+      const card = document.getElementById('refsCard');
+      const list = document.getElementById('refsList');
+      const refs = data.references || [];
+      list.innerHTML = '';
+      if (!refs.length) { card.style.display = 'none'; return; }
+      card.style.display = 'block';
+      document.getElementById('refCount').textContent = refs.length;
+
+      ROLE_ORDER.forEach(role => {
+        const group = refs.filter(r => r.role === role);
+        if (!group.length) return;
+        const meta = ROLE_META[role];
+        const head = document.createElement('div');
+        head.style.cssText = 'font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase;'
+          + 'margin:0.7rem 0 0.35rem; color:' + meta.color;
+        head.textContent = meta.label + ' (' + group.length + ')';
+        list.appendChild(head);
+
+        group.forEach(r => {
+          const row = document.createElement('div');
+          row.style.cssText = 'display:flex; align-items:center; gap:0.6rem; padding:0.4rem 0.6rem;'
+            + 'margin-bottom:0.3rem; border-radius:6px; background:rgba(255,255,255,0.03);'
+            + 'border-left:3px solid ' + meta.color + ';';
+          row.innerHTML =
+            '<div style="flex:1; min-width:0">'
+            + '<div style="font-family:ui-monospace,monospace; font-size:0.86rem; word-break:break-all">'
+            + esc(r.value) + '</div>'
+            + '<div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.15rem">'
+            + esc(r.label) + '</div>'
+            + '</div>'
+            + '<span class="conf-badge" style="flex-shrink:0">'
+            + Math.round((r.confidence || 0) * 100) + '%</span>'
+            + '<button type="button" class="btn btn-outline" style="padding:0.2rem 0.5rem;'
+            + 'font-size:0.7rem; flex-shrink:0" data-copy="' + esc(r.value) + '">Copy</button>';
+          list.appendChild(row);
+        });
+      });
+
+      list.querySelectorAll('[data-copy]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          navigator.clipboard.writeText(btn.getAttribute('data-copy'));
+          const was = btn.textContent;
+          btn.textContent = 'Copied';
+          setTimeout(() => { btn.textContent = was; }, 1200);
+        });
+      });
+    }
+
+    function renderReviewReasons(data) {
+      const card = document.getElementById('reviewCard');
+      const ul = document.getElementById('reviewReasons');
+      const reasons = data.review_reasons || [];
+      ul.innerHTML = '';
+      if (!reasons.length) { card.style.display = 'none'; return; }
+      card.style.display = 'block';
+      reasons.forEach(r => {
+        const li = document.createElement('li');
+        li.textContent = r;
+        ul.appendChild(li);
+      });
+    }
+
     function populateResults(data) {
       document.getElementById('fieldBank').value = data.bank_name || 'Not Found';
       document.getElementById('fieldId').value = data.transaction_id || 'Not Found';
@@ -601,10 +730,22 @@
 
       const fc = data.field_confidence || {};
       const overall = data.overall_confidence || data.ocr_confidence || 0;
-      setConf(document.getElementById('bankConf'), data.bank_name && data.bank_name !== 'Unknown' ? overall : 0);
-      setConf(document.getElementById('idConf'), fc.transaction_id || 0);
-      setConf(document.getElementById('dateConf'), fc.date || 0);
-      setConf(document.getElementById('amountConf'), fc.amount || 0);
+      // Prefer the IBG engine's per-field confidence: it is derived from which
+      // label produced the value, so it actually varies. The legacy figure was
+      // a flat 1.0 on every receipt, including wrong ones.
+      const fd = data.field_detail || {};
+      const conf = (name, fallback) =>
+        fd[name] ? fd[name].confidence : (fallback || 0);
+      setConf(document.getElementById('bankConf'), conf('bank_name',
+        data.bank_name && data.bank_name !== 'Unknown' ? overall : 0));
+      setConf(document.getElementById('idConf'), conf('reference_id', fc.transaction_id));
+      setConf(document.getElementById('dateConf'), conf('transaction_date', fc.date));
+      setConf(document.getElementById('amountConf'), conf('amount', fc.amount));
+
+      renderMoney(data, fd);
+      renderBeneficiary(data, fd);
+      renderReferences(data);
+      renderReviewReasons(data);
 
       const badge = document.getElementById('methodBadge');
       badge.textContent = methodLabel(data.method);

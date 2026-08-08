@@ -54,3 +54,6 @@ Receipts/
 eval_*.txt
 pattern_training_user/
 *.original.md
+
+# Machine-local Claude Code permissions
+.claude/settings.local.json

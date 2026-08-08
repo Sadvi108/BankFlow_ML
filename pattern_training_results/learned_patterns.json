@@ -42,7 +42,7 @@
     },
     {
       "ref_id": "C797210121083048",
-      "context": "e\nTransaction Details\nTransaction Reference No. : C797210121083048 Beneficiary Name : D&D CONTROL (M) SDN BHD\nPaymen",
+      "context": "e\nTransaction Details\nTransaction Reference No. : C797210121083048 Beneficiary Name : ACME CONTROL (M) SDN BHD\nPaymen",
       "pattern": "e\\\nTransaction\\ Details\\\nTransaction\\ Reference\\ No\\.\\ :\\ ([A-Z0-9]{14,18})\\ Beneficiary\\ Name\\ :\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\\nPaymen"
     },
     {
@@ -91,8 +91,8 @@
       "pattern": "ompany\\ ID:\\ MULTRANS\\ Bank:\\ UOBM\\\nTransfer\\ From:\\ MYR\\ ([A-Z0-9]{8,12})\\ BIB\\ Ref:\\ FT21010031294101\\\nMULTI\\-TRANS\\ SDN\\.\\ BHD\\.\\\nA"
     },
     {
-      "ref_id": "21246660001343",
-      "context": " CONTROL (M) SDN BHD Bank Code: RHBBMYKL\nAccount: 21246660001343 Bank Name: RHB Bank Berhad\nBeneficiary Resident\nR",
+      "ref_id": "21000000000001",
+      "context": " CONTROL (M) SDN BHD Bank Code: RHBBMYKL\nAccount: 21000000000001 Bank Name: RHB Bank Berhad\nBeneficiary Resident\nR",
       "pattern": "\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\ Bank\\ Code:\\ RHBBMYKL\\\nAccount:\\ ([A-Z0-9]{12,16})\\ Bank\\ Name:\\ RHB\\ Bank\\ Berhad\\\nBeneficiary\\ Resident\\\nR"
     },
     {
@@ -141,8 +141,8 @@
       "pattern": "Executed\\ Successfully\\\nTransaction\\ Reference\\ No\\.\\ :\\ ([A-Z0-9]{16,20})\\\nSource\\ Account\\ :\\ 8603478285\\ /\\ PERUSAHAAN\\ IMPIAN\\ M"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "nformation\nTransfer To : Account No.\nDuitNow ID : 21246660001343 / D&D CONTROL (M) SDN BHD\nAdditional Information\n",
+      "ref_id": "21000000000001",
+      "context": "nformation\nTransfer To : Account No.\nDuitNow ID : 21000000000001 / ACME CONTROL (M) SDN BHD\nAdditional Information\n",
       "pattern": "nformation\\\nTransfer\\ To\\ :\\ Account\\ No\\.\\\nDuitNow\\ ID\\ :\\ ([A-Z0-9]{12,16})\\ /\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\\nAdditional\\ Information\\\n"
     },
     {
@@ -176,8 +176,8 @@
       "pattern": "000294789\\\nTxn\\ Ref\\ No\\.\\\n财务交易类型\\\nDuitNow\\ iGTB\\ Ref\\ No\\.\\ ([A-Z0-9]{9,13})\\\nFinancial\\ Txn\\ Type\\\n交易日期\\ 交易状态\\\n2025/11/20\\ 15:04\\ 交易完"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "ary Information\nBeneficiary Type Adhoc\nDuitNow ID 21246660001343 DuitNow ID Type ACC\nBeneficiary Name D&D CONTROL ",
+      "ref_id": "21000000000001",
+      "context": "ary Information\nBeneficiary Type Adhoc\nDuitNow ID 21000000000001 DuitNow ID Type ACC\nBeneficiary Name ACME CONTROL ",
       "pattern": "ary\\ Information\\\nBeneficiary\\ Type\\ Adhoc\\\nDuitNow\\ ID\\ ([A-Z0-9]{12,16})\\ DuitNow\\ ID\\ Type\\ ACC\\\nBeneficiary\\ Name\\ D\\&D\\ CONTROL\\ "
     },
     {
@@ -202,7 +202,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "formation\nBeneficiary Type Adhoc\nDuitNow ID 21246660001343 DuitNow ID Type ACC\nBeneficiary Name D&D CONTROL ",
+      "context": "formation\nBeneficiary Type Adhoc\nDuitNow ID 21000000000001 DuitNow ID Type ACC\nBeneficiary Name ACME CONTROL ",
       "pattern": "formation\\\nBeneficiary\\ Type\\ Adhoc\\\nDuitNow\\ ID\\ 212466([A-Z0-9]{6,10})\\ DuitNow\\ ID\\ Type\\ ACC\\\nBeneficiary\\ Name\\ D\\&D\\ CONTROL\\ "
     },
     {
@@ -216,8 +216,8 @@
       "pattern": "Executed\\ Successfully\\\nTransaction\\ Reference\\ No\\.\\ :\\ ([A-Z0-9]{16,20})\\\nSource\\ Account\\ :\\ 8001877790\\ /\\ ATLANTIC\\ CONTAINER\\ "
     },
     {
-      "ref_id": "21246660001343",
-      "context": "ransfer To : Account No.(DuitNow ID)\nDuitNow ID : 21246660001343 / D&D CONTROL (M) SDN BHD\nAdditional Information\n",
+      "ref_id": "21000000000001",
+      "context": "ransfer To : Account No.(DuitNow ID)\nDuitNow ID : 21000000000001 / ACME CONTROL (M) SDN BHD\nAdditional Information\n",
       "pattern": "ransfer\\ To\\ :\\ Account\\ No\\.\\(DuitNow\\ ID\\)\\\nDuitNow\\ ID\\ :\\ ([A-Z0-9]{12,16})\\ /\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\\nAdditional\\ Information\\\n"
     },
     {
@@ -272,7 +272,7 @@
     },
     {
       "ref_id": "KMT12511727962",
-      "context": "ame: D&D CONTROL (M) SDN BHD\nRecipient Reference: KMT12511727962\nOther Payment Details: DAMAGE CHARGES TEMU 635746",
+      "context": "ame: ACME CONTROL (M) SDN BHD\nRecipient Reference: KMT12511727962\nOther Payment Details: DAMAGE CHARGES TEMU 635746",
       "pattern": "ame:\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\\nRecipient\\ Reference:\\ ([A-Z0-9]{12,16})\\\nOther\\ Payment\\ Details:\\ DAMAGE\\ CHARGES\\ TEMU\\ 635746"
     }
   ],
@@ -289,7 +289,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "nk's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you ",
+      "context": "nk's reference only.\nBeneficiary Account No 21000000000001\nPlease verify the beneficiary details before you ",
       "pattern": "nk's\\ reference\\ only\\.\\\nBeneficiary\\ Account\\ No\\ 212466([A-Z0-9]{6,10})\\\nPlease\\ verify\\ the\\ beneficiary\\ details\\ before\\ you\\ "
     },
     {
@@ -314,7 +314,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "nk's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you ",
+      "context": "nk's reference only.\nBeneficiary Account No 21000000000001\nPlease verify the beneficiary details before you ",
       "pattern": "nk's\\ reference\\ only\\.\\\nBeneficiary\\ Account\\ No\\ 212466([A-Z0-9]{6,10})\\\nPlease\\ verify\\ the\\ beneficiary\\ details\\ before\\ you\\ "
     },
     {
@@ -379,7 +379,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "nk's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you ",
+      "context": "nk's reference only.\nBeneficiary Account No 21000000000001\nPlease verify the beneficiary details before you ",
       "pattern": "nk's\\ reference\\ only\\.\\\nBeneficiary\\ Account\\ No\\ 212466([A-Z0-9]{6,10})\\\nPlease\\ verify\\ the\\ beneficiary\\ details\\ before\\ you\\ "
     },
     {
@@ -404,7 +404,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "nk's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you ",
+      "context": "nk's reference only.\nBeneficiary Account No 21000000000001\nPlease verify the beneficiary details before you ",
       "pattern": "nk's\\ reference\\ only\\.\\\nBeneficiary\\ Account\\ No\\ 212466([A-Z0-9]{6,10})\\\nPlease\\ verify\\ the\\ beneficiary\\ details\\ before\\ you\\ "
     },
     {
@@ -439,8 +439,8 @@
     },
     {
       "ref_id": "NSA32010055160",
-      "context": "ary Account No 21246660001343\nRecipient Reference NSA32010055160/54261\nAmount MYR 20.00\nFee MYR 0.00\nTotal Fee MYR",
-      "pattern": "ary\\ Account\\ No\\ 21246660001343\\\nRecipient\\ Reference\\ ([A-Z0-9]{12,16})/54261\\\nAmount\\ MYR\\ 20\\.00\\\nFee\\ MYR\\ 0\\.00\\\nTotal\\ Fee\\ MYR"
+      "context": "ary Account No 21000000000001\nRecipient Reference NSA32010055160/54261\nAmount MYR 20.00\nFee MYR 0.00\nTotal Fee MYR",
+      "pattern": "ary\\ Account\\ No\\ 21000000000001\\\nRecipient\\ Reference\\ ([A-Z0-9]{12,16})/54261\\\nAmount\\ MYR\\ 20\\.00\\\nFee\\ MYR\\ 0\\.00\\\nTotal\\ Fee\\ MYR"
     },
     {
       "ref_id": "21353115",
@@ -464,7 +464,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "nk's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you ",
+      "context": "nk's reference only.\nBeneficiary Account No 21000000000001\nPlease verify the beneficiary details before you ",
       "pattern": "nk's\\ reference\\ only\\.\\\nBeneficiary\\ Account\\ No\\ 212466([A-Z0-9]{6,10})\\\nPlease\\ verify\\ the\\ beneficiary\\ details\\ before\\ you\\ "
     },
     {
@@ -489,7 +489,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "nk's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you ",
+      "context": "nk's reference only.\nBeneficiary Account No 21000000000001\nPlease verify the beneficiary details before you ",
       "pattern": "nk's\\ reference\\ only\\.\\\nBeneficiary\\ Account\\ No\\ 212466([A-Z0-9]{6,10})\\\nPlease\\ verify\\ the\\ beneficiary\\ details\\ before\\ you\\ "
     },
     {
@@ -514,7 +514,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "nk's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you ",
+      "context": "nk's reference only.\nBeneficiary Account No 21000000000001\nPlease verify the beneficiary details before you ",
       "pattern": "nk's\\ reference\\ only\\.\\\nBeneficiary\\ Account\\ No\\ 212466([A-Z0-9]{6,10})\\\nPlease\\ verify\\ the\\ beneficiary\\ details\\ before\\ you\\ "
     },
     {
@@ -539,7 +539,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "nk's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you ",
+      "context": "nk's reference only.\nBeneficiary Account No 21000000000001\nPlease verify the beneficiary details before you ",
       "pattern": "nk's\\ reference\\ only\\.\\\nBeneficiary\\ Account\\ No\\ 212466([A-Z0-9]{6,10})\\\nPlease\\ verify\\ the\\ beneficiary\\ details\\ before\\ you\\ "
     },
     {
@@ -564,7 +564,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "nk's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you ",
+      "context": "nk's reference only.\nBeneficiary Account No 21000000000001\nPlease verify the beneficiary details before you ",
       "pattern": "nk's\\ reference\\ only\\.\\\nBeneficiary\\ Account\\ No\\ 212466([A-Z0-9]{6,10})\\\nPlease\\ verify\\ the\\ beneficiary\\ details\\ before\\ you\\ "
     },
     {
@@ -589,7 +589,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "nk's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you ",
+      "context": "nk's reference only.\nBeneficiary Account No 21000000000001\nPlease verify the beneficiary details before you ",
       "pattern": "nk's\\ reference\\ only\\.\\\nBeneficiary\\ Account\\ No\\ 212466([A-Z0-9]{6,10})\\\nPlease\\ verify\\ the\\ beneficiary\\ details\\ before\\ you\\ "
     },
     {
@@ -604,8 +604,8 @@
     },
     {
       "ref_id": "NSA32010055263F",
-      "context": "ary Account No 21246660001343\nRecipient Reference NSA32010055263F\nAmount MYR 4,200.00\nFee MYR 0.00\nTotal Fee MYR 0.",
-      "pattern": "ary\\ Account\\ No\\ 21246660001343\\\nRecipient\\ Reference\\ ([A-Z0-9]{13,17})\\\nAmount\\ MYR\\ 4,200\\.00\\\nFee\\ MYR\\ 0\\.00\\\nTotal\\ Fee\\ MYR\\ 0\\."
+      "context": "ary Account No 21000000000001\nRecipient Reference NSA32010055263F\nAmount MYR 4,200.00\nFee MYR 0.00\nTotal Fee MYR 0.",
+      "pattern": "ary\\ Account\\ No\\ 21000000000001\\\nRecipient\\ Reference\\ ([A-Z0-9]{13,17})\\\nAmount\\ MYR\\ 4,200\\.00\\\nFee\\ MYR\\ 0\\.00\\\nTotal\\ Fee\\ MYR\\ 0\\."
     },
     {
       "ref_id": "21353472",
@@ -619,18 +619,18 @@
     },
     {
       "ref_id": "3134019307",
-      "context": "Amount Status\nDate Date Account/Name Account/Name\n3134019307 /\nInterbank 21246660001343 /\nBINEX MYR\n2101210021",
-      "pattern": "Amount\\ Status\\\nDate\\ Date\\ Account/Name\\ Account/Name\\\n([A-Z0-9]{8,12})\\ /\\\nInterbank\\ 21246660001343\\ /\\\nBINEX\\ MYR\\\n2101210021"
+      "context": "Amount Status\nDate Date Account/Name Account/Name\n3134019307 /\nInterbank 21000000000001 /\nBINEX MYR\n2101210021",
+      "pattern": "Amount\\ Status\\\nDate\\ Date\\ Account/Name\\ Account/Name\\\n([A-Z0-9]{8,12})\\ /\\\nInterbank\\ 21000000000001\\ /\\\nBINEX\\ MYR\\\n2101210021"
     },
     {
-      "ref_id": "21246660001343",
-      "context": " Account/Name Account/Name\n3134019307 /\nInterbank 21246660001343 /\nBINEX MYR\n2101210021796611 21-Jan-2021 21-Jan-2",
+      "ref_id": "21000000000001",
+      "context": " Account/Name Account/Name\n3134019307 /\nInterbank 21000000000001 /\nBINEX MYR\n2101210021796611 21-Jan-2021 21-Jan-2",
       "pattern": "\\ Account/Name\\ Account/Name\\\n3134019307\\ /\\\nInterbank\\ ([A-Z0-9]{12,16})\\ /\\\nBINEX\\ MYR\\\n2101210021796611\\ 21\\-Jan\\-2021\\ 21\\-Jan\\-2"
     },
     {
       "ref_id": "2101210021796611",
-      "context": "3134019307 /\nInterbank 21246660001343 /\nBINEX MYR\n2101210021796611 21-Jan-2021 21-Jan-2021 GIRO D&D CONTROL Processe",
-      "pattern": "3134019307\\ /\\\nInterbank\\ 21246660001343\\ /\\\nBINEX\\ MYR\\\n([A-Z0-9]{14,18})\\ 21\\-Jan\\-2021\\ 21\\-Jan\\-2021\\ GIRO\\ D\\&D\\ CONTROL\\ Processe"
+      "context": "3134019307 /\nInterbank 21000000000001 /\nBINEX MYR\n2101210021796611 21-Jan-2021 21-Jan-2021 GIRO ACME CONTROL Processe",
+      "pattern": "3134019307\\ /\\\nInterbank\\ 21000000000001\\ /\\\nBINEX\\ MYR\\\n([A-Z0-9]{14,18})\\ 21\\-Jan\\-2021\\ 21\\-Jan\\-2021\\ GIRO\\ D\\&D\\ CONTROL\\ Processe"
     },
     {
       "ref_id": "TCKU1015259",
@@ -644,7 +644,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "nk's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you ",
+      "context": "nk's reference only.\nBeneficiary Account No 21000000000001\nPlease verify the beneficiary details before you ",
       "pattern": "nk's\\ reference\\ only\\.\\\nBeneficiary\\ Account\\ No\\ 212466([A-Z0-9]{6,10})\\\nPlease\\ verify\\ the\\ beneficiary\\ details\\ before\\ you\\ "
     },
     {
@@ -674,7 +674,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "nk's reference only.\nBeneficiary Account No 21246660001343\nPlease verify the beneficiary details before you ",
+      "context": "nk's reference only.\nBeneficiary Account No 21000000000001\nPlease verify the beneficiary details before you ",
       "pattern": "nk's\\ reference\\ only\\.\\\nBeneficiary\\ Account\\ No\\ 212466([A-Z0-9]{6,10})\\\nPlease\\ verify\\ the\\ beneficiary\\ details\\ before\\ you\\ "
     },
     {
@@ -691,22 +691,22 @@
   "CIMB": [
     {
       "ref_id": "202101200085132189",
-      "context": "No. Account Account Account Bank Charges Tax\nName\n202101200085132189 8010165798 / 21246660001343 D&D RHB BANK MYR 1,87",
-      "pattern": "No\\.\\ Account\\ Account\\ Account\\ Bank\\ Charges\\ Tax\\\nName\\\n([A-Z0-9]{16,20})\\ 8010165798\\ /\\ 21246660001343\\ D\\&D\\ RHB\\ BANK\\ MYR\\ 1,87"
+      "context": "No. Account Account Account Bank Charges Tax\nName\n202101200085132189 8010165798 / 21000000000001 D&D RHB BANK MYR 1,87",
+      "pattern": "No\\.\\ Account\\ Account\\ Account\\ Bank\\ Charges\\ Tax\\\nName\\\n([A-Z0-9]{16,20})\\ 8010165798\\ /\\ 21000000000001\\ D\\&D\\ RHB\\ BANK\\ MYR\\ 1,87"
     },
     {
       "ref_id": "8010165798",
-      "context": " Account Bank Charges Tax\nName\n202101200085132189 8010165798 / 21246660001343 D&D RHB BANK MYR 1,871.00 Interb",
-      "pattern": "\\ Account\\ Bank\\ Charges\\ Tax\\\nName\\\n202101200085132189\\ ([A-Z0-9]{8,12})\\ /\\ 21246660001343\\ D\\&D\\ RHB\\ BANK\\ MYR\\ 1,871\\.00\\ Interb"
+      "context": " Account Bank Charges Tax\nName\n202101200085132189 8010165798 / 21000000000001 D&D RHB BANK MYR 1,871.00 Interb",
+      "pattern": "\\ Account\\ Bank\\ Charges\\ Tax\\\nName\\\n202101200085132189\\ ([A-Z0-9]{8,12})\\ /\\ 21000000000001\\ D\\&D\\ RHB\\ BANK\\ MYR\\ 1,871\\.00\\ Interb"
     },
     {
-      "ref_id": "21246660001343",
-      "context": " Charges Tax\nName\n202101200085132189 8010165798 / 21246660001343 D&D RHB BANK MYR 1,871.00 Interbank\nCL GLOBAL CON",
+      "ref_id": "21000000000001",
+      "context": " Charges Tax\nName\n202101200085132189 8010165798 / 21000000000001 D&D RHB BANK MYR 1,871.00 Interbank\nCL GLOBAL CON",
       "pattern": "\\ Charges\\ Tax\\\nName\\\n202101200085132189\\ 8010165798\\ /\\ ([A-Z0-9]{12,16})\\ D\\&D\\ RHB\\ BANK\\ MYR\\ 1,871\\.00\\ Interbank\\\nCL\\ GLOBAL\\ CON"
     },
     {
       "ref_id": "PV2101547",
-      "context": "Page 1 of 1\nPAY TO : D&D CONTROL (M) SDN BHD NO : PV2101547\nACCT NO. : DDCONTPGU\nDATE : 18/01/2021\nDESCRIPTIO",
+      "context": "Page 1 of 1\nPAY TO : ACME CONTROL (M) SDN BHD NO : PV2101547\nACCT NO. : DDCONTPGU\nDATE : 18/01/2021\nDESCRIPTIO",
       "pattern": "Page\\ 1\\ of\\ 1\\\nPAY\\ TO\\ :\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\ NO\\ :\\ ([A-Z0-9]{7,11})\\\nACCT\\ NO\\.\\ :\\ DDCONTPGU\\\nDATE\\ :\\ 18/01/2021\\\nDESCRIPTIO"
     },
     {
@@ -765,8 +765,8 @@
       "pattern": "ference\\ No\\.\\ :\\ 202101220085325138\\\nSource\\ Account\\ :\\ ([A-Z0-9]{8,12})/DEMAND\\ TOTAL\\ LOGISTICS\\ SDN\\ BHD\\(MYR\\)\\\nServices\\ :\\ In"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "BHD\nBeneficiary Account Information\nAccount No. : 21246660001343\nName : D & D CONTROL (M) SDN BHD\nValidate Benefic",
+      "ref_id": "21000000000001",
+      "context": "BHD\nBeneficiary Account Information\nAccount No. : 21000000000001\nName : D & D CONTROL (M) SDN BHD\nValidate Benefic",
       "pattern": "BHD\\\nBeneficiary\\ Account\\ Information\\\nAccount\\ No\\.\\ :\\ ([A-Z0-9]{12,16})\\\nName\\ :\\ D\\ \\&\\ D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\\nValidate\\ Benefic"
     },
     {
@@ -797,8 +797,8 @@
       "pattern": "ccount\\ Transfer\\ Information\\\nReference\\ Number\\ Date\\\n([A-Z0-9]{10,14})\\ 22\\-01\\-2021\\ 09:34:57\\\nFrom\\ Account\\ To\\ Account\\\n20101"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "57\nFrom Account To Account\n20101700174080 / ROUND 21246660001343 / D&D CONTROL (M) SDN BHD ( RM )\n-THE-WOR\nAmount ",
+      "ref_id": "21000000000001",
+      "context": "57\nFrom Account To Account\n20101700174080 / ROUND 21000000000001 / ACME CONTROL (M) SDN BHD ( RM )\n-THE-WOR\nAmount ",
       "pattern": "57\\\nFrom\\ Account\\ To\\ Account\\\n20101700174080\\ /\\ ROUND\\ ([A-Z0-9]{12,16})\\ /\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\ \\(\\ RM\\ \\)\\\n\\-THE\\-WOR\\\nAmount\\ "
     },
     {
@@ -812,8 +812,8 @@
       "pattern": "rty\\ Account\\ Transfer\\ Information\\\nReference\\ Number\\\n([A-Z0-9]{10,14})\\\nFrom\\ Account\\ To\\ Account\\\n20122200046301\\ /\\ GREAT\\ NE"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "Account To Account\n20122200046301 / GREAT NEPTUNE 21246660001343 / D&D CONTROL (M) SDN BHD\nAmount Fund Transfer Ch",
+      "ref_id": "21000000000001",
+      "context": "Account To Account\n20122200046301 / GREAT NEPTUNE 21000000000001 / ACME CONTROL (M) SDN BHD\nAmount Fund Transfer Ch",
       "pattern": "Account\\ To\\ Account\\\n20122200046301\\ /\\ GREAT\\ NEPTUNE\\ ([A-Z0-9]{12,16})\\ /\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\\nAmount\\ Fund\\ Transfer\\ Ch"
     },
     {
@@ -847,8 +847,8 @@
       "pattern": "nsfers\\ Pending\\ Task\\ Detail\\ Result\\\nReference\\ No\\.\\ :\\ ([A-Z0-9]{16,20})\\\nSource\\ Account\\ :\\ 8007765922\\ /\\ DEMAND\\ TOTAL\\ LOGIST"
     },
     {
-      "ref_id": "21246660001343",
-      "context": " BHD\nBeneficiary Account Information\nAccount No : 21246660001343\nName : D & D CONTROL (M) SDN BHD\nValidate Benefic",
+      "ref_id": "21000000000001",
+      "context": " BHD\nBeneficiary Account Information\nAccount No : 21000000000001\nName : D & D CONTROL (M) SDN BHD\nValidate Benefic",
       "pattern": "\\ BHD\\\nBeneficiary\\ Account\\ Information\\\nAccount\\ No\\ :\\ ([A-Z0-9]{12,16})\\\nName\\ :\\ D\\ \\&\\ D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\\nValidate\\ Benefic"
     },
     {
@@ -892,8 +892,8 @@
       "pattern": "25,\\ 5:34\\ PM\\\nFrom\\ To\\\nYour\\ Account\\ Beneficiary\\ Bank\\\n([A-Z0-9]{8,12})\\-MYR\\ PANDA\\ LOGISTICS\\ \\(MALAYSIA\\)\\ SDN\\ BHD\\ RHB\\ BANK\\ K"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "t Beneficiary Account No.\n12 Nov 2025 1,560.00MYR 21246660001343\nBeneficiary Name\nD&D CONTROL (M) SDN BH\nRequire I",
+      "ref_id": "21000000000001",
+      "context": "t Beneficiary Account No.\n12 Nov 2025 1,560.00MYR 21000000000001\nBeneficiary Name\nACME CONTROL (M) SDN BH\nRequire I",
       "pattern": "t\\ Beneficiary\\ Account\\ No\\.\\\n12\\ Nov\\ 2025\\ 1,560\\.00MYR\\ ([A-Z0-9]{12,16})\\\nBeneficiary\\ Name\\\nD\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BH\\\nRequire\\ I"
     },
     {
@@ -927,8 +927,8 @@
       "pattern": "21,\\ 8:37\\ AM\\\nFrom\\ To\\\nYour\\ Account\\ Beneficiary\\ Bank\\\n([A-Z0-9]{8,12})\\ \\-\\ MYR\\ KW\\ AQUATIC\\ SUPPLIES\\ SDN\\ BHD\\ RHB\\ BANK\\ KUALA\\ "
     },
     {
-      "ref_id": "21246660001343",
-      "context": "unt Beneficiary Account No.\n18 Jan 2021 105.00MYR 21246660001343\nBeneficiary Name\nD & D CONTROL (M) SB\nBeneficiary",
+      "ref_id": "21000000000001",
+      "context": "unt Beneficiary Account No.\n18 Jan 2021 105.00MYR 21000000000001\nBeneficiary Name\nD & D CONTROL (M) SB\nBeneficiary",
       "pattern": "unt\\ Beneficiary\\ Account\\ No\\.\\\n18\\ Jan\\ 2021\\ 105\\.00MYR\\ ([A-Z0-9]{12,16})\\\nBeneficiary\\ Name\\\nD\\ \\&\\ D\\ CONTROL\\ \\(M\\)\\ SB\\\nBeneficiary"
     },
     {
@@ -958,8 +958,8 @@
     },
     {
       "ref_id": "073537231",
-      "context": "ion\nBusiness Registration : 923103K\nContact No. : 073537231\nPayment Date : 25/01/2021\nAmount (MYR) : 100.00\nS",
-      "pattern": "ion\\\nBusiness\\ Registration\\ :\\ 923103K\\\nContact\\ No\\.\\ :\\ ([A-Z0-9]{7,11})\\\nPayment\\ Date\\ :\\ 25/01/2021\\\nAmount\\ \\(MYR\\)\\ :\\ 100\\.00\\\nS"
+      "context": "ion\nBusiness Registration : 100001A\nContact No. : 073537231\nPayment Date : 25/01/2021\nAmount (MYR) : 100.00\nS",
+      "pattern": "ion\\\nBusiness\\ Registration\\ :\\ 100001A\\\nContact\\ No\\.\\ :\\ ([A-Z0-9]{7,11})\\\nPayment\\ Date\\ :\\ 25/01/2021\\\nAmount\\ \\(MYR\\)\\ :\\ 100\\.00\\\nS"
     },
     {
       "ref_id": "78982716",
@@ -972,8 +972,8 @@
       "pattern": ",\\\nHere's\\ your\\ transaction\\ details\\.\\\nSuccessful\\\nRef\\ ([A-Z0-9]{7,11})\\\n20\\ Jan\\ 2021,\\ 03:32:35\\ pm\\\nTo\\\nAccount\\ Number\\ Recipi"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "021, 03:32:35 pm\nTo\nAccount Number Recipient Name\n21246660001343 D&D CONTROL (M) SDN BHD\nTransfer Type Bank Name\nT",
+      "ref_id": "21000000000001",
+      "context": "021, 03:32:35 pm\nTo\nAccount Number Recipient Name\n21000000000001 ACME CONTROL (M) SDN BHD\nTransfer Type Bank Name\nT",
       "pattern": "021,\\ 03:32:35\\ pm\\\nTo\\\nAccount\\ Number\\ Recipient\\ Name\\\n([A-Z0-9]{12,16})\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\\nTransfer\\ Type\\ Bank\\ Name\\\nT"
     },
     {
@@ -1007,8 +1007,8 @@
       "pattern": "ference\\ No\\.\\ :\\ 202101200085139354\\\nSource\\ Account\\ :\\ ([A-Z0-9]{8,12})/ALLIED\\ SEA\\ PRODUCTS\\ SDN\\.\\ BHD\\.\\(MYR\\)\\\nServices\\ :\\ Int"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "BHD\nBeneficiary Account Information\nAccount No. : 21246660001343\nName : D&D Control (M) Sdn Bhd\nValidate Beneficia",
+      "ref_id": "21000000000001",
+      "context": "BHD\nBeneficiary Account Information\nAccount No. : 21000000000001\nName : D&D Control (M) Sdn Bhd\nValidate Beneficia",
       "pattern": "BHD\\\nBeneficiary\\ Account\\ Information\\\nAccount\\ No\\.\\ :\\ ([A-Z0-9]{12,16})\\\nName\\ :\\ D\\&D\\ Control\\ \\(M\\)\\ Sdn\\ Bhd\\\nValidate\\ Beneficia"
     },
     {
@@ -1017,8 +1017,8 @@
       "pattern": "===\\ PAGE\\ 1\\ ===\\\nDomestic\\ Transfers\\\nReference\\ No\\.\\ :\\ ([A-Z0-9]{16,20})\\\nSource\\ Account\\ :\\ 8002441094\\ /\\ QUANTERM\\ LOGISTICS\\ "
     },
     {
-      "ref_id": "21246660001343",
-      "context": " BHD\nBeneficiary Account Information\nAccount No : 21246660001343\nName : D&D CONTROL (M) SDN BHD\nValidate Beneficia",
+      "ref_id": "21000000000001",
+      "context": " BHD\nBeneficiary Account Information\nAccount No : 21000000000001\nName : ACME CONTROL (M) SDN BHD\nValidate Beneficia",
       "pattern": "\\ BHD\\\nBeneficiary\\ Account\\ Information\\\nAccount\\ No\\ :\\ ([A-Z0-9]{12,16})\\\nName\\ :\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\\nValidate\\ Beneficia"
     },
     {
@@ -1052,8 +1052,8 @@
       "pattern": "ccount\\ Transfer\\ Information\\\nReference\\ Number\\ Date\\\n([A-Z0-9]{10,14})\\ 21\\-01\\-2021\\ 12:54:35\\\nFrom\\ Account\\ To\\ Account\\\n20101"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "Account To Account\n20101700097247 / GREENPEN FREI 21246660001343 / D&D CONTROL (M) SDN BHD ( RM )\nAmount Fund Tran",
+      "ref_id": "21000000000001",
+      "context": "Account To Account\n20101700097247 / GREENPEN FREI 21000000000001 / ACME CONTROL (M) SDN BHD ( RM )\nAmount Fund Tran",
       "pattern": "Account\\ To\\ Account\\\n20101700097247\\ /\\ GREENPEN\\ FREI\\ ([A-Z0-9]{12,16})\\ /\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\ \\(\\ RM\\ \\)\\\nAmount\\ Fund\\ Tran"
     },
     {
@@ -1088,7 +1088,7 @@
     },
     {
       "ref_id": "PV21010108",
-      "context": "No. : 202101212123404359\nCustomer Reference No. : PV21010108\nDate : 21/01/2021\nTo : D&D CONTROL (M) SDN BHD\nDe",
+      "context": "No. : 202101212123404359\nCustomer Reference No. : PV21010108\nDate : 21/01/2021\nTo : ACME CONTROL (M) SDN BHD\nDe",
       "pattern": "No\\.\\ :\\ 202101212123404359\\\nCustomer\\ Reference\\ No\\.\\ :\\ ([A-Z0-9]{8,12})\\\nDate\\ :\\ 21/01/2021\\\nTo\\ :\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\\nDe"
     },
     {
@@ -1127,8 +1127,8 @@
       "pattern": "ccount\\ Transfer\\ Information\\\nReference\\ Number\\ Date\\\n([A-Z0-9]{10,14})\\ 22\\-01\\-2021\\ 18:27:08\\\nFrom\\ Account\\ To\\ Account\\\n20816"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "\nFrom Account To Account\n20816435054800 / FOONG H 21246660001343 / D&D CONTROL (M) SDN BHD\nWA PAP\nAmount Fund Tran",
+      "ref_id": "21000000000001",
+      "context": "\nFrom Account To Account\n20816435054800 / FOONG H 21000000000001 / ACME CONTROL (M) SDN BHD\nWA PAP\nAmount Fund Tran",
       "pattern": "\\\nFrom\\ Account\\ To\\ Account\\\n20816435054800\\ /\\ FOONG\\ H\\ ([A-Z0-9]{12,16})\\ /\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\\nWA\\ PAP\\\nAmount\\ Fund\\ Tran"
     },
     {
@@ -1162,8 +1162,8 @@
       "pattern": "21,\\ 3:03\\ PM\\\nFrom\\ To\\\nYour\\ Account\\ Beneficiary\\ Bank\\\n([A-Z0-9]{8,12})\\ \\-\\ MYR\\ TAS\\ SHIPPING\\ N\\ TRANSPORT\\ SDN\\ BHD\\ RHB\\ BANK\\ K"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "ount Beneficiary Account No.\n12 Jan 2021 25.00MYR 21246660001343\nBeneficiary Name\nD&D CONTROL (M) SDN BH\nBeneficia",
+      "ref_id": "21000000000001",
+      "context": "ount Beneficiary Account No.\n12 Jan 2021 25.00MYR 21000000000001\nBeneficiary Name\nACME CONTROL (M) SDN BH\nBeneficia",
       "pattern": "ount\\ Beneficiary\\ Account\\ No\\.\\\n12\\ Jan\\ 2021\\ 25\\.00MYR\\ ([A-Z0-9]{12,16})\\\nBeneficiary\\ Name\\\nD\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BH\\\nBeneficia"
     },
     {
@@ -1192,8 +1192,8 @@
       "pattern": "21,\\ 2:31\\ PM\\\nFrom\\ To\\\nYour\\ Account\\ Beneficiary\\ Bank\\\n([A-Z0-9]{8,12})\\ \\-\\ MYR\\ TAS\\ SHIPPING\\ N\\ TRANSPORT\\ SDN\\ BHD\\ RHB\\ BANK\\ K"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "t Beneficiary Account No.\n25 Jan 2021 2,435.00MYR 21246660001343\nBeneficiary Name\nD&D CONTROL (M) SDN BH\nBeneficia",
+      "ref_id": "21000000000001",
+      "context": "t Beneficiary Account No.\n25 Jan 2021 2,435.00MYR 21000000000001\nBeneficiary Name\nACME CONTROL (M) SDN BH\nBeneficia",
       "pattern": "t\\ Beneficiary\\ Account\\ No\\.\\\n25\\ Jan\\ 2021\\ 2,435\\.00MYR\\ ([A-Z0-9]{12,16})\\\nBeneficiary\\ Name\\\nD\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BH\\\nBeneficia"
     },
     {
@@ -1222,8 +1222,8 @@
       "pattern": "\\ ID:\\ ESTRATTOSDNBHD\\ Bank:\\ UOBM\\\nTransfer\\ From:\\ MYR\\ ([A-Z0-9]{8,12})\\ ESTRATTO\\ BIB\\ Ref:\\ FT21010031140593\\\nSDN\\.\\ BHD\\.\\\nAppl"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "AND D CONTROL M SB Bank/Branch 100002186\nAccount: 21246660001343 Codes:\nBeneficiary Resident Bank Name: RHB BANK\nR",
+      "ref_id": "21000000000001",
+      "context": "ANACME CONTROL M SB Bank/Branch 100002186\nAccount: 21000000000001 Codes:\nBeneficiary Resident Bank Name: RHB BANK\nR",
       "pattern": "AND\\ D\\ CONTROL\\ M\\ SB\\ Bank/Branch\\ 100002186\\\nAccount:\\ ([A-Z0-9]{12,16})\\ Codes:\\\nBeneficiary\\ Resident\\ Bank\\ Name:\\ RHB\\ BANK\\\nR"
     },
     {
@@ -1277,8 +1277,8 @@
       "pattern": "\\ ID:\\ ESTRATTOSDNBHD\\ Bank:\\ UOBM\\\nTransfer\\ From:\\ MYR\\ ([A-Z0-9]{8,12})\\ ESTRATTO\\ BIB\\ Ref:\\ FT21010031140775\\\nSDN\\.\\ BHD\\.\\\nAppl"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "AND D CONTROL M SB Bank/Branch 100002186\nAccount: 21246660001343 Codes:\nBeneficiary Resident Bank Name: RHB BANK\nR",
+      "ref_id": "21000000000001",
+      "context": "ANACME CONTROL M SB Bank/Branch 100002186\nAccount: 21000000000001 Codes:\nBeneficiary Resident Bank Name: RHB BANK\nR",
       "pattern": "AND\\ D\\ CONTROL\\ M\\ SB\\ Bank/Branch\\ 100002186\\\nAccount:\\ ([A-Z0-9]{12,16})\\ Codes:\\\nBeneficiary\\ Resident\\ Bank\\ Name:\\ RHB\\ BANK\\\nR"
     },
     {
@@ -1318,8 +1318,8 @@
     },
     {
       "ref_id": "WHS22110059980",
-      "context": "Account Number\n21246660001343\nRecipient Reference\nWHS22110059980\nOther Payment Details\nWHSU5528105- DEMM",
-      "pattern": "Account\\ Number\\\n21246660001343\\\nRecipient\\ Reference\\\n([A-Z0-9]{12,16})\\\nOther\\ Payment\\ Details\\\nWHSU5528105\\-\\ DEMM"
+      "context": "Account Number\n21000000000001\nRecipient Reference\nWHS22110059980\nOther Payment Details\nWHSU5528105- DEMM",
+      "pattern": "Account\\ Number\\\n21000000000001\\\nRecipient\\ Reference\\\n([A-Z0-9]{12,16})\\\nOther\\ Payment\\ Details\\\nWHSU5528105\\-\\ DEMM"
     },
     {
       "ref_id": "77147048",
@@ -1342,14 +1342,14 @@
       "pattern": "112435\\ Org\\ Name\\ :\\ AX\\ FURNITURE\\ SDN\\ BHD\\\nOrg\\ Code\\ :\\ ([A-Z0-9]{6,10})\\ File\\ Format\\ :\\ IBG\\\nService\\ Type\\ :\\ Bulk\\ Payment\\ Tot"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "w IC Number Old IC Number Other ID Name Bank Code\n21246660001343 20.00 INV.32110059622,31 D AND D CONTROL (M) S/B ",
+      "ref_id": "21000000000001",
+      "context": "w IC Number Old IC Number Other ID Name Bank Code\n21000000000001 20.00 INV.32110059622,31 D ANACME CONTROL (M) S/B ",
       "pattern": "w\\ IC\\ Number\\ Old\\ IC\\ Number\\ Other\\ ID\\ Name\\ Bank\\ Code\\\n([A-Z0-9]{12,16})\\ 20\\.00\\ INV\\.32110059622,31\\ D\\ AND\\ D\\ CONTROL\\ \\(M\\)\\ S/B\\ "
     },
     {
       "ref_id": "32110059622",
-      "context": " Other ID Name Bank Code\n21246660001343 20.00 INV.32110059622,31 D AND D CONTROL (M) S/B RHB",
-      "pattern": "\\ Other\\ ID\\ Name\\ Bank\\ Code\\\n21246660001343\\ 20\\.00\\ INV\\.([A-Z0-9]{9,13}),31\\ D\\ AND\\ D\\ CONTROL\\ \\(M\\)\\ S/B\\ RHB"
+      "context": " Other ID Name Bank Code\n21000000000001 20.00 INV.32110059622,31 D ANACME CONTROL (M) S/B RHB",
+      "pattern": "\\ Other\\ ID\\ Name\\ Bank\\ Code\\\n21000000000001\\ 20\\.00\\ INV\\.([A-Z0-9]{9,13}),31\\ D\\ AND\\ D\\ CONTROL\\ \\(M\\)\\ S/B\\ RHB"
     },
     {
       "ref_id": "CORPFUNDTRANSFER3RDPARTY",
@@ -1362,8 +1362,8 @@
       "pattern": "ccount\\ Transfer\\ Information\\\nReference\\ Number\\ Date\\\n([A-Z0-9]{10,14})\\ 19\\-01\\-2021\\ 09:51:34\\\nFrom\\ Account\\ To\\ Account\\\n20701"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "Account To Account\n20701900211726 / ROUND-THE-WOR 21246660001343 / D&D CONTROL (M) SDN BHD ( RM )\nAmount Fund Tran",
+      "ref_id": "21000000000001",
+      "context": "Account To Account\n20701900211726 / ROUND-THE-WOR 21000000000001 / ACME CONTROL (M) SDN BHD ( RM )\nAmount Fund Tran",
       "pattern": "Account\\ To\\ Account\\\n20701900211726\\ /\\ ROUND\\-THE\\-WOR\\ ([A-Z0-9]{12,16})\\ /\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\ \\(\\ RM\\ \\)\\\nAmount\\ Fund\\ Tran"
     },
     {
@@ -1442,8 +1442,8 @@
       "pattern": "21,\\ 2:14\\ PM\\\nFrom\\ To\\\nYour\\ Account\\ Beneficiary\\ Bank\\\n([A-Z0-9]{8,12})\\ \\-\\ MYR\\ TAS\\ SHIPPING\\ N\\ TRANSPORT\\ SDN\\ BHD\\ RHB\\ BANK\\ K"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "ount Beneficiary Account No.\n20 Jan 2021 30.00MYR 21246660001343\nBeneficiary Name\nD&D CONTROL (M) SDN BH\nBeneficia",
+      "ref_id": "21000000000001",
+      "context": "ount Beneficiary Account No.\n20 Jan 2021 30.00MYR 21000000000001\nBeneficiary Name\nACME CONTROL (M) SDN BH\nBeneficia",
       "pattern": "ount\\ Beneficiary\\ Account\\ No\\.\\\n20\\ Jan\\ 2021\\ 30\\.00MYR\\ ([A-Z0-9]{12,16})\\\nBeneficiary\\ Name\\\nD\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BH\\\nBeneficia"
     },
     {
@@ -1462,9 +1462,9 @@
       "pattern": "e\\ RHB\\ BANK\\ KUALA\\ LUMPUR\\\nRecipient's\\ Reference\\ No\\.\\ ([A-Z0-9]{12,16})\\\nOther\\ Payment\\ Details\\ DEMURRAGE\\\nItem\\ Status\\ Submi"
     },
     {
-      "ref_id": "7301122587",
-      "context": "ganisation ID SCABLE\nCountry Malaysia Account No. 7301122587\nPayee Name D&D Date Range 25 Jan 2021 To 25 Jan 2",
-      "pattern": "ganisation\\ ID\\ SCABLE\\\nCountry\\ Malaysia\\ Account\\ No\\.\\ ([A-Z0-9]{8,12})\\\nPayee\\ Name\\ D\\&D\\ Date\\ Range\\ 25\\ Jan\\ 2021\\ To\\ 25\\ Jan\\ 2"
+      "ref_id": "7300000002",
+      "context": "ganisation ID NCABLE\nCountry Malaysia Account No. 7300000002\nPayee Name D&D Date Range 25 Jan 2021 To 25 Jan 2",
+      "pattern": "ganisation\\ ID\\ NCABLE\\\nCountry\\ Malaysia\\ Account\\ No\\.\\ ([A-Z0-9]{8,12})\\\nPayee\\ Name\\ D\\&D\\ Date\\ Range\\ 25\\ Jan\\ 2021\\ To\\ 25\\ Jan\\ 2"
     },
     {
       "ref_id": "A11-1808-21024723",
@@ -2107,8 +2107,8 @@
       "pattern": "rty\\ Account\\ Transfer\\ Information\\\nReference\\ Number\\\n([A-Z0-9]{10,14})\\\nFrom\\ Account\\ To\\ Account\\\n20702800080431\\ /\\ CT\\ FRANK"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "Account To Account\n20702800080431 / CT FRANK TECH 21246660001343 / D&D CONTROL (M) SDN BHD\nAmount Fund Transfer Ch",
+      "ref_id": "21000000000001",
+      "context": "Account To Account\n20702800080431 / CT FRANK TECH 21000000000001 / ACME CONTROL (M) SDN BHD\nAmount Fund Transfer Ch",
       "pattern": "Account\\ To\\ Account\\\n20702800080431\\ /\\ CT\\ FRANK\\ TECH\\ ([A-Z0-9]{12,16})\\ /\\ D\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\\nAmount\\ Fund\\ Transfer\\ Ch"
     },
     {
@@ -2118,7 +2118,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "54:36 am\nAmount\nTo\nMYR 70.00\nAccount Number\n21246660001343 Bank charges MYR 0.00\nRecipient Name\nBank Name\nD&",
+      "context": "54:36 am\nAmount\nTo\nMYR 70.00\nAccount Number\n21000000000001 Bank charges MYR 0.00\nRecipient Name\nBank Name\nD&",
       "pattern": "54:36\\ am\\\nAmount\\\nTo\\\nMYR\\ 70\\.00\\\nAccount\\ Number\\\n212466([A-Z0-9]{6,10})\\ Bank\\ charges\\ MYR\\ 0\\.00\\\nRecipient\\ Name\\\nBank\\ Name\\\nD\\&"
     },
     {
@@ -2507,8 +2507,8 @@
       "pattern": "21\\ 16:15:46\\\nFrom\\ To\\\nYour\\ Account\\ Beneficiary\\ Bank\\\n([A-Z0-9]{8,12})\\ \\-\\ MYR\\ ARS\\ GLOBAL\\ SOLUTIONS\\ \\(MALAYSIA\\)\\ SDN\\ BHD\\ RHB"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "ount Beneficiary Account No.\n22 Jan 2021 10.00MYR 21246660001343\nBeneficiary Name\nD&D CONTROL\nBeneficiary ID Type ",
+      "ref_id": "21000000000001",
+      "context": "ount Beneficiary Account No.\n22 Jan 2021 10.00MYR 21000000000001\nBeneficiary Name\nACME CONTROL\nBeneficiary ID Type ",
       "pattern": "ount\\ Beneficiary\\ Account\\ No\\.\\\n22\\ Jan\\ 2021\\ 10\\.00MYR\\ ([A-Z0-9]{12,16})\\\nBeneficiary\\ Name\\\nD\\&D\\ CONTROL\\\nBeneficiary\\ ID\\ Type\\ "
     },
     {
@@ -2537,8 +2537,8 @@
       "pattern": "nsfers\\ Pending\\ Task\\ Detail\\ Result\\\nReference\\ No\\.\\ :\\ ([A-Z0-9]{16,20})\\\nSource\\ Account\\ :\\ 8007765922\\ /\\ DEMAND\\ TOTAL\\ LOGIST"
     },
     {
-      "ref_id": "21246660001343",
-      "context": " BHD\nBeneficiary Account Information\nAccount No : 21246660001343\nName : D & D CONTROL (M) SDN BHD\nValidate Benefic",
+      "ref_id": "21000000000001",
+      "context": " BHD\nBeneficiary Account Information\nAccount No : 21000000000001\nName : D & D CONTROL (M) SDN BHD\nValidate Benefic",
       "pattern": "\\ BHD\\\nBeneficiary\\ Account\\ Information\\\nAccount\\ No\\ :\\ ([A-Z0-9]{12,16})\\\nName\\ :\\ D\\ \\&\\ D\\ CONTROL\\ \\(M\\)\\ SDN\\ BHD\\\nValidate\\ Benefic"
     },
     {
@@ -2563,8 +2563,8 @@
     },
     {
       "ref_id": "SWIFT-BIC",
-      "context": "426 JALAN TUN RAZAK\nAccount number 21246660001343\nSWIFT-BIC RHBAMYKL\nPayment details\nAmount MYR 200.00\nValue ",
-      "pattern": "426\\ JALAN\\ TUN\\ RAZAK\\\nAccount\\ number\\ 21246660001343\\\n([A-Z0-9]{7,11})\\ RHBAMYKL\\\nPayment\\ details\\\nAmount\\ MYR\\ 200\\.00\\\nValue\\ "
+      "context": "426 JALAN TUN RAZAK\nAccount number 21000000000001\nSWIFT-BIC RHBAMYKL\nPayment details\nAmount MYR 200.00\nValue ",
+      "pattern": "426\\ JALAN\\ TUN\\ RAZAK\\\nAccount\\ number\\ 21000000000001\\\n([A-Z0-9]{7,11})\\ RHBAMYKL\\\nPayment\\ details\\\nAmount\\ MYR\\ 200\\.00\\\nValue\\ "
     },
     {
       "ref_id": "71865Y401YD8",
@@ -2602,14 +2602,14 @@
       "pattern": "21,\\ 2:18\\ PM\\\nFrom\\ To\\\nYour\\ Account\\ Beneficiary\\ Bank\\\n([A-Z0-9]{8,12})\\ \\-\\ MYR\\ TAS\\ SHIPPING\\ N\\ TRANSPORT\\ SDN\\ BHD\\ RHB\\ BANK\\ K"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "unt Beneficiary Account No.\n20 Jan 2021 100.00MYR 21246660001343\nBeneficiary Name\nD&D CONTROL (M) SDN BH\nBeneficia",
+      "ref_id": "21000000000001",
+      "context": "unt Beneficiary Account No.\n20 Jan 2021 100.00MYR 21000000000001\nBeneficiary Name\nACME CONTROL (M) SDN BH\nBeneficia",
       "pattern": "unt\\ Beneficiary\\ Account\\ No\\.\\\n20\\ Jan\\ 2021\\ 100\\.00MYR\\ ([A-Z0-9]{12,16})\\\nBeneficiary\\ Name\\\nD\\&D\\ CONTROL\\ \\(M\\)\\ SDN\\ BH\\\nBeneficia"
     },
     {
       "ref_id": "SWIFT-BIC",
-      "context": "426 JALAN TUN RAZAK\nAccount number 21246660001343\nSWIFT-BIC RHBAMYKL\nPayment details\nAmount MYR 60.00\nExpecte",
-      "pattern": "426\\ JALAN\\ TUN\\ RAZAK\\\nAccount\\ number\\ 21246660001343\\\n([A-Z0-9]{7,11})\\ RHBAMYKL\\\nPayment\\ details\\\nAmount\\ MYR\\ 60\\.00\\\nExpecte"
+      "context": "426 JALAN TUN RAZAK\nAccount number 21000000000001\nSWIFT-BIC RHBAMYKL\nPayment details\nAmount MYR 60.00\nExpecte",
+      "pattern": "426\\ JALAN\\ TUN\\ RAZAK\\\nAccount\\ number\\ 21000000000001\\\n([A-Z0-9]{7,11})\\ RHBAMYKL\\\nPayment\\ details\\\nAmount\\ MYR\\ 60\\.00\\\nExpecte"
     },
     {
       "ref_id": "33817B600YO8",
@@ -2658,7 +2658,7 @@
     },
     {
       "ref_id": "60001343",
-      "context": "\n55100 KUALA LUMPUR MALAYSIA\nAccount number 21246660001343\nBank code 18\nPayment details\nAmount MYR 21.20\nVal",
+      "context": "\n55100 KUALA LUMPUR MALAYSIA\nAccount number 21000000000001\nBank code 18\nPayment details\nAmount MYR 21.20\nVal",
       "pattern": "\\\n55100\\ KUALA\\ LUMPUR\\ MALAYSIA\\\nAccount\\ number\\ 212466([A-Z0-9]{6,10})\\\nBank\\ code\\ 18\\\nPayment\\ details\\\nAmount\\ MYR\\ 21\\.20\\\nVal"
     },
     {
@@ -2673,8 +2673,8 @@
     },
     {
       "ref_id": "MXC12511726684",
-      "context": "ount Number : 21246660001343\nRecipient reference: MXC12511726684\nOther payment details:\nNote: This receipt is comp",
-      "pattern": "ount\\ Number\\ :\\ 21246660001343\\\nRecipient\\ reference:\\ ([A-Z0-9]{12,16})\\\nOther\\ payment\\ details:\\\nNote:\\ This\\ receipt\\ is\\ comp"
+      "context": "ount Number : 21000000000001\nRecipient reference: MXC12511726684\nOther payment details:\nNote: This receipt is comp",
+      "pattern": "ount\\ Number\\ :\\ 21000000000001\\\nRecipient\\ reference:\\ ([A-Z0-9]{12,16})\\\nOther\\ payment\\ details:\\\nNote:\\ This\\ receipt\\ is\\ comp"
     },
     {
       "ref_id": "7901990048",
@@ -2787,8 +2787,8 @@
       "pattern": "or\\ Details\\\nKUEHNE\\ \\+\\ NAGEL\\ SDN\\ BHD\\ \\-\\\nDebit\\ Account\\ ([A-Z0-9]{10,14})\\ \\-\\ SCBLMYKXXXX\\ \\-\\ Company\\ Name\\ KUEHNE\\ NAGEL\\ SDN\\ B\\\nM"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "ess in Local Language\n-\n-\nAccount Details\nACCOUNT 21246660001343\nBeneficiary Bank\nBank Code Type - Bank Code RHBBM",
+      "ref_id": "21000000000001",
+      "context": "ess in Local Language\n-\n-\nAccount Details\nACCOUNT 21000000000001\nBeneficiary Bank\nBank Code Type - Bank Code RHBBM",
       "pattern": "ess\\ in\\ Local\\ Language\\\n\\-\\\n\\-\\\nAccount\\ Details\\\nACCOUNT\\ ([A-Z0-9]{12,16})\\\nBeneficiary\\ Bank\\\nBank\\ Code\\ Type\\ \\-\\ Bank\\ Code\\ RHBBM"
     }
   ],
@@ -2814,8 +2814,8 @@
       "pattern": "tails\\\nDebit\\ From\\ Account\\ No\\.\\ Transaction\\ Currency\\\n([A-Z0-9]{10,14})\\ \\(MYR\\)\\ NNR\\ GLOBAL\\ MYR\\\nLOGISTICS\\ \\(M\\)\\ SDN\\ BHD\\\nTransa"
     },
     {
-      "ref_id": "21246660001343",
-      "context": "eficiary Details\nBeneficiary Account No. Resident\n21246660001343 Yes\nBeneficiary Name Beneficiary Bank Code\nD&D CO",
+      "ref_id": "21000000000001",
+      "context": "eficiary Details\nBeneficiary Account No. Resident\n21000000000001 Yes\nBeneficiary Name Beneficiary Bank Code\nD&D CO",
       "pattern": "eficiary\\ Details\\\nBeneficiary\\ Account\\ No\\.\\ Resident\\\n([A-Z0-9]{12,16})\\ Yes\\\nBeneficiary\\ Name\\ Beneficiary\\ Bank\\ Code\\\nD\\&D\\ CO"
     },
     {
@@ -2961,7 +2961,7 @@
     },
     {
       "ref_id": "212466600",
-      "context": "s name: GAC CARGO SYS ( M )\nBeneficiary's account:212466600***** Remitting bank: HSBC Bank Malaysia Berhad\n(P",
+      "context": "s name: SEALINE CARGO SYS ( M )\nBeneficiary's account:210000000***** Remitting bank: HSBC Bank Malaysia Berhad\n(P",
       "pattern": "s\\ name:\\ GAC\\ CARGO\\ SYS\\ \\(\\ M\\ \\)\\\nBeneficiary's\\ account:([A-Z0-9]{7,11})\\*\\*\\*\\*\\*\\ Remitting\\ bank:\\ HSBC\\ Bank\\ Malaysia\\ Berhad\\\n\\(P"
     },
     {
@@ -2991,7 +2991,7 @@
     },
     {
       "ref_id": "212466600",
-      "context": "SIA Value date: 31 Oct 2025\nBeneficiary's account:212466600***** Remitter's name: ON TIME WORLDWIDE LOGISTICS",
+      "context": "SIA Value date: 31 Oct 2025\nBeneficiary's account:210000000***** Remitter's name: ON TIME WORLDWIDE LOGISTICS",
       "pattern": "SIA\\ Value\\ date:\\ 31\\ Oct\\ 2025\\\nBeneficiary's\\ account:([A-Z0-9]{7,11})\\*\\*\\*\\*\\*\\ Remitter's\\ name:\\ ON\\ TIME\\ WORLDWIDE\\ LOGISTICS"
     },
     {

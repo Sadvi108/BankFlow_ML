@@ -2,7 +2,7 @@ File: RHB - CUSTOMER REF.pdf
 Method: ocr
 ================================================================================
 === PAGE 1 ===
-      Applicani Dstails MITSUL-SOKO    Beneficiary Details   D&D CONTROL SDK. BHD. I,
+      Applicani Dstails KITA-KAIUN    Beneficiary Details   ACME CONTROL SDK. BHD. I,
 RHB BANK (RHBBMYKL)
 Transaction Detalis    
    

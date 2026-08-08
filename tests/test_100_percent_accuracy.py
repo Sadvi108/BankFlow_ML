@@ -86,8 +86,13 @@ def test_failing_cases():
     print("\n" + "=" * 80)
     print(f"RESULTS: {passed}/{len(test_cases)} tests passed")
     print("=" * 80)
-    
-    return passed == len(test_cases)
+
+    # A bare `return <bool>` does NOT fail under pytest -- it only emits
+    # PytestReturnNotNoneWarning -- so this suite silently "passed" no matter
+    # what the engine returned. Assert so the suite is a real regression gate.
+    assert passed == len(test_cases), (
+        f"{failed} of {len(test_cases)} previously-failing cases regressed"
+    )
 
 
 def test_all_35_cases():
@@ -166,17 +171,34 @@ def test_all_35_cases():
             print(f"  Expected: {expected}")
             print(f"  Extracted: {extracted}")
     
-    return passed == len(all_test_cases)
+    assert passed == len(all_test_cases), (
+        f"{len(all_test_cases) - passed} of {len(all_test_cases)} cases failed"
+    )
+
+
+def _run(fn):
+    """Run an assert-based test fn, reporting pass/fail as a bool.
+
+    Kept so the __main__ path below (which run_tests.py shells out to and
+    checks the exit code of) still works now that the test functions assert
+    instead of returning a bool.
+    """
+    try:
+        fn()
+        return True
+    except AssertionError as exc:
+        print(f"\n❌ {fn.__name__}: {exc}")
+        return False
 
 
 if __name__ == "__main__":
     print("\n🧪 Bank Receipt OCR - 100% Accuracy Validation Test\n")
     
     # Test the 5 previously failing cases
-    failing_cases_pass = test_failing_cases()
-    
+    failing_cases_pass = _run(test_failing_cases)
+
     # Test all 35 cases
-    all_cases_pass = test_all_35_cases()
+    all_cases_pass = _run(test_all_35_cases)
     
     print("\n" + "=" * 80)
     print("FINAL SUMMARY")

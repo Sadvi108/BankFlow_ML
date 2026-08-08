@@ -26,7 +26,7 @@
       "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
     },
     {
-      "filename": "584ab260-7a1d-4951-90db-b09e8bfc1ec9_QPV 0253 11 D D CONTROL.pdf",
+      "filename": "584ab260-7a1d-4951-90db-b09e8bfc1ec9_QPV 0253 11 ACME CONTROL.pdf",
       "success": false,
       "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
     },
@@ -41,7 +41,7 @@
       "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
     },
     {
-      "filename": "9d459d0f-467c-46ab-a8c7-d80a425d39c9_DnD CONTROL - EMC12511748202.pdf",
+      "filename": "9d459d0f-467c-46ab-a8c7-d80a425d39c9_AcMe CONTROL - EMC12511748202.pdf",
       "success": false,
       "error": "HTTP 500: {\"detail\":\"Extraction failed: 422: Could not extract text from the image. Please ensure the image is"
     },

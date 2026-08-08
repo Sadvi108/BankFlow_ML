@@ -38,7 +38,7 @@ RULES:
 6. Date: keep the format printed on the receipt; do not reformat.
 
 EXAMPLES OF VALID transaction_id: "PBB251031999999", "MBB210119805805", "RHB251031222222", "MYCN251031853500", "210119805805".
-EXAMPLES TO REJECT: "W10-1808-32000018" (SST), "21246660001343" alone (account), "WHS32110059378" (recipient ref).
+EXAMPLES TO REJECT: "W10-1808-32000018" (SST), "21000000000001" alone (account), "WHS32110059378" (recipient ref).
 
 Return only the JSON object."""
 

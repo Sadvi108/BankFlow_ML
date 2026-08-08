@@ -12,7 +12,7 @@ if os.name == 'nt':
 def verify_api():
     url = "http://localhost:8081/extract"
     # Testing the DnD receipt (DuitNow Outward)
-    file_path = "Receipts/9d459d0f-467c-46ab-a8c7-d80a425d39c9_DnD CONTROL - EMC12511748202.pdf"
+    file_path = "Receipts/9d459d0f-467c-46ab-a8c7-d80a425d39c9_AcMe CONTROL - EMC12511748202.pdf"
     
     if not os.path.exists(file_path):
         print(f"File not found: {file_path}")

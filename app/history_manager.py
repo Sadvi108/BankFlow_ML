@@ -33,7 +33,15 @@ class HistoryManager:
             "date": entry.get("date", ""),
             "confidence": entry.get("confidence", 0.0),
             "status": "success" if entry.get("reference_id") else "warning",
-            "notes": ""
+            "notes": "",
+            # A receipt carries several references and three distinct money
+            # figures. Storing only the elected primary and a single amount
+            # threw the rest away before the CSV export could ever see them.
+            "references": entry.get("references", []),
+            "fee": entry.get("fee"),
+            "total_debit": entry.get("total_debit"),
+            "beneficiary_bank": entry.get("beneficiary_bank"),
+            "needs_review": entry.get("needs_review", False),
         }
         
         history.insert(0, new_entry) # Most recent first
