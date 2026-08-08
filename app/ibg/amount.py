@@ -128,7 +128,11 @@ _TOTAL_FEE_RE = re.compile(
 _STRONG_LABEL_RE = re.compile(
     r'\b(?:Transaction\s*Amount|Transfer\s*Amount|Payment\s*Amount|'
     r'Remittance\s*Amount|Debit\s*Amount|Gross\s*Amount|Net\s*Amount|'
-    r'Total\s*Amount)\b',
+    r'Total\s*Amount|'
+    # Standard Chartered payee advices head the money block with
+    # "Invoice Total", never the word "Amount"; without this the whole slip
+    # returned no amount at all.
+    r'Invoice\s*Total|Debit\s*Amt|Payment\s*Advice\s*Amount)\b',
     re.IGNORECASE,
 )
 
@@ -143,6 +147,10 @@ _WEAK_LABEL_RE = re.compile(r'\bAmount\b', re.IGNORECASE)
 _CURRENCY_RE = re.compile(r'\b(?:RM|MYR)\b', re.IGNORECASE)
 
 _LABEL_WINDOW = 300
+# Deliberately much tighter than the forward window. A value above its label is
+# a real layout (OCBC Velocity), but reaching far backwards would let a label
+# adopt an unrelated figure from the previous section.
+_BACKWARD_WINDOW = 60
 _FEE_WINDOW = 150
 _CURRENCY_WINDOW = 25
 
@@ -259,7 +267,24 @@ def _looks_like_account_fragment(text: str, start: int, end: int) -> bool:
             continue
         break
 
-    return left < start or right > end
+    if not (left < start or right > end):
+        return False
+
+    # A single space-joined group on the left is not an account run -- it is
+    # far more often the year of a date sitting beside the value, as OCBC
+    # prints it: "06 Aug 2026 1,457.50 MYR". Treating that as a fragment
+    # rejected the amount on every OCBC Velocity slip. An account number
+    # ("2124 6660 0013 435") always contributes two or more such groups, so
+    # require that before rejecting, and only when nothing was glued directly
+    # (no space) to the match -- direct adjacency, as in the three-decimal
+    # "31.800" case, still rejects immediately.
+    glued_left = left < start and text[left:start].find(' ') == -1
+    glued_right = right > end and text[end:right].find(' ') == -1
+    if glued_left or glued_right:
+        return True
+
+    groups = [g for g in text[left:right].split(' ') if g]
+    return len(groups) > 2
 
 
 def _format_amount(raw: str) -> Optional[str]:
@@ -333,6 +358,43 @@ def _collect_labels(text: str) -> List[_Label]:
 # ---------------------------------------------------------------------------
 # Scanning helpers
 # ---------------------------------------------------------------------------
+
+def _last_money_before(
+    text: str, end: int, window: int,
+    labels: List[_Label], label_starts: List[int],
+) -> Optional[Tuple[str, int, int]]:
+    """Nearest plausible money token *before* `end`, for labels printed under
+    their value.
+
+    Mirrors `_first_money_after` and stops at the preceding label for the same
+    reason: one label must never adopt another's value. Used only as a fallback
+    when nothing lies ahead of the label.
+    """
+    # Only the label's own line and the one directly above it. A wider reach
+    # let MUFG's trailing "Total Amount" label grab the last invoice row
+    # (290.00) instead of the group total. One line is all the value-above-label
+    # layout ever needs.
+    line_start = text.rfind("\n", 0, end) + 1
+    prev_start = text.rfind("\n", 0, max(0, line_start - 1)) + 1
+    start = max(0, end - window, prev_start)
+    idx = bisect.bisect_left(label_starts, start)
+    while idx < len(labels) and labels[idx].start < end:
+        # A label sits between `start` and our label -- the value beyond it
+        # belongs to that one, so pull the floor in.
+        if labels[idx].end <= end and labels[idx].start > start:
+            start = max(start, labels[idx].end)
+        idx += 1
+    best = None
+    for m in _MONEY_RE.finditer(text, start, end):
+        if _looks_like_account_fragment(text, m.start(), m.end()):
+            continue
+        if not _is_plausible_amount(m.group(0)):
+            continue
+        best = m
+    if best is None:
+        return None
+    return best.group(0), best.start(), best.end()
+
 
 def _first_money_after(
     text: str, start: int, window: int,
@@ -475,6 +537,28 @@ def _gather(text: str) -> _Gathered:
                     ))
                 continue
             found = _first_money_after(text, lbl.end, _LABEL_WINDOW, labels, label_starts)
+            backward = False
+            if found is None and lbl.kind != KIND_STRONG:
+                # OCBC Velocity stacks the value ABOVE its label:
+                #     06 Aug 2026 1,457.50 MYR
+                #     Amount
+                # so scanning only forwards yields nothing and the slip
+                # returned no amount at all.
+                #
+                # Restricted to a *bare* "Amount" label whose value carries a
+                # trailing currency token, which is exactly that layout's
+                # signature. A strong label ("Total Amount") always precedes
+                # its value, and allowing it to look back let MUFG's trailing
+                # "Total Amount / Number of Invoices" heading adopt the last
+                # invoice row instead of the group total.
+                back = _last_money_before(text, lbl.start, _BACKWARD_WINDOW,
+                                          labels, label_starts)
+                if back is not None:
+                    tail = text[back[2]:back[2] + _CURRENCY_WINDOW]
+                    if _CURRENCY_RE.match(tail.lstrip()) or _CURRENCY_RE.search(
+                            tail.split("\n")[0]):
+                        found = back
+                        backward = True
             if found is None:
                 continue
             raw, s, e = found
@@ -482,7 +566,9 @@ def _gather(text: str) -> _Gathered:
             if formatted is None:
                 continue
             score = _SCORE_STRONG if lbl.kind == KIND_STRONG else _SCORE_WEAK
-            source = "label:" + lbl.kind
+            if backward:
+                score -= 5.0      # weaker evidence than a value under its label
+            source = "label:" + lbl.kind + (":above" if backward else "")
             amount_candidates.append(_Candidate(formatted, score, source, s))
 
         elif lbl.kind == KIND_FEE:
@@ -540,6 +626,14 @@ def _gather(text: str) -> _Gathered:
     for cm in _CURRENCY_RE.finditer(text):
         window_end = min(cm.end() + _CURRENCY_WINDOW, len(text))
         m = _MONEY_RE.search(text, cm.end(), window_end)
+        if m is None:
+            # OCBC Velocity prints the currency AFTER the value ("31.80 MYR"),
+            # with the "Amount" label on the following line. Searching only
+            # forwards from the currency token missed those slips entirely.
+            back_start = max(0, cm.start() - _CURRENCY_WINDOW)
+            behind = [b for b in _MONEY_RE.finditer(text, back_start, cm.start())]
+            if behind:
+                m = behind[-1]
         if not m:
             continue
         if _looks_like_account_fragment(text, m.start(), m.end()):

@@ -67,7 +67,9 @@ _LABEL_SPECS = [
     (r"Payment\s*Details?", _C, "Payment Details"),
     (r"Debit\s*Reference", _C, "Debit Reference"),
     (r"Debit\s*Description", _C, "Debit Description"),
-    (r"Favourite\s*Name", _C, "Favourite Name"),
+    # "Favourite Name" is the nickname on a saved payee ("DnD CONTROL"), not a
+    # reference. Treating it as one surfaced the beneficiary's own name, and on
+    # Public Bank slips the beneficiary BANK, as if they were references.
     (r"Remark", _C, "Remark"),
 
     # --- bank secondary ---------------------------------------------------
@@ -140,10 +142,38 @@ _NON_VALUE_WORDS = frozenset([
     "APPROVED", "RESIDENT", "YES", "NO", "NONE", "NIL", "MYR", "RM",
     "FUND TRANSFER", "FUNDS TRANSFER", "CURRENT ACCOUNT", "ACCOUNT NUMBER",
     "INTERNET PORTAL", "NEW TRANSFER", "DUITNOW TRANSFER", "OUTWARD ACH",
+    # Product and rail names. A block-paired run that starts one slot early
+    # elects the product type as the bank's reference -- "Interbank GIRO (IBG)"
+    # was being returned as a bank_primary on Public Bank approval slips.
+    "INTERBANK GIRO IBG", "INTERBANK GIRO", "DUITNOW", "GIRO", "IBG",
+    "DUITNOW PAYMENT", "DUITNOW TRANSFER", "INSTANT TRANSFER", "INWARD ACH",
+    "IMMEDIATE TRANSFER", "POST DATED TRANSFER", "FAVOURITE ACCOUNT TRANSFER",
+    "THIRD PARTY TRANSFER", "ACH CREDIT GIRO", "PAYLINK GIRO",
+    "AUTOMATED CLEARING HOUSE ACH", "ACCOUNT NO DUITNOW ID",
+    # Section headers and form furniture that a scan can run into.
+    "PAYMENT METHOD", "PAYMENT TYPE", "PAYMENT DETAILS", "SEARCH CRITERIA",
+    "DATE TIME", "TRANSFER TYPE", "TRANSFER MODE", "PRODUCT TYPE",
+    "TRANSACTION DETAILS", "BENEFICIARY DETAILS", "PAYER DETAILS",
+    "ADDITIONAL INFORMATION", "INSTRUCTION MODE", "APPROVAL STATUS",
 ])
+
+
+def _normalise_phrase(value):
+    """Uppercase, strip punctuation, collapse spaces -- for the noise check."""
+    return re.sub(r"\s+", " ", re.sub(r"[^A-Za-z0-9 ]+", " ", value)).strip().upper()
 
 # Amount-shaped strings must never become references.
 _MONEY_RE = re.compile(r"^(?:RM|MYR)?\s*[\d,]+\.\d{2}$", re.IGNORECASE)
+# A value that *contains* a currency amount is a money field bleeding into the
+# reference slot ("Debit Amount MYR 241.20"), never a reference.
+_CONTAINS_MONEY_RE = re.compile(r"\b(?:RM|MYR)\s*[\d,]+\.\d{2}", re.IGNORECASE)
+# Prose and section headers leak in when a label has no value of its own:
+# "Please refer to the payment details below:" yields "below". A real reference
+# either carries a digit or is an uppercase code (CPC, DEMURAGE).
+_SINGLE_WORD_RE = re.compile(r"^[A-Za-z()]+$")
+# Trailing form furniture that is part of the label, not the value.
+_TRAILING_NOISE_RE = re.compile(r"^\(?\s*(?:optional|if\s+any|s)\s*\)?$",
+                                re.IGNORECASE)
 
 # Field labels that are not references but appear inside the same label blocks,
 # so positional pairing must not mistake them for values.
@@ -283,6 +313,16 @@ def _find_labels(text):
     return kept
 
 
+def _matches_any_label(value):
+    """True when `value` is itself a field label rather than a field's value."""
+    probe = value.strip().rstrip(":").strip()
+    for regex, _role, _name in _COMPILED:
+        m = regex.match(probe)
+        if m and m.end() >= len(probe):
+            return True
+    return bool(_GENERIC_LABEL_RE.match(probe))
+
+
 def _clean_value(raw):
     """Trim a raw slice down to a usable reference value, or None."""
     if raw is None:
@@ -310,7 +350,20 @@ def _clean_value(raw):
         return None
     if value.upper() in _NON_VALUE_WORDS:
         return None
-    if _MONEY_RE.match(value):
+    if _normalise_phrase(value) in _NON_VALUE_WORDS:
+        return None
+    if _MONEY_RE.match(value) or _CONTAINS_MONEY_RE.search(value):
+        return None
+    if _TRAILING_NOISE_RE.match(value):
+        return None
+    # A single alphabetic word with no digits is prose or a form label unless
+    # it is an uppercase code. Kills "below", "Report", "Payment", "Citizen"
+    # while keeping "CPC" and "DEMURAGE".
+    if _SINGLE_WORD_RE.match(value) and not value.isupper():
+        return None
+    # A value that is itself one of our labels means the scan ran past this
+    # field into the next one ("Payment Details" -> "Payment Method").
+    if _matches_any_label(value):
         return None
     if any(pat.match(value) for pat in _DATE_SHAPE_RES):
         return None
