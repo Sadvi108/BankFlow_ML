@@ -11,3 +11,6 @@ services:
         value: "1"
       - key: PYTHONPATH
         value: /app
+      # One uvicorn worker per 512MB instance -- see the CMD note in Dockerfile.
+      - key: WEB_CONCURRENCY
+        value: "1"

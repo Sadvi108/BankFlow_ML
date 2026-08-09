@@ -32,12 +32,20 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Production stage
 FROM python:3.11-slim as production
 
-# Install runtime dependencies
-RUN apt-get update && apt-get install -y \
+# Install runtime dependencies.
+# libglib2.0-0/libgomp1 look like build-only packages but are NOT: the
+# opencv-python-headless wheel still dynamically links libgthread-2.0.so.0 and
+# libgomp.so.1. They were installed in the builder stage only, which never
+# imports cv2 -- so `import cv2` raised ImportError on the first request path
+# at startup and the container exited before the health check could pass.
+# tesseract-ocr provides the binary pytesseract shells out to; the -dev headers
+# are build-time only and are deliberately not carried into this stage.
+RUN apt-get update && apt-get install -y --no-install-recommends \
     tesseract-ocr \
     tesseract-ocr-eng \
-    libtesseract-dev \
     poppler-utils \
+    libglib2.0-0 \
+    libgomp1 \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
@@ -71,5 +79,9 @@ USER app
 # Expose port
 EXPOSE 8000
 
-# Run the application — honor $PORT (Render/Heroku set it), default 8000
-CMD ["sh", "-c", "uvicorn simple_server:app --host 0.0.0.0 --port ${PORT:-8000} --workers 2"]
+# Run the application — honor $PORT (Render/Heroku set it), default 8000.
+# Worker count is env-driven and defaults to 1: each worker loads its own copy
+# of cv2 + numpy + PyMuPDF (~300MB RSS), so a hardcoded 2 exceeded the 512MB
+# free-instance limit and the service was OOM-killed in a restart loop. Raise
+# WEB_CONCURRENCY on a paid instance with more memory.
+CMD ["sh", "-c", "uvicorn simple_server:app --host 0.0.0.0 --port ${PORT:-8000} --workers ${WEB_CONCURRENCY:-1}"]

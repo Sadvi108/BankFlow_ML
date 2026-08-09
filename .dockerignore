@@ -1,0 +1,36 @@
+# Keep the build context small -- Render uploads the whole context before the
+# first COPY runs. Nothing here is copied into the image by the Dockerfile.
+.git
+.github
+.venv
+venv
+env
+ENV
+__pycache__
+*.py[cod]
+
+# Local run artifacts and OCR dumps of real receipts -- never ship these.
+logs/
+data/
+debug_failures/
+debug_failures_images/
+debug_ocr_output/
+pattern_training_results/
+test_reports/
+*.log
+
+# Dev-only trees
+tests/
+testsprite_tests/
+scripts/
+docs/
+static/
+
+# Other platforms' config
+.vercel/
+.vercelignore
+vercel.json
+docker-compose.yml
+nginx.conf
+*.bat
+.env
