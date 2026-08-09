@@ -123,13 +123,22 @@ def _pdf_to_text(tmp_path: str) -> Dict[str, Any]:
         except Exception as e:
             logger.warning(f"Apple Vision OCR failed on PDF: {e}")
 
-    # 3. pdfplumber
+    # 3. pdfplumber. The garbage check matters most HERE: this is the last
+    #    fallback, and pdfplumber happily returns the CID codepoints of a
+    #    font-subset PDF -- `(cid:3)(cid:9)...` -- which is far longer than the
+    #    caller's 5-character guard. Without this check that garbage was
+    #    accepted as real text, every extractor found nothing in it, and the
+    #    upload returned success with all fields blank and no error shown.
+    #    Falling through to "" instead makes the caller raise an honest 422.
     try:
         import pdfplumber
         with pdfplumber.open(tmp_path) as pdf:
             pl_text = " ".join((p.extract_text() or "") for p in pdf.pages).strip()
-        if pl_text:
+        if pl_text and not is_text_garbage(pl_text):
             return {"text": pl_text, "tokens": [], "confidence": 0.4, "source": "pdfplumber"}
+        if pl_text:
+            logger.warning("pdfplumber returned %d chars of unusable text "
+                           "(CID-encoded or mojibake); discarding", len(pl_text))
     except Exception as e:
         logger.warning(f"pdfplumber fallback failed: {e}")
 
@@ -163,7 +172,8 @@ async def train_page(request: Request):
 
 def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
                     raw_text: str, ocr_confidence: float, llm_used: bool,
-                    ibg: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+                    ibg: Optional[Dict[str, Any]] = None,
+                    text_source: str = "unknown") -> Dict[str, Any]:
     """Persist to history/Supabase, build the JSON response shape the UI expects."""
     results = {
         "bank": merged["bank_name"],
@@ -181,6 +191,11 @@ def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
         "needs_review": merged["needs_review"],
         "llm_used": llm_used,
         "raw_text": raw_text,
+        # Which rung of the PDF ladder actually produced the text (embedded /
+        # ocr / vision / pdfplumber). When fields come back empty this is the
+        # first thing worth knowing, and it is not otherwise recoverable from
+        # a deployed instance.
+        "text_source": text_source,
     }
 
     # Everything the IBG engine found, added alongside the legacy keys rather
@@ -398,6 +413,7 @@ async def extract_receipt(file: UploadFile = File(...)):
             ocr_confidence=ocr_result.get("confidence", 0.5),
             llm_used=llm_used,
             ibg=ibg_results,
+            text_source=ocr_result.get("source", "unknown"),
         )
 
     except HTTPException:
