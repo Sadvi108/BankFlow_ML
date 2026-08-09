@@ -39,7 +39,7 @@ dataset.ensure_dirs()
 
 @app.get("/", response_class=HTMLResponse)
 async def upload_page(request: Request):
-    return templates.TemplateResponse("upload.html", {"request": request})
+    return templates.TemplateResponse(request, "upload.html", {})
 
 
 @app.post("/extract")
@@ -194,7 +194,7 @@ async def update_history_item(item_id: str, payload: Dict[str, Any]):
 
 @app.get("/train", response_class=HTMLResponse)
 async def train_page(request: Request):
-    return templates.TemplateResponse("train.html", {"request": request})
+    return templates.TemplateResponse(request, "train.html", {})
 
 
 @app.post("/upload_bulk")

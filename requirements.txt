@@ -1,3 +1,8 @@
+# Render builds fresh, so an unpinned floor silently pulls the newest release.
+# Starlette 1.0 REMOVED the legacy TemplateResponse(name, context) signature,
+# which 500'd every page on deploy while local (0.49) only warned. All call
+# sites now pass `request` first, which is valid on 0.29+ and required on 1.0+,
+# so both ends of this range work.
 fastapi>=0.100.0
 uvicorn>=0.20.0
 python-multipart>=0.0.6

@@ -155,11 +155,11 @@ def _render_pdf_page_to_png(pdf_bytes: bytes, page_index: int = 0, zoom: float =
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     """Serve the simplified upload page"""
-    return templates.TemplateResponse("simple_upload.html", {"request": request})
+    return templates.TemplateResponse(request, "simple_upload.html", {})
 
 @app.get("/train", response_class=HTMLResponse)
 async def train_page(request: Request):
-    return templates.TemplateResponse("train.html", {"request": request})
+    return templates.TemplateResponse(request, "train.html", {})
 
 def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
                     raw_text: str, ocr_confidence: float, llm_used: bool,

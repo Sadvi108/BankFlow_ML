@@ -109,8 +109,7 @@ async def shutdown_event():
 @app.get("/", response_class=HTMLResponse)
 async def upload_page(request: Request):
     """Main upload page - simplified version."""
-    return templates.TemplateResponse("simple_upload.html", {
-        "request": request,
+    return templates.TemplateResponse(request, "simple_upload.html", {
         "ml_models_loaded": models_loaded
     })
 
@@ -472,8 +471,7 @@ def validate_transaction_id(transaction_id: str, bank_name: str) -> float:
 @app.get("/train", response_class=HTMLResponse)
 async def train_page(request: Request):
     """Training interface page."""
-    return templates.TemplateResponse("train.html", {
-        "request": request,
+    return templates.TemplateResponse(request, "train.html", {
         "dataset_summary": dataset.summary()
     })
 
