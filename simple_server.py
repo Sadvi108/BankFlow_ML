@@ -462,10 +462,71 @@ async def export_history():
         headers={"Content-Disposition": "attachment; filename=extraction_history.csv"}
     )
 
+def _ocr_diagnostics() -> Dict[str, Any]:
+    """What the OCR stack actually looks like from inside the container.
+
+    A missing `tesseract` binary and an OOM-killed worker both surface in the
+    browser as a failed upload with no useful message, and neither is
+    reproducible locally. Render's free instances have no shell, so this is the
+    only way to tell the two apart. Every probe is individually guarded --
+    /health is the deploy's health check and must never raise.
+    """
+    import shutil
+
+    diag: Dict[str, Any] = {}
+
+    diag["tesseract_path"] = shutil.which("tesseract")
+    try:
+        import pytesseract
+        diag["tesseract_version"] = str(pytesseract.get_tesseract_version())
+    except Exception as e:
+        diag["tesseract_version"] = f"unavailable: {e}"
+    try:
+        import pytesseract
+        diag["languages"] = pytesseract.get_languages(config="")
+    except Exception as e:
+        diag["languages"] = f"unavailable: {e}"
+
+    try:
+        diag["vision_available"] = ocr_vision.available()
+    except Exception as e:
+        diag["vision_available"] = f"unavailable: {e}"
+
+    # Resident size vs the cgroup limit. Three sequential Tesseract passes over
+    # a full-resolution phone photo is the memory peak in this app; if headroom
+    # here is small, the worker is being killed mid-upload rather than erroring.
+    try:
+        with open("/proc/self/status") as f:
+            for line in f:
+                if line.startswith("VmRSS:"):
+                    diag["rss_mb"] = round(int(line.split()[1]) / 1024, 1)
+                    break
+    except Exception:
+        diag["rss_mb"] = None
+
+    for limit_file in ("/sys/fs/cgroup/memory.max",
+                       "/sys/fs/cgroup/memory/memory.limit_in_bytes"):
+        try:
+            with open(limit_file) as f:
+                raw = f.read().strip()
+            if raw and raw != "max":
+                diag["memory_limit_mb"] = round(int(raw) / 1024 / 1024, 1)
+                break
+        except Exception:
+            continue
+
+    return diag
+
+
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
-    return {"status": "healthy", "service": "Bank Receipt Extractor"}
+    """Health check endpoint (also the Render healthCheckPath)."""
+    payload = {"status": "healthy", "service": "Bank Receipt Extractor"}
+    try:
+        payload["ocr"] = _ocr_diagnostics()
+    except Exception as e:  # never let diagnostics fail the health check
+        payload["ocr"] = {"error": str(e)}
+    return payload
 
 if __name__ == "__main__":
     import uvicorn
