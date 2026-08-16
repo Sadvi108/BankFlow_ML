@@ -53,6 +53,12 @@ _BENEFICIARY_LABELS: List[Tuple[str, float]] = [
     (r"Payee\s*Name", 0.95),
     (r"Payee'?s?\s*Nickname", 0.90),
     (r"Transfer\s*To", 0.90),
+    # CIMB puts the payee inside the DuitNow ID field rather than giving it a
+    # name label of its own, so "Paid To" came back empty on those slips.
+    (r"To\s*DuitNow\s*ID\s*/?\s*Account\s*Number", 0.88),
+    (r"Recipient'?s?\s*DuitNow\s*ID\s*/?\s*Account\s*No\.?", 0.88),
+    (r"DuitNow\s*ID", 0.80),
+    (r"Payee\s*/\s*Payee", 0.85),
     (r"Credit\s*Account", 0.85),
     (r"Name\s*and\s*Addr\.?", 0.85),
 ]
@@ -96,7 +102,11 @@ def _clean_party(raw: str) -> Optional[str]:
         return None
     value = raw.strip()
     value = re.split(r"\s{2,}", value)[0].strip()
-    value = value.strip(" \t\r\n:;|")
+    # CIMB writes "CMA CGM MALAYSIA SDN BHD < XXXXXXXX0101" -- the masked
+    # account is appended to the name and is not part of it.
+    value = re.split(r"\s*[<(]\s*[*X\d]{4,}", value)[0].strip()
+    value = re.split(r"\s*/\s*[*X\d]{6,}", value)[0].strip()
+    value = value.strip(" \t\r\n:;|<>")
     if not value or _PLACEHOLDER_RE.match(value):
         return None
     # "8000000002 / BLUE ORCHID LOGISTICS SDN BHD (MYR)" -> drop the account.
@@ -219,6 +229,8 @@ _MODE_PATTERNS = [
     (r"Immediate\s*Transfer", "Immediate Transfer"),
     (r"RENTAS", "RENTAS"),
     (r"Funds?\s*Transfer", "Fund Transfer"),
+    (r"GIRO\s*payment", "Interbank GIRO (IBG)"),
+    (r"\bGIRO\b", "Interbank GIRO (IBG)"),
 ]
 _COMPILED_MODE = [(re.compile(p, re.IGNORECASE), name) for p, name in _MODE_PATTERNS]
 

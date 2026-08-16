@@ -100,6 +100,11 @@ _LABEL_SPECS = [
     (r"Txn\s*Ref\.?\s*No\.?", _P, "Txn Ref No"),
     (r"SCB\s*Ref\.?", _P, "SCB Ref"),
     (r"Group\s*No\.?", _P, "Group No."),
+    # MUFG's GIRO advice letter uses neither "Reference No" nor any label the
+    # vocabulary knew, so the file returned no reference at all and the portal
+    # reported it as unreadable.
+    (r"MUFG\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _P, "MUFG Reference"),
+    (r"Payment\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _P, "Payment Reference"),
     # "Bank Reference No." is demoted to secondary later if a primary exists.
     (r"Bank\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _P, "Bank Reference"),
     (r"Ref(?:erence)?\.?\s*(?:Number|No\.?|ID)", _P, "Reference No"),
@@ -152,6 +157,7 @@ _NON_VALUE_WORDS = frozenset([
     "AUTOMATED CLEARING HOUSE ACH", "ACCOUNT NO DUITNOW ID",
     # Section headers and form furniture that a scan can run into.
     "PAYMENT METHOD", "PAYMENT TYPE", "PAYMENT DETAILS", "SEARCH CRITERIA",
+    "STATUS SUCCESS", "STATUS SUCCESSFUL", "STATUS PROCESSED", "SUCCESS",
     "DATE TIME", "TRANSFER TYPE", "TRANSFER MODE", "PRODUCT TYPE",
     "TRANSACTION DETAILS", "BENEFICIARY DETAILS", "PAYER DETAILS",
     "ADDITIONAL INFORMATION", "INSTRUCTION MODE", "APPROVAL STATUS",
