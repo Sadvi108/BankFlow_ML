@@ -470,6 +470,19 @@
           </div>
         </div>
 
+        <!-- Who the money moved between. Direction-aware: an inbound credit
+             advice names the payer as "Ordering Customer", an outbound slip as
+             "Debit From Account". -->
+        <div class="detail-card" id="payerRow" style="display:none">
+          <div class="label">Payer <span id="payerConf" class="conf-badge">--</span></div>
+          <input type="text" id="fieldPayer" class="value-input" value="--">
+        </div>
+
+        <div class="detail-card" id="beneficiaryRow" style="display:none">
+          <div class="label">Beneficiary <span id="beneficiaryConf" class="conf-badge">--</span></div>
+          <input type="text" id="fieldBeneficiary" class="value-input" value="--">
+        </div>
+
         <div class="detail-card" id="beneRow" style="display:none">
           <div class="label">Beneficiary Bank <span id="beneConf" class="conf-badge">--</span></div>
           <input type="text" id="fieldBene" class="value-input" value="--">
@@ -663,13 +676,20 @@
       setConf(document.getElementById('totalConf'), fd.total_debit ? fd.total_debit.confidence : 0);
     }
 
-    function renderBeneficiary(data, fd) {
-      const row = document.getElementById('beneRow');
-      if (!data.beneficiary_bank) { row.style.display = 'none'; return; }
+    function renderParty(rowId, inputId, confId, value, detail) {
+      const row = document.getElementById(rowId);
+      if (!value) { row.style.display = 'none'; return; }
       row.style.display = 'block';
-      document.getElementById('fieldBene').value = data.beneficiary_bank;
-      setConf(document.getElementById('beneConf'),
-              fd.beneficiary_bank ? fd.beneficiary_bank.confidence : 0);
+      document.getElementById(inputId).value = value;
+      setConf(document.getElementById(confId), detail ? detail.confidence : 0);
+    }
+
+    function renderBeneficiary(data, fd) {
+      renderParty('payerRow', 'fieldPayer', 'payerConf', data.payer, fd.payer);
+      renderParty('beneficiaryRow', 'fieldBeneficiary', 'beneficiaryConf',
+                  data.beneficiary, fd.beneficiary);
+      renderParty('beneRow', 'fieldBene', 'beneConf',
+                  data.beneficiary_bank, fd.beneficiary_bank);
     }
 
     function renderReferences(data) {

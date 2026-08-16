@@ -299,6 +299,25 @@ def _find_labels(text):
             nxt = text[end:end + 1]
             if nxt not in ("", ":", "-", "\n", "\r", " ", "\t", ".", "*"):
                 continue
+
+            matched = text[m.start():end]
+            # Prose, not a field label. "This Advice is for your reference only
+            # and is not to be relied upon" matched "your reference" and bound
+            # the next few words as the payer's reference. No bank prints a
+            # field label in lowercase, so casing separates the two cleanly.
+            if matched.islower():
+                continue
+            # A label mid-sentence is prose too: a real one begins its line or
+            # its column, or follows a separator.
+            line_start = text.rfind("\n", 0, m.start()) + 1
+            before = text[line_start:m.start()]
+            if before.strip() and not re.search(r"[:\-|]\s*$|\s{2,}$", before):
+                # Allow a label that follows another label's value on the same
+                # line (two-column layouts), but not one trailing prose.
+                tail_word = re.search(r"([A-Za-z']+)\s*$", before)
+                if tail_word and tail_word.group(1).islower():
+                    continue
+
             hits.append(_Hit(m.start(), end, role, name))
 
     hits.sort(key=lambda h: (h.start, -(h.end - h.start)))

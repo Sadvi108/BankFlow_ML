@@ -22,6 +22,7 @@ from app.ibg.contract import (
     ROLE_PAYER_SUPPLIED,
     looks_like_ibg,
 )
+from app.ibg.party import extract_beneficiary, extract_payer
 from app.ibg.reference_id import extract_references
 from app.ibg.transaction_date import extract_transaction_date
 
@@ -71,6 +72,11 @@ def extract_ibg_fields(text: str, ocr_used: bool = True) -> Dict[str, Any]:
         "amount": amount,
         "fee": fee,
         "total_debit": total_debit,
+        # Who the money moved between. Direction-aware: an inbound credit
+        # advice names the payer as "Ordering Customer", an outbound slip as
+        # "Debit From Account".
+        "payer": extract_payer(text, ocr_used=ocr_used),
+        "beneficiary": extract_beneficiary(text, ocr_used=ocr_used),
     }
 
     out: Dict[str, Any] = {}
