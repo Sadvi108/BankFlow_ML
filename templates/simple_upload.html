@@ -498,6 +498,11 @@
           <div id="refsList" style="margin-top:0.6rem"></div>
         </div>
 
+        <div class="detail-card" id="absentCard" style="display:none">
+          <div class="label" style="color:var(--text-dim)">Not present on this receipt</div>
+          <div id="absentList" style="font-size:0.82rem; color:var(--text-dim); margin-top:0.3rem"></div>
+        </div>
+
         <div class="detail-card" id="reviewCard" style="display:none; border-color:var(--warning)">
           <div class="label" style="color:var(--warning)">Why this needs review</div>
           <ul id="reviewReasons" style="margin:0.4rem 0 0 1rem; font-size:0.82rem; color:var(--text-dim)"></ul>
@@ -741,6 +746,12 @@
       });
     }
 
+    const FIELD_LABELS = {
+      reference_id: 'Reference ID', bank_name: 'Bank', beneficiary_bank: 'Beneficiary bank',
+      transaction_date: 'Transaction date', amount: 'Amount', fee: 'Fee',
+      total_debit: 'Total debit', payer: 'Payer', beneficiary: 'Beneficiary',
+    };
+
     function renderReviewReasons(data) {
       const card = document.getElementById('reviewCard');
       const ul = document.getElementById('reviewReasons');
@@ -753,6 +764,18 @@
         li.textContent = r;
         ul.appendChild(li);
       });
+    }
+
+    // Receipts differ -- a DuitNow slip has no fee line, a recipient's copy
+    // names no payer. Saying so plainly is better than an empty box the reader
+    // has to interpret, and better than a warning for something that is fine.
+    function renderAbsentFields(data) {
+      const box = document.getElementById('absentCard');
+      const el = document.getElementById('absentList');
+      const absent = (data.fields_absent || []).filter(f => FIELD_LABELS[f]);
+      if (!absent.length) { box.style.display = 'none'; return; }
+      box.style.display = 'block';
+      el.textContent = absent.map(f => FIELD_LABELS[f]).join(' · ');
     }
 
     function populateResults(data) {
@@ -779,6 +802,7 @@
       renderBeneficiary(data, fd);
       renderReferences(data);
       renderReviewReasons(data);
+      renderAbsentFields(data);
 
       const badge = document.getElementById('methodBadge');
       badge.textContent = methodLabel(data.method);
