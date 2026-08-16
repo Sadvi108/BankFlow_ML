@@ -96,8 +96,12 @@ _RETAIL = [
                 "STRAIGHT2BANK"], "retail", None),
     BankEntity("ocbc", "OCBC", "OCBCMYKL",
                ["OCBC", "OCBC BANK", "VELOCITY", "OCBC VELOCITY"], "retail", None),
+    # UOB's wordmark is preceded by four vertical bars, which OCR reads as
+    # "#H", "HH" or "IIII" glued to the name -- so "UOB" never matched on a
+    # scanned UOB slip and the bank came back unidentified.
     BankEntity("uob", "UOB", "UOVBMYKL",
-               ["UOB", "UNITED OVERSEAS BANK", "UOB MALAYSIA", "BIBPLUS"],
+               ["UOB", "UNITED OVERSEAS BANK", "UOB MALAYSIA", "BIBPLUS",
+                "#HUOB", "HUOB", "HHUOB", "IIIIUOB", "IIUOB", "||||UOB"],
                "retail", None),
     # CitiDirect prints US month-first dates -- see DAY_FIRST/MONTH_FIRST above.
     BankEntity("citibank", "Citibank", "CITIMYKL",

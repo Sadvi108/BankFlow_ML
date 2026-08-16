@@ -26,6 +26,10 @@ _PAYER_LABELS: List[Tuple[str, float]] = [
     (r"Account\s*Name", 0.88),
     (r"Company\s*Name", 0.88),
     (r"From\s*Account\s*Name", 0.95),
+    # OCBC Velocity heads the payer block with "Your Account" and nothing else,
+    # which is why the payer came back empty on every OCBC slip.
+    (r"Your\s*Account", 0.90),
+    (r"Debit\s*Acct\.?\s*No\.?", 0.85),
     (r"Source\s*Account", 0.90),
     (r"Debit\s*From\s*Account\s*No\.?", 0.90),
     (r"From\s*Account", 0.85),
