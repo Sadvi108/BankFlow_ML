@@ -91,7 +91,12 @@ _LABEL_LIKE_RE = re.compile(
     r"(?:Transaction|Transfer|Payment|Beneficiary|Recipient|Payee|Payer|"
     r"Account|Bank|Debit|Credit|Value|Applicant|Ordering|Customer|Source|"
     r"Destination|Instruction|Additional|Reference|Service|Product|Status|"
-    r"Charges?|Fee|Amount|Currency|Date|Details?|Mode|Type|Name|Number|No)"
+    r"Charges?|Fee|Amount|Currency|Date|Details?|Mode|Type|Name|Number|No|"
+    # "Business Registration Number" and "DuitNow ID Type" were both being
+    # reported as payers, and then echoed into the reference list on top.
+    r"Business|Registration|Registrati|DuitNow|ID|Nickname|Residency|"
+    r"Resident|Information|Approval|Purpose|Remark|Note|Total|Validate|"
+    r"Favourite|Channel|Batch|Import|Advice|Message|Email|Telephone|Fax)"
     r"[\s.:/'’-]*)+$",
     re.IGNORECASE)
 

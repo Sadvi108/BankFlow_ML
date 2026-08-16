@@ -945,7 +945,10 @@ CORPUS = [
             "reference_id": "MYIG2608033918802",
             "references": [
                 ("MYIG2608033918802", PRIMARY),
-                ("ACME CONTROL", PAYER),          # Customer Ref No.
+                # "Customer Ref No." here is the beneficiary's own name, not a
+                # reference. The owner reported these name echoes as wrong --
+                # a reference that identifies nothing is worse than none -- so
+                # they are dropped and this expectation was corrected to match.
                 ("OOL12612032422", PAYER),       # Debit Description
             ],
             "bank_name": "Maybank",
@@ -1274,7 +1277,8 @@ CORPUS = [
             "reference_id": "260806446749",
             "references": [
                 ("260806446749", PRIMARY),
-                ("NOVATECH BHD", PAYER),
+                # "Recipient's Reference" repeats the payer's own name; see the
+                # note on S1. Dropped as a name echo.
                 ("HAL22610717193", PAYER),
             ],
             "bank_name": "RHB",

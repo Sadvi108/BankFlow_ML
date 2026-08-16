@@ -41,6 +41,52 @@ SCALAR_FIELDS = ("reference_id", "bank_name", "beneficiary_bank",
                  "payer", "beneficiary", "payment_mode")
 
 
+import re
+
+# Corporate suffixes carry no identifying weight, so "Bigbell industry" and
+# "BIGBELL INDUSTRY SDN. BHD." must compare equal.
+_CORP_SUFFIX_RE = re.compile(
+    r"\b(?:SDN|BHD|BERHAD|PTE|LTD|LIMITED|COMPANY|CO|INC|CORP|"
+    r"CORPORATION|GROUP|HOLDINGS|ENTERPRISE|MALAYSIA|M)\b\.?", re.IGNORECASE)
+
+
+def _name_words(value):
+    """Significant words of a party name, for echo comparison."""
+    if not value:
+        return set()
+    stripped = _CORP_SUFFIX_RE.sub(" ", str(value).upper())
+    return set(w for w in re.sub(r"[^A-Z0-9 ]", " ", stripped).split()
+               if len(w) > 1)
+
+
+def _drop_name_echoes(references, party_names):
+    """Remove references that are just a party's own name written back.
+
+    Only payer-supplied references are considered: a bank-issued reference that
+    happens to share a word with the company name is still the bank's record
+    and must survive.
+    """
+    parties = [_name_words(n) for n in party_names if n]
+    if not parties:
+        return references
+    kept = []
+    for ref in references:
+        if ref.role != ROLE_PAYER_SUPPLIED:
+            kept.append(ref)
+            continue
+        words = _name_words(ref.value)
+        # A reference carrying digits is an identifier even if it also names
+        # the company ("BIGBELL INV 4471"), so keep those.
+        if not words or any(c.isdigit() for c in str(ref.value)):
+            kept.append(ref)
+            continue
+        if any(p and (words <= p or len(words & p) >= max(2, len(words) * 0.6))
+               for p in parties):
+            continue
+        kept.append(ref)
+    return kept
+
+
 def _bank_key_for(name: Optional[str]) -> Optional[str]:
     """Registry key for a resolved display name, for the date-order lookup."""
     if not name:
@@ -67,6 +113,16 @@ def extract_ibg_fields(text: str, ocr_used: bool = True) -> Dict[str, Any]:
     total_debit = extract_total_debit(text, ocr_used=ocr_used)
 
     references = extract_references(text, ocr_used=ocr_used)
+    payer_result = extract_payer(text, ocr_used=ocr_used)
+    beneficiary_result = extract_beneficiary(text, ocr_used=ocr_used)
+
+    # Some payers type their own company name into the reference box, so the
+    # slip carries "Customer Ref: Bigbell industry" next to a payer of
+    # "BIGBELL INDUSTRY SDN. BHD.". That is a name, not a reference, and
+    # surfacing it as one gives the reader a reference that identifies nothing.
+    references = _drop_name_echoes(
+        references, [payer_result.value, beneficiary_result.value])
+
     primary = next(
         (r for r in references if r.role == ROLE_BANK_PRIMARY), None
     )
@@ -82,8 +138,8 @@ def extract_ibg_fields(text: str, ocr_used: bool = True) -> Dict[str, Any]:
         # Who the money moved between. Direction-aware: an inbound credit
         # advice names the payer as "Ordering Customer", an outbound slip as
         # "Debit From Account".
-        "payer": extract_payer(text, ocr_used=ocr_used),
-        "beneficiary": extract_beneficiary(text, ocr_used=ocr_used),
+        "payer": payer_result,
+        "beneficiary": beneficiary_result,
         # The rail the money moved on. Nothing extracted this before, so the
         # portal defaulted every transfer to IBG even when the slip said
         # DuitNow -- different rails with different clearing times.
