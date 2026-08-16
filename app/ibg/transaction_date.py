@@ -601,9 +601,15 @@ def extract_transaction_date(text: str, ocr_used: bool = True,
     # frequency is actively misleading on these receipts).
     non_stamp = [iso for _, iso, is_stamp in all_hits if not is_stamp]
     if non_stamp:
+        # 0.70, not 0.60. This path fired on 32 of 208 real receipts and the
+        # owner confirmed every one of those dates is correct, so scoring it
+        # just under the review threshold produced 32 false alarms and nothing
+        # else. It stays well below a labelled match (0.95) because it *is*
+        # weaker evidence -- print stamps and approval timestamps are already
+        # excluded before we get here, which is what makes it trustworthy.
         return FieldResult(
             value=non_stamp[0],
-            confidence=round(0.6 - penalty, 3),
+            confidence=round(0.70 - penalty, 3),
             source="fallback:unlabeled_date",
             candidates=doc_candidates,
         )
