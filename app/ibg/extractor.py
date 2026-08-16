@@ -22,7 +22,8 @@ from app.ibg.contract import (
     ROLE_PAYER_SUPPLIED,
     looks_like_ibg,
 )
-from app.ibg.party import extract_beneficiary, extract_payer
+from app.ibg.party import (extract_beneficiary, extract_payer,
+                           extract_payment_mode)
 from app.ibg.reference_id import extract_references
 from app.ibg.transaction_date import extract_transaction_date
 
@@ -37,7 +38,7 @@ REQUIRED = ("reference_id", "bank_name", "transaction_date", "amount")
 # carries varies by bank and document type, so absence is normal.
 SCALAR_FIELDS = ("reference_id", "bank_name", "beneficiary_bank",
                  "transaction_date", "amount", "fee", "total_debit",
-                 "payer", "beneficiary")
+                 "payer", "beneficiary", "payment_mode")
 
 
 def _bank_key_for(name: Optional[str]) -> Optional[str]:
@@ -83,6 +84,10 @@ def extract_ibg_fields(text: str, ocr_used: bool = True) -> Dict[str, Any]:
         # "Debit From Account".
         "payer": extract_payer(text, ocr_used=ocr_used),
         "beneficiary": extract_beneficiary(text, ocr_used=ocr_used),
+        # The rail the money moved on. Nothing extracted this before, so the
+        # portal defaulted every transfer to IBG even when the slip said
+        # DuitNow -- different rails with different clearing times.
+        "payment_mode": extract_payment_mode(text, ocr_used=ocr_used),
     }
 
     out: Dict[str, Any] = {}
@@ -131,7 +136,7 @@ def extract_ibg_fields(text: str, ocr_used: bool = True) -> Dict[str, Any]:
         elif entry["confidence"] < REVIEW_THRESHOLD:
             reasons.append("%s low confidence (%.2f)" % (name, entry["confidence"]))
     for name in ("fee", "total_debit", "payer", "beneficiary",
-                 "beneficiary_bank"):
+                 "beneficiary_bank", "payment_mode"):
         entry = out[name]
         # Optional fields never flag on absence -- only on a value we distrust.
         if entry["value"] is not None and entry["confidence"] < REVIEW_THRESHOLD:

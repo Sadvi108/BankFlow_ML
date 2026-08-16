@@ -34,7 +34,15 @@ _PAYER_LABELS: List[Tuple[str, float]] = [
     (r"Debit\s*From\s*Account\s*No\.?", 0.90),
     (r"From\s*Account", 0.85),
     (r"Ordering\s*Customer", 0.90),
+    # Citi CitiDirect names the payer "Ordering Party"; Maybank2E advices put
+    # it under "Applicant Details / Contact Name". Neither was in the
+    # vocabulary, so the payer came back empty on both -- and on the Maybank2E
+    # advice the fallback reached the beneficiary's BANK instead.
+    (r"Ordering\s*Party", 0.95),
+    (r"Contact\s*Name", 0.88),
+    (r"Payer\s*/?\s*Payee", 0.92),
     (r"Payer", 0.90),
+    (r"Remitter", 0.95),
     (r"Applicant", 0.80),
 ]
 
@@ -94,8 +102,13 @@ def _clean_party(raw: str) -> Optional[str]:
     # "8000000002 / BLUE ORCHID LOGISTICS SDN BHD (MYR)" -> drop the account.
     value = _ACCOUNT_PREFIX_RE.sub("", value).strip()
     # "510000000001 (MYR) ACME LOGISTICS" leaves a currency marker behind.
-    value = re.sub(r"^\(?[A-Z]{3}\)?\s+", "", value).strip()
-    value = re.sub(r"\s*\([A-Z]{3}\)\s*$", "", value).strip()
+    # Match the actual currency codes, not any three uppercase letters: the
+    # loose form ate the first word of "ECO ACTION SDN BHD" and reported the
+    # payer as "ACTION SDN BHD".
+    value = re.sub(r"^\(?(?:MYR|RM|USD|SGD|EUR|GBP|AUD|JPY|CNY|HKD)\)?[\s-]+",
+                   "", value, flags=re.IGNORECASE).strip()
+    value = re.sub(r"\s*\((?:MYR|RM|USD|SGD|EUR|GBP|AUD|JPY|CNY|HKD)\)\s*$",
+                   "", value, flags=re.IGNORECASE).strip()
     if not value or _MASKED_RE.match(value) or len(value) > _MAX_LEN:
         return None
     if not re.search(r"[A-Za-z]{3}", value):
@@ -179,3 +192,65 @@ def extract_payer(text: str, ocr_used: bool = True) -> FieldResult:
 def extract_beneficiary(text: str, ocr_used: bool = True) -> FieldResult:
     """The party the money went TO."""
     return _extract(text, _COMPILED_BENEF, ocr_used)
+
+
+# ---------------------------------------------------------------------------
+# Payment mode
+# ---------------------------------------------------------------------------
+# The portal was showing every transfer as "IBG" because nothing extracted the
+# mode at all. Interbank GIRO and DuitNow are different rails with different
+# clearing times, so the distinction is not cosmetic.
+#
+# Ordered most specific first: "DuitNow Transfer" must beat bare "Transfer",
+# and a slip saying "Interbank GIRO (IBG)" must not also match "GIRO" alone.
+_MODE_PATTERNS = [
+    (r"Interbank\s*GIRO\s*\(\s*IBG\s*\)", "Interbank GIRO (IBG)"),
+    (r"Interbank\s*GIRO", "Interbank GIRO (IBG)"),
+    (r"\bIBG\b", "Interbank GIRO (IBG)"),
+    (r"DuitNow\s*\(\s*Transfer\s*\)", "DuitNow Transfer"),
+    (r"DuitNow\s*Transfer", "DuitNow Transfer"),
+    (r"DuitNow\s*Payment", "DuitNow Payment"),
+    (r"\bDuitNow\b", "DuitNow"),
+    (r"Outward\s*ACH", "Outward ACH"),
+    (r"Inward\s*ACH", "Inward ACH"),
+    (r"ACH\s*Credit\s*/?\s*GIRO", "ACH Credit/GIRO"),
+    (r"Automated\s*Clearing\s*House\s*\(\s*ACH\s*\)", "ACH"),
+    (r"Instant\s*Transfer", "Instant Transfer"),
+    (r"Immediate\s*Transfer", "Immediate Transfer"),
+    (r"RENTAS", "RENTAS"),
+    (r"Funds?\s*Transfer", "Fund Transfer"),
+]
+_COMPILED_MODE = [(re.compile(p, re.IGNORECASE), name) for p, name in _MODE_PATTERNS]
+
+# Labels that introduce the mode. A hit next to one of these is authoritative;
+# a bare mention anywhere on the page is weaker but still usable.
+_MODE_LABEL_RE = re.compile(
+    r"\b(?:Payment\s*Mode|Product\s*Type|Payment\s*Type|Transfer\s*Mode|"
+    r"Transaction\s*Type|Services?|Payment\s*Method|Transfer\s*Type|"
+    r"Financial\s*Txn\s*Type)\b", re.IGNORECASE)
+_MODE_LABEL_WINDOW = 120
+
+
+def extract_payment_mode(text, ocr_used=True):
+    """The rail the money moved on -- IBG, DuitNow, ACH, RENTAS."""
+    if not text or not text.strip():
+        return FieldResult.missing(source="missing:empty_text")
+
+    # A value sitting next to an explicit mode label wins.
+    for lm in _MODE_LABEL_RE.finditer(text):
+        window = text[lm.end():lm.end() + _MODE_LABEL_WINDOW]
+        for regex, name in _COMPILED_MODE:
+            m = regex.search(window)
+            if m:
+                conf = 0.95 - (0.05 if ocr_used else 0.0)
+                return FieldResult(value=name, confidence=round(conf, 3),
+                                   source="label:payment_mode", candidates=[])
+
+    # Otherwise the most specific mode named anywhere on the receipt.
+    for regex, name in _COMPILED_MODE:
+        if regex.search(text):
+            conf = 0.75 - (0.05 if ocr_used else 0.0)
+            return FieldResult(value=name, confidence=round(conf, 3),
+                               source="mention:payment_mode", candidates=[])
+
+    return FieldResult.missing(source="missing:no_mode")

@@ -209,13 +209,14 @@ def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
         results["beneficiary_bank"] = ibg["beneficiary_bank"]["value"]
         results["payer"] = ibg["payer"]["value"]
         results["beneficiary"] = ibg["beneficiary"]["value"]
+        results["payment_mode"] = ibg["payment_mode"]["value"]
         results["review_reasons"] = ibg.get("review_reasons", [])
         results["fields_absent"] = ibg.get("fields_absent", [])
         results["field_detail"] = dict(
             (k, ibg[k]) for k in
             ("reference_id", "bank_name", "beneficiary_bank",
              "transaction_date", "amount", "fee", "total_debit",
-             "payer", "beneficiary")
+             "payer", "beneficiary", "payment_mode")
         )
 
     try:

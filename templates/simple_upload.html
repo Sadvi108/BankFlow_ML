@@ -473,6 +473,11 @@
         <!-- Who the money moved between. Direction-aware: an inbound credit
              advice names the payer as "Ordering Customer", an outbound slip as
              "Debit From Account". -->
+        <div class="detail-card" id="modeRow" style="display:none">
+          <div class="label">Payment Mode <span id="modeConf" class="conf-badge">--</span></div>
+          <input type="text" id="fieldMode" class="value-input" value="--">
+        </div>
+
         <div class="detail-card" id="payerRow" style="display:none">
           <div class="label">Payer <span id="payerConf" class="conf-badge">--</span></div>
           <input type="text" id="fieldPayer" class="value-input" value="--">
@@ -690,6 +695,7 @@
     }
 
     function renderBeneficiary(data, fd) {
+      renderParty('modeRow', 'fieldMode', 'modeConf', data.payment_mode, fd.payment_mode);
       renderParty('payerRow', 'fieldPayer', 'payerConf', data.payer, fd.payer);
       renderParty('beneficiaryRow', 'fieldBeneficiary', 'beneficiaryConf',
                   data.beneficiary, fd.beneficiary);
@@ -749,7 +755,7 @@
     const FIELD_LABELS = {
       reference_id: 'Reference ID', bank_name: 'Bank', beneficiary_bank: 'Beneficiary bank',
       transaction_date: 'Transaction date', amount: 'Amount', fee: 'Fee',
-      total_debit: 'Total debit', payer: 'Payer', beneficiary: 'Beneficiary',
+      total_debit: 'Total debit', payer: 'Payer', beneficiary: 'Beneficiary', payment_mode: 'Payment mode',
     };
 
     function renderReviewReasons(data) {
