@@ -300,3 +300,41 @@ def test_straight2bank_remittance_table_extraction():
     assert ref_map.get("S2505174689") == ROLE_PAYER_SUPPLIED
     assert ref_map.get("YML125117584") == ROLE_PAYER_SUPPLIED
 
+
+def test_straight2bank_split_column_layout():
+    """When the PDF text extractor splits table columns onto separate lines,
+    YML125117584 must still be captured (the real-world layout from embedded text)."""
+    text = (
+        "SCB Ref : MY00150Q0354490\n"
+        "Customer Ref : CPDDC\n"
+        "Date : 10/07/2026\n"
+        "Straight2Bank\n"
+        "PAYEE ADVICE\n"
+        "To:\n"
+        "D&D CONTROL (MALAYSIA) SDN BHD\n"
+        "MALAYSIA\n"
+        "Invoice Total\n"
+        "10.00\n"
+        "UTR Reference\n"
+        "SB2596260710F399\n"
+        "Remittance Advice\n"
+        "Payment Details :\n"
+        "S2505174689\n"
+        "Reference\n"
+        "Date\n"
+        "Description\n"
+        "Amount ( MYR )\n"
+        "YML125117584\n"
+        "10/07/2026\n"
+        "10.00\n"
+        "Page  1\n"
+    )
+    refs = extract_references(text, ocr_used=False)
+    ref_map = {r.value: r.role for r in refs}
+    assert ref_map.get("MY00150Q0354490") == ROLE_BANK_PRIMARY
+    assert ref_map.get("SB2596260710F399") == ROLE_BANK_SECONDARY
+    assert ref_map.get("CPDDC") == ROLE_PAYER_SUPPLIED
+    assert ref_map.get("S2505174689") == ROLE_PAYER_SUPPLIED
+    assert ref_map.get("YML125117584") == ROLE_PAYER_SUPPLIED, (
+        "YML125117584 must be captured even when table columns are on separate lines"
+    )

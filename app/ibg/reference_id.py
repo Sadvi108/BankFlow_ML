@@ -539,15 +539,37 @@ def _value_after(text, hit, next_start):
 
     # Otherwise the next non-empty line, provided it starts before the next label.
     pos = line_end + 1
-    while pos < limit:
+    # Allow scanning past table header lines that were split across separate
+    # lines by the PDF text extractor (e.g. "Reference\nDate\nDescription\n
+    # Amount ( MYR )\nYML125117584"). Cap at a small number of skips to avoid
+    # running away into body text.
+    max_skips = 6
+    skipped = 0
+    while pos < limit and skipped < max_skips:
         nxt = text.find("\n", pos)
         if nxt == -1:
             nxt = len(text)
-        candidate = _clean_value(text[pos:min(nxt, limit)])
+        line_text = text[pos:min(nxt, limit)].strip()
+        candidate = _clean_value(line_text)
         if candidate:
             return candidate, pos
-        if text[pos:nxt].strip():
-            break  # a non-empty line that is not a value: stop, don't skip past it
+        if line_text:
+            # Check if this non-value line is table furniture we can skip:
+            # 1) Purely table header words (Date, Description, Amount, etc.)
+            line_words = [re.sub(r"[^A-Za-z0-9]", "", w.upper()) for w in line_text.split()]
+            line_words = [w for w in line_words if w]
+            is_table_header = line_words and all(w in _TABLE_HEADER_WORDS for w in line_words)
+            # 2) A date-shaped line (e.g. "10/07/2026")
+            is_date = any(pat.match(line_text) for pat in _DATE_SHAPE_RES)
+            # Do NOT skip recognised field labels here — those indicate a
+            # label-block boundary where the block pairing logic should take
+            # over.  Only table column-header furniture and isolated dates are
+            # safe to skip past.
+            if is_table_header or is_date:
+                skipped += 1
+                pos = nxt + 1
+                continue
+            break  # a non-empty line that is not skippable furniture: stop
         pos = nxt + 1
     return None, cursor
 
