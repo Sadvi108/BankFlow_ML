@@ -219,6 +219,59 @@ def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
              "payer", "beneficiary", "payment_mode")
         )
 
+        # Populate receipt_ref / other_ref / customer_ref for downstream ERP / company portals
+        all_ref_objs = ibg.get("references", [])
+        receipt_ref = None
+        other_ref = None
+        customer_ref = None
+
+        # 1. Customer Ref
+        for r in all_ref_objs:
+            lbl = r.get("label", "").lower()
+            if not customer_ref and "customer" in lbl:
+                customer_ref = r.get("value")
+
+        # 2. Receipt / Invoice / Table Remittance Ref
+        for r in all_ref_objs:
+            lbl = r.get("label", "").lower()
+            val = r.get("value")
+            if val == merged["transaction_id"] or any(x in lbl for x in ("utr", "paynet", "duitnow", "rpp", "channel", "batch")):
+                continue
+            if not receipt_ref and any(k in lbl for k in ("receipt", "invoice", "document", "remittance", "reference no", "reference", "bill of lading", "b/l")):
+                receipt_ref = val
+
+        # 3. Other / Payer / Payment Details Ref
+        for r in all_ref_objs:
+            lbl = r.get("label", "").lower()
+            val = r.get("value")
+            if val == merged["transaction_id"] or val == receipt_ref:
+                continue
+            if not other_ref and any(k in lbl for k in ("other", "payment details", "recipient", "remark", "2nd party", "your reference", "customer")):
+                other_ref = val
+
+        # Fallbacks
+        non_primary = [r.get("value") for r in all_ref_objs if r.get("value") != merged["transaction_id"]]
+        if not receipt_ref and non_primary:
+            receipt_ref = non_primary[0]
+        if not other_ref and customer_ref and customer_ref != receipt_ref:
+            other_ref = customer_ref
+        elif not other_ref and len(non_primary) > 1:
+            for cand in non_primary:
+                if cand != receipt_ref:
+                    other_ref = cand
+                    break
+
+        results["receipt_ref"] = receipt_ref
+        results["receipt_reference"] = receipt_ref
+        results["other_ref"] = other_ref
+        results["other_reference"] = other_ref
+        results["customer_ref"] = customer_ref
+        results["customer_reference"] = customer_ref
+
+        all_ids_list = [r["value"] for r in all_ref_objs if r.get("value")]
+        if all_ids_list:
+            results["all_ids"] = list(dict.fromkeys([merged["transaction_id"]] + all_ids_list))
+
     try:
         entry_id = history_manager.add_entry({
             "id": file_id,

@@ -275,3 +275,28 @@ def test_no_corpus_literal_is_hardcoded():
 
     leaked = sorted(lit for lit in literals if len(lit) >= 6 and lit in source)
     assert not leaked, "corpus literals hardcoded in the module: %s" % leaked
+
+
+def test_straight2bank_remittance_table_extraction():
+    """Straight2Bank payee advice with multiple header references and table row reference."""
+    text = (
+        "SCB Ref : MY00150Q0354490\n"
+        "Customer Ref : CPDDC\n"
+        "Date : 10/07/2026\n"
+        "Straight2Bank\n"
+        "PAYEE ADVICE\n"
+        "To: D&D CONTROL (MALAYSIA) SDN BHD\n"
+        "UTR Reference SB2596260710F399\n"
+        "Remittance Advice\n"
+        "Payment Details : S2505174689\n"
+        "Reference Date Description Amount ( MYR )\n"
+        "YML125117584 10/07/2026 10.00\n"
+    )
+    refs = extract_references(text, ocr_used=False)
+    ref_map = {r.value: r.role for r in refs}
+    assert ref_map.get("MY00150Q0354490") == ROLE_BANK_PRIMARY
+    assert ref_map.get("SB2596260710F399") == ROLE_BANK_SECONDARY
+    assert ref_map.get("CPDDC") == ROLE_PAYER_SUPPLIED
+    assert ref_map.get("S2505174689") == ROLE_PAYER_SUPPLIED
+    assert ref_map.get("YML125117584") == ROLE_PAYER_SUPPLIED
+

@@ -54,7 +54,7 @@ _LABEL_SPECS = [
     # longest-match resolution is what actually protects them.
     # RHB prints "Recipient`s Reference" with a BACKTICK, not an apostrophe.
     # Matching only ' silently dropped every RHB recipient reference.
-    (r"Recipient\s*(?:['’`´]s)?\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _C, "Recipient Reference"),
+    (r"Recipien[t!']?\s*(?:['’`´]s)?\s*Ref(?:erence)?\.?\s*(?:No\.?)?\*?", _C, "Recipient Reference"),
     (r"Recipient\s*Ref\.?\s*/\s*Customer\s*Ref\.?\s*No\.?", _C, "Recipient Ref./Customer Ref. No."),
     (r"Customer\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _C, "Customer Ref"),
     (r"Your\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _C, "Your Reference No"),
@@ -67,6 +67,15 @@ _LABEL_SPECS = [
     (r"Payment\s*Details?", _C, "Payment Details"),
     (r"Debit\s*Reference", _C, "Debit Reference"),
     (r"Debit\s*Description", _C, "Debit Description"),
+    (r"Invoice\s*(?:Ref(?:erence)?|Number|No\.?|#)(?!\s*(?:Total|Amount))", _C, "Invoice No"),
+    (r"Inv\s*(?:No\.?|#)(?!\s*(?:Total|Amount))", _C, "Invoice No"),
+    (r"Receipt\s*(?:Ref(?:erence)?|Number|No\.?|#)(?!\s*(?:Total|Amount))", _C, "Receipt No"),
+    (r"Document\s*(?:Ref(?:erence)?|Number|No\.?|#)(?!\s*(?:Total|Amount))", _C, "Document No"),
+    (r"Doc\s*(?:Ref(?:erence)?|Number|No\.?|#)(?!\s*(?:Total|Amount))", _C, "Document No"),
+    (r"(?:Bill\s*of\s*Lading|B/?L)\s*(?:Ref(?:erence)?|Number|No\.?|#)", _C, "B/L No"),
+    (r"Bill\s*of\s*Lading", _C, "B/L No"),
+    (r"Remittance\s*(?:Advice\s*)?Ref(?:erence)?\.?\s*(?:Number|No\.?)?", _C, "Remittance Reference"),
+    (r"(?:Remitter\s*to\s*Beneficiary\s*(?:Information|Info)|/EREF/)", _C, "Remitter to Beneficiary Info"),
     # "Favourite Name" is the nickname on a saved payee ("DnD CONTROL"), not a
     # reference. Treating it as one surfaced the beneficiary's own name, and on
     # Public Bank slips the beneficiary BANK, as if they were references.
@@ -107,7 +116,8 @@ _LABEL_SPECS = [
     (r"Payment\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _P, "Payment Reference"),
     # "Bank Reference No." is demoted to secondary later if a primary exists.
     (r"Bank\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _P, "Bank Reference"),
-    (r"Ref(?:erence)?\.?\s*(?:Number|No\.?|ID)", _P, "Reference No"),
+    (r"\bRef(?:erence)?\.?\s*ID\b", _P, "Reference ID"),
+    (r"\bRef(?:erence)?\.?(?:\s*(?:Number|No\.?))?", _P, "Reference No"),
 ]
 
 # Every `\s*` inside a label is narrowed to horizontal whitespace before
@@ -189,7 +199,7 @@ _GENERIC_LABEL_RE = re.compile(
     r"From\s*Account|To\s*Account|Account\s*(?:No\.?|Number|Name)|"
     r"Beneficiary\s*(?:Bank|Name|Account.*)?|Recipient\s*Bank|Payee\s*(?:Name|Bank.*)?|"
     r"Amount(?:\s*\(MYR\))?|Fee|Total.*|Service\s*Charge.*|Status|Currency|"
-    r"Transaction\s*Date(?:,\s*Time)?|Date\s*and\s*Time|Channel|"
+    r"Transaction\s*Date(?:,\s*Time)?|Date\s*and\s*Time|Channel|Favourite\s*Name|"
     r"Recipient's\s*DuitNow\s*ID(?:\s*Type)?|Debit\s*Account|Credit\s*Account.*|"
     # Maybank M2E form labels. Their own values are printed as "-", so the
     # block pairing walked past the dash and adopted the NEXT label as a
@@ -334,6 +344,16 @@ def _find_labels(text):
         # extends one we kept from the same start.
         if kept and hit.start < kept[-1].end:
             continue
+        # If a previous hit on the same line has a colon, any subsequent pattern
+        # on that same line following that colon is part of the first hit's value.
+        if kept:
+            prev = kept[-1]
+            prev_line_start = text.rfind("\n", 0, prev.start) + 1
+            curr_line_start = text.rfind("\n", 0, hit.start) + 1
+            if prev_line_start == curr_line_start:
+                between = text[prev.end:hit.start]
+                if ":" in between and not re.search(r"\|\s*|\s{2,}", between):
+                    continue
         kept.append(hit)
     return kept
 
@@ -348,23 +368,47 @@ def _matches_any_label(value):
     return bool(_GENERIC_LABEL_RE.match(probe))
 
 
+_TABLE_HEADER_WORDS = {
+    "DATE", "DESCRIPTION", "AMOUNT", "MYR", "RM", "SGD", "USD", "CURRENCY",
+    "STATUS", "REMARKS", "INVOICE", "DETAILS", "REFERENCE", "REF", "CODE",
+    "TYPE", "MODE", "DEBIT", "CREDIT", "BALANCE", "TOTAL", "FEE", "TAX", "RATE"
+}
+
+
 def _clean_value(raw):
     """Trim a raw slice down to a usable reference value, or None."""
     if raw is None:
         return None
     value = raw.strip()
+    # Strip ISO20022/SWIFT /EREF/ prefixes
+    value = re.sub(r"^/(?:EREF|INV|REF)/", "", value, flags=re.IGNORECASE).strip()
     # Cut at two-or-more spaces: on a two-column layout the next column's text
     # runs on after the value.
     value = re.split(r"\s{2,}", value)[0].strip()
     value = value.strip(" \t\r\n:;|")
+    # If the text on this line is a run of table column headers (e.g. "Date Description Amount ( MYR )"),
+    # it is not a value.
+    words = [re.sub(r"[^A-Za-z0-9]", "", w.upper()) for w in value.split()]
+    words = [w for w in words if w]
+    if words and all(w in _TABLE_HEADER_WORDS for w in words):
+        return None
     # A row in a multi-column table carries the reference, then other columns:
     # "ABC1234567890 - 01/02/2030" is reference, status-reason, date. Cut at
-    # the first date-shaped token after the first, which ends the reference.
+    # the first date-shaped token, currency code, amount, or status word after
+    # the first, which ends the reference.
     # Payer references legitimately contain spaces and dashes
-    # ("INV - ABC1234567", "ref 111111 222222"), so only a date cuts.
+    # ("INV - ABC1234567", "ref 111111 222222"), so only structural boundaries cut.
     tokens = value.split()
     for index in range(1, len(tokens)):
+        tok = tokens[index].upper().strip("()[],:;|")
+        tok_clean = re.sub(r"[^A-Za-z0-9]", "", tok)
         if any(pat.match(tokens[index]) for pat in _DATE_SHAPE_RES):
+            value = " ".join(tokens[:index]).strip(" -–—")
+            break
+        if tok in ("MYR", "RM", "SGD", "USD") or _MONEY_RE.match(tokens[index]) or re.match(r"^[-–—]?[\d,]+\.\d{2,3}$", tokens[index]):
+            value = " ".join(tokens[:index]).strip(" -–—")
+            break
+        if tok_clean in ("APPROVED", "SUCCESSFUL", "SUCCESS", "PENDING", "PROCESSED", "COMPLETED", "FAILED", "REJECTED"):
             value = " ".join(tokens[:index]).strip(" -–—")
             break
     if not value or len(value) > _MAX_VALUE_LEN:
@@ -533,6 +577,44 @@ def _slot_positions(text, hits, run, block_start):
     return slot_of
 
 
+def _is_label_line_text(s):
+    stripped = s.strip().rstrip(":.-").strip()
+    if not stripped:
+        return False
+    for regex, _role, _name in _COMPILED:
+        m = regex.match(stripped)
+        if m and m.end() == len(stripped):
+            return True
+    if _GENERIC_LABEL_RE.match(stripped):
+        return True
+    return False
+
+
+def _find_line_block_pairs(text):
+    """Find 1-to-1 mappings between a block of label lines and a block of value lines."""
+    lines = [l.strip() for l in text.split("\n") if l.strip()]
+    i = 0
+    pairs = {}
+    while i < len(lines):
+        if _is_label_line_text(lines[i]):
+            lbl_start = i
+            while i < len(lines) and _is_label_line_text(lines[i]):
+                i += 1
+            lbl_end = i
+            lbl_count = lbl_end - lbl_start
+            if lbl_count >= 2:
+                val_start = lbl_end
+                for k in range(lbl_count):
+                    if val_start + k < len(lines):
+                        lbl = lines[lbl_start + k]
+                        val = lines[val_start + k]
+                        pairs[lbl] = val
+                        pairs[lbl.rstrip(":.-").strip()] = val
+        else:
+            i += 1
+    return pairs
+
+
 def _pair_blocks(text, hits, resolved):
     """Positionally pair a run of consecutive value-less labels with the values
     that follow the run.
@@ -542,6 +624,20 @@ def _pair_blocks(text, hits, resolved):
     approval slip both do it. Adjacency is meaningless there; index is the only
     signal.
     """
+    line_pairs = _find_line_block_pairs(text)
+    for index, hit in enumerate(hits):
+        if resolved.get(index) is None:
+            line_start = text.rfind("\n", 0, hit.start) + 1
+            line_end = text.find("\n", hit.end)
+            if line_end == -1:
+                line_end = len(text)
+            hit_line = text[line_start:line_end].strip()
+            raw_val = line_pairs.get(hit_line) or line_pairs.get(hit_line.rstrip(":.-").strip()) or line_pairs.get(hit.name)
+            if raw_val:
+                cleaned = _clean_value(raw_val)
+                if cleaned:
+                    resolved[index] = (cleaned, hit.end)
+
     i = 0
     while i < len(hits):
         if resolved.get(i) is not None:
@@ -552,23 +648,16 @@ def _pair_blocks(text, hits, resolved):
         while j < len(hits) and resolved.get(j) is None:
             run.append(j)
             j += 1
-        # A run that begins with an unresolved label absorbs the labels that
-        # follow it on the same line. In a label-block-then-value-block layout
-        # the first value belongs to the FIRST label, but a plain forward scan
-        # hands it to whichever label happens to sit closest to it -- on the
-        # OCR'd Maybank receipt that gave the bank's reference to
-        # "Payment Details". Pool the run's values and reassign them in order.
         if run and j < len(hits):
             line_end = text.find("\n", hits[run[-1]].end)
             if line_end == -1:
                 line_end = len(text)
             while j < len(hits) and hits[j].start < line_end:
-                run.append(j)
+                if resolved.get(j) is None:
+                    run.append(j)
                 j += 1
         if len(run) >= 2:
             pooled = [resolved[k][0] for k in run if resolved.get(k)]
-            for k in run:
-                resolved[k] = None
             block_start = hits[run[-1]].end
             # The label block also contains labels this module does not model
             # (Product Type, Approval Status, From Account, ...). Their values
@@ -627,7 +716,10 @@ _PRIMARY_SPECIFICITY = {
     "SCB Ref": 0.97,
     "Group No.": 0.96,
     "Bank Reference": 0.96,
-    "Reference No": 0.95,
+    "Reference ID": 0.96,
+    "Payment Reference": 0.95,
+    "Reference No": 0.94,
+    "Reference": 0.94,
 }
 
 
@@ -711,6 +803,14 @@ def extract_references(text, ocr_used=True):
             confidence=_confidence_for(role, adjacent, ocr_used, hit.name),
             source=_slug(hit.name),
         ))
+
+    # Ensure at most one bank_primary reference is returned.
+    primaries = [r for r in references if r.role == ROLE_BANK_PRIMARY]
+    if len(primaries) > 1:
+        best_primary = max(primaries, key=lambda r: r.confidence)
+        for r in primaries:
+            if r is not best_primary:
+                r.role = ROLE_PAYER_SUPPLIED if ("remittance" in r.source or r.label in ("Reference No", "Reference", "Payment Reference")) else ROLE_BANK_SECONDARY
 
     # A clearing-network reference (PayNet, DuitNow, RPP) is secondary when the
     # bank also prints its own transaction reference -- but on portals that
