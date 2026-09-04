@@ -1,27 +1,21 @@
-# Bank Receipt OCR - High Accuracy Extraction System
+# Bank Receipt OCR and Structured Extraction
 
-A specialized Optical Character Recognition (OCR) and Information Extraction system for Malaysian Bank Receipts.
-Designed to achieve **100% accuracy** on reference ID extraction using a hybrid approach of enhanced pattern matching (V3) and layout-aware extraction.
+A specialized Optical Character Recognition (OCR) and information-extraction
+system for Malaysian bank receipts. It combines bounded OCR with label-aware
+extraction, so account numbers, bank references, clearing references, and
+payer-supplied references remain separate.
 
 ## 🚀 Features
 
-*   **High Accuracy**: Achieves 100% accuracy on the validation dataset (35/35 challenging cases).
+*   **Measured Regression Coverage**: The labeled IBG corpus currently passes 168/168 scalar field checks and captures 72/72 expected references. These are regression results, not a claim of universal real-world accuracy.
 *   **Multi-Bank Support**: Supports Maybank, CIMB, Public Bank, RHB, Hong Leong, AmBank, HSBC, UOB, Standard Chartered, DuitNow, and more.
 *   **Robust Extraction**:
     *   **Ultimate Pattern Matcher V3**: Advanced regex engine with flexible spacing, OCR error repair, and noise filtering.
     *   **Layout-Awareness**: Intelligent fallback to layout analysis when patterns are ambiguous.
     *   **OCR Repair**: Automatically fixes common OCR glitches (e.g., `H5BC` -> `HSBC`, `l` -> `1`).
+*   **Adaptive OCR**: One fast pass for clean documents, then at most one orientation check and one photo-optimized retry for weak reads.
+*   **Complete Reference Output**: Returns every labeled reference with its role while preserving the legacy scalar ID.
 *   **Simple UI**: Web interface for easy testing and upload.
-
-## 🎯 100% Mode (AI Fallback)
-
-For receipts the local pipeline cannot fully validate (CID-encoded PDFs, garbled scans, missing fields), the server escalates to Gemini 1.5 Flash and cross-validates the two results. To enable:
-
-1. Get a free Gemini key: https://aistudio.google.com/app/apikey
-2. Copy `.env.example` → `.env` and paste the key into `GOOGLE_API_KEY`.
-3. Restart the server. Receipts that needed AI verification show an `AI-verified` badge in the UI.
-
-Without a key the system still runs in local-only mode (~96–98% accuracy); results whose fields fail validation are flagged `Needs review`.
 
 ## 📂 Project Structure
 
@@ -77,6 +71,24 @@ The core engine that handles:
 
 ### Simple Server (`simple_server.py`)
 A FastAPI backend that serves the UI and processes uploads using the V3 engine.
+
+### Portal response contract
+
+`POST /extract` keeps the existing `transaction_id` and `all_ids` fields and
+also returns unambiguous reference collections:
+
+* `primary_reference_id`: the bank's primary transaction reference, or `null`.
+* `reference_ids`: every extracted reference, deduplicated.
+* `bank_reference_ids`: primary plus bank/clearing-system references.
+* `payer_reference_ids`: customer, invoice, remittance, and other payer-entered references.
+* `references`: objects containing `value`, `label`, `role`, `confidence`, and `source`.
+* `processing_time_ms`, `timings`, and `ocr_details`: production latency diagnostics.
+
+### OCR deployment controls
+
+The defaults in `.env.example` and `render.yaml` cap rendered images at 2800
+pixels and use two OCR passes at most. `OCR_ENABLE_HEAVY_PASS=1` enables a third
+CPU-heavy pass and should only be used after staging benchmarks show a benefit.
 
 ## 🧪 Testing
 

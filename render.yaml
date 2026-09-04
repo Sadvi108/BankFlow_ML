@@ -14,3 +14,9 @@ services:
       # One uvicorn worker per 512MB instance -- see the CMD note in Dockerfile.
       - key: WEB_CONCURRENCY
         value: "1"
+      - key: OCR_PDF_ZOOM
+        value: "3.0"
+      - key: OCR_MAX_IMAGE_DIMENSION
+        value: "2800"
+      - key: OCR_ENABLE_HEAVY_PASS
+        value: "0"

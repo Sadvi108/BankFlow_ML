@@ -1,7 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Dict, Any, List
-import cv2
+from typing import Dict, Any
 import numpy as np
 
 logger = logging.getLogger(__name__)
@@ -14,7 +13,6 @@ except ImportError:
     logger.warning("pdfplumber not available, PDF text extraction disabled")
 
 from app.ocr_pipeline import OCRPipeline
-from app.ultimate_patterns_v3 import extract_all_fields_v3
 
 
 def is_text_garbage(text: str) -> bool:
@@ -52,7 +50,11 @@ class EnhancedOCRPipeline:
         Process a file with hybrid approach:
         1. Try PDF text extraction first (if PDF)
         2. Fall back to OCR if extraction fails or yields poor results
-        3. If OCR yields no IDs, try rotating the image
+
+        Rotation and adaptive retries belong to ``OCRPipeline``. Keeping them
+        here too previously multiplied a weak page into as many as twelve OCR
+        runs. It also stopped after the first page with an ID, which lost valid
+        references printed on later pages.
         """
         file_path = Path(file_path)
         
@@ -61,217 +63,30 @@ class EnhancedOCRPipeline:
             try:
                 text = self._extract_pdf_text(file_path)
                 if text and not is_text_garbage(text):
-                    # Check if we can extract IDs from this text
-                    extraction = extract_all_fields_v3(text)
-                    if extraction.get('all_ids'):
-                        logger.info(f"PDF text extraction successful: {len(text)} characters, IDs found")
-                        return {
-                            'text': text,
-                            'confidence': 95.0,  # 0-100 scale
-                            'method': 'pdf_text_extraction'
-                        }
-                    else:
-                        logger.info("PDF text extracted but no IDs found, falling back to OCR")
+                    # Readable embedded text is authoritative whether or not a
+                    # legacy ID heuristic fires. The label-driven extractor may
+                    # legitimately find payer references or an intentionally
+                    # absent bank reference later in the request.
+                    logger.info("PDF text extraction successful: %s characters",
+                                len(text))
+                    return {
+                        'text': text,
+                        'tokens': [],
+                        'confidence': 95.0,  # 0-100 scale
+                        'method': 'pdf_text_extraction',
+                        'processed_successfully': True,
+                    }
                 else:
                     logger.info("PDF text extraction yielded insufficient text, falling back to OCR")
             except Exception as e:
                 logger.warning(f"PDF text extraction failed: {e}, falling back to OCR")
-        
-        # Fall back to OCR with rotation check
+
+        # The core pipeline processes every page sequentially, caps image size,
+        # checks orientation once, and performs adaptive retries.
         logger.info("Using OCR for text extraction")
-        if file_path.suffix.lower() == '.pdf':
-             return self._process_pdf_with_early_exit(str(file_path))
-        return self._process_with_rotation_fallback(str(file_path))
-
-    def _process_pdf_with_early_exit(self, pdf_path: str) -> Dict[str, Any]:
-        """Process PDF pages one by one and stop early if good IDs are found."""
-        try:
-            import fitz
-            doc = fitz.open(pdf_path)
-            
-            all_text_parts = []
-            all_confidences = []
-            
-            # Process page by page
-            for i in range(len(doc)):
-                # 1. Render page
-                page = doc.load_page(i)
-                pix = page.get_pixmap(matrix=fitz.Matrix(3.0, 3.0)) # 300 DPI approx
-                img_data = pix.tobytes("png")
-                nparr = np.frombuffer(img_data, np.uint8)
-                img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-                
-                if img is None:
-                    continue
-                    
-                # 2. OCR this page
-                # Try standard orientation first
-                result = self.ocr_pipeline.extract_text_with_confidence(img)
-                page_text = result['text']
-                page_conf = result['confidence']
-                
-                # 3. Check for IDs immediately
-                extraction = extract_all_fields_v3(page_text)
-                ids = extraction.get('all_ids')
-                
-                if ids and page_conf > 0.8:
-                    logger.info(f"Found high confidence IDs on page {i+1}: {ids}. Stopping early.")
-                    all_text_parts.append(f"=== PAGE {i+1} ===\n{page_text}")
-                    all_confidences.append(page_conf)
-                    
-                    # Return immediately with what we have
-                    avg_conf = sum(all_confidences) / len(all_confidences)
-                    return {
-                        'text': "\n".join(all_text_parts),
-                        'confidence': avg_conf * 100, # convert to %
-                        'method': 'ocr_early_exit',
-                        'processed_successfully': True
-                    }
-                
-                # 4. If no IDs, try rotation for this page ONLY
-                if not ids:
-                    logger.info(f"No IDs on page {i+1}, trying rotation...")
-                    best_rotated_text = page_text
-                    best_rotated_conf = page_conf
-                    
-                    for angle in [90, 180, 270]:
-                        if angle == 90:
-                            rotated = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
-                        elif angle == 180:
-                            rotated = cv2.rotate(img, cv2.ROTATE_180)
-                        elif angle == 270:
-                            rotated = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
-                            
-                        rot_res = self.ocr_pipeline.extract_text_with_confidence(rotated, skip_rotation=True)
-                        rot_ids = extract_all_fields_v3(rot_res['text']).get('all_ids')
-                        
-                        if rot_ids:
-                            logger.info(f"Found IDs on page {i+1} with {angle}° rotation: {rot_ids}")
-                            best_rotated_text = rot_res['text']
-                            best_rotated_conf = rot_res['confidence']
-                            # Stop rotation check, we found something
-                            break
-                    
-                    page_text = best_rotated_text
-                    page_conf = best_rotated_conf
-                    
-                    # Check IDs again after rotation
-                    extraction = extract_all_fields_v3(page_text)
-                    ids = extraction.get('all_ids')
-                    if ids and page_conf > 0.8:
-                         logger.info(f"Found high confidence IDs on page {i+1} (rotated). Stopping early.")
-                         all_text_parts.append(f"=== PAGE {i+1} ===\n{page_text}")
-                         all_confidences.append(page_conf)
-                         avg_conf = sum(all_confidences) / len(all_confidences)
-                         return {
-                            'text': "\n".join(all_text_parts),
-                            'confidence': avg_conf * 100,
-                            'method': 'ocr_rotated_early_exit',
-                            'processed_successfully': True
-                         }
-
-                all_text_parts.append(f"=== PAGE {i+1} ===\n{page_text}")
-                all_confidences.append(page_conf)
-            
-            doc.close()
-            
-            # If we finished all pages without early exit
-            avg_conf = sum(all_confidences) / len(all_confidences) if all_confidences else 0
-            return {
-                'text': "\n".join(all_text_parts),
-                'confidence': avg_conf * 100,
-                'method': 'ocr_full_scan',
-                'processed_successfully': True
-            }
-            
-        except Exception as e:
-            logger.error(f"PDF early exit processing failed: {e}")
-            # Fallback to standard full processing
-            return self._process_with_rotation_fallback(pdf_path)
-
-    def _process_with_rotation_fallback(self, file_path: str) -> Dict[str, Any]:
-        """Run OCR and try rotations if no IDs are found"""
-        # Initial run
-        result = self.ocr_pipeline.process_file(file_path)
-        text = result['text']
-        
-        # Check if we found IDs
-        extraction = extract_all_fields_v3(text)
-        initial_ids = extraction.get('all_ids')
-        
-        # If IDs found AND confidence is good, return immediately
-        # We check confidence because garbage text sometimes produces fake "IDs"
-        if initial_ids and result.get('confidence', 0) >= 70:
-            result['method'] = 'ocr'
-            return result
-            
-        # If no IDs or low confidence, try rotating
-        # ENHANCED: Always try rotation if no IDs are found, regardless of confidence
-        # Garbage text often has "high confidence" but is meaningless
-        if not initial_ids:
-            logger.info(f"No IDs found (Confidence: {result.get('confidence', 0):.2f}%). Attempting rotation fallback...")
-        elif result.get('confidence', 0) < 70:
-             logger.info(f"IDs found but low confidence ({result.get('confidence', 0):.2f}%). Attempting rotation fallback...")
-        else:
-             # Good result
-             result['method'] = 'ocr'
-             return result
-        
-        try:
-            # Get images to rotate
-            images = []
-            if Path(file_path).suffix.lower() == '.pdf':
-                images = self.ocr_pipeline.process_pdf_to_images(file_path)
-            else:
-                img = cv2.imread(file_path)
-                if img is not None:
-                    images = [img]
-            
-            if not images:
-                return result
-                
-            # Try 90, 180, 270 degrees
-            best_result = result
-            
-            for angle in [90, 180, 270]:
-                rotated_text_parts = []
-                total_conf = 0
-                
-                for img in images:
-                    # Rotate image
-                    if angle == 90:
-                        rotated = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
-                    elif angle == 180:
-                        rotated = cv2.rotate(img, cv2.ROTATE_180)
-                    elif angle == 270:
-                        rotated = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
-                    
-                    # Run OCR on rotated image
-                    ocr_res = self.ocr_pipeline.extract_text_with_confidence(rotated, skip_rotation=True)
-                    rotated_text_parts.append(ocr_res['text'])
-                    total_conf += ocr_res['confidence']
-                
-                rotated_text = "\n".join(rotated_text_parts)
-                avg_conf = total_conf / len(images) if images else 0
-                
-                # Check for IDs
-                rot_extraction = extract_all_fields_v3(rotated_text)
-                ids = rot_extraction.get('all_ids', [])
-                
-                if ids:
-                    logger.info(f"Found IDs with {angle}° rotation: {ids}")
-                    return {
-                        'text': rotated_text,
-                        'confidence': avg_conf,
-                        'method': f'ocr_rotated_{angle}'
-                    }
-            
-            logger.info("Rotation fallback yielded no new IDs")
-            return result
-            
-        except Exception as e:
-            logger.error(f"Rotation fallback error: {e}")
-            return result
+        result = self.ocr_pipeline.process_file(str(file_path))
+        result.setdefault('method', 'ocr')
+        return result
     
     def _extract_pdf_text(self, pdf_path: Path) -> str:
         """Extract text directly from PDF"""

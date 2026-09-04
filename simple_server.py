@@ -16,6 +16,7 @@ import io
 import csv
 from dotenv import load_dotenv
 import os
+import time
 
 # Load environment variables
 load_dotenv()
@@ -103,7 +104,12 @@ def _pdf_to_text(tmp_path: str) -> Dict[str, Any]:
             if conf > 1:  # pipeline returns 0-100
                 conf = conf / 100.0
             return {"text": text, "tokens": ocr_res.get("tokens", []),
-                    "confidence": conf, "source": ocr_res.get("method", "ocr")}
+                    "confidence": conf, "source": ocr_res.get("method", "ocr"),
+                    "pages_processed": ocr_res.get("pages_processed"),
+                    "page_methods": ocr_res.get("page_methods", []),
+                    "page_passes": ocr_res.get("page_passes", []),
+                    "passes_used": ocr_res.get("passes_used"),
+                    "processing_time_ms": ocr_res.get("processing_time_ms")}
     except Exception as e:
         logger.warning(f"OCR pipeline failed on PDF: {e}")
 
@@ -173,14 +179,48 @@ async def train_page(request: Request):
 def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
                     raw_text: str, ocr_confidence: float, llm_used: bool,
                     ibg: Optional[Dict[str, Any]] = None,
-                    text_source: str = "unknown") -> Dict[str, Any]:
+                    text_source: str = "unknown",
+                    processing_time_ms: Optional[float] = None,
+                    timings: Optional[Dict[str, float]] = None,
+                    ocr_details: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """Persist to history/Supabase, build the JSON response shape the UI expects."""
+    def _unique_values(values):
+        unique = []
+        seen = set()
+        for value in values:
+            # Layout candidates are evidence objects ({id, score}); the portal
+            # contract is intentionally an array of identifier strings.
+            if isinstance(value, dict):
+                value = value.get("id") or value.get("value") or value.get("text")
+            value = str(value).strip() if value is not None else ""
+            if value and value not in seen:
+                seen.add(value)
+                unique.append(value)
+        return unique
+
+    initial_ids = _unique_values(
+        [merged.get("transaction_id")] + list(merged.get("all_ids") or []))
     results = {
         "bank": merged["bank_name"],
         "bank_name": merged["bank_name"],
         "transaction_id": merged["transaction_id"],
         "reference_number": merged["reference_number"],
-        "all_ids": merged.get("all_ids") or [merged["transaction_id"]],
+        "primary_reference_id": merged["transaction_id"],
+        "all_ids": initial_ids,
+        # Explicit names for portal consumers. `all_ids` remains as a backwards
+        # compatible alias, while these make it impossible to mistake a scalar
+        # primary for the complete reference set.
+        "reference_ids": initial_ids,
+        "all_reference_ids": initial_ids,
+        "bank_reference_ids": _unique_values([merged.get("transaction_id")]),
+        "payer_reference_ids": [],
+        "reference_count": len(initial_ids),
+        "references": [],
+        "references_by_role": {
+            "bank_primary": [],
+            "bank_secondary": [],
+            "payer_supplied": [],
+        },
         "date": merged["date"],
         "amount": merged["amount"],
         "ocr_confidence": ocr_confidence,
@@ -196,6 +236,9 @@ def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
         # first thing worth knowing, and it is not otherwise recoverable from
         # a deployed instance.
         "text_source": text_source,
+        "processing_time_ms": processing_time_ms,
+        "timings": timings or {},
+        "ocr_details": ocr_details or {},
     }
 
     # Everything the IBG engine found, added alongside the legacy keys rather
@@ -268,9 +311,22 @@ def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
         results["customer_ref"] = customer_ref
         results["customer_reference"] = customer_ref
 
-        all_ids_list = [r["value"] for r in all_ref_objs if r.get("value")]
-        if all_ids_list:
-            results["all_ids"] = list(dict.fromkeys([merged["transaction_id"]] + all_ids_list))
+        all_ids_list = _unique_values(
+            [merged.get("transaction_id")]
+            + [r.get("value") for r in all_ref_objs])
+        bank_ids = _unique_values(
+            [merged.get("transaction_id")]
+            + [r.get("value") for r in all_ref_objs
+               if r.get("role") in ("bank_primary", "bank_secondary")])
+        payer_ids = _unique_values(
+            [r.get("value") for r in all_ref_objs
+             if r.get("role") == "payer_supplied"])
+        results["all_ids"] = all_ids_list
+        results["reference_ids"] = all_ids_list
+        results["all_reference_ids"] = all_ids_list
+        results["bank_reference_ids"] = bank_ids
+        results["payer_reference_ids"] = payer_ids
+        results["reference_count"] = len(all_ids_list)
 
     try:
         entry_id = history_manager.add_entry({
@@ -323,6 +379,8 @@ def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
 @app.post("/extract", response_class=JSONResponse)
 async def extract_receipt(file: UploadFile = File(...)):
     """Extract transaction details from uploaded receipt"""
+    request_started = time.perf_counter()
+    timings: Dict[str, float] = {}
     try:
         # Validate file type (accept by extension or known content types)
         allowed_exts = {".pdf", ".jpg", ".jpeg", ".png"}
@@ -349,6 +407,8 @@ async def extract_receipt(file: UploadFile = File(...)):
         content = await file.read()
         with open(file_path, "wb") as f:
             f.write(content)
+        timings["upload_ms"] = round(
+            (time.perf_counter() - request_started) * 1000, 1)
         
         logger.info(f"File saved: {file_path}")
         
@@ -356,8 +416,8 @@ async def extract_receipt(file: UploadFile = File(...)):
         is_image = content_type.startswith("image/") or (
             content_type == "application/octet-stream" and file_ext in {".jpg", ".jpeg", ".png"}
         )
-        image_png_for_llm: Optional[bytes] = None  # bytes to send to Gemini if needed
 
+        ocr_started = time.perf_counter()
         try:
             if is_image:
                 import cv2
@@ -377,31 +437,27 @@ async def extract_receipt(file: UploadFile = File(...)):
                         ocr_result = {"text": vision_res["text"], "tokens": [],
                                       "confidence": vision_res.get("confidence", 0.7),
                                       "source": "vision"}
-                image_png_for_llm = content  # raw image bytes are LLM-ready
             else:
-                import tempfile
-                with tempfile.NamedTemporaryFile(delete=False, suffix=file_ext) as tmp:
-                    tmp.write(content)
-                    tmp_path = tmp.name
-                try:
-                    ocr_result = _pdf_to_text(tmp_path)
-                finally:
-                    try:
-                        os.remove(tmp_path)
-                    except OSError:
-                        pass
+                # The upload was already written to ``file_path`` above. The
+                # old path wrote the same PDF to a second temporary file before
+                # opening it, adding I/O and storage pressure to every request.
+                ocr_result = _pdf_to_text(str(file_path))
         except Exception as e:
             logger.error(f"OCR failed: {e}")
             ocr_result = {"text": "", "tokens": [], "confidence": 0.0}
+        timings["ocr_ms"] = round(
+            (time.perf_counter() - ocr_started) * 1000, 1)
 
         if not ocr_result.get('text') or len(ocr_result['text'].strip()) < 5:
             raise HTTPException(status_code=422, detail="Could not extract text from receipt")
 
         # 2. PATTERN + LAYOUT extraction
+        extraction_started = time.perf_counter()
         text = ocr_result.get('text', '')
         # Text lifted from a PDF's own text layer has no OCR misreads, so the
         # digit-repair pass must not run over it.
-        ocr_used = ocr_result.get("source") not in ("embedded", "pdfplumber")
+        ocr_used = ocr_result.get("source") not in (
+            "embedded", "pdfplumber", "pdf_text_extraction")
         pattern_results = extract_all_fields_v3(text, ocr_used=ocr_used)
         bank_name = pattern_results.get('bank_name', 'Unknown')
 
@@ -456,7 +512,8 @@ async def extract_receipt(file: UploadFile = File(...)):
         llm_used = False
         # carry layout candidates for transparency
         merged["all_ids"] = (
-            layout_results.get("candidates")
+            [candidate.get("id") for candidate in
+             layout_results.get("candidates", []) if candidate.get("id")]
             if layout_results.get("success") else [merged["transaction_id"]]
         ) or [merged["transaction_id"]]
 
@@ -465,6 +522,17 @@ async def extract_receipt(file: UploadFile = File(...)):
             merged["needs_review"] = ibg_results["needs_review"]
             merged["overall_confidence"] = ibg_results["overall_confidence"]
 
+        timings["field_extraction_ms"] = round(
+            (time.perf_counter() - extraction_started) * 1000, 1)
+        timings["total_ms"] = round(
+            (time.perf_counter() - request_started) * 1000, 1)
+        ocr_details = {
+            key: ocr_result.get(key) for key in
+            ("method", "passes_used", "pages_processed", "page_methods",
+             "page_passes", "processing_time_ms")
+            if ocr_result.get(key) is not None
+        }
+
         return _build_response(
             file_id, file.filename, merged,
             raw_text=text,
@@ -472,6 +540,9 @@ async def extract_receipt(file: UploadFile = File(...)):
             llm_used=llm_used,
             ibg=ibg_results,
             text_source=ocr_result.get("source", "unknown"),
+            processing_time_ms=timings["total_ms"],
+            timings=timings,
+            ocr_details=ocr_details,
         )
 
     except HTTPException:

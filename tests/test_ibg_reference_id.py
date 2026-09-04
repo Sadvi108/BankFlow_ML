@@ -211,6 +211,44 @@ def test_masked_account_value_is_not_adopted_as_a_reference():
     assert result.value == "1234567890123456"
 
 
+def test_unmasked_account_number_is_never_returned_as_a_reference():
+    """An explicit account label outweighs a nearby generic ref label."""
+    text = (
+        "Debit From Account Number: 81001234567890\n"
+        "Reference No: 81001234567890\n"
+        "Amount: MYR 21.00\n"
+    )
+    refs = extract_references(text, ocr_used=False)
+    assert "81001234567890" not in [ref.value for ref in refs]
+    assert extract_reference_id(text, ocr_used=False).value is None
+
+
+def test_real_reference_survives_next_to_an_account_number():
+    text = (
+        "Beneficiary Account No: 21001234567890\n"
+        "Transaction Reference No: TXN9988776655\n"
+    )
+    refs = extract_references(text, ocr_used=False)
+    assert [ref.value for ref in refs] == ["TXN9988776655"]
+
+
+def test_account_word_in_prose_does_not_suppress_next_reference():
+    text = (
+        "We have transferred the funds into your account.\n"
+        "Reference No: 2609988776655\n"
+    )
+    assert extract_reference_id(text, ocr_used=False).value == "2609988776655"
+
+
+@pytest.mark.parametrize("noise", ["1", "D D", "Today :", "Debit Amount"])
+def test_short_or_form_label_noise_is_not_a_reference(noise):
+    refs = extract_references(
+        "Customer Ref: %s\nAmount: MYR 10.00\n" % noise,
+        ocr_used=True,
+    )
+    assert refs == []
+
+
 def test_sole_clearing_reference_is_promoted():
     """When the portal prints only a clearing reference, that IS the bank's."""
     text = (

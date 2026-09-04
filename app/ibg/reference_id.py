@@ -171,6 +171,7 @@ _NON_VALUE_WORDS = frozenset([
     "DATE TIME", "TRANSFER TYPE", "TRANSFER MODE", "PRODUCT TYPE",
     "TRANSACTION DETAILS", "BENEFICIARY DETAILS", "PAYER DETAILS",
     "ADDITIONAL INFORMATION", "INSTRUCTION MODE", "APPROVAL STATUS",
+    "TODAY", "DEBIT AMOUNT", "CREDIT AMOUNT", "ACCOUNT", "ACCOUNT NO",
 ])
 
 
@@ -244,6 +245,53 @@ _BLOCK_LOOKAHEAD = 400
 # Sentinel: this label's value is present on the receipt and is explicitly
 # blank ("-"). Distinct from None, which means "found nothing, keep looking".
 _EMPTY = object()
+
+# Account numbers and references are both commonly long digit strings. Shape
+# cannot separate them; the surrounding label can. Collect account-labelled
+# values first and exclude exact matches from the reference candidates below.
+_ACCOUNT_VALUE_RE = re.compile(r"^[ \t:.-]*[*Xx\d][*Xx\d /-]{5,39}")
+
+
+def _identifier_key(value):
+    return re.sub(r"[^A-Za-z0-9]", "", value or "").upper()
+
+
+def _account_number_from(span):
+    """First account-shaped value in a small label-adjacent text span."""
+    for match in _ACCOUNT_VALUE_RE.finditer(span or ""):
+        value = match.group(0).strip(" \t\r\n:/-")
+        if sum(c.isdigit() for c in value) >= 6 or _MASKED_RE.search(value):
+            return value
+    return None
+
+
+def _account_value_keys(text):
+    """Normalized values explicitly introduced by an account label."""
+    keys = set()
+    lines = text.splitlines()
+    for line_index, line in enumerate(lines):
+        match = re.search(
+            r"(?i)(?:(?:Debit\s+From|Credit\s+To|Debit|Credit|From|To|Source|"
+            r"Beneficiary(?:'s)?|Recipient(?:'s)?|Payee|Payer)\s+)?"
+            r"(?:Bank\s+)?(?:Account|A\s*/?\s*C)(?:\s*(?:No\.?|Number))?"
+            r"(?:\s*/\s*DuitNow\s*ID)?(?!\s*Name)",
+            line,
+        )
+        if not match:
+            continue
+        matched_label = match.group(0)
+        if matched_label.islower():
+            continue
+        before = line[:match.start()]
+        if before.strip() and not re.search(r"[:|]\s*$|\s{2,}$", before):
+            continue
+        value = _account_number_from(line[match.end():])
+        if value is None:
+            following = lines[line_index + 1:line_index + 2]
+            value = _account_number_from(following[0]) if following else None
+        if value:
+            keys.add(_identifier_key(value))
+    return set(key for key in keys if key)
 
 
 class _Hit(object):
@@ -437,6 +485,11 @@ def _clean_value(raw):
     if any(pat.match(value) for pat in _DATE_SHAPE_RES):
         return None
     if not any(c.isalnum() for c in value):
+        return None
+    # One-character values and OCR fragments such as "D D" carry too little
+    # information to reconcile a payment. They were false extra references in
+    # the production-shaped corpus.
+    if len(_identifier_key(value)) < 3:
         return None
     if _is_label_text(value):
         return None
@@ -786,6 +839,7 @@ def extract_references(text, ocr_used=True):
 
     references = []
     seen = set()
+    account_keys = _account_value_keys(text)
     # Labels that name the bank's transaction reference on their own, but are a
     # clearing/system artefact whenever the receipt also prints a more specific
     # one. Bank of China shows both "Txn Ref No." and "iGTB Ref No."; the iGTB
@@ -802,6 +856,10 @@ def extract_references(text, ocr_used=True):
         if not entry or entry is _EMPTY:
             continue
         value, pos = entry
+        # Even if a damaged PDF/OCR layout pairs this number to a nearby
+        # reference label, an explicit account label is stronger evidence.
+        if _identifier_key(value) in account_keys:
+            continue
         role = hit.role
         # A generic "Bank Reference No." alongside a more specific primary is
         # the clearing reference, not the transaction reference.
