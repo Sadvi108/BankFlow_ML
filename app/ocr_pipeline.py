@@ -17,6 +17,14 @@ import io
 import os
 import shutil
 import time
+from contextlib import contextmanager
+from contextvars import ContextVar
+
+_OCR_DEADLINE = ContextVar('ocr_document_deadline', default=None)
+
+# Tesseract subprocesses inherit this. Four OpenMP threads contend badly on
+# small CPU-quota containers; operators can explicitly override the limit.
+os.environ.setdefault('OMP_THREAD_LIMIT', '1')
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -40,6 +48,25 @@ class OCRPipeline:
         # A heavy third pass can be enabled for a deployment with more CPU.
         self.max_passes = 3 if os.getenv("OCR_ENABLE_HEAVY_PASS", "0") == "1" else 2
         self.pass_timeout = self._env_float("OCR_PASS_TIMEOUT_SECONDS", 20.0, 2.0, 60.0)
+        self.document_timeout = self._env_float(
+            'OCR_DOCUMENT_TIMEOUT_SECONDS', 25.0, 5.0, 120.0)
+
+    @contextmanager
+    def _time_budget(self):
+        """Nested page reads share one document budget, not 20s per page/pass."""
+        token = None
+        if _OCR_DEADLINE.get() is None:
+            token = _OCR_DEADLINE.set(time.perf_counter() + self.document_timeout)
+        try:
+            yield
+        finally:
+            if token is not None:
+                _OCR_DEADLINE.reset(token)
+
+    def _remaining_time(self):
+        deadline = _OCR_DEADLINE.get()
+        return (self.document_timeout if deadline is None else
+                max(0.0, deadline - time.perf_counter()))
 
     @staticmethod
     def _env_float(name: str, default: float, minimum: float,
@@ -111,7 +138,14 @@ class OCRPipeline:
                        sorted(set(int(i) for i in page_indices
                                   if 0 <= int(i) < len(doc))))
             for page_num in targets:
-                image = self._render_pdf_page(doc.load_page(page_num))
+                if self._remaining_time() <= 0:
+                    break
+                try:
+                    image = self._render_pdf_page(doc.load_page(page_num))
+                except Exception as exc:
+                    # A corrupt later page must not erase earlier references.
+                    logger.warning('Could not render PDF page %s: %s', page_num + 1, exc)
+                    continue
                 if image is not None:
                     logger.info("Rendered PDF page %s, shape=%s", page_num + 1,
                                 image.shape)
@@ -153,8 +187,16 @@ class OCRPipeline:
         confidence = float(result.get("confidence") or 0.0)
         if len(text) < 20 or result.get("word_count", 0) < 5:
             return False
-        from app.ibg.reference_id import has_bank_reference_label, extract_reference_id
-        if has_bank_reference_label(text) and not extract_reference_id(text).found:
+        from app.ibg.reference_id import (
+            has_bank_reference_label, extract_reference_id, extract_references)
+        primary = extract_reference_id(text)
+        if has_bank_reference_label(text) and not primary.found:
+            return False
+        if primary.found and re.search(r'[^A-Za-z0-9\s./-]', primary.value):
+            return False
+        if self._receipt_signal_count(text) >= 3 and not extract_references(text):
+            # Mean word confidence says little about a small unreadable ID.
+            # A receipt whose label itself was lost still needs its one retry.
             return False
         # Preserve the old high-confidence fast path, with an additional safe
         # semantic path for a clearly readable receipt just below 0.85.
@@ -164,18 +206,35 @@ class OCRPipeline:
     def _result_score(self, result: Dict[str, Any]) -> float:
         """Prefer semantic completeness when two OCR passes are close."""
         text = result.get("text") or ""
+        from app.ibg.reference_id import extract_references
+        refs = extract_references(text)
+        # A retry that actually recovered a labelled bank ID must not lose to
+        # a slightly higher average over ordinary words in an incomplete read.
+        reference_score = (0.25 if any(
+            ref.role == 'bank_primary' and not re.search(
+                r'[^A-Za-z0-9\s./-]', ref.value) for ref in refs) else 0.0)
+        reference_score += 0.025 * min(len(refs), 4)
         return (
             float(result.get("confidence") or 0.0)
+            + reference_score
             + 0.035 * self._receipt_signal_count(text)
             + 0.0001 * min(len(text), 400)
         )
 
     def extract_text_with_confidence(self, image: np.ndarray, skip_rotation: bool = False) -> Dict[str, Any]:
+        with self._time_budget():
+            result = self._extract_text_with_confidence(image, skip_rotation)
+            result['budget_exhausted'] = self._remaining_time() <= 0
+            return result
+
+    def _extract_text_with_confidence(self, image: np.ndarray, skip_rotation: bool = False) -> Dict[str, Any]:
         """Extract text with lazy rotation and at most two normal passes."""
         started = time.perf_counter()
 
         def run_pass(preprocessor, working_image, psm):
             try:
+                if self._remaining_time() <= 0:
+                    raise RuntimeError('OCR document time budget exhausted')
                 return self._run_tesseract(
                     preprocessor(working_image, skip_rotation=True), psm=psm)
             except (RuntimeError, pytesseract.TesseractError) as exc:
@@ -204,15 +263,25 @@ class OCRPipeline:
                             light["confidence"])
                 return light
 
-            if not skip_rotation:
+            upright = self._receipt_signal_count(light.get('text', '')) >= 3
+            if not skip_rotation and not upright:
                 # OSD is itself a Tesseract invocation. Skip it entirely for a
-                # clean first read; otherwise run it once before all fallbacks.
+                # clean or clearly upright receipt; otherwise run it once.
                 working = self._auto_rotate_text(working)
 
-            # PASS 2: uneven-lighting / camera-photo optimization.
-            photo = run_pass(self.preprocess_for_photo, working, psm=6)
-            photo["method"] = "photo"
-            attempts.append(("photo", photo))
+            # Repeating the same segmentation mode repeats the same layout
+            # errors. Upright form scans need a layout retry, not sharpening
+            # and thresholding that can erase small ID characters.
+            from app.ibg.reference_id import extract_reference_id
+            primary = extract_reference_id(light.get('text', ''))
+            damaged_id = primary.found and re.search(
+                r'[^A-Za-z0-9\s./-]', primary.value)
+            retry_method = 'layout' if upright and not damaged_id else 'photo'
+            processor = (self.preprocess_image_light if retry_method == 'layout'
+                         else self.preprocess_for_photo)
+            photo = run_pass(processor, working, psm=3)
+            photo['method'] = retry_method
+            attempts.append((retry_method, photo))
 
             # PASS 3 is intentionally deployment-controlled; it is much more
             # CPU-intensive and only useful for a small class of noisy scans.
@@ -329,10 +398,13 @@ class OCRPipeline:
 
     def _run_tesseract(self, image: np.ndarray, psm: int = 6) -> Dict[str, Any]:
         """Helper to run tesseract on an image and parse results"""
+        timeout = min(self.pass_timeout, self._remaining_time())
+        if timeout <= 0:
+            raise RuntimeError('OCR document time budget exhausted')
         config = "--oem 1 --psm %d -c preserve_interword_spaces=1" % psm
         data = pytesseract.image_to_data(
             image, lang="eng", config=config,
-            output_type=pytesseract.Output.DICT, timeout=self.pass_timeout)
+            output_type=pytesseract.Output.DICT, timeout=timeout)
         
         lines = []
         tokens = []
@@ -343,6 +415,7 @@ class OCRPipeline:
         def flush_line():
             if not current_line:
                 return
+            current_line.sort(key=lambda item: item['left'])
             character_width = float(np.median([
                 item['width'] / max(len(item['text']), 1)
                 for item in current_line
@@ -397,6 +470,26 @@ class OCRPipeline:
                 current_line_key = line_key
                     
         flush_line()
+
+        # PSM 3 can put a label and its right-hand value in different blocks.
+        # Reading block order loses field associations. Rebuild geometric rows
+        # using glyph centres, then retain large horizontal column gaps.
+        rows = []
+        for token in sorted(tokens, key=lambda item: (
+                item['top'] + item['height'] / 2.0, item['left'])):
+            centre = token['top'] + token['height'] / 2.0
+            row = rows[-1] if rows else None
+            if row is not None and abs(centre - row['centre']) <= max(
+                    2.0, 0.45 * min(token['height'], row['height'])):
+                row['tokens'].append(token)
+            else:
+                rows.append({'centre': centre, 'height': token['height'],
+                             'tokens': [token]})
+        lines = []
+        word_confidences = []
+        for row in rows:
+            current_line = row['tokens']
+            flush_line()
             
         overall_conf = sum(word_confidences) / len(word_confidences) if word_confidences else 0
         
@@ -422,7 +515,10 @@ class OCRPipeline:
         """Auto-rotate text to correct orientation."""
         try:
             # Use Tesseract's OSD (Orientation and Script Detection)
-            osd = pytesseract.image_to_osd(image, timeout=min(5.0, self.pass_timeout))
+            timeout = min(5.0, self.pass_timeout, self._remaining_time())
+            if timeout <= 0:
+                return image
+            osd = pytesseract.image_to_osd(image, timeout=timeout)
             rotation = int(re.search(r'Rotate: (\d+)', osd).group(1))
             
             if rotation != 0:
@@ -471,6 +567,12 @@ class OCRPipeline:
         return closing
 
     def process_pdf_pages(self, file_path: str, page_indices=None) -> Dict[str, Any]:
+        with self._time_budget():
+            result = self._process_pdf_pages(file_path, page_indices)
+            result['budget_exhausted'] = self._remaining_time() <= 0
+            return result
+
+    def _process_pdf_pages(self, file_path: str, page_indices=None) -> Dict[str, Any]:
         """OCR selected zero-based PDF pages, preserving original page numbers."""
         started = time.perf_counter()
         try:
@@ -487,6 +589,8 @@ class OCRPipeline:
                       else self._iter_pdf_images(
                           file_path, page_indices=page_indices))
             for page_num, image in images:
+                if self._remaining_time() <= 0:
+                    break
                 result = self.extract_text_with_confidence(image)
                 if result.get('processed_successfully'):
                     page_text = result.get('text') or ''

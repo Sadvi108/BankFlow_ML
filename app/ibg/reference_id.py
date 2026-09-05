@@ -59,6 +59,7 @@ _LABEL_SPECS = [
     (r"Recipient(?:['’`]s)?\s*Ref(?:erence)?\.?\s*/\s*Customer(?:\s*Ref(?:erence)?\.?\s*(?:No\.?)?)?", _C, "Recipient Ref./Customer Ref. No."),
     (r"Customer\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _C, "Customer Ref"),
     (r"Your\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _C, "Your Reference No"),
+    (r"Payment\s*Reference\s*[12]\b", _C, "Payment Reference"),
     (r"End\s*to\s*End\s*ID(?:\s*\([^)]*\))?", _C, "End to End ID"),
     (r"2nd\s*party\s*reference", _C, "2nd party reference"),
     (r"Other\s*Payment\s*Details?(?:\s*/\s*Advice)?", _C, "Other Payment Details"),
@@ -136,7 +137,10 @@ _COMPILED = [
 
 # A label is only a label when it is followed by a separator or a line break --
 # otherwise "Reference" inside a sentence would open a field.
-_SEPARATOR_RE = re.compile(r"^[ \t]*[:\-]?[ \t]*")
+# ``match(text, hit.end)`` starts at a label's offset, not the start of the
+# document. An anchored ^ never consumed its separator. OCR commonly reads a
+# printed dot after No. as a comma; accept it without editing identifier text.
+_SEPARATOR_RE = re.compile(r"[ \t]*[.,]?[ \t]*(?:[:|][ \t]*)?")
 
 # Values we never accept, whatever label introduced them: placeholder dashes and
 # masked account fragments. Receipts print both routinely.
@@ -176,6 +180,11 @@ _NON_VALUE_WORDS = frozenset([
     "TRANSACTION DETAILS", "BENEFICIARY DETAILS", "PAYER DETAILS",
     "ADDITIONAL INFORMATION", "ADDITIONAL DETAILS", "INSTRUCTION MODE", "APPROVAL STATUS",
     "TODAY", "DEBIT AMOUNT", "CREDIT AMOUNT", "ACCOUNT", "ACCOUNT NO",
+    "NOTIFICATION EMAILS", "EMAIL ADDRESS", "PAYMENT ADVICE", "NO ADVICE",
+    "NEW ID NO", "POLICE ARMY ID PASSPORT NO", "APPLICANT RESIDENT STATUS",
+    "BENEFICIARY RESIDENT STATUS", "SERVICE TAX CHARGES", "SDN", "PAID",
+    "REGISTERED PAYEE CODE", "PAYEE ACCOUNT NAME", "PAYMENT CODES",
+    "BULK P INFO", "RECEIVED BY", "PREPARED BY", "CHECKED BY", "APPROVED BY",
 ])
 
 
@@ -396,7 +405,7 @@ def _find_labels(text):
             # Bank of China marks mandatory fields with a trailing asterisk
             # ("Recipient's Reference*"), which otherwise fails this check.
             nxt = text[end:end + 1]
-            if nxt not in ("", ":", "-", "\n", "\r", " ", "\t", ".", "*"):
+            if nxt not in ("", ":", "-", "\n", "\r", " ", "\t", ".", ",", "|", "*"):
                 continue
 
             matched = text[m.start():end]
@@ -487,6 +496,18 @@ def _clean_value(raw):
     # runs on after the value.
     value = re.split(r"\s{2,}", value)[0].strip()
     value = value.strip(" \t\r\n:;|")
+    for regex, _role, _name in _COMPILED:
+        if _role != ROLE_BANK_PRIMARY:
+            continue
+        nested = regex.match(value)
+        if nested and value[nested.end():].lstrip().startswith(':'):
+            # A flattened neighbouring field is not the current field's ID.
+            return None
+    if re.match(r'(?i)^(?:Business\s+Registration\s+(?:Number|No\.?)|'
+                r'Please\s+Chop\s+Sign|Click\s+on\s+Print|RINGGIT\s+MALAYSIA)\b', value):
+        return None
+    if re.fullmatch(r'(?i)/?\s*(?:Payment\s+)?Reference\s*[12]', value):
+        return None
     # If the text on this line is a run of table column headers (e.g. "Date Description Amount ( MYR )"),
     # it is not a value.
     words = [re.sub(r"[^A-Za-z0-9]", "", w.upper()) for w in value.split()]
@@ -557,6 +578,8 @@ def _is_label_text(value):
     "Approval Status" or "Payment Date" as a reference number.
     """
     stripped = value.strip().rstrip(":.").strip()
+    if re.fullmatch(r'(?i)/?\s*(?:Payment\s+)?Reference\s*[12]', stripped):
+        return True
     for regex, _role, _name in _COMPILED:
         m = regex.match(stripped)
         if m and m.end() == len(stripped):
@@ -660,6 +683,12 @@ def _value_after(text, hit, next_start):
         if candidate:
             return candidate, pos
         if line_text:
+            if not any(c.isalnum() for c in line_text):
+                # Scanner borders often become a lone quote or pipe between
+                # a field heading and its value. They are not field boundaries.
+                skipped += 1
+                pos = nxt + 1
+                continue
             # Check if this non-value line is table furniture we can skip:
             # 1) Purely table header words (Date, Description, Amount, etc.)
             line_words = [re.sub(r"[^A-Za-z0-9]", "", w.upper()) for w in line_text.split()]
@@ -887,6 +916,32 @@ def has_bank_reference_label(text):
 
 def extract_references(text, ocr_used=True):
     """Every reference on the receipt, each carrying its label and role."""
+    # A bank slip and its attached invoices are separate label/value scopes.
+    # Global label-block pairing let a value on page 2 fill an empty label on
+    # page 1, even letting an unrelated account suppress a real reference.
+    pages = re.split(r'(?m)^=== PAGE \d+ ===\s*$', text or '')
+    if len(pages) > 1:
+        refs = []
+        seen = {}
+        for page in pages:
+            for ref in _extract_page_references(page, ocr_used):
+                key = re.sub(r'\s+', '', ref.value).upper()
+                if key not in seen:
+                    seen[key] = len(refs)
+                    refs.append(ref)
+                elif _ROLE_STRENGTH[ref.role] > _ROLE_STRENGTH[refs[seen[key]].role]:
+                    refs[seen[key]] = ref
+        primaries = [ref for ref in refs if ref.role == ROLE_BANK_PRIMARY]
+        if primaries:
+            primary = max(primaries, key=lambda ref: ref.confidence)
+            for ref in primaries:
+                if ref is not primary:
+                    ref.role = ROLE_BANK_SECONDARY
+        return refs
+    return _extract_page_references(text, ocr_used)
+
+
+def _extract_page_references(text, ocr_used=True):
     if not text or not text.strip():
         return []
 
@@ -1035,6 +1090,15 @@ def extract_references(text, ocr_used=True):
             best = max(secondaries, key=lambda r: r.confidence)
             best.role = ROLE_BANK_PRIMARY
             best.source = best.source + "+promoted_sole_bank_reference"
+
+    # Attached payment vouchers/invoices use a generic Reference column for
+    # their own documents. It is not the bank's transaction handle. Specific
+    # issuer labels (Bank Reference, Transaction Reference, etc.) still count.
+    if re.search(r'(?im)\b(?:PAYMENT VOUCHER|OFFICIAL RECEIPT)\b|'
+                 r'^[ \t]*INVOICE(?:[ \t]*\([^\n]*\))?[ \t]*$', text):
+        for ref in references:
+            if ref.role == ROLE_BANK_PRIMARY and ref.label in ('Reference No', 'Reference'):
+                ref.role = ROLE_PAYER_SUPPLIED
 
     return references
 

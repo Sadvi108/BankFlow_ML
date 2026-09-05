@@ -103,6 +103,15 @@ scans and outlined text. Apple Vision is used on macOS when Tesseract is absent.
 See [Reference recovery verification](docs/REFERENCE_RECOVERY.md) for the latest
 failure analysis, test commands, and measured local latency.
 
+For Render troubleshooting, see [IBG runtime follow-up](docs/RENDER_IBG_RUNTIME.md).
+`/health` and extraction responses expose `extraction_version: ibg-runtime-v2`.
+OCR work runs outside the HTTP event loop, one document at a time per worker.
+`OCR_DOCUMENT_TIMEOUT_SECONDS=25` is a shared Tesseract budget across pages and
+retries, not a strict end-to-end HTTP timeout. Partial reads require review.
+Busy uploads receive a retryable 503 after `EXTRACTION_QUEUE_TIMEOUT_SECONDS=8`.
+`timings` separates queue, OCR, field extraction, and persistence delays.
+Render free-tier cold starts happen before the request reaches this code.
+
 ## 🧪 Testing
 
 The system is validated against a comprehensive suite of edge cases in `tests/test_100_percent_accuracy.py`, covering:

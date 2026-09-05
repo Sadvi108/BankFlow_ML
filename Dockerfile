@@ -70,6 +70,7 @@ RUN mkdir -p logs models data/uploads
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
 ENV TORCH_DEVICE=cpu
+ENV OMP_THREAD_LIMIT=1
 
 # Create non-root user
 RUN useradd --create-home --shell /bin/bash app && \

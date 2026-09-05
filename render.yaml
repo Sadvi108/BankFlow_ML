@@ -20,3 +20,11 @@ services:
         value: "2800"
       - key: OCR_ENABLE_HEAVY_PASS
         value: "0"
+      - key: OCR_DOCUMENT_TIMEOUT_SECONDS
+        value: "25"
+      - key: OMP_THREAD_LIMIT
+        value: "1"
+      - key: EXTRACTION_QUEUE_TIMEOUT_SECONDS
+        value: "8"
+      - key: SUPABASE_TIMEOUT_SECONDS
+        value: "3"

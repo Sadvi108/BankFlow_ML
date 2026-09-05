@@ -21,7 +21,13 @@ class SupabaseDB:
             else:
                 url = f"{url}/rest/v1"
                 
-        self.client = PostgrestClient(url, headers={"apikey": key, "Authorization": f"Bearer {key}"})
+        try:
+            timeout = max(1.0, min(30.0, float(os.getenv('SUPABASE_TIMEOUT_SECONDS', '3'))))
+        except (TypeError, ValueError):
+            timeout = 3.0
+        self.client = PostgrestClient(
+            url, headers={"apikey": key, "Authorization": f"Bearer {key}"},
+            timeout=timeout)
         self.table_name = "Receipts"
 
     def append_annotation(self, entry: Dict) -> None:

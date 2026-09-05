@@ -92,7 +92,7 @@ def test_weak_read_is_bounded_to_two_passes_by_default():
 
     assert result["method"] == "photo"
     assert result["passes_used"] == 2
-    assert calls == [6, 6]
+    assert calls == [6, 3]
     assert rotations == [True]
 
 

@@ -17,6 +17,8 @@ import csv
 from dotenv import load_dotenv
 import os
 import time
+import anyio
+from starlette.concurrency import run_in_threadpool
 
 # Load environment variables
 load_dotenv()
@@ -75,6 +77,18 @@ from app import ocr_vision
 
 # Initialize enhanced OCR pipeline
 ocr_pipeline = EnhancedOCRPipeline()
+EXTRACTION_VERSION = 'ibg-runtime-v2'
+
+# Keep CPU-heavy PDF/OCR work off the ASGI event loop, but do not fan out
+# several multi-megabyte rasters on a 512MB instance. Waiting uploads have a
+# short admission timeout instead of silently queueing behind long scans.
+extraction_limiter = anyio.CapacityLimiter(1)
+EXTRACTION_QUEUE_TIMEOUT = 8.0
+try:
+    EXTRACTION_QUEUE_TIMEOUT = max(0.1, min(60.0, float(
+        os.getenv('EXTRACTION_QUEUE_TIMEOUT_SECONDS', '8'))))
+except (TypeError, ValueError):
+    pass
 
 
 def _pdf_to_text(tmp_path: str) -> Dict[str, Any]:
@@ -132,6 +146,7 @@ def _pdf_to_text(tmp_path: str) -> Dict[str, Any]:
     ocr_result = None
     ocr_source = None
     ocr_pages = {}
+    budget_exhausted = False
     core_ocr = ocr_pipeline.ocr_pipeline
 
     def _ocr_page_map(candidate, targets):
@@ -156,6 +171,7 @@ def _pdf_to_text(tmp_path: str) -> Dict[str, Any]:
     if scan_pages and core_ocr.tesseract_available():
         try:
             candidate = core_ocr.process_pdf_pages(tmp_path, scan_pages)
+            budget_exhausted = candidate.get('budget_exhausted', False)
             ocr_pages = _ocr_page_map(candidate, scan_pages)
             if ocr_pages:
                 ocr_result = candidate
@@ -166,7 +182,7 @@ def _pdf_to_text(tmp_path: str) -> Dict[str, Any]:
     # Retry only unread pages, even when Tesseract recovered some of a PDF.
     # One successful page must not suppress recovery of a later page's IDs.
     pending_pages = [index for index in scan_pages if index not in ocr_pages]
-    if pending_pages and ocr_vision.available():
+    if pending_pages and not budget_exhausted and ocr_vision.available():
         try:
             candidate = ocr_vision.pdf_to_text(
                 tmp_path, page_indices=pending_pages)
@@ -201,6 +217,7 @@ def _pdf_to_text(tmp_path: str) -> Dict[str, Any]:
                 "page_count": page_count,
                 "ocr_pages": [index + 1 for index in scan_pages],
                 "unread_pages": unread_pages,
+                "budget_exhausted": budget_exhausted,
                 "page_methods": ocr_result.get("page_methods", []),
                 "page_passes": ocr_result.get("page_passes", []),
                 "passes_used": ocr_result.get("passes_used"),
@@ -220,7 +237,13 @@ def _pdf_to_text(tmp_path: str) -> Dict[str, Any]:
             "page_count": page_count,
             "ocr_pages": [index + 1 for index in scan_pages],
             "unread_pages": [index + 1 for index in scan_pages],
+            "budget_exhausted": budget_exhausted,
         }
+
+    if budget_exhausted:
+        return {'text': '', 'tokens': [], 'confidence': 0.0,
+                'source': 'ocr', 'budget_exhausted': True,
+                'unread_pages': [index + 1 for index in scan_pages]}
 
     # Final fallback for malformed PDFs that fitz could not inspect. The
     #    fallback, and pdfplumber happily returns the CID codepoints of a
@@ -335,6 +358,7 @@ def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
         "processing_time_ms": processing_time_ms,
         "timings": timings or {},
         "ocr_details": ocr_details or {},
+        "extraction_version": EXTRACTION_VERSION,
     }
 
     # Everything the IBG engine found, added alongside the legacy keys rather
@@ -474,9 +498,31 @@ def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
 
 @app.post("/extract", response_class=JSONResponse)
 async def extract_receipt(file: UploadFile = File(...)):
-    """Extract transaction details from uploaded receipt"""
+    """Admit one extraction at a time without blocking the HTTP event loop."""
     request_started = time.perf_counter()
-    timings: Dict[str, float] = {}
+    try:
+        with anyio.fail_after(EXTRACTION_QUEUE_TIMEOUT):
+            await extraction_limiter.acquire()
+    except TimeoutError:
+        raise HTTPException(
+            status_code=503,
+            detail='Receipt processor is busy. Please retry shortly.',
+            headers={'Retry-After': '3'},
+        )
+    try:
+        queue_ms = round((time.perf_counter() - request_started) * 1000, 1)
+        # AnyIO shields the worker from cancellation: keep the admission slot
+        # until it has actually finished, including persistence.
+        return await run_in_threadpool(
+            _extract_receipt_sync, file, request_started, queue_ms)
+    finally:
+        extraction_limiter.release()
+
+
+def _extract_receipt_sync(file: UploadFile, request_started: float,
+                          queue_ms: float) -> Dict[str, Any]:
+    """Blocking OCR, extraction, and storage run in a bounded worker thread."""
+    timings: Dict[str, float] = {'queue_ms': queue_ms}
     try:
         # Validate file type (accept by extension or known content types)
         allowed_exts = {".pdf", ".jpg", ".jpeg", ".png"}
@@ -500,7 +546,7 @@ async def extract_receipt(file: UploadFile = File(...)):
         file_path = UPLOAD_DIR / filename
         
         # Save uploaded file
-        content = await file.read()
+        content = file.file.read()
         with open(file_path, "wb") as f:
             f.write(content)
         timings["upload_ms"] = round(
@@ -553,6 +599,9 @@ async def extract_receipt(file: UploadFile = File(...)):
             (time.perf_counter() - ocr_started) * 1000, 1)
 
         if not ocr_result.get('text') or len(ocr_result['text'].strip()) < 5:
+            if ocr_result.get('budget_exhausted'):
+                raise HTTPException(status_code=422, detail=(
+                    'OCR time limit reached. Please upload fewer pages or a clearer scan.'))
             raise HTTPException(status_code=422, detail="Could not extract text from receipt")
 
         # 2. PATTERN + LAYOUT extraction
@@ -636,6 +685,11 @@ async def extract_receipt(file: UploadFile = File(...)):
                 ibg_results.setdefault("review_reasons", []).append(
                     "OCR could not read PDF page(s): %s" % ", ".join(
                         str(page) for page in ocr_result["unread_pages"]))
+        if ocr_result.get('budget_exhausted'):
+            merged['needs_review'] = True
+            if ibg_results is not None:
+                ibg_results.setdefault('review_reasons', []).append(
+                    'OCR time budget exhausted; remaining pages or retries were skipped')
         if ibg_results and ocr_used:
             reference_keys = [re.sub(r"[^A-Z0-9]", "", ref["value"].upper())
                               for ref in ibg_results.get("references", [])]
@@ -658,11 +712,12 @@ async def extract_receipt(file: UploadFile = File(...)):
             key: ocr_result.get(key) for key in
             ("method", "passes_used", "pages_processed", "page_methods",
              "page_passes", "processing_time_ms", "page_count", "ocr_pages",
-             "unread_pages")
+             "unread_pages", "budget_exhausted")
             if ocr_result.get(key) is not None
         }
 
-        return _build_response(
+        persistence_started = time.perf_counter()
+        response = _build_response(
             file_id, file.filename, merged,
             raw_text=text,
             ocr_confidence=ocr_result.get("confidence", 0.5),
@@ -673,6 +728,14 @@ async def extract_receipt(file: UploadFile = File(...)):
             timings=timings,
             ocr_details=ocr_details,
         )
+        # The previous total was recorded before local history and Supabase
+        # writes, hiding database/network waits from the portal's diagnostics.
+        timings['persistence_ms'] = round(
+            (time.perf_counter() - persistence_started) * 1000, 1)
+        timings['total_ms'] = round(
+            (time.perf_counter() - request_started) * 1000, 1)
+        response['data']['processing_time_ms'] = timings['total_ms']
+        return response
 
     except HTTPException:
         raise
@@ -750,6 +813,10 @@ def _ocr_diagnostics() -> Dict[str, Any]:
     diag: Dict[str, Any] = {}
 
     diag["tesseract_path"] = shutil.which("tesseract")
+    diag['document_timeout_seconds'] = ocr_pipeline.ocr_pipeline.document_timeout
+    diag['pass_timeout_seconds'] = ocr_pipeline.ocr_pipeline.pass_timeout
+    diag['queue_timeout_seconds'] = EXTRACTION_QUEUE_TIMEOUT
+    diag['omp_thread_limit'] = os.getenv('OMP_THREAD_LIMIT')
     try:
         import pytesseract
         diag["tesseract_version"] = str(pytesseract.get_tesseract_version())
@@ -793,9 +860,11 @@ def _ocr_diagnostics() -> Dict[str, Any]:
 
 
 @app.get("/health")
-async def health_check():
+def health_check():
     """Health check endpoint (also the Render healthCheckPath)."""
-    payload = {"status": "healthy", "service": "Bank Receipt Extractor"}
+    payload = {"status": "healthy", "service": "Bank Receipt Extractor",
+               'extraction_version': EXTRACTION_VERSION,
+               'revision': os.getenv('RENDER_GIT_COMMIT') or os.getenv('APP_REVISION')}
     try:
         payload["ocr"] = _ocr_diagnostics()
     except Exception as e:  # never let diagnostics fail the health check

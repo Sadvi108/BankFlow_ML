@@ -3,11 +3,13 @@ import os
 import datetime
 from typing import List, Dict, Any, Optional
 from pathlib import Path
+from threading import RLock
 
 class HistoryManager:
     """Manages extraction history using a local JSON file."""
     
     def __init__(self, history_file: str = "data/history.json"):
+        self._lock = RLock()
         self.history_file = Path(history_file)
         self.history_file.parent.mkdir(parents=True, exist_ok=True)
         self._ensure_file_exists()
@@ -18,6 +20,10 @@ class HistoryManager:
                 json.dump([], f)
 
     def add_entry(self, entry: Dict[str, Any]) -> str:
+        with self._lock:
+            return self._add_entry(entry)
+
+    def _add_entry(self, entry: Dict[str, Any]) -> str:
         """Add a new extraction entry and return its ID."""
         history = self.get_all()
         
@@ -52,6 +58,10 @@ class HistoryManager:
         return entry_id
 
     def get_all(self) -> List[Dict[str, Any]]:
+        with self._lock:
+            return self._get_all()
+
+    def _get_all(self) -> List[Dict[str, Any]]:
         """Get all history entries."""
         try:
             with open(self.history_file, 'r') as f:
@@ -60,6 +70,10 @@ class HistoryManager:
             return []
 
     def update_entry(self, entry_id: str, updates: Dict[str, Any]) -> bool:
+        with self._lock:
+            return self._update_entry(entry_id, updates)
+
+    def _update_entry(self, entry_id: str, updates: Dict[str, Any]) -> bool:
         """Update an existing entry."""
         history = self.get_all()
         found = False
