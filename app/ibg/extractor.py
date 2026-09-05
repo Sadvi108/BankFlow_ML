@@ -24,7 +24,7 @@ from app.ibg.contract import (
 )
 from app.ibg.party import (extract_beneficiary, extract_payer,
                            extract_payment_mode)
-from app.ibg.reference_id import extract_references
+from app.ibg.reference_id import extract_references, has_bank_reference_label
 from app.ibg.transaction_date import extract_transaction_date
 
 # Below this, a field is not trustworthy enough to post without a human look.
@@ -155,6 +155,10 @@ def extract_ibg_fields(text: str, ocr_used: bool = True) -> Dict[str, Any]:
         }
 
     out["references"] = [r.to_dict() for r in references]
+    if primary is None and has_bank_reference_label(text):
+        # Missing an explicitly printed reference is a failed read, not an
+        # intentionally absent field. The review queue must see the difference.
+        out["reference_id"]["source"] = "missing:unread_bank_reference"
     out["reference_count"] = len(references)
     out["references_by_role"] = {
         role: [r.to_dict() for r in references if r.role == role]

@@ -78,58 +78,151 @@ ocr_pipeline = EnhancedOCRPipeline()
 
 
 def _pdf_to_text(tmp_path: str) -> Dict[str, Any]:
-    """Single source of truth for PDF -> text. Tries:
-       1. fitz embedded text (rejected if CID-encoded / garbage)
-       2. Enhanced OCR pipeline (rasterize + Tesseract)
-       3. pdfplumber as final fallback.
+    """Extract every PDF page once, OCRing only pages without usable text.
+
+    A PDF may be fully digital, fully scanned, or a mixture of both.  The old
+    aggregate check returned as soon as *any* usable embedded text existed,
+    silently dropping scanned pages.  On fully scanned documents it then tried
+    pdfplumber and an unavailable Tesseract executable before repeating every
+    page through Apple Vision.  Page-level routing fixes both the missing-ID
+    and latency failure modes.
     """
-    # 1. Embedded text
+    embedded_pages = {}
+    scan_pages = []
+    page_count = 0
+
+    # Inspect the text layer once and classify each page independently.
     try:
         import fitz
         doc = fitz.open(tmp_path)
-        parts = [page.get_text("text") for page in doc]
-        doc.close()
-        embedded = " ".join(p for p in parts if p).strip()
-        if embedded and not is_text_garbage(embedded):
-            return {"text": embedded, "tokens": [], "confidence": 0.7, "source": "embedded"}
+        try:
+            page_count = len(doc)
+            for index in range(page_count):
+                page = doc.load_page(index)
+                page_text = (page.get_text("text") or "").strip()
+                if not is_text_garbage(page_text):
+                    embedded_pages[index] = page_text
+                elif page_text or page.get_images(full=True) or page.get_drawings():
+                    # Non-empty garbage includes CID-encoded text. An empty
+                    # page needs OCR when it contains an image or outlined
+                    # vector glyphs. Some banking portals export every letter
+                    # as a drawing, so an image-only check loses the whole ID.
+                    scan_pages.append(index)
+        finally:
+            doc.close()
     except Exception as e:
         logger.warning(f"fitz embedded text failed: {e}")
 
-    # 2. Rasterize + OCR via enhanced pipeline
-    try:
-        ocr_res = ocr_pipeline.process_file(tmp_path)
-        text = (ocr_res.get("text") or "").strip()
-        if text and not is_text_garbage(text):
-            conf = ocr_res.get("confidence", 0)
-            if conf > 1:  # pipeline returns 0-100
-                conf = conf / 100.0
-            return {"text": text, "tokens": ocr_res.get("tokens", []),
-                    "confidence": conf, "source": ocr_res.get("method", "ocr"),
-                    "pages_processed": ocr_res.get("pages_processed"),
-                    "page_methods": ocr_res.get("page_methods", []),
-                    "page_passes": ocr_res.get("page_passes", []),
-                    "passes_used": ocr_res.get("passes_used"),
-                    "processing_time_ms": ocr_res.get("processing_time_ms")}
-    except Exception as e:
-        logger.warning(f"OCR pipeline failed on PDF: {e}")
+    def _joined(page_map):
+        return "\n".join(
+            "=== PAGE %d ===\n%s" % (index + 1, page_map[index])
+            for index in sorted(page_map) if page_map[index].strip()
+        ).strip()
 
-    # 2b. Apple Vision. The pipeline above needs a `tesseract` binary; without
-    #     it every scanned receipt failed with 422 and no text ever reached the
-    #     extractors. Vision ships with macOS, so this recovers those uploads.
-    if ocr_vision.available():
+    if embedded_pages and not scan_pages:
+        return {
+            "text": _joined(embedded_pages),
+            "tokens": [],
+            "confidence": 0.7,
+            "source": "embedded",
+            "pages_processed": len(embedded_pages),
+            "page_count": page_count,
+        }
+
+    ocr_result = None
+    ocr_source = None
+    ocr_pages = {}
+    core_ocr = ocr_pipeline.ocr_pipeline
+
+    def _ocr_page_map(candidate, targets):
+        page_texts = candidate.get("page_texts") or []
+        if page_texts:
+            return {
+                int(item["page"]) - 1: item["text"].strip()
+                for item in page_texts
+                if item.get("page") is not None
+                and int(item["page"]) - 1 in targets
+                and not is_text_garbage(item.get("text"))
+            }
+        aggregate = re.sub(
+            r"(?m)^=== PAGE \d+ ===$", "", candidate.get("text") or "")
+        if len(targets) == 1 and not is_text_garbage(aggregate):
+            return {targets[0]: aggregate.strip()}
+        return {}
+
+    # Use Tesseract only when its external executable exists. Preprocessing a
+    # large page twice before discovering that it is absent was a major source
+    # of slow scanned-receipt requests on macOS deployments.
+    if scan_pages and core_ocr.tesseract_available():
         try:
-            vision_res = ocr_vision.pdf_to_text(tmp_path)
-            text = (vision_res.get("text") or "").strip()
-            if text and not is_text_garbage(text):
-                logger.info("Apple Vision OCR recovered %d chars (conf %.2f)",
-                            len(text), vision_res.get("confidence", 0.0))
-                return {"text": text, "tokens": [],
-                        "confidence": vision_res.get("confidence", 0.7),
-                        "source": "vision"}
+            candidate = core_ocr.process_pdf_pages(tmp_path, scan_pages)
+            ocr_pages = _ocr_page_map(candidate, scan_pages)
+            if ocr_pages:
+                ocr_result = candidate
+                ocr_source = "ocr"
         except Exception as e:
-            logger.warning(f"Apple Vision OCR failed on PDF: {e}")
+            logger.warning(f"Tesseract OCR failed on PDF pages: {e}")
 
-    # 3. pdfplumber. The garbage check matters most HERE: this is the last
+    # Retry only unread pages, even when Tesseract recovered some of a PDF.
+    # One successful page must not suppress recovery of a later page's IDs.
+    pending_pages = [index for index in scan_pages if index not in ocr_pages]
+    if pending_pages and ocr_vision.available():
+        try:
+            candidate = ocr_vision.pdf_to_text(
+                tmp_path, page_indices=pending_pages)
+            recovered = _ocr_page_map(candidate, pending_pages)
+            if recovered:
+                ocr_pages.update(recovered)
+                if ocr_result is None:
+                    ocr_result = candidate
+                    ocr_source = "vision"
+                else:
+                    ocr_source = "ocr_vision"
+        except Exception as e:
+            logger.warning(f"Apple Vision OCR failed on PDF pages: {e}")
+
+    if ocr_result is not None:
+        combined_pages = dict(embedded_pages)
+        combined_pages.update(ocr_pages)
+        combined = _joined(combined_pages)
+        if combined and not is_text_garbage(combined):
+            conf = ocr_result.get("confidence", 0.0)
+            if conf > 1:
+                conf = conf / 100.0
+            unread_pages = [index + 1 for index in scan_pages
+                            if index not in ocr_pages]
+            return {
+                "text": combined,
+                "tokens": ocr_result.get("tokens", []),
+                "confidence": conf,
+                "source": ("hybrid_%s" % ocr_source
+                           if embedded_pages else ocr_source),
+                "pages_processed": len(combined_pages),
+                "page_count": page_count,
+                "ocr_pages": [index + 1 for index in scan_pages],
+                "unread_pages": unread_pages,
+                "page_methods": ocr_result.get("page_methods", []),
+                "page_passes": ocr_result.get("page_passes", []),
+                "passes_used": ocr_result.get("passes_used"),
+                "processing_time_ms": ocr_result.get("processing_time_ms"),
+            }
+
+    # Preserve readable digital pages even if OCR could not recover a scanned
+    # companion page. The response carries the exact unread page numbers so it
+    # cannot masquerade as a complete extraction downstream.
+    if embedded_pages:
+        return {
+            "text": _joined(embedded_pages),
+            "tokens": [],
+            "confidence": 0.5,
+            "source": "embedded_partial",
+            "pages_processed": len(embedded_pages),
+            "page_count": page_count,
+            "ocr_pages": [index + 1 for index in scan_pages],
+            "unread_pages": [index + 1 for index in scan_pages],
+        }
+
+    # Final fallback for malformed PDFs that fitz could not inspect. The
     #    fallback, and pdfplumber happily returns the CID codepoints of a
     #    font-subset PDF -- `(cid:3)(cid:9)...` -- which is far longer than the
     #    caller's 5-character guard. Without this check that garbage was
@@ -193,8 +286,11 @@ def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
             if isinstance(value, dict):
                 value = value.get("id") or value.get("value") or value.get("text")
             value = str(value).strip() if value is not None else ""
-            if value and value not in seen:
-                seen.add(value)
+            # The legacy scalar removes spaces and uppercases an ID. Do not
+            # count its original labelled spelling as a second reference.
+            key = re.sub(r"\s+", "", value).upper()
+            if value and key not in seen:
+                seen.add(key)
                 unique.append(value)
         return unique
 
@@ -424,19 +520,27 @@ async def extract_receipt(file: UploadFile = File(...)):
                 import numpy as np
                 nparr = np.frombuffer(content, np.uint8)
                 image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-                ocr_result = ocr_pipeline.extract_text_with_confidence(image)
-                ocr_result.setdefault("source", "ocr")  # images always go through OCR
-                # Same Tesseract-absent recovery as the PDF path: a photo of a
-                # receipt is the most common upload and produced no text at all
-                # without a tesseract binary.
-                if len((ocr_result.get("text") or "").strip()) < 5 and ocr_vision.available():
+                if (not ocr_pipeline.ocr_pipeline.tesseract_available()
+                        and ocr_vision.available()):
+                    # Do not spend two full preprocessing passes merely to
+                    # discover that pytesseract has no executable to invoke.
                     vision_res = ocr_vision.ndarray_to_text(image)
-                    if (vision_res.get("text") or "").strip():
-                        logger.info("Apple Vision OCR recovered image text (conf %.2f)",
-                                    vision_res.get("confidence", 0.0))
-                        ocr_result = {"text": vision_res["text"], "tokens": [],
-                                      "confidence": vision_res.get("confidence", 0.7),
-                                      "source": "vision"}
+                    ocr_result = {"text": vision_res.get("text", ""),
+                                  "tokens": [],
+                                  "confidence": vision_res.get("confidence", 0.0),
+                                  "source": "vision"}
+                else:
+                    ocr_result = ocr_pipeline.extract_text_with_confidence(image)
+                    ocr_result.setdefault("source", "ocr")
+                    if (len((ocr_result.get("text") or "").strip()) < 5
+                            and ocr_vision.available()):
+                        vision_res = ocr_vision.ndarray_to_text(image)
+                        if (vision_res.get("text") or "").strip():
+                            logger.info("Apple Vision OCR recovered image text (conf %.2f)",
+                                        vision_res.get("confidence", 0.0))
+                            ocr_result = {"text": vision_res["text"], "tokens": [],
+                                          "confidence": vision_res.get("confidence", 0.7),
+                                          "source": "vision"}
             else:
                 # The upload was already written to ``file_path`` above. The
                 # old path wrote the same PDF to a second temporary file before
@@ -457,7 +561,8 @@ async def extract_receipt(file: UploadFile = File(...)):
         # Text lifted from a PDF's own text layer has no OCR misreads, so the
         # digit-repair pass must not run over it.
         ocr_used = ocr_result.get("source") not in (
-            "embedded", "pdfplumber", "pdf_text_extraction")
+            "embedded", "embedded_partial", "pdfplumber",
+            "pdf_text_extraction")
         pattern_results = extract_all_fields_v3(text, ocr_used=ocr_used)
         bank_name = pattern_results.get('bank_name', 'Unknown')
 
@@ -521,6 +626,29 @@ async def extract_receipt(file: UploadFile = File(...)):
         if ibg_results:
             merged["needs_review"] = ibg_results["needs_review"]
             merged["overall_confidence"] = ibg_results["overall_confidence"]
+            if not ibg_results.get("references"):
+                merged["needs_review"] = True
+                ibg_results.setdefault("review_reasons", []).append(
+                    "No reference could be read from this document")
+        if ocr_result.get("unread_pages"):
+            merged["needs_review"] = True
+            if ibg_results is not None:
+                ibg_results.setdefault("review_reasons", []).append(
+                    "OCR could not read PDF page(s): %s" % ", ".join(
+                        str(page) for page in ocr_result["unread_pages"]))
+        if ibg_results and ocr_used:
+            reference_keys = [re.sub(r"[^A-Z0-9]", "", ref["value"].upper())
+                              for ref in ibg_results.get("references", [])]
+            uncertain_reference = any(
+                len(key) >= 3 and any(key in ref for ref in reference_keys)
+                for token in ocr_result.get("tokens", [])
+                if float(token.get("conf", 100)) < 40
+                for key in [re.sub(r"[^A-Z0-9]", "", token.get("text", "").upper())]
+            )
+            if uncertain_reference:
+                merged["needs_review"] = True
+                ibg_results.setdefault("review_reasons", []).append(
+                    "A reference contains text with low OCR confidence; verify its digits")
 
         timings["field_extraction_ms"] = round(
             (time.perf_counter() - extraction_started) * 1000, 1)
@@ -529,7 +657,8 @@ async def extract_receipt(file: UploadFile = File(...)):
         ocr_details = {
             key: ocr_result.get(key) for key in
             ("method", "passes_used", "pages_processed", "page_methods",
-             "page_passes", "processing_time_ms")
+             "page_passes", "processing_time_ms", "page_count", "ocr_pages",
+             "unread_pages")
             if ocr_result.get(key) is not None
         }
 

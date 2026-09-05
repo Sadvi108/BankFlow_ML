@@ -5,9 +5,13 @@ scheduled, independently of whether a Tesseract binary exists on the machine.
 """
 
 import numpy as np
+import cv2
+import fitz
 
 from app.enhanced_ocr_pipeline import EnhancedOCRPipeline
+from app.enhanced_ocr_pipeline import is_text_garbage
 from app.ocr_pipeline import OCRPipeline
+import simple_server
 
 
 def _result(text, confidence):
@@ -134,3 +138,89 @@ def test_readable_pdf_text_does_not_require_a_legacy_id(monkeypatch, tmp_path):
     result = pipeline.process_file(str(path))
     assert result["text"] == text
     assert result["method"] == "pdf_text_extraction"
+
+
+def test_short_meaningful_pdf_text_is_not_forced_through_ocr():
+    assert not is_text_garbage("Reference No: AB123456789")
+    assert is_text_garbage("cover page")
+
+
+def test_mixed_pdf_ocrs_only_the_scanned_page(monkeypatch, tmp_path):
+    path = tmp_path / "mixed.pdf"
+    doc = fitz.open()
+    digital = doc.new_page()
+    digital.insert_text(
+        (72, 72),
+        "Payment receipt Reference No DIGITAL123456 Amount MYR 10.00",
+    )
+    scanned = doc.new_page()
+    ok, encoded = cv2.imencode(
+        ".png", np.full((40, 100, 3), 255, dtype=np.uint8))
+    assert ok
+    scanned.insert_image(scanned.rect, stream=encoded.tobytes())
+    doc.save(path)
+    doc.close()
+
+    monkeypatch.setattr(
+        simple_server.ocr_pipeline.ocr_pipeline,
+        "tesseract_available",
+        lambda: False,
+    )
+    requested = []
+
+    def vision_result(_path, **kwargs):
+        requested.extend(kwargs["page_indices"])
+        return {
+            "text": "Reference No: SCANNED654321",
+            "confidence": 0.91,
+            "page_texts": [
+                {"page": 2, "text": "Reference No: SCANNED654321"}
+            ],
+        }
+
+    monkeypatch.setattr(simple_server.ocr_vision, "available", lambda: True)
+    monkeypatch.setattr(simple_server.ocr_vision, "pdf_to_text", vision_result)
+
+    result = simple_server._pdf_to_text(str(path))
+    assert requested == [1]
+    assert result["source"] == "hybrid_vision"
+    assert "DIGITAL123456" in result["text"]
+    assert "SCANNED654321" in result["text"]
+    assert result["unread_pages"] == []
+
+
+def test_missing_tesseract_goes_directly_to_vision(monkeypatch, tmp_path):
+    path = tmp_path / "scan.pdf"
+    doc = fitz.open()
+    page = doc.new_page()
+    ok, encoded = cv2.imencode(
+        ".png", np.full((40, 100, 3), 255, dtype=np.uint8))
+    assert ok
+    page.insert_image(page.rect, stream=encoded.tobytes())
+    doc.save(path)
+    doc.close()
+
+    core = simple_server.ocr_pipeline.ocr_pipeline
+    monkeypatch.setattr(core, "tesseract_available", lambda: False)
+    monkeypatch.setattr(
+        core,
+        "process_pdf_pages",
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(
+            AssertionError("Tesseract path should be skipped")),
+    )
+    monkeypatch.setattr(simple_server.ocr_vision, "available", lambda: True)
+    monkeypatch.setattr(
+        simple_server.ocr_vision,
+        "pdf_to_text",
+        lambda _path, **_kwargs: {
+            "text": "Reference No: VISION998877",
+            "confidence": 0.9,
+            "page_texts": [
+                {"page": 1, "text": "Reference No: VISION998877"}
+            ],
+        },
+    )
+
+    result = simple_server._pdf_to_text(str(path))
+    assert result["source"] == "vision"
+    assert "VISION998877" in result["text"]

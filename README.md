@@ -84,11 +84,24 @@ also returns unambiguous reference collections:
 * `references`: objects containing `value`, `label`, `role`, `confidence`, and `source`.
 * `processing_time_ms`, `timings`, and `ocr_details`: production latency diagnostics.
 
+The portal should read `reference_ids` to obtain the complete reference list.
+`primary_reference_id` is only the bank's transaction reference and can be
+`null` on an invoice or advice containing only customer references. When OCR
+cannot read a page, `needs_review` is true and `ocr_details.unread_pages` lists
+its one-based page number.
+
 ### OCR deployment controls
 
 The defaults in `.env.example` and `render.yaml` cap rendered images at 2800
 pixels and use two OCR passes at most. `OCR_ENABLE_HEAVY_PASS=1` enables a third
 CPU-heavy pass and should only be used after staging benchmarks show a benefit.
+`OCR_PASS_TIMEOUT_SECONDS` bounds each Tesseract pass (default: 20 seconds);
+orientation detection is capped at 5 seconds. A failed retry preserves the
+previous read. PDF pages use their text layer when available, with OCR for
+scans and outlined text. Apple Vision is used on macOS when Tesseract is absent.
+
+See [Reference recovery verification](docs/REFERENCE_RECOVERY.md) for the latest
+failure analysis, test commands, and measured local latency.
 
 ## 🧪 Testing
 

@@ -15,6 +15,7 @@ from pathlib import Path
 import fitz  # PyMuPDF for PDF processing
 import io
 import os
+import shutil
 import time
 
 # Configure logging
@@ -38,6 +39,7 @@ class OCRPipeline:
         # Two passes are sufficient for clean exports and normal phone photos.
         # A heavy third pass can be enabled for a deployment with more CPU.
         self.max_passes = 3 if os.getenv("OCR_ENABLE_HEAVY_PASS", "0") == "1" else 2
+        self.pass_timeout = self._env_float("OCR_PASS_TIMEOUT_SECONDS", 20.0, 2.0, 60.0)
 
     @staticmethod
     def _env_float(name: str, default: float, minimum: float,
@@ -79,17 +81,36 @@ class OCRPipeline:
                           interpolation=cv2.INTER_CUBIC)
 
     def _render_pdf_page(self, page):
-        pix = page.get_pixmap(matrix=fitz.Matrix(self.pdf_zoom, self.pdf_zoom),
-                              alpha=False)
-        nparr = np.frombuffer(pix.tobytes("png"), np.uint8)
-        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        zoom = min(self.pdf_zoom, self.max_image_dimension / max(
+            page.rect.width, page.rect.height, 1))
+        pix = page.get_pixmap(matrix=fitz.Matrix(zoom, zoom),
+                              colorspace=fitz.csRGB, alpha=False)
+        # ``pix.tobytes('png')`` compressed the whole page and OpenCV then
+        # decompressed it immediately.  Dense multi-page scans spent a visible
+        # amount of request time doing that round trip before OCR even began.
+        raw = np.frombuffer(pix.samples, dtype=np.uint8)
+        try:
+            raw = raw.reshape(pix.height, pix.width, pix.n)
+            if pix.n == 4:
+                image = cv2.cvtColor(raw, cv2.COLOR_RGBA2BGR)
+            elif pix.n == 3:
+                image = cv2.cvtColor(raw, cv2.COLOR_RGB2BGR)
+            elif pix.n == 1:
+                image = cv2.cvtColor(raw[:, :, 0], cv2.COLOR_GRAY2BGR)
+            else:
+                image = None
+        except (ValueError, cv2.error):
+            image = None
         return self._cap_image_size(image) if image is not None else None
 
-    def _iter_pdf_images(self, pdf_path: str):
+    def _iter_pdf_images(self, pdf_path: str, page_indices=None):
         """Yield one rendered page at a time so multi-page PDFs stay bounded."""
         doc = fitz.open(pdf_path)
         try:
-            for page_num in range(len(doc)):
+            targets = (range(len(doc)) if page_indices is None else
+                       sorted(set(int(i) for i in page_indices
+                                  if 0 <= int(i) < len(doc))))
+            for page_num in targets:
                 image = self._render_pdf_page(doc.load_page(page_num))
                 if image is not None:
                     logger.info("Rendered PDF page %s, shape=%s", page_num + 1,
@@ -97,6 +118,14 @@ class OCRPipeline:
                     yield page_num, image
         finally:
             doc.close()
+
+    @staticmethod
+    def tesseract_available() -> bool:
+        """Whether pytesseract's external OCR executable is callable."""
+        command = getattr(pytesseract.pytesseract, "tesseract_cmd", "tesseract")
+        if os.path.isabs(command):
+            return os.path.isfile(command) and os.access(command, os.X_OK)
+        return shutil.which(command) is not None
 
     def process_pdf_to_images(self, pdf_path: str) -> List[np.ndarray]:
         """Compatibility helper; production processing uses the iterator."""
@@ -124,6 +153,9 @@ class OCRPipeline:
         confidence = float(result.get("confidence") or 0.0)
         if len(text) < 20 or result.get("word_count", 0) < 5:
             return False
+        from app.ibg.reference_id import has_bank_reference_label, extract_reference_id
+        if has_bank_reference_label(text) and not extract_reference_id(text).found:
+            return False
         # Preserve the old high-confidence fast path, with an additional safe
         # semantic path for a clearly readable receipt just below 0.85.
         return confidence >= 0.85 or (
@@ -141,14 +173,27 @@ class OCRPipeline:
     def extract_text_with_confidence(self, image: np.ndarray, skip_rotation: bool = False) -> Dict[str, Any]:
         """Extract text with lazy rotation and at most two normal passes."""
         started = time.perf_counter()
+
+        def run_pass(preprocessor, working_image, psm):
+            try:
+                return self._run_tesseract(
+                    preprocessor(working_image, skip_rotation=True), psm=psm)
+            except (RuntimeError, pytesseract.TesseractError) as exc:
+                # A timeout on a retry must not erase a usable first pass.
+                logger.warning("OCR pass failed: %s", exc)
+                return {
+                    'text': '', 'confidence': 0.0, 'tokens': [], 'lines': [],
+                    'word_count': 0, 'processed_successfully': False,
+                    'error': str(exc),
+                }
+
         try:
             if image is None or not getattr(image, "size", 0):
                 raise ValueError("Empty image")
             working = self._cap_image_size(image)
 
             # PASS 1: Light Preprocessing (Resize + Gray + Contrast)
-            light = self._run_tesseract(
-                self.preprocess_image_light(working, skip_rotation=True), psm=6)
+            light = run_pass(self.preprocess_image_light, working, psm=6)
             light["method"] = "light"
             attempts = [("light", light)]
             if self._is_good_read(light):
@@ -165,16 +210,14 @@ class OCRPipeline:
                 working = self._auto_rotate_text(working)
 
             # PASS 2: uneven-lighting / camera-photo optimization.
-            photo = self._run_tesseract(
-                self.preprocess_for_photo(working, skip_rotation=True), psm=6)
+            photo = run_pass(self.preprocess_for_photo, working, psm=6)
             photo["method"] = "photo"
             attempts.append(("photo", photo))
 
             # PASS 3 is intentionally deployment-controlled; it is much more
             # CPU-intensive and only useful for a small class of noisy scans.
             if self.max_passes >= 3 and not self._is_good_read(photo):
-                heavy = self._run_tesseract(
-                    self.preprocess_image_heavy(working, skip_rotation=True), psm=11)
+                heavy = run_pass(self.preprocess_image_heavy, working, psm=11)
                 heavy["method"] = "heavy"
                 attempts.append(("heavy", heavy))
 
@@ -289,20 +332,42 @@ class OCRPipeline:
         config = "--oem 1 --psm %d -c preserve_interword_spaces=1" % psm
         data = pytesseract.image_to_data(
             image, lang="eng", config=config,
-            output_type=pytesseract.Output.DICT)
+            output_type=pytesseract.Output.DICT, timeout=self.pass_timeout)
         
         lines = []
         tokens = []
         word_confidences = []
         current_line = []
         current_line_key = None
+
+        def flush_line():
+            if not current_line:
+                return
+            character_width = float(np.median([
+                item['width'] / max(len(item['text']), 1)
+                for item in current_line
+            ]))
+            parts = []
+            previous_right = None
+            for item in current_line:
+                if previous_right is not None:
+                    gap = item['left'] - previous_right
+                    parts.append('  ' if gap > max(10, 3 * character_width) else ' ')
+                parts.append(item['text'])
+                previous_right = item['left'] + item['width']
+            lines.append(''.join(parts))
+            word_confidences.extend(item['conf'] for item in current_line)
         
         item_count = len(data['text'])
         page_numbers = data.get('page_num') or [1] * item_count
         block_numbers = data.get('block_num') or [0] * item_count
         paragraph_numbers = data.get('par_num') or [0] * item_count
         for i in range(item_count):
-            if float(data['conf'][i]) > 0 and data['text'][i].strip():
+            # A zero-confidence word is still recognized text. Long receipt
+            # identifiers often receive zero despite readable neighbouring
+            # words. Retain them as low-confidence evidence; -1 denotes a
+            # non-word record and is excluded.
+            if float(data['conf'][i]) >= 0 and data['text'][i].strip():
                 word = data['text'][i].strip()
                 conf = float(data['conf'][i])
                 line_num = int(data['line_num'][i])
@@ -325,17 +390,13 @@ class OCRPipeline:
                 tokens.append(token)
                 
                 if current_line_key is None or line_key == current_line_key:
-                    current_line.append((word, conf))
+                    current_line.append(token)
                 else:
-                    if current_line:
-                        lines.append(' '.join([w for w, _ in current_line]))
-                        word_confidences.extend([c for _, c in current_line])
-                    current_line = [(word, conf)]
+                    flush_line()
+                    current_line = [token]
                 current_line_key = line_key
                     
-        if current_line:
-            lines.append(' '.join([w for w, _ in current_line]))
-            word_confidences.extend([c for _, c in current_line])
+        flush_line()
             
         overall_conf = sum(word_confidences) / len(word_confidences) if word_confidences else 0
         
@@ -361,7 +422,7 @@ class OCRPipeline:
         """Auto-rotate text to correct orientation."""
         try:
             # Use Tesseract's OSD (Orientation and Script Detection)
-            osd = pytesseract.image_to_osd(image)
+            osd = pytesseract.image_to_osd(image, timeout=min(5.0, self.pass_timeout))
             rotation = int(re.search(r'Rotate: (\d+)', osd).group(1))
             
             if rotation != 0:
@@ -409,83 +470,95 @@ class OCRPipeline:
         closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel, iterations=1)
         return closing
 
-    def process_file(self, file_path: str) -> Dict[str, Any]:
-        """Process a file (image or PDF) and extract text"""
+    def process_pdf_pages(self, file_path: str, page_indices=None) -> Dict[str, Any]:
+        """OCR selected zero-based PDF pages, preserving original page numbers."""
         started = time.perf_counter()
         try:
-            file_extension = Path(file_path).suffix.lower()
-            
-            if file_extension == '.pdf':
-                all_text = []
-                confidences = []
-                all_tokens = []
-                page_methods = []
-                page_passes = []
-                pages_processed = 0
-                page_top_offset = 0
-                max_page_width = 1
+            all_text = []
+            page_texts = []
+            confidences = []
+            all_tokens = []
+            page_methods = []
+            page_passes = []
+            page_top_offset = 0
+            max_page_width = 1
 
-                # Render and release one page at a time. Apart from bounding
-                # memory, this preserves every page so a later-page reference
-                # is never lost to an early exit.
-                for page_num, image in self._iter_pdf_images(file_path):
-                    result = self.extract_text_with_confidence(image)
-                    if result.get('processed_successfully'):
-                        all_text.append(f"=== PAGE {page_num + 1} ===")
-                        all_text.append(result['text'])
-                        confidences.append(result['confidence'])
-                        page_methods.append(result.get('method', 'unknown'))
-                        page_passes.append(int(result.get('passes_used') or 0))
-                        pages_processed += 1
-                        for token in result.get('tokens', []):
-                            positioned = dict(token)
-                            positioned['page'] = page_num + 1
-                            positioned['top'] = positioned.get('top', 0) + page_top_offset
-                            all_tokens.append(positioned)
-                        max_page_width = max(
-                            max_page_width, int(result.get('width') or image.shape[1]))
-                        page_top_offset += int(result.get('height') or image.shape[0])
-
-                if not pages_processed:
-                    return {
-                        'text': '', 'confidence': 0.0,
-                        'error': 'Failed to process PDF',
-                        'processed_successfully': False,
-                        'pages_processed': 0,
-                    }
-                overall_confidence = sum(confidences) / len(confidences) if confidences else 0
-                return {
-                    'text': '\n'.join(all_text),
-                    'confidence': overall_confidence * 100,  # Convert to percentage
-                    'tokens': all_tokens,
-                    'width': max_page_width,
-                    'height': max(page_top_offset, 1),
-                    'pages_processed': pages_processed,
-                    'page_methods': page_methods,
-                    'page_passes': page_passes,
-                    'passes_used': sum(page_passes),
-                    'method': 'ocr',
-                    'processed_successfully': True,
-                    'processing_time_ms': round(
-                        (time.perf_counter() - started) * 1000, 1),
-                }
-            
-            else:
-                # Process image
-                image = cv2.imread(file_path)
-                if image is None:
-                    return {
-                        'text': '',
-                        'confidence': 0.0,
-                        'error': 'Failed to load image',
-                        'processed_successfully': False
-                    }
-                
+            images = (self._iter_pdf_images(file_path) if page_indices is None
+                      else self._iter_pdf_images(
+                          file_path, page_indices=page_indices))
+            for page_num, image in images:
                 result = self.extract_text_with_confidence(image)
-                # Convert confidence to percentage for consistency
-                result['confidence'] = result.get('confidence', 0) * 100
-                return result
-                
+                if result.get('processed_successfully'):
+                    page_text = result.get('text') or ''
+                    all_text.append(f"=== PAGE {page_num + 1} ===")
+                    all_text.append(page_text)
+                    page_texts.append({'page': page_num + 1, 'text': page_text})
+                    confidences.append(result['confidence'])
+                    page_methods.append(result.get('method', 'unknown'))
+                    page_passes.append(int(result.get('passes_used') or 0))
+                    for token in result.get('tokens', []):
+                        positioned = dict(token)
+                        positioned['page'] = page_num + 1
+                        positioned['top'] = positioned.get('top', 0) + page_top_offset
+                        all_tokens.append(positioned)
+                    max_page_width = max(
+                        max_page_width, int(result.get('width') or image.shape[1]))
+                    page_top_offset += int(result.get('height') or image.shape[0])
+
+            pages_processed = len(page_texts)
+            if not pages_processed:
+                return {
+                    'text': '', 'confidence': 0.0,
+                    'error': 'Failed to process PDF',
+                    'processed_successfully': False,
+                    'pages_processed': 0,
+                    'page_texts': [],
+                }
+            overall_confidence = sum(confidences) / len(confidences) if confidences else 0
+            return {
+                'text': '\n'.join(all_text),
+                'page_texts': page_texts,
+                'confidence': overall_confidence * 100,
+                'tokens': all_tokens,
+                'width': max_page_width,
+                'height': max(page_top_offset, 1),
+                'pages_processed': pages_processed,
+                'page_methods': page_methods,
+                'page_passes': page_passes,
+                'passes_used': sum(page_passes),
+                'method': 'ocr',
+                'processed_successfully': True,
+                'processing_time_ms': round(
+                    (time.perf_counter() - started) * 1000, 1),
+            }
+        except Exception as e:
+            logger.error(f"PDF processing error: {e}")
+            return {
+                'text': '',
+                'confidence': 0.0,
+                'error': str(e),
+                'processed_successfully': False
+            }
+
+    def process_file(self, file_path: str) -> Dict[str, Any]:
+        """Process a file (image or PDF) and extract text"""
+        try:
+            file_extension = Path(file_path).suffix.lower()
+            if file_extension == '.pdf':
+                return self.process_pdf_pages(file_path)
+
+            image = cv2.imread(file_path)
+            if image is None:
+                return {
+                    'text': '',
+                    'confidence': 0.0,
+                    'error': 'Failed to load image',
+                    'processed_successfully': False
+                }
+
+            result = self.extract_text_with_confidence(image)
+            result['confidence'] = result.get('confidence', 0) * 100
+            return result
         except Exception as e:
             logger.error(f"File processing error: {e}")
             return {

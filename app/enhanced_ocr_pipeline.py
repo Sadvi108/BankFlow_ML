@@ -1,4 +1,5 @@
 import logging
+import re
 from pathlib import Path
 from typing import Dict, Any
 import numpy as np
@@ -25,13 +26,24 @@ def is_text_garbage(text: str) -> bool:
     if not text:
         return True
     stripped = text.strip()
-    if len(stripped) < 50:
+    if len(stripped) < 15:
         return True
     if stripped.count("(cid:") >= 3:
         return True
     printable = sum(1 for c in stripped if c.isprintable() or c in "\n\r\t")
     if printable / max(len(stripped), 1) < 0.6:
         return True
+    # A one-line receipt or cropped confirmation can be shorter than the old
+    # arbitrary 50-character threshold and still contain everything needed.
+    # Requiring both a receipt label and digits keeps random PDF furniture from
+    # bypassing OCR while avoiding an expensive raster pass for valid short
+    # text layers.
+    if len(stripped) < 50:
+        has_field = bool(re.search(
+            r"\b(?:REF(?:ERENCE)?|TRANSACTION|PAYMENT|RECEIPT|ACCOUNT|"
+            r"AMOUNT|TOTAL|DATE|BANK)\b", stripped, re.IGNORECASE))
+        if not has_field or sum(ch.isdigit() for ch in stripped) < 3:
+            return True
     return False
 
 

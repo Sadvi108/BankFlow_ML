@@ -23,6 +23,7 @@ from app.ibg.contract import (
 )
 from app.ibg.reference_id import extract_reference_id, extract_references
 from tests.fixtures.ibg_corpus import CORPUS, by_id, cases_for, reference_cases
+from tests.fixtures.ibg_holdout import HOLDOUT
 
 _SCALAR_CASES = list(cases_for("reference_id"))
 _SCALAR_IDS = [c[0] for c in _SCALAR_CASES]
@@ -170,6 +171,18 @@ def test_scalar_equals_the_bank_primary_reference():
             )
 
 
+@pytest.mark.parametrize("sample", HOLDOUT, ids=[s["id"] for s in HOLDOUT])
+def test_unseen_holdout_references_are_all_recovered(sample):
+    """The bank vocabulary must generalize beyond the tuning corpus."""
+    refs = extract_references(sample["text"], ocr_used=sample["ocr_used"])
+    found = set((ref.value, ref.role) for ref in refs)
+    expected = set(sample["expected"]["references"])
+    assert not expected - found
+    assert extract_reference_id(
+        sample["text"], ocr_used=sample["ocr_used"]
+    ).value == sample["expected"]["reference_id"]
+
+
 # ---------------------------------------------------------------------------
 # Rules, tested independently of the corpus
 # ---------------------------------------------------------------------------
@@ -262,6 +275,49 @@ def test_sole_clearing_reference_is_promoted():
     primaries = [r for r in refs if r.role == ROLE_BANK_PRIMARY]
     assert len(primaries) == 1
     assert primaries[0].value == "20300101BANKMYKL010ABC12345678"
+
+
+def test_hsbc_status_sentence_supplies_primary_reference():
+    text = (
+        "HSBCnet Priority Payment\n"
+        "Your reference\n"
+        "CUSTOMER-NOTE-7\n"
+        "The status for payment 48291ID07ABC is: Received by Beneficiary Bank\n"
+    )
+    refs = extract_references(text, ocr_used=False)
+    assert [(r.value, r.role) for r in refs] == [
+        ("CUSTOMER-NOTE-7", ROLE_PAYER_SUPPLIED),
+        ("48291ID07ABC", ROLE_BANK_PRIMARY),
+    ]
+    assert extract_reference_id(text, ocr_used=False).value == "48291ID07ABC"
+
+
+def test_stronger_bank_label_wins_when_value_is_repeated():
+    text = (
+        "Customer reference\nLP ABC829632\n"
+        "Bank reference\nLP ABC829632\n"
+    )
+    refs = extract_references(text, ocr_used=False)
+    assert len(refs) == 1
+    assert refs[0].value == "LP ABC829632"
+    assert refs[0].role == ROLE_BANK_PRIMARY
+
+
+def test_scrambled_payment_reference_can_precede_its_label():
+    text = (
+        "Payment Details\nFIN0708264455667\n"
+        "Payee Account\nPayment Ref No.\n:\nPayee Bank\n"
+    )
+    assert extract_reference_id(text, ocr_used=False).value == "FIN0708264455667"
+
+
+def test_official_receipt_number_is_captured_without_becoming_a_bank_id():
+    text = (
+        "Receipt No\n70000987654\nIssue Date\n5 Aug 2030\n"
+        "OFFICIAL RECEIPT\n"
+    )
+    assert [r.value for r in extract_references(text, ocr_used=False)] == ["70000987654"]
+    assert extract_reference_id(text, ocr_used=False).value is None
 
 
 def test_clearing_reference_stays_secondary_when_a_primary_exists():

@@ -56,6 +56,7 @@ _LABEL_SPECS = [
     # Matching only ' silently dropped every RHB recipient reference.
     (r"Recipien[t!']?\s*(?:['’`´]s)?\s*Ref(?:erence)?\.?\s*(?:No\.?)?\*?", _C, "Recipient Reference"),
     (r"Recipient\s*Ref\.?\s*/\s*Customer\s*Ref\.?\s*No\.?", _C, "Recipient Ref./Customer Ref. No."),
+    (r"Recipient(?:['’`]s)?\s*Ref(?:erence)?\.?\s*/\s*Customer(?:\s*Ref(?:erence)?\.?\s*(?:No\.?)?)?", _C, "Recipient Ref./Customer Ref. No."),
     (r"Customer\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _C, "Customer Ref"),
     (r"Your\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _C, "Your Reference No"),
     (r"End\s*to\s*End\s*ID(?:\s*\([^)]*\))?", _C, "End to End ID"),
@@ -103,6 +104,9 @@ _LABEL_SPECS = [
     # --- bank primary -----------------------------------------------------
     (r"Bank\s*Payment\s*Ref(?:erence)?\.?", _P, "Bank Payment Reference"),
     (r"Transaction\s*Ref(?:erence)?\.?\s*(?:Number|No\.?)?", _P, "Transaction Reference No"),
+    (r"Transaction\s*(?:ID|Number|No\.?)\b", _P, "Transaction ID"),
+    (r"Trx\s*No\.?\s*/\s*Seq\s*No\.?", _P, "Trx No/Seq No"),
+    (r"No\.?\s*U(?:r)?us\s*Niaga", _P, "No Urus Niaga"),
     (r"Advice\s*Ref(?:erence)?\.?\s*(?:no\.?|No\.?)?", _P, "Advice Reference no"),
     (r"OCBC\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _P, "OCBC Reference No"),
     (r"iGTB\s*Ref(?:erence)?\.?\s*(?:No\.?)?", _P, "iGTB Reference"),
@@ -170,7 +174,7 @@ _NON_VALUE_WORDS = frozenset([
     "STATUS SUCCESS", "STATUS SUCCESSFUL", "STATUS PROCESSED", "SUCCESS",
     "DATE TIME", "TRANSFER TYPE", "TRANSFER MODE", "PRODUCT TYPE",
     "TRANSACTION DETAILS", "BENEFICIARY DETAILS", "PAYER DETAILS",
-    "ADDITIONAL INFORMATION", "INSTRUCTION MODE", "APPROVAL STATUS",
+    "ADDITIONAL INFORMATION", "ADDITIONAL DETAILS", "INSTRUCTION MODE", "APPROVAL STATUS",
     "TODAY", "DEBIT AMOUNT", "CREDIT AMOUNT", "ACCOUNT", "ACCOUNT NO",
 ])
 
@@ -212,7 +216,7 @@ _GENERIC_LABEL_RE = re.compile(
     r"State/Province|Prefecture|City/District|Country|Remarks?|"
     r"Source\s*Of\s*Fund|Ultimate\s*(?:Debtor|Creditor)\s*Name|"
     r"Beneficiary\s*(?:Citizenship|Category|Bank\s*Branch)|Save\s*as\s*\w+|"
-    r"Payee/?Beneficiary\s*Details|Transaction\s*Type|Resident|Maker|Channel)$",
+    r"Payee/?Beneficiary\s*Details|Transaction\s*Type|Resident(?:\s+Status)?|Maker|Channel)$",
     re.IGNORECASE)
 
 # Same vocabulary, searched anywhere in a digit-free candidate rather than
@@ -235,12 +239,26 @@ _GENERIC_LABEL_RE_SCAN = re.compile(
     r"Payment\s+(?:Type|Date|Mode)|Value\s+Date|Amount(?:\s*\(MYR\))?|Fee|"
     r"Total\s+\w+[\w\s]*|SMS\s+Fee|Service\s+Charge[\w\s()%-]*|Status|"
     r"Currency|Channel|Debit\s+Account|Credit\s+Account|Account\s+Number|"
-    r"Resident\w*|Transaction\s+Date(?:,\s*Time)?|Fund\s+Transfer\s+Purpose)"
+    r"Resident(?:\w*|\s+Status)|Transaction\s+Date(?:,\s*Time)?|Fund\s+Transfer\s+Purpose)"
     r"[ \t]*:?[ \t]*$",
     re.IGNORECASE)
 
 _MAX_VALUE_LEN = 60
 _BLOCK_LOOKAHEAD = 400
+
+# Decorative headings that some PDF generators place between a complete label
+# block and its corresponding value block. They consume no value slot. Without
+# skipping them, every following value shifts by one or two positions and the
+# extractor can return a heading such as "Resident Status" as the reference.
+_VALUE_BLOCK_PREAMBLE_RE = re.compile(
+    r"^(?:View[ \t]+Successful[ \t]*/[ \t]*Failed[ \t]*-[ \t]*Detail|"
+    r"DuitNow[ \t]*\([^)]+\)|Payment[ \t]+Details[ \t]+View)$",
+    re.IGNORECASE,
+)
+_VALUE_BLOCK_DECORATION_RE = re.compile(
+    r"^(?:Payer|Beneficiary|Payment|Transaction)[ \t]+Details$",
+    re.IGNORECASE,
+)
 
 # Sentinel: this label's value is present on the receipt and is explicitly
 # blank ("-"). Distinct from None, which means "found nothing, keep looking".
@@ -250,6 +268,23 @@ _EMPTY = object()
 # cannot separate them; the surrounding label can. Collect account-labelled
 # values first and exclude exact matches from the reference candidates below.
 _ACCOUNT_VALUE_RE = re.compile(r"^[ \t:.-]*[*Xx\d][*Xx\d /-]{5,39}")
+
+# HSBCnet confirmation pages sometimes omit a conventional bank-reference
+# field.  Their only authoritative payment handle is repeated in a sentence:
+# ``The status for payment 123ABC is: ...``.  This is stronger evidence than
+# the nearby, user-editable ``Your reference`` field and must be captured even
+# though the value appears in the middle of prose rather than after a label.
+_PAYMENT_STATUS_REFERENCE_RE = re.compile(
+    r"\b(?:THE[ \t]+)?STATUS[ \t]+FOR[ \t]+PAYMENT[ \t]+"
+    r"([A-Z0-9][A-Z0-9()_/.-]{5,59})[ \t]+IS[ \t]*:",
+    re.IGNORECASE,
+)
+
+_ROLE_STRENGTH = {
+    ROLE_BANK_PRIMARY: 3,
+    ROLE_BANK_SECONDARY: 2,
+    ROLE_PAYER_SUPPLIED: 1,
+}
 
 
 def _identifier_key(value):
@@ -382,6 +417,23 @@ def _find_labels(text):
                 if tail_word and tail_word.group(1).islower():
                     continue
 
+            # Bare "Payment Details" is often a tab/section heading rather
+            # than a reference field (notably on HSBCnet pages and CitiDirect).
+            # Suppress browser titles and value-less section headings while
+            # retaining fields inside flattened multi-column receipt rows.
+            if name == "Payment Details":
+                line_end = text.find("\n", end)
+                line_end = len(text) if line_end < 0 else line_end
+                tail = text[end:line_end]
+                if re.search(r"\|[ \t]*HSBCnet[ \t]*$", tail, re.IGNORECASE):
+                    continue
+                if not tail.strip(" \t:;|.-") and ":" not in tail:
+                    next_end = text.find("\n", line_end + 1)
+                    next_end = len(text) if next_end < 0 else next_end
+                    following = text[line_end + 1:next_end]
+                    if not _first_reference_token(following):
+                        continue
+
             hits.append(_Hit(m.start(), end, role, name))
 
     hits.sort(key=lambda h: (h.start, -(h.end - h.start)))
@@ -419,7 +471,8 @@ def _matches_any_label(value):
 _TABLE_HEADER_WORDS = {
     "DATE", "DESCRIPTION", "AMOUNT", "MYR", "RM", "SGD", "USD", "CURRENCY",
     "STATUS", "REMARKS", "INVOICE", "DETAILS", "REFERENCE", "REF", "CODE",
-    "TYPE", "MODE", "DEBIT", "CREDIT", "BALANCE", "TOTAL", "FEE", "TAX", "RATE"
+    "TYPE", "MODE", "DEBIT", "CREDIT", "BALANCE", "TOTAL", "FEE", "TAX", "RATE",
+    "INV", "DEPOSIT", "NO",
 }
 
 
@@ -679,12 +732,20 @@ def _find_line_block_pairs(text):
             lbl_count = lbl_end - lbl_start
             if lbl_count >= 2:
                 val_start = lbl_end
-                for k in range(lbl_count):
-                    if val_start + k < len(lines):
-                        lbl = lines[lbl_start + k]
-                        val = lines[val_start + k]
-                        pairs[lbl] = val
-                        pairs[lbl.rstrip(":.-").strip()] = val
+                while (val_start < len(lines)
+                       and _VALUE_BLOCK_PREAMBLE_RE.match(lines[val_start])):
+                    val_start += 1
+                values = []
+                cursor = val_start
+                while cursor < len(lines) and len(values) < lbl_count:
+                    if not _VALUE_BLOCK_DECORATION_RE.match(lines[cursor]):
+                        values.append(lines[cursor])
+                    cursor += 1
+                for k in range(min(lbl_count, len(values))):
+                    lbl = lines[lbl_start + k]
+                    val = values[k]
+                    pairs[lbl] = val
+                    pairs[lbl.rstrip(":.-").strip()] = val
         else:
             i += 1
     return pairs
@@ -816,6 +877,14 @@ def _slug(name):
     return "label:" + re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
 
 
+def has_bank_reference_label(text):
+    """Whether the document explicitly names a bank-issued reference field."""
+    return bool(_PAYMENT_STATUS_REFERENCE_RE.search(text or "")) or any(
+        hit.role in (ROLE_BANK_PRIMARY, ROLE_BANK_SECONDARY)
+        for hit in _find_labels(_reflow_vertical_labels(text or ""))
+    )
+
+
 def extract_references(text, ocr_used=True):
     """Every reference on the receipt, each carrying its label and role."""
     if not text or not text.strip():
@@ -823,7 +892,7 @@ def extract_references(text, ocr_used=True):
 
     text = _reflow_vertical_labels(text)
     hits = _find_labels(text)
-    if not hits:
+    if not hits and not _PAYMENT_STATUS_REFERENCE_RE.search(text):
         return []
 
     resolved = {}
@@ -837,9 +906,36 @@ def extract_references(text, ocr_used=True):
 
     _pair_blocks(text, hits, resolved)
 
-    references = []
-    seen = set()
     account_keys = _account_value_keys(text)
+
+    # A two-column PDF can emit a value just before its own label.  The AmBank
+    # advice in the production receipt set is rendered as:
+    #
+    #     Payment Details
+    #     FINEXAMPLE1234
+    #     Payee Account
+    #     Payment Ref No.
+    #
+    # Recover only an unresolved, specific Payment Reference label, only from
+    # the bounded span since the preceding reference label, and still reject a
+    # value explicitly labelled as an account.  Keeping this deliberately
+    # narrow avoids turning arbitrary preceding numbers into references.
+    for index, hit in enumerate(hits):
+        if resolved.get(index) is not None or hit.name != "Payment Reference":
+            continue
+        lower = hits[index - 1].end if index else max(0, hit.start - 160)
+        preceding_lines = text[lower:hit.start].splitlines()
+        for line in reversed(preceding_lines[-4:]):
+            token = _first_reference_token(line)
+            if not token:
+                continue
+            if _identifier_key(token) in account_keys:
+                continue
+            resolved[index] = (token, hit.start - len(line))
+            break
+
+    references = []
+    seen = {}
     # Labels that name the bank's transaction reference on their own, but are a
     # clearing/system artefact whenever the receipt also prints a more specific
     # one. Bank of China shows both "Txn Ref No." and "iGTB Ref No."; the iGTB
@@ -867,14 +963,23 @@ def extract_references(text, ocr_used=True):
             role = ROLE_BANK_SECONDARY
         # Dedupe on the VALUE alone, not (value, role). A receipt that prints
         # its reference block twice -- once in the page header, once in the body
-        # table -- otherwise yields the same number under two different roles,
-        # and the block pairing shifts the second copy onto the wrong label.
-        # First occurrence wins: the header is printed adjacent to its label,
-        # so it is the better-evidenced one.
+        # table -- otherwise yields the same number under two different roles.
+        # When the roles differ, the strongest issuer label wins below.
         key = value.upper()
         if key in seen:
+            # The same value can be printed first as Customer Reference and
+            # then as Bank Reference.  Value-level dedupe is correct, but the
+            # stronger issuer label must win; keeping the first occurrence
+            # left the document with payer-only references and no scalar ID.
+            previous = references[seen[key]]
+            if _ROLE_STRENGTH[role] > _ROLE_STRENGTH[previous.role]:
+                previous.label = hit.name
+                previous.role = role
+                previous.confidence = _confidence_for(
+                    role, pos - hit.end < 40, ocr_used, hit.name)
+                previous.source = _slug(hit.name)
             continue
-        seen.add(key)
+        seen[key] = len(references)
         adjacent = pos - hit.end < 40
         references.append(Reference(
             value=value,
@@ -883,6 +988,33 @@ def extract_references(text, ocr_used=True):
             confidence=_confidence_for(role, adjacent, ocr_used, hit.name),
             source=_slug(hit.name),
         ))
+
+    # Capture HSBCnet's sentence-form payment handle.  If the same value was
+    # already read from ``Your Reference``, upgrade that one instead of
+    # returning a duplicate with conflicting roles.
+    for match in _PAYMENT_STATUS_REFERENCE_RE.finditer(text):
+        value = _clean_value(match.group(1))
+        if not value or _identifier_key(value) in account_keys:
+            continue
+        key = value.upper()
+        confidence = _confidence_for(
+            ROLE_BANK_PRIMARY, True, ocr_used, "Payment Status Reference")
+        if key in seen:
+            existing = references[seen[key]]
+            if existing.role != ROLE_BANK_PRIMARY:
+                existing.label = "Payment Status Reference"
+                existing.role = ROLE_BANK_PRIMARY
+                existing.confidence = confidence
+                existing.source = "context:payment_status"
+        else:
+            seen[key] = len(references)
+            references.append(Reference(
+                value=value,
+                label="Payment Status Reference",
+                role=ROLE_BANK_PRIMARY,
+                confidence=confidence,
+                source="context:payment_status",
+            ))
 
     # Ensure at most one bank_primary reference is returned.
     primaries = [r for r in references if r.role == ROLE_BANK_PRIMARY]

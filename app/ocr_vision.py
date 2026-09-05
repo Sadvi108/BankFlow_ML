@@ -98,9 +98,25 @@ def _lines_to_text(lines: List[Dict[str, Any]]) -> str:
     """
     if not lines:
         return ""
-    # y is bottom-left origin, so larger y is higher on the page.
-    ordered = sorted(lines, key=lambda l: (-round(l["y"], 3), l["x"]))
-    return "\n".join(l["text"] for l in ordered)
+    # Match by vertical centres, not bottom edges. A digit value often has a
+    # slightly shorter box than its label; sorting bottoms alone could place
+    # the value ABOVE the label and make the field look empty. Join aligned
+    # columns on one row so their original label/value relationship survives.
+    ordered = sorted(lines, key=lambda l: (-(l["y"] + l["h"] / 2), l["x"]))
+    rows = []
+    for line in ordered:
+        centre = line["y"] + line["h"] / 2
+        if rows:
+            anchor = rows[-1][0]
+            anchor_centre = anchor["y"] + anchor["h"] / 2
+            same_row = abs(centre - anchor_centre) <= 0.45 * min(
+                line["h"], anchor["h"])
+            if same_row:
+                rows[-1].append(line)
+                continue
+        rows.append([line])
+    return "\n".join("  ".join(item["text"] for item in sorted(
+        row, key=lambda item: item["x"])) for row in rows)
 
 
 def image_to_text(image_path: str,
@@ -144,7 +160,8 @@ def ndarray_to_text(image, languages: Optional[List[str]] = None,
 
 
 def pdf_to_text(pdf_path: str, zoom: float = 3.0,
-                max_pages: int = 10) -> Dict[str, Any]:
+                max_pages: Optional[int] = None,
+                page_indices: Optional[List[int]] = None) -> Dict[str, Any]:
     """Rasterise a PDF and OCR every page.
 
     zoom=3 renders at ~216 dpi. Receipt reference numbers are small and dense;
@@ -159,24 +176,50 @@ def pdf_to_text(pdf_path: str, zoom: float = 3.0,
 
     doc = fitz.open(pdf_path)
     chunks: List[str] = []
+    page_texts: List[Dict[str, Any]] = []
     confidences: List[float] = []
-    pages = min(len(doc), max_pages)
+    if page_indices is None:
+        targets = list(range(len(doc)))
+    else:
+        targets = sorted(set(
+            int(index) for index in page_indices
+            if 0 <= int(index) < len(doc)
+        ))
+    if max_pages is not None:
+        targets = targets[:max_pages]
     try:
-        for index in range(pages):
-            pixmap = doc.load_page(index).get_pixmap(
+        for index in targets:
+            page = doc.load_page(index)
+            pixmap = page.get_pixmap(
                 matrix=fitz.Matrix(zoom, zoom), alpha=False)
             handle, path = tempfile.mkstemp(suffix=".png")
             os.close(handle)
             try:
                 pixmap.save(path)
                 result = image_to_text(path)
+                # Some scanners attach a /Rotate flag that leaves the printed
+                # receipt sideways. Retry that known rotation only when the
+                # first read contains no references. Keep the corrected view
+                # only when it actually recovers an identifier.
+                if page.rotation:
+                    from app.ibg.reference_id import extract_references
+                    if not extract_references(result.get('text', '')):
+                        rotated = page.get_pixmap(
+                            matrix=fitz.Matrix(zoom, zoom).prerotate(-page.rotation),
+                            alpha=False)
+                        rotated.save(path)
+                        alternative = image_to_text(path)
+                        if extract_references(alternative.get('text', '')):
+                            result = alternative
             finally:
                 try:
                     os.remove(path)
                 except OSError:
                     pass
             if result["text"].strip():
-                chunks.append(result["text"])
+                chunks.append("=== PAGE %d ===\n%s" % (
+                    index + 1, result["text"]))
+                page_texts.append({"page": index + 1, "text": result["text"]})
                 confidences.append(result["confidence"])
     finally:
         doc.close()
@@ -184,5 +227,7 @@ def pdf_to_text(pdf_path: str, zoom: float = 3.0,
     return {
         "text": "\n".join(chunks),
         "confidence": (sum(confidences) / len(confidences)) if confidences else 0.0,
-        "pages": pages,
+        "pages": len(targets),
+        "pages_processed": len(page_texts),
+        "page_texts": page_texts,
     }

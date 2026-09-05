@@ -78,6 +78,11 @@ def test_extract_endpoint_returns_all_reference_roles_and_timings(monkeypatch,
     monkeypatch.setattr(simple_server.history_manager, "add_entry", lambda _entry: "1")
     monkeypatch.setattr(simple_server, "db", None)
     monkeypatch.setattr(
+        simple_server.ocr_pipeline.ocr_pipeline,
+        "tesseract_available",
+        lambda: True,
+    )
+    monkeypatch.setattr(
         simple_server.ocr_pipeline,
         "extract_text_with_confidence",
         lambda _image: {
