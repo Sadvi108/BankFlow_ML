@@ -44,7 +44,7 @@ One admitted extraction runs in a worker thread per server process. Admission
 waits do not occupy the event loop. Local history read/modify/write operations
 are locked against concurrent history endpoints within that process.
 
-`/health` and `/extract` expose `extraction_version: ibg-runtime-v2`; `/health`
+`/health` and `/extract` expose `extraction_version: ibg-label-repair-v3`; `/health`
 also exposes Render's `RENDER_GIT_COMMIT` as `revision` when available.
 `timings.queue_ms`, `ocr_ms`, `field_extraction_ms`, `persistence_ms`, and
 `total_ms` distinguish the stages. `total_ms` starts at endpoint entry, so it

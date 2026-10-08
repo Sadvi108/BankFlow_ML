@@ -8,6 +8,7 @@ payer-supplied references remain separate.
 ## 🚀 Features
 
 *   **Measured Regression Coverage**: The labeled IBG corpus currently passes 168/168 scalar field checks and captures 72/72 expected references. These are regression results, not a claim of universal real-world accuracy.
+*   **Trained OCR Label Repair**: A local model trained with 1,650 augmented spelling examples recovers damaged field labels. The fixed OCR-label benchmark improved from 90.0% to 98.84%, while clean regression results were preserved. See [accuracy verification](docs/ACCURACY_IMPROVEMENTS.md) for the data and limits.
 *   **Multi-Bank Support**: Supports Maybank, CIMB, Public Bank, RHB, Hong Leong, AmBank, HSBC, UOB, Standard Chartered, DuitNow, and more.
 *   **Robust Extraction**:
     *   **Ultimate Pattern Matcher V3**: Advanced regex engine with flexible spacing, OCR error repair, and noise filtering.
@@ -21,7 +22,8 @@ payer-supplied references remain separate.
 
 ```
 ├── app/                    # Core application logic
-│   ├── ultimate_patterns_v3.py  # The extraction brain (100% accuracy engine)
+│   ├── ultimate_patterns_v3.py  # Legacy pattern fallback
+│   ├── ibg/                    # Label-aware field extraction and trained OCR repair
 │   ├── enhanced_ocr_pipeline.py # OCR processing
 │   └── ...
 ├── tests/                  # Test suites
@@ -104,7 +106,7 @@ See [Reference recovery verification](docs/REFERENCE_RECOVERY.md) for the latest
 failure analysis, test commands, and measured local latency.
 
 For Render troubleshooting, see [IBG runtime follow-up](docs/RENDER_IBG_RUNTIME.md).
-`/health` and extraction responses expose `extraction_version: ibg-runtime-v2`.
+`/health` and extraction responses expose `extraction_version: ibg-label-repair-v3`.
 OCR work runs outside the HTTP event loop, one document at a time per worker.
 `OCR_DOCUMENT_TIMEOUT_SECONDS=25` is a shared Tesseract budget across pages and
 retries, not a strict end-to-end HTTP timeout. Partial reads require review.

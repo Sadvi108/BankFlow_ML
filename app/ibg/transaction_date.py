@@ -123,8 +123,14 @@ _RANK2_LABEL_PATTERNS = (
     r"Statement\s*(?:Period|Date)",
 )
 
-_RANK1_RE = re.compile(r"\b(?:" + "|".join(_RANK1_LABEL_PATTERNS) + r")\b", re.IGNORECASE)
+_RANK1_RE = re.compile(r"\b(?:" + "|".join(_RANK1_LABEL_PATTERNS)
+                       + r")\b|(?m:^[ \t]*Date[ \t]*/[ \t]*Time\b)", re.IGNORECASE)
 _RANK2_RE = re.compile(r"\b(?:" + "|".join(_RANK2_LABEL_PATTERNS) + r")\b", re.IGNORECASE)
+
+
+def has_transaction_date_label(text: str) -> bool:
+    """A primary transaction date is explicitly printed on this document."""
+    return bool(_RANK1_RE.search(text))
 
 # Labels that introduce a render/administrative stamp -- never the answer,
 # regardless of whether the date next to them happens to be comma-shaped
@@ -193,6 +199,28 @@ _MONTH_FIRST = ("m", "d", "y")
 # a print stamp apart from an unlabeled-but-genuine date-time that also
 # happens to use a comma separator but does carry seconds.
 _PRINT_STAMP_TAIL_RE = re.compile(r"\A\s*,\s*\d{1,2}:\d{2}(?!\s*:\s*\d{2})")
+_RECEIPT_AMPM_TAIL_RE = re.compile(r"\A\s*,\s*\d{1,2}:\d{2}\s*[AP]M\b", re.I)
+_REFERENCE_HEADER_RE = re.compile(
+    r"(?:Reference\s*ID|Transaction\s*(?:ID|Reference(?:\s*No\.?)))\s*:?\s*\n"
+    r"[ \t]*[A-Z0-9 -]{6,60}[ \t]*\n[ \t]*$", re.I)
+_OCR_DATE_RE = re.compile(
+    r"(?<!\w)[0-9OQIlS]{1,2}[-/.][0-9OQIlS]{1,2}[-/.][0-9OQIlS]{4}(?!\w)")
+_DATE_LABEL_FOR_REPAIR_RE = re.compile(
+    r"(?:(?:Transaction|Value|Transfer|Payment|Debit|Creation|Created|Advice|Printed|Export)\s+)?"
+    r"Date(?:\s*/\s*Time)?[ \t:;|+.-]*", re.I)
+
+
+def _repair_ocr_dates(text):
+    def repair(match):
+        start = text.rfind("\n", 0, match.start()) + 1
+        label = text[start:match.start()].strip()
+        if not label and start:
+            previous_start = text.rfind("\n", 0, start - 1) + 1
+            label = text[previous_start:start].strip()
+        if _DATE_LABEL_FOR_REPAIR_RE.fullmatch(label):
+            return match[0].translate(str.maketrans({"O": "0", "Q": "0", "I": "1", "l": "1", "S": "5"}))
+        return match[0]
+    return _OCR_DATE_RE.sub(repair, text)
 
 
 def _resolve_two_digit_year(yy: int, reference_year: int) -> int:
@@ -349,6 +377,12 @@ def _iter_date_candidates(text: str, reference_year: int,
             return
         seen_spans.add(span)
         is_stamp = bool(_PRINT_STAMP_TAIL_RE.match(text[m.end():m.end() + 20]))
+        if (is_stamp and _RECEIPT_AMPM_TAIL_RE.match(text[m.end():m.end() + 25])
+                and _REFERENCE_HEADER_RE.search(text[max(0, m.start() - 150):m.start()])):
+            # Mobile bank receipts put an AM/PM transaction time directly
+            # below their reference, without seconds. This is receipt
+            # evidence, unlike a browser/footer date printed beside a URL.
+            is_stamp = False
         if not is_stamp:
             is_stamp = _preceded_by_never_label(text, m.start())
         hits.append((m.start(), iso, is_stamp))
@@ -559,6 +593,9 @@ def extract_transaction_date(text: str, ocr_used: bool = True,
     """
     if not text:
         return FieldResult.missing(source="missing:empty_text")
+
+    if ocr_used:
+        text = _repair_ocr_dates(text)
 
     reference_year = date.today().year
     penalty = 0.05 if ocr_used else 0.0

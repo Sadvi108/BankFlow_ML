@@ -19,6 +19,8 @@ from __future__ import print_function
 import os
 import re
 import sys
+import json
+from pathlib import Path
 from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -42,28 +44,19 @@ _MONEY_OUT = re.compile(r"^\d+\.\d{2}$")
 
 def read_text(path):
     """Embedded text first, then OCR. Mirrors what the server does."""
+    from simple_server import _pdf_to_text, ocr_pipeline
     lower = path.lower()
     if lower.endswith((".png", ".jpg", ".jpeg")):
         try:
-            from app import ocr_vision
-            if ocr_vision.available():
-                return ocr_vision.image_to_text(path)["text"], "vision"
+            import cv2
+            image = cv2.imread(path)
+            result = ocr_pipeline.extract_text_with_confidence(image)
+            return result.get("text", ""), "ocr"
         except Exception:
-            pass
-        return "", "none"
+            return "", "none"
     try:
-        import fitz
-        doc = fitz.open(path)
-        text = "\n".join(p.get_text("text") for p in doc)
-        doc.close()
-        if len(text.strip()) >= 40:
-            return text, "embedded"
-    except Exception:
-        pass
-    try:
-        from app import ocr_vision
-        if ocr_vision.available():
-            return ocr_vision.pdf_to_text(path)["text"], "vision"
+        result = _pdf_to_text(path)
+        return result.get("text", ""), result.get("source", "none")
     except Exception:
         pass
     return "", "none"
@@ -96,6 +89,11 @@ def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     show = "--show-suspects" in sys.argv
     root = args[0] if args else "Receipts"
+    cache_path = (Path(root).resolve().parent / "logs" / "receipt_audit_cache.json"
+                  if "--cache" in sys.argv else None)
+    cache = {}
+    if cache_path and cache_path.exists():
+        cache = json.loads(cache_path.read_text(encoding="utf-8"))
 
     files = []
     for base, _dirs, names in os.walk(root):
@@ -111,18 +109,29 @@ def main():
     no_text = []
     suspect_rows = []
     per_bank = defaultdict(lambda: Counter())
+    missing_rows = []
     total = len(files)
 
     for i, path in enumerate(files, 1):
         sys.stderr.write("\r  %d/%d" % (i, total))
         sys.stderr.flush()
-        text, how = read_text(path)
+        stat = os.stat(path)
+        key = "%s:%s:%s" % (os.path.abspath(path), stat.st_size, stat.st_mtime_ns)
+        if key in cache:
+            text, how = cache[key]
+        else:
+            text, how = read_text(path)
+            if cache_path:
+                cache[key] = [text, how]
+                cache_path.parent.mkdir(exist_ok=True)
+                cache_path.write_text(json.dumps(cache), encoding="utf-8")
         sources[how] += 1
         if len(text.strip()) < 40:
             no_text.append(path)
             continue
         try:
-            res = extract_ibg_fields(text, ocr_used=(how == "vision"))
+            res = extract_ibg_fields(text, ocr_used=how not in (
+                "embedded", "embedded_partial", "pdfplumber", "pdf_text_extraction"))
         except Exception as exc:                       # noqa: BLE001
             suspect_rows.append((path, "EXTRACTOR", "raised %s" % type(exc).__name__, ""))
             continue
@@ -139,6 +148,10 @@ def main():
         found["_refs"] += res["reference_count"]
         if res["needs_review"]:
             found["_review"] += 1
+        absent = [f for f in ("reference_id", "transaction_date", "amount")
+                  if res[f]["value"] is None]
+        if absent:
+            missing_rows.append((os.path.basename(path), absent))
 
     sys.stderr.write("\r" + " " * 24 + "\r")
     usable = total - len(no_text)
@@ -181,6 +194,10 @@ def main():
                   % (os.path.basename(p)[:33], f, reason[:27], str(v)[:34]))
     elif suspect_rows:
         print("\n  (re-run with --show-suspects for the per-file detail)")
+    if "--show-missing" in sys.argv:
+        print("\nMISSING CORE FIELDS (absence may be intentional):")
+        for name, fields in missing_rows:
+            print("  %s: %s" % (name, ", ".join(fields)))
     return 0
 
 

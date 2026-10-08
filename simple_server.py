@@ -77,7 +77,7 @@ from app import ocr_vision
 
 # Initialize enhanced OCR pipeline
 ocr_pipeline = EnhancedOCRPipeline()
-EXTRACTION_VERSION = 'ibg-runtime-v2'
+EXTRACTION_VERSION = 'ibg-label-repair-v3'
 
 # Keep CPU-heavy PDF/OCR work off the ASGI event loop, but do not fan out
 # several multi-megabyte rasters on a 512MB instance. Waiting uploads have a
@@ -375,6 +375,7 @@ def _build_response(file_id: str, filename: str, merged: Dict[str, Any],
         results["payment_mode"] = ibg["payment_mode"]["value"]
         results["review_reasons"] = ibg.get("review_reasons", [])
         results["fields_absent"] = ibg.get("fields_absent", [])
+        results["label_repairs"] = ibg.get("label_repairs", [])
         results["field_detail"] = dict(
             (k, ibg[k]) for k in
             ("reference_id", "bank_name", "beneficiary_bank",
@@ -658,7 +659,8 @@ def _extract_receipt_sync(file: UploadFile, request_started: float,
             for legacy_key, ibg_key in (("bank_name", "bank_name"),
                                         ("date", "transaction_date"),
                                         ("amount", "amount")):
-                if ibg_results[ibg_key]["value"] is not None:
+                if (ibg_results[ibg_key]["value"] is not None
+                        or ibg_results[ibg_key]["source"].startswith("missing:unread")):
                     local_dict[legacy_key] = ibg_results[ibg_key]["value"]
 
         # 3. Validate locally (no API). Merger flags needs_review when fields fail.

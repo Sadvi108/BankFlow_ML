@@ -677,6 +677,41 @@ def _confidence(score: float, ocr_used: bool) -> float:
 # Public interface
 # ---------------------------------------------------------------------------
 
+_OCR_DECIMAL_COMMA_RE = re.compile(
+    r'(?<![\w.,/])(?:\d{1,3}(?:,\d{3})+|\d{1,9}),\d{2}(?![\d,./])')
+
+
+def _repair_ocr_decimal_commas(text: str) -> str:
+    """Restore a decimal dot only on a labeled or currency-qualified value."""
+    previous = ""
+    lines = []
+    for line in text.splitlines(keepends=True):
+        labels = _collect_labels(line)
+
+        def repair(match):
+            before, after = line[:match.start()], line[match.end():]
+            currency = (re.search(r'\b(?:MYR|RM)[ \t:*-]*$', before, re.I)
+                        or re.match(r'[ \t]*(?:MYR|RM)\b', after, re.I))
+            labelled = any(label.end <= match.start() and not re.sub(
+                r'[\s:;()*/-]|\b(?:MYR|RM)\b', '', before[label.end:], flags=re.I)
+                for label in labels)
+            below_label = not before.strip() and bool(_collect_labels(previous))
+            if currency or labelled or below_label:
+                head, _, sen = match[0].rpartition(',')
+                return head + '.' + sen
+            return match[0]
+
+        lines.append(_OCR_DECIMAL_COMMA_RE.sub(repair, line))
+        previous = line
+    return ''.join(lines)
+
+
+def has_amount_label(text: str) -> bool:
+    """Whether a transfer-amount label exists, excluding fee/total-debit labels."""
+    return any(label.kind in (KIND_STRONG, KIND_WEAK)
+               for label in _collect_labels(text))
+
+
 def extract_amount(text: str, ocr_used: bool = True) -> FieldResult:
     """Extract the transaction/transfer amount from IBG receipt text.
 
@@ -686,6 +721,8 @@ def extract_amount(text: str, ocr_used: bool = True) -> FieldResult:
     if not text:
         return FieldResult.missing("empty_text")
 
+    if ocr_used:
+        text = _repair_ocr_decimal_commas(text)
     gathered = _gather(text)
     candidates_out = [
         (c.value, round(c.score, 2))
@@ -715,6 +752,9 @@ def extract_fee(text: str, ocr_used: bool = True) -> FieldResult:
     """
     if not text:
         return FieldResult.missing("empty_text")
+
+    if ocr_used:
+        text = _repair_ocr_decimal_commas(text)
 
     gathered = _gather(text)
     entries = gathered.fee_entries
@@ -769,6 +809,9 @@ def extract_total_debit(text: str, ocr_used: bool = True) -> FieldResult:
     """
     if not text:
         return FieldResult.missing("empty_text")
+
+    if ocr_used:
+        text = _repair_ocr_decimal_commas(text)
 
     gathered = _gather(text)
     candidates_out = [

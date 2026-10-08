@@ -184,6 +184,8 @@ class OCRPipeline:
 
     def _is_good_read(self, result: Dict[str, Any]) -> bool:
         text = (result.get("text") or "").strip()
+        from app.ibg.label_repair import repair_labels
+        text, _repairs = repair_labels(text, ocr_used=True)
         confidence = float(result.get("confidence") or 0.0)
         if len(text) < 20 or result.get("word_count", 0) < 5:
             return False
@@ -198,6 +200,14 @@ class OCRPipeline:
             # Mean word confidence says little about a small unreadable ID.
             # A receipt whose label itself was lost still needs its one retry.
             return False
+        from app.ibg.amount import extract_amount, has_amount_label
+        from app.ibg.transaction_date import (extract_transaction_date,
+                                              has_transaction_date_label)
+        if has_amount_label(text) and not extract_amount(text).found:
+            return False
+        if (has_transaction_date_label(text)
+                and not extract_transaction_date(text).found):
+            return False
         # Preserve the old high-confidence fast path, with an additional safe
         # semantic path for a clearly readable receipt just below 0.85.
         return confidence >= 0.85 or (
@@ -206,7 +216,11 @@ class OCRPipeline:
     def _result_score(self, result: Dict[str, Any]) -> float:
         """Prefer semantic completeness when two OCR passes are close."""
         text = result.get("text") or ""
+        from app.ibg.label_repair import repair_labels
+        text, _repairs = repair_labels(text, ocr_used=True)
         from app.ibg.reference_id import extract_references
+        from app.ibg.amount import extract_amount
+        from app.ibg.transaction_date import extract_transaction_date
         refs = extract_references(text)
         # A retry that actually recovered a labelled bank ID must not lose to
         # a slightly higher average over ordinary words in an incomplete read.
@@ -217,6 +231,8 @@ class OCRPipeline:
         return (
             float(result.get("confidence") or 0.0)
             + reference_score
+            + 0.10 * extract_amount(text).found
+            + 0.10 * extract_transaction_date(text).found
             + 0.035 * self._receipt_signal_count(text)
             + 0.0001 * min(len(text), 400)
         )

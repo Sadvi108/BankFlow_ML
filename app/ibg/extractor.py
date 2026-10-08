@@ -13,7 +13,8 @@ fired and wrong values reached the ledger silently.
 """
 from typing import Any, Dict, Optional
 
-from app.ibg.amount import extract_amount, extract_fee, extract_total_debit
+from app.ibg.amount import (extract_amount, extract_fee, extract_total_debit,
+                            has_amount_label)
 from app.ibg.bank_name import extract_bank_name, extract_beneficiary_bank
 from app.ibg.bank_registry import ALL_ENTITIES, is_rail
 from app.ibg.contract import (
@@ -25,7 +26,9 @@ from app.ibg.contract import (
 from app.ibg.party import (extract_beneficiary, extract_payer,
                            extract_payment_mode)
 from app.ibg.reference_id import extract_references, has_bank_reference_label
-from app.ibg.transaction_date import extract_transaction_date
+from app.ibg.transaction_date import (extract_transaction_date,
+                                     has_transaction_date_label)
+from app.ibg.label_repair import repair_labels
 
 # Below this, a field is not trustworthy enough to post without a human look.
 REVIEW_THRESHOLD = 0.6
@@ -103,6 +106,7 @@ def extract_ibg_fields(text: str, ocr_used: bool = True) -> Dict[str, Any]:
     Returns a dict with, for each field, `value` / `confidence` / `source`,
     plus the full roled `references` list and an overall `needs_review`.
     """
+    text, label_repairs = repair_labels(text, ocr_used=ocr_used)
     bank = extract_bank_name(text, ocr_used=ocr_used)
     bank_key = _bank_key_for(bank.value)
 
@@ -159,6 +163,10 @@ def extract_ibg_fields(text: str, ocr_used: bool = True) -> Dict[str, Any]:
         # Missing an explicitly printed reference is a failed read, not an
         # intentionally absent field. The review queue must see the difference.
         out["reference_id"]["source"] = "missing:unread_bank_reference"
+    if amount.value is None and has_amount_label(text):
+        out["amount"]["source"] = "missing:unread_amount"
+    if date.value is None and has_transaction_date_label(text):
+        out["transaction_date"]["source"] = "missing:unread_transaction_date"
     out["reference_count"] = len(references)
     out["references_by_role"] = {
         role: [r.to_dict() for r in references if r.role == role]
@@ -215,4 +223,5 @@ def extract_ibg_fields(text: str, ocr_used: bool = True) -> Dict[str, Any]:
     out["overall_confidence"] = round(sum(scores) / len(scores), 3) if scores else 0.0
     out["needs_review"] = bool(reasons)
     out["review_reasons"] = reasons
+    out["label_repairs"] = label_repairs
     return out

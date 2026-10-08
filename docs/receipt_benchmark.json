@@ -1,0 +1,1878 @@
+{
+  "branches": {
+    "origin/clean-main": {
+      "engine": "legacy_v3",
+      "holdout_layouts": {
+        "accuracy_percent": 28.33,
+        "failure_count": 43,
+        "failures": [
+          {
+            "field": "bank_name",
+            "sample": "H1_CIMB_DUITNOW_RECEIPT"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H1_CIMB_DUITNOW_RECEIPT"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H2_CIMB_IBG_TT_SLIP"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H2_CIMB_IBG_TT_SLIP"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H3_PBB_IBG_APPROVAL"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H3_PBB_IBG_APPROVAL"
+          },
+          {
+            "field": "reference_id",
+            "sample": "H4_PBB_NOTIFICATION_EMAIL"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H4_PBB_NOTIFICATION_EMAIL"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H5_MAYBANK_M2E_DUITNOW"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H5_MAYBANK_M2E_DUITNOW"
+          }
+        ],
+        "passed": 17,
+        "total": 60
+      },
+      "ocr_stress": {
+        "amount_ocr": {
+          "accuracy_percent": 33.72,
+          "failure_count": 114,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "amount",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            }
+          ],
+          "passed": 58,
+          "total": 172
+        },
+        "date_ocr": {
+          "accuracy_percent": 34.88,
+          "failure_count": 112,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "amount",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            }
+          ],
+          "passed": 60,
+          "total": 172
+        },
+        "fullwidth_label_colon": {
+          "accuracy_percent": 36.05,
+          "failure_count": 110,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "amount",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            }
+          ],
+          "passed": 62,
+          "total": 172
+        },
+        "reference_ocr": {
+          "accuracy_percent": 29.07,
+          "failure_count": 122,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "amount",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            }
+          ],
+          "passed": 50,
+          "total": 172
+        },
+        "transaction_ocr": {
+          "accuracy_percent": 34.88,
+          "failure_count": 112,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "amount",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            }
+          ],
+          "passed": 60,
+          "total": 172
+        }
+      },
+      "stress_overall": {
+        "accuracy_percent": 33.72,
+        "passed": 290,
+        "total": 860
+      },
+      "training_layouts": {
+        "accuracy_percent": 38.39,
+        "failure_count": 69,
+        "failures": [
+          {
+            "field": "reference_id",
+            "sample": "S1_MAYBANK_M2E_ACH"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "S1_MAYBANK_M2E_ACH"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "S2_MAYBANK_M2E_TRUNCATED"
+          },
+          {
+            "field": "amount",
+            "sample": "S2_MAYBANK_M2E_TRUNCATED"
+          },
+          {
+            "field": "reference_id",
+            "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+          },
+          {
+            "field": "bank_name",
+            "sample": "S4_MAYBANK_GIRO_DUITNOW"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "S4_MAYBANK_GIRO_DUITNOW"
+          },
+          {
+            "field": "amount",
+            "sample": "S4_MAYBANK_GIRO_DUITNOW"
+          },
+          {
+            "field": "reference_id",
+            "sample": "S6_MAYBANK2U_BIZ_GIRO"
+          }
+        ],
+        "passed": 43,
+        "total": 112
+      }
+    },
+    "origin/codex/fix-missing-reference-ids": {
+      "engine": "ibg",
+      "holdout_layouts": {
+        "accuracy_percent": 96.67,
+        "failure_count": 2,
+        "failures": [
+          {
+            "field": "bank_name",
+            "sample": "H8_UOB_DUITNOW"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H11_RHB_REFLEX"
+          }
+        ],
+        "passed": 58,
+        "total": 60
+      },
+      "ocr_stress": {
+        "amount_ocr": {
+          "accuracy_percent": 91.28,
+          "failure_count": 15,
+          "failures": [
+            {
+              "field": "amount",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "amount",
+              "sample": "S7_MAYBANK_M2E_ACH2"
+            },
+            {
+              "field": "amount",
+              "sample": "S11_PBB_COLUMN_SCRAMBLE"
+            },
+            {
+              "field": "amount",
+              "sample": "S20_UOB_INTERBANK_GIRO"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S23_ALLIANCE_BIZSMART"
+            },
+            {
+              "field": "amount",
+              "sample": "S23_ALLIANCE_BIZSMART"
+            },
+            {
+              "field": "amount",
+              "sample": "S26_CITIBANK_CITIDIRECT"
+            },
+            {
+              "field": "amount",
+              "sample": "H5_MAYBANK_M2E_DUITNOW"
+            }
+          ],
+          "passed": 157,
+          "total": 172
+        },
+        "date_ocr": {
+          "accuracy_percent": 95.93,
+          "failure_count": 7,
+          "failures": [
+            {
+              "field": "transaction_date",
+              "sample": "S10_PBB_DUITNOW_SLIP"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S11_PBB_COLUMN_SCRAMBLE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S23_ALLIANCE_BIZSMART"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S24_HSBC_PAYMENT_ADVICE"
+            },
+            {
+              "field": "bank_name",
+              "sample": "H8_UOB_DUITNOW"
+            },
+            {
+              "field": "bank_name",
+              "sample": "H11_RHB_REFLEX"
+            },
+            {
+              "field": "reference_id",
+              "sample": "H13_ALLIANCE_BIZSMART"
+            }
+          ],
+          "passed": 165,
+          "total": 172
+        },
+        "fullwidth_label_colon": {
+          "accuracy_percent": 88.37,
+          "failure_count": 20,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S8_MAYBANK2E_ADVICE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S9_PBB_IBG_APPROVAL"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S10_PBB_DUITNOW_SLIP"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S12_PBB_NOTIFICATION_EMAIL"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S13_CIMB_BIZCHANNEL_IBG"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S14_CIMB_EMAIL_IBG"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S18_HONGLEONG_DEBIT_ADVICE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S19_HONGLEONG_CREDIT_ADVICE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S22_AMBANK_TRANSFER_ADVICE"
+            }
+          ],
+          "passed": 152,
+          "total": 172
+        },
+        "reference_ocr": {
+          "accuracy_percent": 77.33,
+          "failure_count": 39,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S7_MAYBANK_M2E_ACH2"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S8_MAYBANK2E_ADVICE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S9_PBB_IBG_APPROVAL"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S10_PBB_DUITNOW_SLIP"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S11_PBB_COLUMN_SCRAMBLE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S12_PBB_NOTIFICATION_EMAIL"
+            }
+          ],
+          "passed": 133,
+          "total": 172
+        },
+        "transaction_ocr": {
+          "accuracy_percent": 97.09,
+          "failure_count": 5,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S21_AMBANK_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S23_ALLIANCE_BIZSMART"
+            },
+            {
+              "field": "bank_name",
+              "sample": "H8_UOB_DUITNOW"
+            },
+            {
+              "field": "bank_name",
+              "sample": "H11_RHB_REFLEX"
+            },
+            {
+              "field": "reference_id",
+              "sample": "H13_ALLIANCE_BIZSMART"
+            }
+          ],
+          "passed": 167,
+          "total": 172
+        }
+      },
+      "stress_overall": {
+        "accuracy_percent": 90.0,
+        "passed": 774,
+        "total": 860
+      },
+      "training_layouts": {
+        "accuracy_percent": 100.0,
+        "failure_count": 0,
+        "failures": [],
+        "passed": 112,
+        "total": 112
+      }
+    },
+    "origin/codex/render-ibg-runtime": {
+      "engine": "ibg",
+      "holdout_layouts": {
+        "accuracy_percent": 96.67,
+        "failure_count": 2,
+        "failures": [
+          {
+            "field": "bank_name",
+            "sample": "H8_UOB_DUITNOW"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H11_RHB_REFLEX"
+          }
+        ],
+        "passed": 58,
+        "total": 60
+      },
+      "ocr_stress": {
+        "amount_ocr": {
+          "accuracy_percent": 91.28,
+          "failure_count": 15,
+          "failures": [
+            {
+              "field": "amount",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "amount",
+              "sample": "S7_MAYBANK_M2E_ACH2"
+            },
+            {
+              "field": "amount",
+              "sample": "S11_PBB_COLUMN_SCRAMBLE"
+            },
+            {
+              "field": "amount",
+              "sample": "S20_UOB_INTERBANK_GIRO"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S23_ALLIANCE_BIZSMART"
+            },
+            {
+              "field": "amount",
+              "sample": "S23_ALLIANCE_BIZSMART"
+            },
+            {
+              "field": "amount",
+              "sample": "S26_CITIBANK_CITIDIRECT"
+            },
+            {
+              "field": "amount",
+              "sample": "H5_MAYBANK_M2E_DUITNOW"
+            }
+          ],
+          "passed": 157,
+          "total": 172
+        },
+        "date_ocr": {
+          "accuracy_percent": 95.93,
+          "failure_count": 7,
+          "failures": [
+            {
+              "field": "transaction_date",
+              "sample": "S10_PBB_DUITNOW_SLIP"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S11_PBB_COLUMN_SCRAMBLE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S23_ALLIANCE_BIZSMART"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S24_HSBC_PAYMENT_ADVICE"
+            },
+            {
+              "field": "bank_name",
+              "sample": "H8_UOB_DUITNOW"
+            },
+            {
+              "field": "bank_name",
+              "sample": "H11_RHB_REFLEX"
+            },
+            {
+              "field": "reference_id",
+              "sample": "H13_ALLIANCE_BIZSMART"
+            }
+          ],
+          "passed": 165,
+          "total": 172
+        },
+        "fullwidth_label_colon": {
+          "accuracy_percent": 88.37,
+          "failure_count": 20,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S8_MAYBANK2E_ADVICE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S9_PBB_IBG_APPROVAL"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S10_PBB_DUITNOW_SLIP"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S12_PBB_NOTIFICATION_EMAIL"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S13_CIMB_BIZCHANNEL_IBG"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S14_CIMB_EMAIL_IBG"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S18_HONGLEONG_DEBIT_ADVICE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S19_HONGLEONG_CREDIT_ADVICE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S22_AMBANK_TRANSFER_ADVICE"
+            }
+          ],
+          "passed": 152,
+          "total": 172
+        },
+        "reference_ocr": {
+          "accuracy_percent": 77.33,
+          "failure_count": 39,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S7_MAYBANK_M2E_ACH2"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S8_MAYBANK2E_ADVICE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S9_PBB_IBG_APPROVAL"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S10_PBB_DUITNOW_SLIP"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S11_PBB_COLUMN_SCRAMBLE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S12_PBB_NOTIFICATION_EMAIL"
+            }
+          ],
+          "passed": 133,
+          "total": 172
+        },
+        "transaction_ocr": {
+          "accuracy_percent": 97.09,
+          "failure_count": 5,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S21_AMBANK_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S23_ALLIANCE_BIZSMART"
+            },
+            {
+              "field": "bank_name",
+              "sample": "H8_UOB_DUITNOW"
+            },
+            {
+              "field": "bank_name",
+              "sample": "H11_RHB_REFLEX"
+            },
+            {
+              "field": "reference_id",
+              "sample": "H13_ALLIANCE_BIZSMART"
+            }
+          ],
+          "passed": 167,
+          "total": 172
+        }
+      },
+      "stress_overall": {
+        "accuracy_percent": 90.0,
+        "passed": 774,
+        "total": 860
+      },
+      "training_layouts": {
+        "accuracy_percent": 100.0,
+        "failure_count": 0,
+        "failures": [],
+        "passed": 112,
+        "total": 112
+      }
+    },
+    "origin/fix/maybank-m2e-amount-date-extraction": {
+      "engine": "legacy_v3",
+      "holdout_layouts": {
+        "accuracy_percent": 33.33,
+        "failure_count": 40,
+        "failures": [
+          {
+            "field": "bank_name",
+            "sample": "H1_CIMB_DUITNOW_RECEIPT"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H1_CIMB_DUITNOW_RECEIPT"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H2_CIMB_IBG_TT_SLIP"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H2_CIMB_IBG_TT_SLIP"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H3_PBB_IBG_APPROVAL"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H3_PBB_IBG_APPROVAL"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H4_PBB_NOTIFICATION_EMAIL"
+          },
+          {
+            "field": "reference_id",
+            "sample": "H5_MAYBANK_M2E_DUITNOW"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H5_MAYBANK_M2E_DUITNOW"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H5_MAYBANK_M2E_DUITNOW"
+          }
+        ],
+        "passed": 20,
+        "total": 60
+      },
+      "ocr_stress": {
+        "amount_ocr": {
+          "accuracy_percent": 34.88,
+          "failure_count": 112,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "amount",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            }
+          ],
+          "passed": 60,
+          "total": 172
+        },
+        "date_ocr": {
+          "accuracy_percent": 40.12,
+          "failure_count": 103,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "amount",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            }
+          ],
+          "passed": 69,
+          "total": 172
+        },
+        "fullwidth_label_colon": {
+          "accuracy_percent": 38.37,
+          "failure_count": 106,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "amount",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            }
+          ],
+          "passed": 66,
+          "total": 172
+        },
+        "reference_ocr": {
+          "accuracy_percent": 34.3,
+          "failure_count": 113,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "amount",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            }
+          ],
+          "passed": 59,
+          "total": 172
+        },
+        "transaction_ocr": {
+          "accuracy_percent": 37.79,
+          "failure_count": 107,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "amount",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            }
+          ],
+          "passed": 65,
+          "total": 172
+        }
+      },
+      "stress_overall": {
+        "accuracy_percent": 37.09,
+        "passed": 319,
+        "total": 860
+      },
+      "training_layouts": {
+        "accuracy_percent": 43.75,
+        "failure_count": 63,
+        "failures": [
+          {
+            "field": "reference_id",
+            "sample": "S1_MAYBANK_M2E_ACH"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "S1_MAYBANK_M2E_ACH"
+          },
+          {
+            "field": "reference_id",
+            "sample": "S2_MAYBANK_M2E_TRUNCATED"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "S2_MAYBANK_M2E_TRUNCATED"
+          },
+          {
+            "field": "reference_id",
+            "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+          },
+          {
+            "field": "bank_name",
+            "sample": "S4_MAYBANK_GIRO_DUITNOW"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "S4_MAYBANK_GIRO_DUITNOW"
+          },
+          {
+            "field": "amount",
+            "sample": "S4_MAYBANK_GIRO_DUITNOW"
+          },
+          {
+            "field": "reference_id",
+            "sample": "S6_MAYBANK2U_BIZ_GIRO"
+          }
+        ],
+        "passed": 49,
+        "total": 112
+      }
+    },
+    "origin/fresh_deploy": {
+      "engine": "legacy_v3",
+      "holdout_layouts": {
+        "accuracy_percent": 31.67,
+        "failure_count": 41,
+        "failures": [
+          {
+            "field": "bank_name",
+            "sample": "H1_CIMB_DUITNOW_RECEIPT"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H1_CIMB_DUITNOW_RECEIPT"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H2_CIMB_IBG_TT_SLIP"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H2_CIMB_IBG_TT_SLIP"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H3_PBB_IBG_APPROVAL"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H3_PBB_IBG_APPROVAL"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H4_PBB_NOTIFICATION_EMAIL"
+          },
+          {
+            "field": "reference_id",
+            "sample": "H5_MAYBANK_M2E_DUITNOW"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H5_MAYBANK_M2E_DUITNOW"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "H5_MAYBANK_M2E_DUITNOW"
+          }
+        ],
+        "passed": 19,
+        "total": 60
+      },
+      "ocr_stress": {
+        "amount_ocr": {
+          "accuracy_percent": 36.63,
+          "failure_count": 109,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "amount",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            }
+          ],
+          "passed": 63,
+          "total": 172
+        },
+        "date_ocr": {
+          "accuracy_percent": 38.37,
+          "failure_count": 106,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "amount",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            }
+          ],
+          "passed": 66,
+          "total": 172
+        },
+        "fullwidth_label_colon": {
+          "accuracy_percent": 37.79,
+          "failure_count": 107,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "amount",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            }
+          ],
+          "passed": 65,
+          "total": 172
+        },
+        "reference_ocr": {
+          "accuracy_percent": 32.56,
+          "failure_count": 116,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "amount",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            }
+          ],
+          "passed": 56,
+          "total": 172
+        },
+        "transaction_ocr": {
+          "accuracy_percent": 38.37,
+          "failure_count": 106,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "bank_name",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "amount",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            }
+          ],
+          "passed": 66,
+          "total": 172
+        }
+      },
+      "stress_overall": {
+        "accuracy_percent": 36.74,
+        "passed": 316,
+        "total": 860
+      },
+      "training_layouts": {
+        "accuracy_percent": 41.96,
+        "failure_count": 65,
+        "failures": [
+          {
+            "field": "reference_id",
+            "sample": "S1_MAYBANK_M2E_ACH"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "S1_MAYBANK_M2E_ACH"
+          },
+          {
+            "field": "reference_id",
+            "sample": "S2_MAYBANK_M2E_TRUNCATED"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "S2_MAYBANK_M2E_TRUNCATED"
+          },
+          {
+            "field": "amount",
+            "sample": "S2_MAYBANK_M2E_TRUNCATED"
+          },
+          {
+            "field": "reference_id",
+            "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+          },
+          {
+            "field": "bank_name",
+            "sample": "S4_MAYBANK_GIRO_DUITNOW"
+          },
+          {
+            "field": "transaction_date",
+            "sample": "S4_MAYBANK_GIRO_DUITNOW"
+          },
+          {
+            "field": "amount",
+            "sample": "S4_MAYBANK_GIRO_DUITNOW"
+          }
+        ],
+        "passed": 47,
+        "total": 112
+      }
+    },
+    "origin/main": {
+      "engine": "ibg",
+      "holdout_layouts": {
+        "accuracy_percent": 96.67,
+        "failure_count": 2,
+        "failures": [
+          {
+            "field": "bank_name",
+            "sample": "H8_UOB_DUITNOW"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H11_RHB_REFLEX"
+          }
+        ],
+        "passed": 58,
+        "total": 60
+      },
+      "ocr_stress": {
+        "amount_ocr": {
+          "accuracy_percent": 91.28,
+          "failure_count": 15,
+          "failures": [
+            {
+              "field": "amount",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "amount",
+              "sample": "S2_MAYBANK_M2E_TRUNCATED"
+            },
+            {
+              "field": "amount",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "amount",
+              "sample": "S7_MAYBANK_M2E_ACH2"
+            },
+            {
+              "field": "amount",
+              "sample": "S11_PBB_COLUMN_SCRAMBLE"
+            },
+            {
+              "field": "amount",
+              "sample": "S20_UOB_INTERBANK_GIRO"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S23_ALLIANCE_BIZSMART"
+            },
+            {
+              "field": "amount",
+              "sample": "S23_ALLIANCE_BIZSMART"
+            },
+            {
+              "field": "amount",
+              "sample": "S26_CITIBANK_CITIDIRECT"
+            },
+            {
+              "field": "amount",
+              "sample": "H5_MAYBANK_M2E_DUITNOW"
+            }
+          ],
+          "passed": 157,
+          "total": 172
+        },
+        "date_ocr": {
+          "accuracy_percent": 95.93,
+          "failure_count": 7,
+          "failures": [
+            {
+              "field": "transaction_date",
+              "sample": "S10_PBB_DUITNOW_SLIP"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S11_PBB_COLUMN_SCRAMBLE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S23_ALLIANCE_BIZSMART"
+            },
+            {
+              "field": "transaction_date",
+              "sample": "S24_HSBC_PAYMENT_ADVICE"
+            },
+            {
+              "field": "bank_name",
+              "sample": "H8_UOB_DUITNOW"
+            },
+            {
+              "field": "bank_name",
+              "sample": "H11_RHB_REFLEX"
+            },
+            {
+              "field": "reference_id",
+              "sample": "H13_ALLIANCE_BIZSMART"
+            }
+          ],
+          "passed": 165,
+          "total": 172
+        },
+        "fullwidth_label_colon": {
+          "accuracy_percent": 88.37,
+          "failure_count": 20,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S8_MAYBANK2E_ADVICE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S9_PBB_IBG_APPROVAL"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S10_PBB_DUITNOW_SLIP"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S12_PBB_NOTIFICATION_EMAIL"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S13_CIMB_BIZCHANNEL_IBG"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S14_CIMB_EMAIL_IBG"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S18_HONGLEONG_DEBIT_ADVICE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S19_HONGLEONG_CREDIT_ADVICE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S22_AMBANK_TRANSFER_ADVICE"
+            }
+          ],
+          "passed": 152,
+          "total": 172
+        },
+        "reference_ocr": {
+          "accuracy_percent": 77.33,
+          "failure_count": 39,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S1_MAYBANK_M2E_ACH"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S3_MAYBANK2U_OPEN_INTERBANK"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S4_MAYBANK_GIRO_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S6_MAYBANK2U_BIZ_GIRO"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S7_MAYBANK_M2E_ACH2"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S8_MAYBANK2E_ADVICE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S9_PBB_IBG_APPROVAL"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S10_PBB_DUITNOW_SLIP"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S11_PBB_COLUMN_SCRAMBLE"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S12_PBB_NOTIFICATION_EMAIL"
+            }
+          ],
+          "passed": 133,
+          "total": 172
+        },
+        "transaction_ocr": {
+          "accuracy_percent": 97.09,
+          "failure_count": 5,
+          "failures": [
+            {
+              "field": "reference_id",
+              "sample": "S21_AMBANK_DUITNOW"
+            },
+            {
+              "field": "reference_id",
+              "sample": "S23_ALLIANCE_BIZSMART"
+            },
+            {
+              "field": "bank_name",
+              "sample": "H8_UOB_DUITNOW"
+            },
+            {
+              "field": "bank_name",
+              "sample": "H11_RHB_REFLEX"
+            },
+            {
+              "field": "reference_id",
+              "sample": "H13_ALLIANCE_BIZSMART"
+            }
+          ],
+          "passed": 167,
+          "total": 172
+        }
+      },
+      "stress_overall": {
+        "accuracy_percent": 90.0,
+        "passed": 774,
+        "total": 860
+      },
+      "training_layouts": {
+        "accuracy_percent": 100.0,
+        "failure_count": 0,
+        "failures": [],
+        "passed": 112,
+        "total": 112
+      }
+    }
+  },
+  "current": {
+    "engine": "ibg",
+    "holdout_layouts": {
+      "accuracy_percent": 96.67,
+      "failure_count": 2,
+      "failures": [
+        {
+          "field": "bank_name",
+          "sample": "H8_UOB_DUITNOW"
+        },
+        {
+          "field": "bank_name",
+          "sample": "H11_RHB_REFLEX"
+        }
+      ],
+      "passed": 58,
+      "total": 60
+    },
+    "ocr_stress": {
+      "amount_ocr": {
+        "accuracy_percent": 98.84,
+        "failure_count": 2,
+        "failures": [
+          {
+            "field": "bank_name",
+            "sample": "H8_UOB_DUITNOW"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H11_RHB_REFLEX"
+          }
+        ],
+        "passed": 170,
+        "total": 172
+      },
+      "date_ocr": {
+        "accuracy_percent": 98.84,
+        "failure_count": 2,
+        "failures": [
+          {
+            "field": "bank_name",
+            "sample": "H8_UOB_DUITNOW"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H11_RHB_REFLEX"
+          }
+        ],
+        "passed": 170,
+        "total": 172
+      },
+      "fullwidth_label_colon": {
+        "accuracy_percent": 98.84,
+        "failure_count": 2,
+        "failures": [
+          {
+            "field": "bank_name",
+            "sample": "H8_UOB_DUITNOW"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H11_RHB_REFLEX"
+          }
+        ],
+        "passed": 170,
+        "total": 172
+      },
+      "reference_ocr": {
+        "accuracy_percent": 98.84,
+        "failure_count": 2,
+        "failures": [
+          {
+            "field": "bank_name",
+            "sample": "H8_UOB_DUITNOW"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H11_RHB_REFLEX"
+          }
+        ],
+        "passed": 170,
+        "total": 172
+      },
+      "transaction_ocr": {
+        "accuracy_percent": 98.84,
+        "failure_count": 2,
+        "failures": [
+          {
+            "field": "bank_name",
+            "sample": "H8_UOB_DUITNOW"
+          },
+          {
+            "field": "bank_name",
+            "sample": "H11_RHB_REFLEX"
+          }
+        ],
+        "passed": 170,
+        "total": 172
+      }
+    },
+    "stress_overall": {
+      "accuracy_percent": 98.84,
+      "passed": 850,
+      "total": 860
+    },
+    "training_layouts": {
+      "accuracy_percent": 100.0,
+      "failure_count": 0,
+      "failures": [],
+      "passed": 112,
+      "total": 112
+    }
+  }
+}
